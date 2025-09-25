@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motiv.FluentFactory.Attributes", "src\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj", "{BB164196-5B7E-4EC0-9C68-06093DBB3FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motiv.FluentFactory.Generator", "src\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj", "{8D70EA54-764D-4EBB-B383-177E15DE6750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motiv.FluentFactory.Generator.Tests", "src\Motiv.FluentFactory.Generator.Tests\Motiv.FluentFactory.Generator.Tests.csproj", "{7399C927-0BD6-4477-8B53-87B6C0CDA4F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB164196-5B7E-4EC0-9C68-06093DBB3FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB164196-5B7E-4EC0-9C68-06093DBB3FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB164196-5B7E-4EC0-9C68-06093DBB3FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB164196-5B7E-4EC0-9C68-06093DBB3FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D70EA54-764D-4EBB-B383-177E15DE6750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D70EA54-764D-4EBB-B383-177E15DE6750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D70EA54-764D-4EBB-B383-177E15DE6750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D70EA54-764D-4EBB-B383-177E15DE6750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7399C927-0BD6-4477-8B53-87B6C0CDA4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7399C927-0BD6-4477-8B53-87B6C0CDA4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7399C927-0BD6-4477-8B53-87B6C0CDA4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7399C927-0BD6-4477-8B53-87B6C0CDA4F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

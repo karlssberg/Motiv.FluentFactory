@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Motiv.FluentFactory.Generator.Tests</RootNamespace>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <NoWarn>CS1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+        <DebugSourceGenerators>true</DebugSourceGenerators>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <MSBuildWarningsAsMessages>MSB3277</MSBuildWarningsAsMessages>
+        <SourceGeneratorTrace>true</SourceGeneratorTrace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj" GeneratePathProperty="true" PrivateAssets="all" OutputItemType="Analyzer" />
+      <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="Microsoft.CodeAnalysis.Analyzers">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Update="coverlet.collector">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Remove="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" />
+      <PackageReference Remove="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" />
+    </ItemGroup>
+
+</Project>
