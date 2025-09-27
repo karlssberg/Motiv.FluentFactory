@@ -7,11 +7,13 @@ A C# source generator that automatically creates fluent factory patterns for you
 ```csharp
 using Motiv.FluentFactory.Generator;
 
+// Fluent factory class:
 [FluentFactory]
 public static partial class PersonFactory;
 
 public class Person
 {
+    // Turn constructor parameters into fluent methods chain
     [FluentConstructor(typeof(PersonFactory))]
     public Person(string name, int age)
     {
@@ -84,6 +86,13 @@ public static partial class BookFactory
 
 public struct Step_0__BookFactory
 {
+    private readonly in string _title__parameter;
+    
+    internal Step_0__BookFactory(in string title)
+    {
+        this._title__parameter = title;
+    }
+    
     public Book Create()
     {
         return new Book(this._title__parameter);
@@ -122,6 +131,69 @@ var product = ProductFactory
     .Create();
 ```
 
+### Naming Create Methods
+
+Customize the final create method name using the `CreateMethodName` parameter:
+
+```csharp
+[FluentFactory]
+public static partial class VehicleFactory;
+
+public class Car
+{
+    [FluentConstructor(typeof(VehicleFactory), CreateMethodName = "BuildCar")]
+    public Car(string make, string model)
+    {
+        Make = make;
+        Model = model;
+    }
+
+    public string Make { get; }
+    public string Model { get; }
+}
+
+// Usage with custom create method name:
+var car = VehicleFactory
+    .WithMake("Toyota")
+    .WithModel("Camry")
+    .BuildCar(); // Custom method name instead of Create()
+```
+
+You can also have multiple constructors with different create method names:
+
+```csharp
+[FluentFactory]
+public static partial class ShapeFactory;
+
+public class Rectangle
+{
+    [FluentConstructor(typeof(ShapeFactory), CreateMethodName = "CreateRectangle")]
+    public Rectangle(int width, int height)
+    {
+        Width = width;
+        Height = height;
+    }
+
+    public int Width { get; }
+    public int Height { get; }
+}
+
+public class Circle
+{
+    [FluentConstructor(typeof(ShapeFactory), CreateMethodName = "CreateCircle")]
+    public Circle(int radius)
+    {
+        Radius = radius;
+    }
+
+    public int Radius { get; }
+}
+
+// Usage with multiple create methods:
+var rectangle = ShapeFactory.WithWidth(10).WithHeight(20).CreateRectangle();
+var circle = ShapeFactory.WithRadius(5).CreateCircle();
+```
+
 ### Skipping the Create() Method
 
 Use `FluentOptions.NoCreateMethod` to eliminate the final `Create()` call:
@@ -145,6 +217,8 @@ var address = AddressFactory
     .WithStreet("123 Main St")
     .WithCity("New York");
 ```
+
+**Note:** You cannot use `CreateMethodName` together with `FluentOptions.NoCreateMethod` as there would be no create method to name.
 
 ### Custom Method Names
 
@@ -172,6 +246,64 @@ var user = UserFactory
     .SetEmail("alice@example.com")
     .Create();
 ```
+
+### Advanced: Custom Partial Types as Fluent Steps
+
+When using `FluentOptions.NoCreateMethod`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
+
+```csharp
+[FluentFactory]
+public static partial class Line;
+
+[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+public partial record Line1D([FluentMethod("X")]int X);
+
+[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+public partial record Line2D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y);
+
+[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+public partial record Line3D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y, [FluentMethod("Z")]int Z);
+```
+
+**Generated Code:**
+```csharp
+public static partial class Line
+{
+    public static Line1D X(int x)
+    {
+        return new Line1D(x);
+    }
+}
+
+public partial record Line1D
+{
+    public Line2D Y(int y)
+    {
+        return new Line2D(this.X, y);
+    }
+}
+
+public partial record Line2D
+{
+    public Line3D Z(int z)
+    {
+        return new Line3D(this.X, this.Y, z);
+    }
+}
+```
+
+**Usage:**
+```csharp
+Line1D line1D = Line.X(5);
+Line2D line2D = Line.X(5).Y(10);
+Line3D line3D = Line.X(5).Y(10).Z(3);
+```
+
+This pattern is powerful because:
+- Each type (`Line1D`, `Line2D`, `Line3D`) can be used as a standalone result
+- The fluent chain naturally extends from simpler to more complex types
+- No final `Create()` method is needed - each step returns the constructed object
+- The types must be declared as `partial` to allow the generator to add fluent methods
 
 ### Method Priorities
 
