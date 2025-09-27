@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Motiv.FluentFactory.Generator</id>
+    <version>1.0.0</version>
+    <title>Motiv Fluent Builder Generator</title>
+    <authors>Daniel Karlsson</authors>
+    <developmentDependency>true</developmentDependency>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/motiv-solutions/Motiv.FluentFactory.Generator</projectUrl>
+    <description>Source generator and attributes for creating fluent API builders automatically. This package provides both the attributes that can be applied to classes, constructors, and parameters, and the source generator that creates fluent builder patterns.</description>
+    <copyright>Copyright (c) 2025 Daniel Karlsson</copyright>
+    <tags>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</tags>
+    <repository type="git" url="https://github.com/motiv-solutions/Motiv.FluentFactory.Generator" commit="bfa8a867b84fc51deb4fb2c94feb8f3b633ca7b8" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Collections.Immutable" version="9.0.9" exclude="Build,Analyzers" />
+        <dependency id="System.Composition" version="9.0.9" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

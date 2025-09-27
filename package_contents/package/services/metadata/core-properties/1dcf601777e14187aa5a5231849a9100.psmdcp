@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Daniel Karlsson</dc:creator>
+  <dc:description>Source generator and attributes for creating fluent API builders automatically. This package provides both the attributes that can be applied to classes, constructors, and parameters, and the source generator that creates fluent builder patterns.</dc:description>
+  <dc:identifier>Motiv.FluentFactory.Generator</dc:identifier>
+  <version>1.0.0</version>
+  <keywords>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</keywords>
+  <lastModifiedBy>NuGet.Packaging, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;.NET 8.0</lastModifiedBy>
+</coreProperties>

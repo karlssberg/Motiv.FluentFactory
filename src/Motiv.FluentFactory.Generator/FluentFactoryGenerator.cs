@@ -7,11 +7,17 @@ using Motiv.FluentFactory.Generator.Model;
 
 namespace Motiv.FluentFactory.Generator;
 
+/// <summary>
+/// Source generator for creating fluent factories based on constructors marked with the FluentConstructor attribute.
+/// </summary>
 [Generator(LanguageNames.CSharp)]
-internal class FluentFactoryGenerator : IIncrementalGenerator
+public class FluentFactoryGenerator : IIncrementalGenerator
 {
     private const string Category = "FluentFactory";
 
+    /// <summary>
+    /// Diagnostic for unreachable fluent constructor.
+    /// </summary>
     public static readonly DiagnosticDescriptor UnreachableConstructor = new(
         id: "MFFG0001",
         title: "Unreachable fluent constructor",
@@ -22,6 +28,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         isEnabledByDefault: true,
         customTags: [WellKnownDiagnosticTags.Unnecessary]);
 
+    /// <summary>
+    /// Diagnostic for superseded fluent method template.
+    /// </summary>
     public static readonly DiagnosticDescriptor ContainsSupersededFluentMethodTemplate = new(
         id: "MFFG0002",
         title: "Multiple fluent method contains superseded method",
@@ -31,6 +40,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         isEnabledByDefault: true,
         customTags: [WellKnownDiagnosticTags.Unnecessary]);
 
+    /// <summary>
+    /// Diagnostic for incompatible fluent method template.
+    /// </summary>
     public static readonly DiagnosticDescriptor IncompatibleFluentMethodTemplate = new(
         id: "MFFG0003",
         title: "Fluent method template not compatible",
@@ -40,6 +52,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         isEnabledByDefault: true,
         customTags: [WellKnownDiagnosticTags.Unnecessary]);
 
+    /// <summary>
+    /// Diagnostic for all fluent method templates being incompatible.
+    /// </summary>
     public static readonly DiagnosticDescriptor AllFluentMethodTemplatesIncompatible = new(
         id: "MFFG0004",
         title: "All fluent method template incompatible",
@@ -49,6 +64,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         isEnabledByDefault: true,
         customTags: [WellKnownDiagnosticTags.Unnecessary]);
 
+    /// <summary>
+    /// Diagnostic for fluent method template not being static.
+    /// </summary>
     public static readonly DiagnosticDescriptor FluentMethodTemplateAttributeNotStatic = new(
         id: "MFFG0005",
         title: "Fluent method template not static",
@@ -57,6 +75,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Diagnostic for fluent method template being superseded by a higher precedence parameter.
+    /// </summary>
     public static readonly DiagnosticDescriptor FluentMethodTemplateSuperseded = new(
         id: "MFFG0006",
         title: "Fluent method template superseded",
@@ -66,6 +87,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         defaultSeverity: DiagnosticSeverity.Info,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Diagnostic for invalid create method name.
+    /// </summary>
     public static readonly DiagnosticDescriptor InvalidCreateMethodName = new(
         id: "MFFG0007",
         title: "Invalid CreateMethodName",
@@ -74,6 +98,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Diagnostic for duplicate create method name.
+    /// </summary>
     public static readonly DiagnosticDescriptor DuplicateCreateMethodName = new(
         id: "MFFG0008",
         title: "Duplicate CreateMethodName",
@@ -82,6 +109,9 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Diagnostic for FluentConstructor target type missing FluentFactory attribute.
+    /// </summary>
     public static readonly DiagnosticDescriptor FluentConstructorTargetTypeMissingFluentFactory = new(
         id: "MFFG0009",
         title: "FluentConstructor target type missing FluentFactory attribute",
@@ -90,14 +120,21 @@ internal class FluentFactoryGenerator : IIncrementalGenerator
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Diagnostic for CreateMethodName specified with NoCreateMethod option.
+    /// </summary>
     public static readonly DiagnosticDescriptor CreateMethodNameWithNoCreateMethod = new(
-        id: "MFFG0010",
+        "MFFG0010",
         title: "CreateMethodName specified with NoCreateMethod option",
         category: Category,
         messageFormat: "CreateMethodName cannot be used with NoCreateMethod option",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
+    /// <summary>
+    /// Initializes the source generator by setting up the incremental generation pipeline.
+    /// </summary>
+    /// <param name="context"></param>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var compilationProvider = context.CompilationProvider;

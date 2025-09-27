@@ -29,7 +29,7 @@
 
     <!-- Ship the generator as an analyzer -->
     <ItemGroup>
-        <Analyzer Include="$(TargetPath)" Pack="true" PackagePath="analyzers/dotnet/cs" Condition="Exists('$(TargetPath)')" />
+        <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers\dotnet\cs\$(AssemblyName).dll" />
     </ItemGroup>
 
     <!-- Bundle the Attributes assembly in lib for consumers -->
@@ -37,4 +37,6 @@
         <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" ReferenceOutputAssembly="false" />
         <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
+
+    <!-- Include the Attributes assembly in the package lib folder -->
 </Project>
