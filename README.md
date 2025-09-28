@@ -100,7 +100,7 @@ public struct Step_0__BookFactory
 }
 ```
 
-### Multiple Parameters - Chained Steps
+### Multiple Parameters—Chained Steps
 
 With multiple parameters, each becomes a separate step in the fluent chain:
 
@@ -157,41 +157,6 @@ var car = VehicleFactory
     .WithMake("Toyota")
     .WithModel("Camry")
     .BuildCar(); // Custom method name instead of Create()
-```
-
-You can also have multiple constructors with different create method names:
-
-```csharp
-[FluentFactory]
-public static partial class ShapeFactory;
-
-public class Rectangle
-{
-    [FluentConstructor(typeof(ShapeFactory), CreateMethodName = "CreateRectangle")]
-    public Rectangle(int width, int height)
-    {
-        Width = width;
-        Height = height;
-    }
-
-    public int Width { get; }
-    public int Height { get; }
-}
-
-public class Circle
-{
-    [FluentConstructor(typeof(ShapeFactory), CreateMethodName = "CreateCircle")]
-    public Circle(int radius)
-    {
-        Radius = radius;
-    }
-
-    public int Radius { get; }
-}
-
-// Usage with multiple create methods:
-var rectangle = ShapeFactory.WithWidth(10).WithHeight(20).CreateRectangle();
-var circle = ShapeFactory.WithRadius(5).CreateCircle();
 ```
 
 ### Skipping the Create() Method
