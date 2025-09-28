@@ -7,14 +7,10 @@
         <IsRoslynComponent>true</IsRoslynComponent>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <AnalyzerLanguage>cs</AnalyzerLanguage>
-        <NoWarn>$(NoWarn);RS2000;NU5128</NoWarn>
-        <PackageId>Motiv.FluentFactory.Generator</PackageId>
-        <Title>Motiv Fluent Builder Generator</Title>
-        <Description>Source generator and attributes for creating fluent API builders automatically. This package provides both the attributes that can be applied to classes, constructors, and parameters, and the source generator that creates fluent builder patterns.</Description>
-        <PackageTags>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <NoWarn>$(NoWarn);RS2000;NU5128</NoWarn>        
         <DevelopmentDependency>true</DevelopmentDependency>
         <WarningsAsErrors>true</WarningsAsErrors>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,8 +19,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis" PrivateAssets="all" />
-        <PackageReference Include="System.Collections.Immutable" />
-        <PackageReference Include="System.Composition" />
+        <PackageReference Include="System.Collections.Immutable" PrivateAssets="all" />
+        <PackageReference Include="System.Composition" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- Ship the generator as an analyzer -->
@@ -34,9 +30,8 @@
 
     <!-- Bundle the Attributes assembly in lib for consumers -->
     <ItemGroup>
-        <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" PrivateAssets="all"/>
         <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
-
-    <!-- Include the Attributes assembly in the package lib folder -->
+    
 </Project>

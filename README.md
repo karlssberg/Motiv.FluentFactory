@@ -1,11 +1,11 @@
-# Motiv.FluentFactory.Generator
+# Motiv.FluentFactory
 
 A C# source generator that automatically creates fluent factory patterns for your classes and structs. Transform constructor parameters into chainable, strongly-typed builder methods that guide developers through object creation with IntelliSense support.
 
 ## 🚀 Quick Start
 
 ```csharp
-using Motiv.FluentFactory.Generator;
+using Motiv.FluentFactory.Attributes;
 
 // Fluent factory class:
 [FluentFactory]
@@ -37,13 +37,13 @@ var person = PersonFactory
 Install the NuGet package in your project:
 
 ```xml
-<PackageReference Include="Motiv.FluentFactory.Generator" Version="1.0.0" />
+<PackageReference Include="Motiv.FluentFactory" Version="1.0.0" />
 ```
 
 Or via Package Manager Console:
 
 ```powershell
-Install-Package Motiv.FluentFactory.Generator
+Install-Package Motiv.FluentFactory
 ```
 
 ## 📚 Tutorial
@@ -460,7 +460,7 @@ Marks methods in a variants type as templates for generating fluent methods.
 
 ## 🤝 Contributing
 
-This project is generated using the Motiv.FluentFactory.Generator. Contributions are welcome!
+This project is generated using the Motiv.FluentFactory. Contributions are welcome!
 
 ## 📄 License
 

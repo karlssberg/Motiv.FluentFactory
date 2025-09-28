@@ -58,7 +58,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(T value).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(T value).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -164,7 +164,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T1 value1, T2 value2).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 value1, T2 value2).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
@@ -299,7 +299,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2, T3>.MyBuildTarget(T1 value1, T2 value2, T3 value3).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2, T3&gt;.MyBuildTarget(T1 value1, T2 value2, T3 value3).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
@@ -465,7 +465,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2, T3, T4>.MyBuildTarget(T1 value1, T2 value2, T3 value3, T4 value4).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2, T3, T4&gt;.MyBuildTarget(T1 value1, T2 value2, T3 value3, T4 value4).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
@@ -544,7 +544,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(T value).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(T value).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -648,7 +648,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T, TAlt>.MyBuildTarget(T value1, TAlt value2).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T, TAlt&gt;.MyBuildTarget(T value1, TAlt value2).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
@@ -731,7 +731,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(T value).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(T value).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -812,7 +812,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(T value).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(T value).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -930,7 +930,7 @@ public class FluentFactoryGeneratorGenericTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T, TAlt>.MyBuildTarget(T value1, TAlt value2).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T, TAlt&gt;.MyBuildTarget(T value1, TAlt value2).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>

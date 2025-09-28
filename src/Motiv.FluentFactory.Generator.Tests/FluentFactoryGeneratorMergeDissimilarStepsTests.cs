@@ -223,7 +223,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T1 value1, T2 value2).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 value1, T2 value2).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
@@ -450,7 +450,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T1 value1, string value2, T2 value3).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 value1, string value2, T2 value3).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
@@ -475,7 +475,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T1 value1, T2 value3).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 value1, T2 value3).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
@@ -601,7 +601,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T1 value1, T2 value2).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 value1, T2 value2).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
@@ -647,7 +647,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyBuildTarget<T1, T2>.MyBuildTarget(T2 value2, T1 value1).
+                    /// Creates a new instance using constructor Test.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T2 value2, T1 value1).
                     ///
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>

@@ -13,8 +13,8 @@
   <PropertyGroup>
     <Authors>Daniel Karlsson</Authors>
     <Copyright>Copyright (c) 2025 Daniel Karlsson</Copyright>
-    <PackageProjectUrl>https://github.com/motiv-solutions/Motiv.FluentFactory.Generator</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/motiv-solutions/Motiv.FluentFactory.Generator</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/karlssberg/Motiv.FluentFactory.Generator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/karlssberg/Motiv.FluentFactory.Generator</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

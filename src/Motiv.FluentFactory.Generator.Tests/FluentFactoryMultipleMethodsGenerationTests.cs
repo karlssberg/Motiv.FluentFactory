@@ -88,7 +88,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(T data).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(T data).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -770,7 +770,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTargetA<T>.MyBuildTargetA(int number, T data).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTargetA&lt;T&gt;.MyBuildTargetA(int number, T data).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
@@ -878,7 +878,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T>.MyBuildTarget(System.Threading.Tasks.Task<T> data).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T&gt;.MyBuildTarget(System.Threading.Tasks.Task&lt;T&gt; data).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
@@ -1064,7 +1064,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget<T1, T2>.MyBuildTarget(T1 first, T2 second).
+                    /// Creates a new instance using constructor Test.Namespace.MyBuildTarget&lt;T1, T2&gt;.MyBuildTarget(T1 first, T2 second).
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>

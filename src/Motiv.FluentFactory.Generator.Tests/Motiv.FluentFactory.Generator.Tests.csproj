@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis" />
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" />
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" />

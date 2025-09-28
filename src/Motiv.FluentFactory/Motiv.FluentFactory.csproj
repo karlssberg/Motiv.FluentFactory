@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <PackageId>Motiv.FluentFactory</PackageId>
+        <Title>Motiv Fluent Builder Generator</Title>
+        <Description>Source generator and attributes for creating fluent API builders automatically. This package provides both the attributes that can be applied to classes, constructors, and parameters, and the source generator that creates fluent builder patterns.</Description>
+        <PackageTags>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" PrivateAssets="all"/>
+      <ProjectReference Include="..\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+        <None Include="..\Motiv.FluentFactory.Generator\$(OutputPath)\Motiv.FluentFactory.Generator.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs"
+              Visible="false" />
+
+        <!-- Pack the attributes to both analyzers (for generator) and lib (for runtime) -->
+        <None Include="..\Motiv.FluentFactory.Attributes\$(OutputPath)\Motiv.FluentFactory.Attributes.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs"
+              Visible="false" />
+        <None Include="..\Motiv.FluentFactory.Attributes\$(OutputPath)\Motiv.FluentFactory.Attributes.dll"
+              Pack="true"
+              PackagePath="lib/netstandard2.0"
+              Visible="false" />
+    </ItemGroup>
+</Project>

@@ -41,7 +41,7 @@ internal class CreationMethod : IFluentMethod
         get
         {
             var constructorNames = Return.CandidateConstructors
-                .Select(ctor => ctor.ToFullDisplayString());
+                .Select(ctor => ctor.ToFullDisplayString().Replace("<", "&lt;").Replace(">", "&gt;"));
 
             return Return.CandidateConstructors switch
             {

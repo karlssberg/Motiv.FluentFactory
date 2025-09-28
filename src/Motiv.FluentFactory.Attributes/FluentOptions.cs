@@ -1,3 +1,5 @@
+using System;
+
 namespace Motiv.FluentFactory.Attributes;
 
 /// <summary>

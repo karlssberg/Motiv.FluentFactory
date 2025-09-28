@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="930378cc-e4c5-481a-bdb3-2032a9a44027" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;karlssberg&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/karlssberg/Motiv.FluentFactory.Generator.git&quot;,
+    &quot;accountId&quot;: &quot;63d0818c-286d-4660-b035-ca6015db9f61&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Dev/Motiv.FluentFactory.Generator/src/Motiv.FluentFactory.Attributes/FluentOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator.Tests/CSharpSourceGeneratorVerifier.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator.Tests/FluentFactoryDiagnosticsTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Generation/SyntaxElements/Methods/FluentRootFactoryMethodDeclaration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Generation/SyntaxElements/Methods/FluentStepMethodDeclaration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Generation/SyntaxElements/RootTypeDeclaration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentFactoryCompilationUnit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentMethodExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentParameter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentParameterComparer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/FluentTypeParameter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Methods/FluentTypeSymbolEqualityComparer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Methods/IFluentMethod.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Methods/MultiMethod.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Methods/RegularMethod.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/OrderedDictionary.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/ParameterSequence.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Steps/IFluentReturn.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Steps/IFluentStep.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Steps/RegularFluentStep.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Steps/TargetTypeReturn.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Storage/FieldStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Storage/IFluentValueStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Storage/NullStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Storage/PrimaryConstructorParameterStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Storage/PropertyStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/SymbolExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Model/Trie.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/Modifiers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/StringExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Motiv.FluentFactory.Generator/TypeName.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="33Cpj9HML8q0krTnPJuZYORspjR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Remove" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Publish to folder.Publish Motiv.FluentFactory.Generator to local nuget.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "junie.allowlist",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ],
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "C#"
+    ]
+  }
+}]]></component>
+  <component name="RunManager" selected="239e5059-53be-49e8-9206-4cb7d111027b">
+    <configuration name="Publish Motiv.FluentFactory.Generator to local nuget" type="DotNetFolderPublish" factoryName="Publish to folder">
+      <riderPublish configuration="Release" platform="Any CPU" target_folder="$PROJECT_DIR$/../nuget" target_framework="netstandard2.0" uuid_high="-4965709425093488960" uuid_low="-7176479369454731346">
+        <runtimes>
+          <item value="Portable" />
+        </runtimes>
+      </riderPublish>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="930378cc-e4c5-481a-bdb3-2032a9a44027" name="Changes" comment="" />
+      <created>1758831040686</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758831040686</updated>
+      <workItem from="1758831042242" duration="7939000" />
+      <workItem from="1758927776293" duration="3014000" />
+      <workItem from="1758930890469" duration="11706000" />
+      <workItem from="1758972933018" duration="13147000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add initial project files and configurations for Fluent Factory Generator">
+      <option name="closed" value="true" />
+      <created>1758841325139</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1758841325139</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Refactor project configurations and centralize package version management">
+      <option name="closed" value="true" />
+      <created>1758932338483</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758932338483</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add initial implementation of Motiv.FluentFactory.Generator with XML configuration and README">
+      <option name="closed" value="true" />
+      <created>1758934594127</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1758934594127</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update README.md with detailed usage examples, installation instructions, and API reference for Motiv.FluentFactory.Generator">
+      <option name="closed" value="true" />
+      <created>1758938820321</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1758938820321</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Enhance README.md with detailed examples for custom create method names and advanced fluent patterns">
+      <option name="closed" value="true" />
+      <created>1758940993417</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1758940993417</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Add initial project files and configurations for Fluent Factory Generator" />
+    <MESSAGE value="Refactor project configurations and centralize package version management" />
+    <MESSAGE value="Add initial implementation of Motiv.FluentFactory.Generator with XML configuration and README" />
+    <MESSAGE value="Update README.md with detailed usage examples, installation instructions, and API reference for Motiv.FluentFactory.Generator" />
+    <MESSAGE value="Enhance README.md with detailed examples for custom create method names and advanced fluent patterns" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
