@@ -7,13 +7,13 @@ A C# source generator that automatically creates fluent factory patterns for you
 ```csharp
 using Motiv.FluentFactory.Attributes;
 
-// Fluent factory class:
+// The entry point for the fluent method chain
 [FluentFactory]
 public static partial class PersonFactory;
 
 public class Person
 {
-    // Turn constructor parameters into fluent methods chain
+    // Turns the parameters into fluent methods chain that call this constructor
     [FluentConstructor(typeof(PersonFactory))]
     public Person(string name, int age)
     {
@@ -52,8 +52,8 @@ Install-Package Motiv.FluentFactory
 
 The simplest fluent factory requires two attributes:
 
-1. `[FluentFactory]` - marks a static partial class as a factory
-2. `[FluentConstructor]` - marks a constructor to generate fluent methods for
+1. `[FluentFactory]` - marks a partial class as the entry point for fluent methods
+2. `[FluentConstructor]` - marks a constructor to generate fluent methods for using the constructor parameters as the fluent steps
 
 ```csharp
 [FluentFactory]
