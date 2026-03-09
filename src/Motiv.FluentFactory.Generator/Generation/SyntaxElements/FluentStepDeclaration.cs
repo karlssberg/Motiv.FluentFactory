@@ -20,15 +20,15 @@ internal static class FluentStepDeclaration
                 method switch
                 {
                     CreationMethod createMethod => FluentFactoryMethodDeclaration.Create(createMethod, step),
-                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters, step.Namespace),
-                    _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters, step.Namespace)
+                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters),
+                    _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters)
                 });
 
         var fieldDeclarations = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
 
         var constructor = FluentStepConstructorDeclaration.Create(step);
 
-        NameSyntax name = IdentifierName(((IFluentReturn)step).IdentifierDisplayString(step.Namespace));
+        NameSyntax name = IdentifierName(((IFluentReturn)step).IdentifierDisplayString());
 
         var identifier = name is GenericNameSyntax genericName
             ? genericName.Identifier
@@ -140,9 +140,7 @@ internal static class FluentStepDeclaration
                 // Add type constraints
                 foreach (var constraintType in tp.ConstraintTypes)
                 {
-                    var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                        .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                    constraints.Add(TypeConstraint(ParseTypeName(typeName)));
+                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
                 }
 
                 // Add constructor constraint (new())

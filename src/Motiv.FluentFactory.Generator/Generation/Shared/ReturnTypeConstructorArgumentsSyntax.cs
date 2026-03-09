@@ -27,7 +27,7 @@ internal static class ReturnTypeConstructorArgumentsSyntax
                         _ =>
                             DefaultExpression(
                                 ParseTypeName(
-                                    storage.Type.ToDynamicDisplayString(method.RootNamespace)))
+                                    storage.Type.ToGlobalDisplayString()))
                     };
 
                 return Argument(node);

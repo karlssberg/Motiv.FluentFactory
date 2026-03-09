@@ -11,6 +11,25 @@ internal static class SymbolExtensions
         genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters
     );
 
+    private static readonly SymbolDisplayFormat GlobalQualifiedFormat = SymbolDisplayFormat.FullyQualifiedFormat
+        .WithMiscellaneousOptions(
+            SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
+            SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+    /// <summary>
+    /// Returns the global::-qualified display string for a type symbol.
+    /// Type parameters (T, TResult) are returned as their name only.
+    /// C# keyword aliases (int, string, bool) are preserved via UseSpecialTypes.
+    /// </summary>
+    public static string ToGlobalDisplayString(this ITypeSymbol typeSymbol)
+    {
+        return typeSymbol switch
+        {
+            ITypeParameterSymbol tp => tp.Name,
+            _ => typeSymbol.ToDisplayString(GlobalQualifiedFormat)
+        };
+    }
+
     public static bool IsOpenGenericType(this ITypeSymbol type)
     {
         return type switch
@@ -80,7 +99,7 @@ internal static class SymbolExtensions
         foreach (var constraintType in typeParameter.ConstraintTypes)
         {
             constraints.Add(SyntaxFactory.TypeConstraint(
-                SyntaxFactory.IdentifierName(constraintType.ToDisplayString())));
+                SyntaxFactory.ParseTypeName(constraintType.ToGlobalDisplayString())));
         }
 
         return typeParameterSyntax;
@@ -222,53 +241,4 @@ internal static class SymbolExtensions
    public static string ToUnqualifiedDisplayString(this ITypeSymbol typeSymbol) =>
        typeSymbol.ToDisplayString(TypeNameOnlyFormat);
 
-   public static string ToDynamicDisplayString(this ITypeSymbol typeSymbol, INamespaceSymbol currentNamespace)
-   {
-       switch (typeSymbol)
-       {
-           case null:
-               return string.Empty;
-           // Handle named type symbols (regular classes, structs, interfaces)
-           case INamedTypeSymbol namedType:
-           {
-               // Get the base name without namespace
-               var baseName = GetBaseTypeName(namedType, currentNamespace);
-
-               // If it's not a generic type, return the base name
-               if (!namedType.IsGenericType)
-                   return baseName;
-
-               // Handle generic type parameters
-               var typeArguments = namedType.TypeArguments;
-               if (!typeArguments.Any())
-                   return baseName;
-
-               // Process each type argument recursively
-               var processedTypeArgs = typeArguments.Select(arg => arg.ToDynamicDisplayString(currentNamespace));
-
-               // Combine the base name with processed type arguments
-               return $"{baseName.Split('<')[0]}<{string.Join(", ", processedTypeArgs)}>";
-           }
-           // Handle array types
-           case IArrayTypeSymbol arrayType:
-               return $"{arrayType.ElementType.ToDynamicDisplayString(currentNamespace)}[]";
-           default:
-               // Handle other type symbols (like type parameters)
-               return typeSymbol.Name;
-       }
-   }
-
-   private static string GetBaseTypeName(INamedTypeSymbol typeSymbol, INamespaceSymbol currentNamespace)
-   {
-       var fullName = typeSymbol.ContainingType != null
-           ? $"{typeSymbol.ContainingType.ToDynamicDisplayString(currentNamespace)}.{typeSymbol.Name}"
-           : typeSymbol.ToDisplayString();
-
-       var namespaceName = currentNamespace.ToDisplayString();
-
-       // Remove namespace prefix if it matches current namespace
-       return fullName.StartsWith(namespaceName)
-           ? fullName.Substring(namespaceName.Length).TrimStart('.')
-           : fullName;
-   }
 }

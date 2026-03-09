@@ -22,13 +22,12 @@ internal class TargetTypeReturn(
 
     public IMethodSymbol Constructor => targetTypeConstructor;
 
-    public string IdentifierDisplayString(INamespaceSymbol currentNamespace)
+    public string IdentifierDisplayString()
     {
-        return IdentifierDisplayString(currentNamespace, new Dictionary<FluentType, ITypeSymbol>());
+        return IdentifierDisplayString(new Dictionary<FluentType, ITypeSymbol>());
     }
 
     public string IdentifierDisplayString(
-        INamespaceSymbol currentNamespace,
         IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
     {
         var allArgs = targetTypeConstructor.ContainingType.TypeParameters
@@ -41,7 +40,7 @@ internal class TargetTypeReturn(
             ? targetTypeConstructor.ContainingType.Construct(allArgs)
             : targetTypeConstructor.ContainingType;
 
-        return constructedType.ToDynamicDisplayString(currentNamespace);
+        return constructedType.ToGlobalDisplayString();
     }
 
     public INamespaceSymbol Namespace => targetTypeConstructor.ContainingNamespace;

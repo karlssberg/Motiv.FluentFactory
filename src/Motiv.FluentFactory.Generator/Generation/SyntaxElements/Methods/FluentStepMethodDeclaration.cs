@@ -15,12 +15,11 @@ internal static class FluentStepMethodDeclaration
     public static MethodDeclarationSyntax Create(
         MultiMethod multiMethod,
         ParameterSequence knownConstructorParameters,
-        INamespaceSymbol currentNamespace,
         ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null)
     {
         var stepActivationArgs = CreateStepConstructorArguments(multiMethod, knownConstructorParameters);
 
-        var returnObjectExpression = FluentStepCreationExpression.Create(currentNamespace, multiMethod, stepActivationArgs);
+        var returnObjectExpression = FluentStepCreationExpression.Create(multiMethod, stepActivationArgs);
 
         return CreateMethodDeclaration(multiMethod, knownConstructorParameters, returnObjectExpression, ambientTypeParameters ?? []);
     }
@@ -28,12 +27,11 @@ internal static class FluentStepMethodDeclaration
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,
         ParameterSequence knownConstructorParameters,
-        INamespaceSymbol currentNamespace,
         ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null)
     {
         var stepActivationArgs = CreateStepConstructorArguments(method, knownConstructorParameters);
 
-        var returnObjectExpression = FluentStepCreationExpression.Create(currentNamespace, method, stepActivationArgs);
+        var returnObjectExpression = FluentStepCreationExpression.Create(method, stepActivationArgs);
 
         return CreateMethodDeclaration(method, knownConstructorParameters, returnObjectExpression, ambientTypeParameters ?? []);
     }
@@ -95,7 +93,7 @@ internal static class FluentStepMethodDeclaration
                                         Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
                                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                     .WithType(
-                                        IdentifierName(parameter.ParameterSymbol.Type.ToDynamicDisplayString(method.RootNamespace)))))));
+                                        ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
         }
 
         if (!method.TypeParameters.Any())
@@ -165,9 +163,7 @@ internal static class FluentStepMethodDeclaration
                 // Add type constraints
                 foreach (var constraintType in typeParam.ConstraintTypes)
                 {
-                    var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                        .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                    constraints.Add(TypeConstraint(ParseTypeName(typeName)));
+                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
                 }
 
                 if (constraints.Count > 0)

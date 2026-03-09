@@ -7,6 +7,9 @@ using Motiv.FluentFactory.Generator.Model.Methods;
 using Motiv.FluentFactory.Generator.Model.Steps;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
+// ReSharper disable once RedundantUsingDirective - needed for ToGlobalDisplayString extension method
+using Motiv.FluentFactory.Generator.Generation;
+
 namespace Motiv.FluentFactory.Generator.Generation.SyntaxElements;
 
 internal static class RootTypeDeclaration
@@ -95,9 +98,7 @@ internal static class RootTypeDeclaration
                 // Add type constraints
                 foreach (var constraintType in tp.ConstraintTypes)
                 {
-                    var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                        .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                    constraints.Add(TypeConstraint(ParseTypeName(typeName)));
+                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
                 }
 
                 // Add constructor constraint (new())
@@ -130,9 +131,9 @@ internal static class RootTypeDeclaration
         return file.FluentMethods
             .Select<IFluentMethod, MethodDeclarationSyntax>(method => method switch
             {
-                { Return: TargetTypeReturn } => FluentRootFactoryMethodDeclaration.Create(file.RootType.ContainingNamespace, method, file.RootType),
-                MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.ContainingNamespace, file.RootType.TypeParameters),
-                _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.ContainingNamespace, file.RootType.TypeParameters)
+                { Return: TargetTypeReturn } => FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
+                MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
+                _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
             })
             .Select(method =>
             {

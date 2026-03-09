@@ -47,19 +47,19 @@ internal class ExistingTypeFluentStep(
     
     public FluentConstructorContext ConstructorContext => constructorMetadata.Context;
 
-    public string IdentifierDisplayString(INamespaceSymbol currentNamespace)
+    public string IdentifierDisplayString()
     {
-        return constructorMetadata.Constructor.ContainingType.ToDynamicDisplayString(currentNamespace);
+        return constructorMetadata.Constructor.ContainingType.ToGlobalDisplayString();
     }
 
-    public string IdentifierDisplayString(INamespaceSymbol currentNamespace,
+    public string IdentifierDisplayString(
         IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
     {
         var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap).ToArray();
 
         var existingStepConstructed = constructorMetadata.Constructor.ContainingType.Construct(distinctGenericParameters);
 
-        return existingStepConstructed.ToDynamicDisplayString(currentNamespace);
+        return existingStepConstructed.ToGlobalDisplayString();
     }
 
     public INamespaceSymbol Namespace => constructorMetadata.Constructor.ContainingNamespace;

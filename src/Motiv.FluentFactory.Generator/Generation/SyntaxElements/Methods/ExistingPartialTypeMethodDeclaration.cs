@@ -20,8 +20,8 @@ internal static class ExistingPartialTypeMethodDeclaration
 
         var returnObjectExpression = method.Return switch
         {
-            TargetTypeReturn => TargetTypeObjectCreationExpression.Create(step.Namespace, method, stepActivationArgs, []),
-            _ => FluentStepCreationExpression.Create(step.Namespace, method, stepActivationArgs)
+            TargetTypeReturn => TargetTypeObjectCreationExpression.Create(method, stepActivationArgs, []),
+            _ => FluentStepCreationExpression.Create(method, stepActivationArgs)
         };
 
         var methodDeclaration = MethodDeclaration(
@@ -53,7 +53,7 @@ internal static class ExistingPartialTypeMethodDeclaration
                                         Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
                                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                     .WithType(
-                                        IdentifierName(parameter.ParameterSymbol.Type.ToDynamicDisplayString(method.RootNamespace)))))));
+                                        ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
         }
 
         if (!method.TypeParameters.Any())

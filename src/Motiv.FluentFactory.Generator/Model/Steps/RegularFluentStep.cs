@@ -52,55 +52,43 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public ImmutableArray<IMethodSymbol> CandidateConstructors => [..candidateConstructors];
 
-    public string IdentifierDisplayString(INamespaceSymbol namespaceSymbol)
+    public string IdentifierDisplayString()
     {
         var distinctGenericParameters = GenericConstructorParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
-            .DistinctBy(symbol => symbol.ToDynamicDisplayString(Namespace))
+            .DistinctBy(symbol => symbol.Name)
             .ToArray();
 
-        var name = GetMinimalQualifiedName(namespaceSymbol);
-
         return distinctGenericParameters.Length > 0
-            ? GenericName(Identifier(name))
+            ? GenericName(Identifier(Name))
                 .WithTypeArgumentList(
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         distinctGenericParameters
-                            .Select(arg => IdentifierName(arg.ToDynamicDisplayString(Namespace))))))
+                            .Select(arg => IdentifierName(arg.Name)))))
                 .NormalizeWhitespace()
                 .ToString()
-            : name;
+            : Name;
     }
 
-    public string IdentifierDisplayString(INamespaceSymbol currentNamespace, IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
+    public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
     {
         var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap)
             .ToArray();
 
-        var name = GetMinimalQualifiedName(currentNamespace);
-
         return distinctGenericParameters.Length > 0
-            ? GenericName(Identifier(name))
+            ? GenericName(Identifier(Name))
                 .WithTypeArgumentList(
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         distinctGenericParameters
-                            .Select(arg => IdentifierName(arg.ToDynamicDisplayString(Namespace))))))
+                            .Select(arg => ParseTypeName(arg.ToGlobalDisplayString())))))
                 .NormalizeWhitespace()
                 .ToString()
-            : name;
+            : Name;
     }
 
     public INamespaceSymbol Namespace => RootType.ContainingNamespace;
 
     public int Index { get; set; }
-
-
-    private string GetMinimalQualifiedName(INamespaceSymbol currentNamespace)
-    {
-        return RootType.ContainingNamespace.Equals(currentNamespace, SymbolEqualityComparer.Default)
-            ? Name
-            : FullName;
-    }
 
     private string GetStepName(INamedTypeSymbol rootType)
     {

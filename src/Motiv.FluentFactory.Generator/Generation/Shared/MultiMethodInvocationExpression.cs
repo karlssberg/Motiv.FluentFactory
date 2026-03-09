@@ -9,22 +9,21 @@ internal static class MultiMethodInvocationExpression
 {
     public static InvocationExpressionSyntax Create(
         IMethodSymbol parameterConverterMethod,
-        IEnumerable<ArgumentSyntax> arguments,
-        INamespaceSymbol methodRootNamespace)
+        IEnumerable<ArgumentSyntax> arguments)
     {
         SimpleNameSyntax identifierName = parameterConverterMethod.IsGenericMethod
             ? GenericName(parameterConverterMethod.Name)
                 .WithTypeArgumentList(
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         parameterConverterMethod.TypeArguments
-                            .Select(t => IdentifierName(t.ToDynamicDisplayString(methodRootNamespace)))))
+                            .Select(t => ParseTypeName(t.ToGlobalDisplayString()))))
                 )
             : IdentifierName(parameterConverterMethod.Name);
 
         var invocationExpression = InvocationExpression(
                 MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
-                    ParseTypeName(parameterConverterMethod.ContainingType.ToDynamicDisplayString(methodRootNamespace)),
+                    ParseTypeName(parameterConverterMethod.ContainingType.ToGlobalDisplayString()),
                     identifierName))
             .WithArgumentList(ArgumentList(SeparatedList(arguments)));
 

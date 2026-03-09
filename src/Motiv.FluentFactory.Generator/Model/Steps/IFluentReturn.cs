@@ -6,9 +6,15 @@ namespace Motiv.FluentFactory.Generator.Model.Steps;
 
 internal interface IFluentReturn
 {
-    string IdentifierDisplayString(INamespaceSymbol currentNamespace);
+    /// <summary>
+    /// Returns the display string for this return type, using global:: qualification.
+    /// </summary>
+    string IdentifierDisplayString();
 
-    string IdentifierDisplayString(INamespaceSymbol currentNamespace, IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap);
+    /// <summary>
+    /// Returns the display string for this return type with generic type argument mappings applied.
+    /// </summary>
+    string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap);
 
     INamespaceSymbol Namespace { get; }
 

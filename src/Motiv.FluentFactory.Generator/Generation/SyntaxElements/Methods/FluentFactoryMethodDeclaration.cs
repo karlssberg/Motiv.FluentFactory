@@ -21,7 +21,6 @@ internal static class FluentFactoryMethodDeclaration
         var methodArguments = GetMethodArguments(method);
 
         var returnObjectExpression = TargetTypeObjectCreationExpression.Create(
-            step.Namespace,
             method,
             fieldArguments,
             methodArguments);
@@ -71,7 +70,7 @@ internal static class FluentFactoryMethodDeclaration
                             Identifier(method.SourceParameter.Name.ToCamelCase()))
                         .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                         .WithType(
-                            IdentifierName(method.SourceParameter.Type.ToDynamicDisplayString(method.RootNamespace))))));
+                            ParseTypeName(method.SourceParameter.Type.ToGlobalDisplayString())))));
         }
 
         return methodDeclaration;

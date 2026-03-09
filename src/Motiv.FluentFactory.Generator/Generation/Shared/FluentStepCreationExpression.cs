@@ -10,19 +10,17 @@ namespace Motiv.FluentFactory.Generator.Generation.Shared;
 internal static class FluentStepCreationExpression
 {
     public  static ObjectCreationExpressionSyntax Create(
-        INamespaceSymbol currentNamespace,
         IFluentMethod method,
         IEnumerable<ArgumentSyntax> arguments)
     {
         return method switch
         {
-            MultiMethod multiMethod => CreateMultiMethod(currentNamespace, multiMethod, arguments),
-            _ => CreateDefaultMethod(currentNamespace, method, arguments)
+            MultiMethod multiMethod => CreateMultiMethod(multiMethod, arguments),
+            _ => CreateDefaultMethod(method, arguments)
         };
     }
 
     private static ObjectCreationExpressionSyntax CreateMultiMethod(
-        INamespaceSymbol currentNamespace,
         MultiMethod method,
         IEnumerable<ArgumentSyntax> arguments)
     {
@@ -31,17 +29,16 @@ internal static class FluentStepCreationExpression
             .ToDictionary(pair => new FluentType(pair.Key), pair => pair.Value);
 
         var name = IdentifierName(
-            method.Return.IdentifierDisplayString(currentNamespace, typeArgMappings));
+            method.Return.IdentifierDisplayString(typeArgMappings));
 
         return CreateMethodOverloadExpression(method, arguments, name);
     }
 
     private static ObjectCreationExpressionSyntax CreateDefaultMethod(
-        INamespaceSymbol currentNamespace,
         IFluentMethod method,
         IEnumerable<ArgumentSyntax> arguments)
     {
-        NameSyntax name = IdentifierName(method.Return.IdentifierDisplayString(currentNamespace));
+        NameSyntax name = IdentifierName(method.Return.IdentifierDisplayString());
         return CreateObjectCreationExpression(arguments, name);
     }
 
@@ -68,7 +65,7 @@ internal static class FluentStepCreationExpression
         IEnumerable<ArgumentSyntax> argNodes =
         [
             ..fieldSourcedArguments,
-            Argument(MultiMethodInvocationExpression.Create(parameterConverterMethod, methodParameterSourcedArguments, method.RootNamespace))
+            Argument(MultiMethodInvocationExpression.Create(parameterConverterMethod, methodParameterSourcedArguments))
         ];
 
         return ObjectCreationExpression(name)

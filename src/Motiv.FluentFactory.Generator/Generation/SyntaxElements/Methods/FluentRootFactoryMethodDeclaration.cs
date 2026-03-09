@@ -12,7 +12,6 @@ namespace Motiv.FluentFactory.Generator.Generation.SyntaxElements.Methods;
 internal static class FluentRootFactoryMethodDeclaration
 {
     public static MethodDeclarationSyntax Create(
-        INamespaceSymbol currentNamespace,
         IFluentMethod method,
         INamedTypeSymbol rootType)
     {
@@ -21,7 +20,6 @@ internal static class FluentRootFactoryMethodDeclaration
         var methodSourcedArguments = GetMethodSourcedArguments(method);
 
         var returnObjectExpression = TargetTypeObjectCreationExpression.Create(
-            currentNamespace,
             method,
             fieldSourcedArguments,
             methodSourcedArguments);
@@ -118,9 +116,7 @@ internal static class FluentRootFactoryMethodDeclaration
                 // Add type constraints
                 foreach (var constraintType in typeParam.ConstraintTypes)
                 {
-                    var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                        .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                    constraints.Add(TypeConstraint(ParseTypeName(typeName)));
+                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
                 }
 
                 if (constraints.Count > 0)
@@ -208,7 +204,7 @@ internal static class FluentRootFactoryMethodDeclaration
                                         Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
                                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                     .WithType(
-                                        IdentifierName(parameter.ParameterSymbol.Type.ToDynamicDisplayString(method.RootNamespace)))))));
+                                        ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
         }
 
         return methodDeclaration;

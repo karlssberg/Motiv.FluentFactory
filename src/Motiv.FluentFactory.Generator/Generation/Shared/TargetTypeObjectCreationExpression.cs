@@ -9,12 +9,11 @@ namespace Motiv.FluentFactory.Generator.Generation.Shared;
 internal static class TargetTypeObjectCreationExpression
 {
     public static ObjectCreationExpressionSyntax Create(
-        INamespaceSymbol currentNamespace,
         IFluentMethod method,
         IEnumerable<ArgumentSyntax> fieldArguments,
         IEnumerable<ArgumentSyntax> methodArguments)
     {
-        var name = IdentifierName(method.Return.IdentifierDisplayString(currentNamespace));
+        var name = IdentifierName(method.Return.IdentifierDisplayString());
 
         if (method is MultiMethod multiMethod)
         {
@@ -35,7 +34,7 @@ internal static class TargetTypeObjectCreationExpression
         IEnumerable<ArgumentSyntax> argNodes =
         [
             ..fieldArguments,
-            Argument(MultiMethodInvocationExpression.Create(method.ParameterConverter, methodArguments, method.RootNamespace))
+            Argument(MultiMethodInvocationExpression.Create(method.ParameterConverter, methodArguments))
         ];
 
         return ObjectCreationExpression(name)

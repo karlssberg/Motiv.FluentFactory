@@ -29,7 +29,7 @@ internal static class FieldAndPropertySyntax
     private static FieldDeclarationSyntax CreateFieldDeclaration(FieldStorage fieldStorage)
     {
         return FieldDeclaration(
-                VariableDeclaration(ParseTypeName(fieldStorage.Type.ToDynamicDisplayString(fieldStorage.ContainingNamespace)))
+                VariableDeclaration(ParseTypeName(fieldStorage.Type.ToGlobalDisplayString()))
                     .AddVariables(VariableDeclarator(
                         Identifier(fieldStorage.IdentifierName))))
             .WithModifiers(TokenList(
@@ -40,7 +40,7 @@ internal static class FieldAndPropertySyntax
     private static PropertyDeclarationSyntax CreatePropertyDeclaration(PropertyStorage propertyStorage)
     {
         return PropertyDeclaration(
-                ParseTypeName(propertyStorage.Type.ToDynamicDisplayString(propertyStorage.ContainingNamespace)),
+                ParseTypeName(propertyStorage.Type.ToGlobalDisplayString()),
                 Identifier(propertyStorage.IdentifierName))
             .WithModifiers(TokenList(propertyStorage.Accessibility
                 .AccessibilityToSyntaxKind()

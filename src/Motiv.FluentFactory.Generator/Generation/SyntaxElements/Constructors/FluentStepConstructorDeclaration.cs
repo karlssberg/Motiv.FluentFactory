@@ -35,7 +35,7 @@ internal static class FluentStepConstructorDeclaration
         return step.KnownConstructorParameters
             .Select(parameter =>
                 Parameter(Identifier(parameter.Name.ToCamelCase()))
-                    .WithType(IdentifierName(parameter.Type.ToDynamicDisplayString(step.Namespace)))
+                    .WithType(ParseTypeName(parameter.Type.ToGlobalDisplayString()))
                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))))
             .InterleaveWith(Token(SyntaxKind.CommaToken));
     }
