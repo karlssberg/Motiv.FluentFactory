@@ -54,6 +54,47 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public string IdentifierDisplayString()
     {
+        var globalPrefix = Namespace.IsGlobalNamespace
+            ? "global::"
+            : $"global::{Namespace.ToDisplayString()}.";
+        var distinctGenericParameters = GenericConstructorParameters
+            .SelectMany(t => t.Type.GetGenericTypeArguments())
+            .DistinctBy(symbol => symbol.Name)
+            .ToArray();
+
+        return distinctGenericParameters.Length > 0
+            ? $"{globalPrefix}{GenericName(Identifier(Name))
+                .WithTypeArgumentList(
+                    TypeArgumentList(SeparatedList<TypeSyntax>(
+                        distinctGenericParameters
+                            .Select(arg => IdentifierName(arg.Name)))))
+                .NormalizeWhitespace()}"
+            : $"{globalPrefix}{Name}";
+    }
+
+    public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
+    {
+        var globalPrefix = Namespace.IsGlobalNamespace
+            ? "global::"
+            : $"global::{Namespace.ToDisplayString()}.";
+        var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap)
+            .ToArray();
+
+        return distinctGenericParameters.Length > 0
+            ? $"{globalPrefix}{GenericName(Identifier(Name))
+                .WithTypeArgumentList(
+                    TypeArgumentList(SeparatedList<TypeSyntax>(
+                        distinctGenericParameters
+                            .Select(arg => ParseTypeName(arg.ToGlobalDisplayString())))))
+                .NormalizeWhitespace()}"
+            : $"{globalPrefix}{Name}";
+    }
+
+    /// <summary>
+    /// Returns the display string for the struct declaration (no global:: qualification).
+    /// </summary>
+    public string DeclarationDisplayString()
+    {
         var distinctGenericParameters = GenericConstructorParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
             .DistinctBy(symbol => symbol.Name)
@@ -65,22 +106,6 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         distinctGenericParameters
                             .Select(arg => IdentifierName(arg.Name)))))
-                .NormalizeWhitespace()
-                .ToString()
-            : Name;
-    }
-
-    public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
-    {
-        var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap)
-            .ToArray();
-
-        return distinctGenericParameters.Length > 0
-            ? GenericName(Identifier(Name))
-                .WithTypeArgumentList(
-                    TypeArgumentList(SeparatedList<TypeSyntax>(
-                        distinctGenericParameters
-                            .Select(arg => ParseTypeName(arg.ToGlobalDisplayString())))))
                 .NormalizeWhitespace()
                 .ToString()
             : Name;

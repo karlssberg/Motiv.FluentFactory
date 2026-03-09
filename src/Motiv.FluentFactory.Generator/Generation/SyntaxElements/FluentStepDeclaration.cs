@@ -28,7 +28,7 @@ internal static class FluentStepDeclaration
 
         var constructor = FluentStepConstructorDeclaration.Create(step);
 
-        NameSyntax name = IdentifierName(((IFluentReturn)step).IdentifierDisplayString());
+        NameSyntax name = IdentifierName(step.DeclarationDisplayString());
 
         var identifier = name is GenericNameSyntax genericName
             ? genericName.Identifier

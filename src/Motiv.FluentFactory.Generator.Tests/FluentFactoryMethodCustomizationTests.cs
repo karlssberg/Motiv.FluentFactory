@@ -117,9 +117,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithX(in int x)
+                    public static global::Test.Step_0__Test_Factory WithX(in int x)
                     {
-                        return new Step_0__Test_Factory(x);
+                        return new global::Test.Step_0__Test_Factory(x);
                     }
                 }
 
@@ -290,9 +290,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -379,9 +379,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -401,9 +401,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -496,9 +496,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -518,9 +518,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -542,9 +542,9 @@ public class FluentFactoryMethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_2__Test_Factory<T1, T2, T3> SetValue3<T3>(in T3 value3)
+                    public global::Test.Step_2__Test_Factory<T1, T2, T3> SetValue3<T3>(in T3 value3)
                     {
-                        return new Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -816,18 +816,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory Value1(in string value)
+                public static global::Step_0__Factory Value1(in string value)
                 {
-                    return new Step_0__Factory(global::Value1Methods.Value1<string>(value));
+                    return new global::Step_0__Factory(global::Value1Methods.Value1<string>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory Value1(in global::System.Func<string> factory)
+                public static global::Step_0__Factory Value1(in global::System.Func<string> factory)
                 {
-                    return new Step_0__Factory(global::Value1Methods.Value1<string>(factory));
+                    return new global::Step_0__Factory(global::Value1Methods.Value1<string>(factory));
                 }
             }
 
@@ -945,18 +945,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T> Value1<T>(in T value)
+                public static global::Step_0__Factory<T> Value1<T>(in T value)
                 {
-                    return new Step_0__Factory<T>(global::Value1Methods.Value1<T>(value));
+                    return new global::Step_0__Factory<T>(global::Value1Methods.Value1<T>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T> Value1<T>(in global::System.Func<T> factory)
+                public static global::Step_0__Factory<T> Value1<T>(in global::System.Func<T> factory)
                 {
-                    return new Step_0__Factory<T>(global::Value1Methods.Value1<T>(factory));
+                    return new global::Step_0__Factory<T>(global::Value1Methods.Value1<T>(factory));
                 }
             }
 
@@ -1097,18 +1097,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1> Value1<T1>(in T1 value)
+                public static global::Step_0__Factory<T1> Value1<T1>(in T1 value)
                 {
-                    return new Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(value));
+                    return new global::Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1> Value1<T1>(in global::System.Func<string, string, T1> function)
+                public static global::Step_0__Factory<T1> Value1<T1>(in global::System.Func<string, string, T1> function)
                 {
-                    return new Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(function));
+                    return new global::Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(function));
                 }
             }
 
@@ -1128,18 +1128,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1, T2> Value2<T2>(in T2 value)
+                public global::Step_1__Factory<T1, T2> Value2<T2>(in T2 value)
                 {
-                    return new Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(value));
+                    return new global::Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1, T2> Value2<T2>(in global::System.Func<string, string, T2> function)
+                public global::Step_1__Factory<T1, T2> Value2<T2>(in global::System.Func<string, string, T2> function)
                 {
-                    return new Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(function));
+                    return new global::Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(function));
                 }
             }
 
@@ -1355,18 +1355,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in global::System.Func<T1A, T1B> value)
+                public static global::Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in global::System.Func<T1A, T1B> value)
                 {
-                    return new Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
+                    return new global::Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in T1B value)
+                public static global::Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in T1B value)
                 {
-                    return new Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
+                    return new global::Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
                 }
             }
 
@@ -1386,18 +1386,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in global::System.Func<T2A, T2B> value)
+                public global::Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in global::System.Func<T2A, T2B> value)
                 {
-                    return new Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
+                    return new global::Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in T2B value)
+                public global::Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in T2B value)
                 {
-                    return new Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
+                    return new global::Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
                 }
             }
 
@@ -1534,18 +1534,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -1565,18 +1565,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1, T2, T3> Value2<T3>(in global::System.Func<T2, T3> value)
+                public global::Step_1__Factory<T1, T2, T3> Value2<T3>(in global::System.Func<T2, T3> value)
                 {
-                    return new Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
+                    return new global::Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Factory<T1, T2, T3> Value2<T3>(in T3 value)
+                public global::Step_1__Factory<T1, T2, T3> Value2<T3>(in T3 value)
                 {
-                    return new Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
+                    return new global::Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
                 }
             }
 
@@ -1726,9 +1726,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
@@ -1736,9 +1736,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -1881,9 +1881,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value<T1, T2>(in global::System.Func<T1, T2> factory1)
+                public static global::Step_0__Factory<T1, T2> Value<T1, T2>(in global::System.Func<T1, T2> factory1)
                 {
-                    return new Step_0__Factory<T1, T2>(factory1);
+                    return new global::Step_0__Factory<T1, T2>(factory1);
                 }
 
                 /// <summary>
@@ -1891,9 +1891,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value<T1, T2>(in T2 value)
+                public static global::Step_0__Factory<T1, T2> Value<T1, T2>(in T2 value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Overloads.Value<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Overloads.Value<T1, T2>(value));
                 }
             }
 
@@ -2067,9 +2067,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> factory1)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> factory1)
                 {
-                    return new Step_0__Factory<T1, T2>(factory1);
+                    return new global::Step_0__Factory<T1, T2>(factory1);
                 }
 
                 /// <summary>
@@ -2077,9 +2077,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::FirstStep.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::FirstStep.Value1<T1, T2>(value));
                 }
             }
 
@@ -2243,9 +2243,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
@@ -2253,9 +2253,9 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -2398,18 +2398,18 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="MyClassA{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Factory<T> Value<T>(in T value)
+                public static global::Step_0__Factory<T> Value<T>(in T value)
                 {
-                    return new Step_0__Factory<T>(global::Overloads.Value<T>(value));
+                    return new global::Step_0__Factory<T>(global::Overloads.Value<T>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClassB"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_1__Factory Value(in string value1)
+                public static global::Step_1__Factory Value(in string value1)
                 {
-                    return new Step_1__Factory(value1);
+                    return new global::Step_1__Factory(value1);
                 }
             }
 
@@ -2573,18 +2573,18 @@ public class FluentFactoryMethodCustomizationTests
                  ///     <seealso cref="MyClassA{T}"/>
                  /// </summary>
                  [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                 public static Step_0__Factory<T> Value<T>(in T value)
+                 public static global::Step_0__Factory<T> Value<T>(in T value)
                  {
-                     return new Step_0__Factory<T>(global::Overloads.Value<T>(value));
+                     return new global::Step_0__Factory<T>(global::Overloads.Value<T>(value));
                  }
 
                  /// <summary>
                  ///     <seealso cref="MyClassC"/>
                  /// </summary>
                  [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                 public static Step_1__Factory Value(in string value)
+                 public static global::Step_1__Factory Value(in string value)
                  {
-                     return new Step_1__Factory(global::Overloads.Value<string>(value));
+                     return new global::Step_1__Factory(global::Overloads.Value<string>(value));
                  }
              }
 

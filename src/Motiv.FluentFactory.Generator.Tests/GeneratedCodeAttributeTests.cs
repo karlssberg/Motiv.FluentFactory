@@ -40,9 +40,9 @@ public class GeneratedCodeAttributeTests
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 

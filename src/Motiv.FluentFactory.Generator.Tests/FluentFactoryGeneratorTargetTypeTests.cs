@@ -373,9 +373,9 @@ public class FluentFactoryGeneratorTargetTypeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 
@@ -457,9 +457,9 @@ public class FluentFactoryGeneratorTargetTypeTests
                     ///     <seealso cref="Test.MyBuildTargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 

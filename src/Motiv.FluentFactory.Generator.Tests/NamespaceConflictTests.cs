@@ -44,9 +44,9 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__ConflictTest_Factory WithName(in string name)
+                    public static global::ConflictTest.Step_0__ConflictTest_Factory WithName(in string name)
                     {
-                        return new Step_0__ConflictTest_Factory(name);
+                        return new global::ConflictTest.Step_0__ConflictTest_Factory(name);
                     }
                 }
 
@@ -66,9 +66,9 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__ConflictTest_Factory WithValue(in int value)
+                    public global::ConflictTest.Step_1__ConflictTest_Factory WithValue(in int value)
                     {
-                        return new Step_1__ConflictTest_Factory(this._name__parameter, value);
+                        return new global::ConflictTest.Step_1__ConflictTest_Factory(this._name__parameter, value);
                     }
                 }
 
@@ -153,9 +153,9 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__ConflictTest_Factory WithItems(in global::System.Collections.Generic.List<string> items)
+                    public static global::ConflictTest.Step_0__ConflictTest_Factory WithItems(in global::System.Collections.Generic.List<string> items)
                     {
-                        return new Step_0__ConflictTest_Factory(items);
+                        return new global::ConflictTest.Step_0__ConflictTest_Factory(items);
                     }
                 }
 

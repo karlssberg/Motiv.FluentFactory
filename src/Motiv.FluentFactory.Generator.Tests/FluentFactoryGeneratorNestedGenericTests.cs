@@ -106,9 +106,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -194,9 +194,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> SetValue1<T1>(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
+                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -286,9 +286,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -308,9 +308,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> WithValue2<T2>(in global::System.Collections.Generic.IEnumerable<T2> value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in global::System.Collections.Generic.IEnumerable<T2> value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -400,9 +400,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::System.Func<T1, T2> value1)
+                    public static global::Test.Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::System.Func<T1, T2> value1)
                     {
-                        return new Step_0__Test_Factory<T1, T2>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1, T2>(value1);
                     }
                 }
 
@@ -422,9 +422,9 @@ public class FluentFactoryGeneratorNestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2, T3, T4> WithValue2<T3, T4>(in global::System.Func<T3, T4> value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2, T3, T4> WithValue2<T3, T4>(in global::System.Func<T3, T4> value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2, T3, T4>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2, T3, T4>(this._value1__parameter, value2);
                     }
                 }
 

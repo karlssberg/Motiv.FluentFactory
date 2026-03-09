@@ -13,7 +13,7 @@ internal static class TargetTypeObjectCreationExpression
         IEnumerable<ArgumentSyntax> fieldArguments,
         IEnumerable<ArgumentSyntax> methodArguments)
     {
-        var name = IdentifierName(method.Return.IdentifierDisplayString());
+        var name = ParseName(method.Return.IdentifierDisplayString());
 
         if (method is MultiMethod multiMethod)
         {

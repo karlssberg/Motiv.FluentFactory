@@ -393,9 +393,9 @@ public class FluentFactoryDiagnosticsTests
                     ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Spec<TModel, TPredicateResult> WithExpression<TModel, TPredicateResult>(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> expression)
+                    public static global::Test.Step_0__Test_Spec<TModel, TPredicateResult> WithExpression<TModel, TPredicateResult>(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> expression)
                     {
-                        return new Step_0__Test_Spec<TModel, TPredicateResult>(expression);
+                        return new global::Test.Step_0__Test_Spec<TModel, TPredicateResult>(expression);
                     }
                 }
 
@@ -504,9 +504,9 @@ public class FluentFactoryDiagnosticsTests
                     ///     <seealso cref="Test.Square"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Shape WithWidth(in int width)
+                    public static global::Test.Step_0__Test_Shape WithWidth(in int width)
                     {
-                        return new Step_0__Test_Shape(width);
+                        return new global::Test.Step_0__Test_Shape(width);
                     }
                 }
 

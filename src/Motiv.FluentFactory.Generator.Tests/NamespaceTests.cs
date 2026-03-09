@@ -82,9 +82,9 @@ public class NamespaceTests
                     ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T> WithDefaultValue<T>()
+                    public static global::Test.Step_0__Test_Factory<T> WithDefaultValue<T>()
                     {
-                        return new Step_0__Test_Factory<T>(global::MethodVariants.WithDefaultValue<T>());
+                        return new global::Test.Step_0__Test_Factory<T>(global::MethodVariants.WithDefaultValue<T>());
                     }
 
                     /// <summary>
@@ -92,9 +92,9 @@ public class NamespaceTests
                     ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T> WithFunction<T>(in global::System.Func<T> function)
+                    public static global::Test.Step_0__Test_Factory<T> WithFunction<T>(in global::System.Func<T> function)
                     {
-                        return new Step_0__Test_Factory<T>(global::MethodVariants.WithFunction<T>(function));
+                        return new global::Test.Step_0__Test_Factory<T>(global::MethodVariants.WithFunction<T>(function));
                     }
                 }
 

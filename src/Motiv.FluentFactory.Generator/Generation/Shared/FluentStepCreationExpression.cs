@@ -28,7 +28,7 @@ internal static class FluentStepCreationExpression
             .GetGenericParameterMappings(method.SourceParameter.Type, method.ParameterConverter.ReturnType)
             .ToDictionary(pair => new FluentType(pair.Key), pair => pair.Value);
 
-        var name = IdentifierName(
+        var name = ParseName(
             method.Return.IdentifierDisplayString(typeArgMappings));
 
         return CreateMethodOverloadExpression(method, arguments, name);
@@ -38,7 +38,7 @@ internal static class FluentStepCreationExpression
         IFluentMethod method,
         IEnumerable<ArgumentSyntax> arguments)
     {
-        NameSyntax name = IdentifierName(method.Return.IdentifierDisplayString());
+        NameSyntax name = ParseName(method.Return.IdentifierDisplayString());
         return CreateObjectCreationExpression(arguments, name);
     }
 

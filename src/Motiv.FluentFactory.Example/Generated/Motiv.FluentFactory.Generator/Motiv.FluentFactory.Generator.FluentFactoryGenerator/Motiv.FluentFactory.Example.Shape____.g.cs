@@ -1,7 +1,8 @@
 ﻿namespace Motiv.FluentFactory.Example
 {
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal partial class Shape<T>
-        where T : System.Numerics.INumber<T>
+        where T : global::System.Numerics.INumber<T>
     {
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
@@ -9,7 +10,7 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static Step_0__Motiv_FluentFactory_Example_Shape____<T> WithWidth(in T width)
         {
             return new Step_0__Motiv_FluentFactory_Example_Shape____<T>(width);
@@ -18,20 +19,21 @@
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static Step_3__Motiv_FluentFactory_Example_Shape____<T> WithRadius(in T radius)
         {
             return new Step_3__Motiv_FluentFactory_Example_Shape____<T>(radius);
         }
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
     /// </summary>
-    internal struct Step_0__Motiv_FluentFactory_Example_Shape____<T> where T : System.Numerics.INumber<T>
+    internal struct Step_0__Motiv_FluentFactory_Example_Shape____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         internal Step_0__Motiv_FluentFactory_Example_Shape____(in T width)
@@ -44,7 +46,7 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public Step_1__Motiv_FluentFactory_Example_Shape____<T> WithHeight(in T height)
         {
             return new Step_1__Motiv_FluentFactory_Example_Shape____<T>(this._width__parameter, height);
@@ -55,19 +57,20 @@
         ///
         ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Square<T> CreateSquare()
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Motiv.FluentFactory.Example.Square<T> CreateSquare()
         {
-            return new Square<T>(this._width__parameter);
+            return new global::Motiv.FluentFactory.Example.Square<T>(this._width__parameter);
         }
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
     /// </summary>
-    internal struct Step_1__Motiv_FluentFactory_Example_Shape____<T> where T : System.Numerics.INumber<T>
+    internal struct Step_1__Motiv_FluentFactory_Example_Shape____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         private readonly T _height__parameter;
@@ -80,7 +83,7 @@
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public Step_2__Motiv_FluentFactory_Example_Shape____<T> WithDepth(in T depth)
         {
             return new Step_2__Motiv_FluentFactory_Example_Shape____<T>(this._width__parameter, this._height__parameter, depth);
@@ -91,10 +94,10 @@
         ///
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Rectangle<T> CreateRectangle()
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Motiv.FluentFactory.Example.Rectangle<T> CreateRectangle()
         {
-            return new Rectangle<T>(this._width__parameter, this._height__parameter);
+            return new global::Motiv.FluentFactory.Example.Rectangle<T>(this._width__parameter, this._height__parameter);
         }
 
         /// <summary>
@@ -102,17 +105,18 @@
         ///
         ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Diamond<T> CreateDiamond()
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Motiv.FluentFactory.Example.Diamond<T> CreateDiamond()
         {
-            return new Diamond<T>(this._width__parameter, this._height__parameter);
+            return new global::Motiv.FluentFactory.Example.Diamond<T>(this._width__parameter, this._height__parameter);
         }
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     /// </summary>
-    internal struct Step_2__Motiv_FluentFactory_Example_Shape____<T> where T : System.Numerics.INumber<T>
+    internal struct Step_2__Motiv_FluentFactory_Example_Shape____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         private readonly T _height__parameter;
@@ -129,17 +133,18 @@
         ///
         ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Cuboid<T> CreateCuboid()
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Motiv.FluentFactory.Example.Cuboid<T> CreateCuboid()
         {
-            return new Cuboid<T>(this._width__parameter, this._height__parameter, this._depth__parameter);
+            return new global::Motiv.FluentFactory.Example.Cuboid<T>(this._width__parameter, this._height__parameter, this._depth__parameter);
         }
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
     /// </summary>
-    internal struct Step_3__Motiv_FluentFactory_Example_Shape____<T> where T : System.Numerics.INumber<T>
+    internal struct Step_3__Motiv_FluentFactory_Example_Shape____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _radius__parameter;
         internal Step_3__Motiv_FluentFactory_Example_Shape____(in T radius)
@@ -152,10 +157,11 @@
         ///
         ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
         /// </summary>
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Circle<T> CreateCircle()
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Motiv.FluentFactory.Example.Circle<T> CreateCircle()
         {
-            return new Circle<T>(this._radius__parameter);
+            return new global::Motiv.FluentFactory.Example.Circle<T>(this._radius__parameter);
         }
     }
-}
+}// <auto-generated/>
+#nullable enable

@@ -139,18 +139,18 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Factory WithValue1(in string value1)
+                    public static global::Test.Step_1__Test_Factory WithValue1(in string value1)
                     {
-                        return new Step_1__Test_Factory(value1);
+                        return new global::Test.Step_1__Test_Factory(value1);
                     }
                 }
 
@@ -279,18 +279,18 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="TestA.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__MyFactory_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::MyFactory.Step_0__MyFactory_Factory<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__MyFactory_Factory<T1>(value1);
+                        return new global::MyFactory.Step_0__MyFactory_Factory<T1>(value1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="TestB.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__MyFactory_Factory WithValue1(in string value1)
+                    public static global::MyFactory.Step_1__MyFactory_Factory WithValue1(in string value1)
                     {
-                        return new Step_1__MyFactory_Factory(value1);
+                        return new global::MyFactory.Step_1__MyFactory_Factory(value1);
                     }
                 }
 
@@ -413,9 +413,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -533,18 +533,18 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_2__Test_Factory WithValue1(in string value1)
+                    public static global::Test.Step_2__Test_Factory WithValue1(in string value1)
                     {
-                        return new Step_2__Test_Factory(value1);
+                        return new global::Test.Step_2__Test_Factory(value1);
                     }
                 }
 
@@ -564,9 +564,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -610,9 +610,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_3__Test_Factory WithValue2(in string value2)
+                    public global::Test.Step_3__Test_Factory WithValue2(in string value2)
                     {
-                        return new Step_3__Test_Factory(this._value1__parameter, value2);
+                        return new global::Test.Step_3__Test_Factory(this._value1__parameter, value2);
                     }
                 }
 
@@ -731,9 +731,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1>(value1);
                     }
                 }
 
@@ -754,18 +754,18 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_3__Test_Factory<T1> WithValue2(in string value2)
+                    public global::Test.Step_3__Test_Factory<T1> WithValue2(in string value2)
                     {
-                        return new Step_3__Test_Factory<T1>(this._value1__parameter, value2);
+                        return new global::Test.Step_3__Test_Factory<T1>(this._value1__parameter, value2);
                     }
                 }
 
@@ -787,9 +787,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_2__Test_Factory<T1, T2, T3> WithValue3<T3>(in T3 value3)
+                    public global::Test.Step_2__Test_Factory<T1, T2, T3> WithValue3<T3>(in T3 value3)
                     {
-                        return new Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -837,9 +837,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_4__Test_Factory<T1> WithValue3(in string value3)
+                    public global::Test.Step_4__Test_Factory<T1> WithValue3(in string value3)
                     {
-                        return new Step_4__Test_Factory<T1>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_4__Test_Factory<T1>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -929,9 +929,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue1(in string value1)
+                    public static global::Test.Step_0__Test_Factory WithValue1(in string value1)
                     {
-                        return new Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Factory(value1);
                     }
                 }
 
@@ -951,9 +951,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithValue2(in string value2)
+                    public global::Test.Step_1__Test_Factory WithValue2(in string value2)
                     {
-                        return new Step_1__Test_Factory(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory(this._value1__parameter, value2);
                     }
                 }
 
@@ -998,9 +998,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_MyBuildTarget WithValue1(in string value1)
+                    public static global::Test.Step_0__Test_MyBuildTarget WithValue1(in string value1)
                     {
-                        return new Step_0__Test_MyBuildTarget(value1);
+                        return new global::Test.Step_0__Test_MyBuildTarget(value1);
                     }
                 }
 
@@ -1020,9 +1020,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_MyBuildTarget WithValue2(in string value2)
+                    public global::Test.Step_1__Test_MyBuildTarget WithValue2(in string value2)
                     {
-                        return new Step_1__Test_MyBuildTarget(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_MyBuildTarget(this._value1__parameter, value2);
                     }
                 }
 
@@ -1136,9 +1136,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValueA(in string valueX1)
+                    public static global::Test.Step_0__Test_Factory WithValueA(in string valueX1)
                     {
-                        return new Step_0__Test_Factory(valueX1);
+                        return new global::Test.Step_0__Test_Factory(valueX1);
                     }
                 }
 
@@ -1160,9 +1160,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithValueB(in string valueX2)
+                    public global::Test.Step_1__Test_Factory WithValueB(in string valueX2)
                     {
-                        return new Step_1__Test_Factory(this._valueX1__parameter, valueX2);
+                        return new global::Test.Step_1__Test_Factory(this._valueX1__parameter, valueX2);
                     }
                 }
 
@@ -1282,18 +1282,18 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1> WithValueA<T1>(in T1 valueX1)
+                    public static global::Test.Step_0__Test_Factory<T1> WithValueA<T1>(in T1 valueX1)
                     {
-                        return new Step_0__Test_Factory<T1>(valueX1);
+                        return new global::Test.Step_0__Test_Factory<T1>(valueX1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_2__Test_Factory WithValueA(in string valueY1)
+                    public static global::Test.Step_2__Test_Factory WithValueA(in string valueY1)
                     {
-                        return new Step_2__Test_Factory(valueY1);
+                        return new global::Test.Step_2__Test_Factory(valueY1);
                     }
                 }
 
@@ -1313,9 +1313,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> WithValueB<T2>(in T2 valueX2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> WithValueB<T2>(in T2 valueX2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._valueX1__parameter, valueX2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._valueX1__parameter, valueX2);
                     }
                 }
 
@@ -1359,9 +1359,9 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_3__Test_Factory WithValueB(in string valueY2)
+                    public global::Test.Step_3__Test_Factory WithValueB(in string valueY2)
                     {
-                        return new Step_3__Test_Factory(this._valueY1__parameter, valueY2);
+                        return new global::Test.Step_3__Test_Factory(this._valueY1__parameter, valueY2);
                     }
                 }
 
@@ -1501,9 +1501,9 @@ public class FluentFactoryGeneratorMergeTests
                 ///     <seealso cref="MultiAssertionExplanationWithNamePropositionFactory{TModel}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static Step_0__Spec<TModel> Build<TModel>(in global::System.Func<TModel, bool> predicate)
+                public static global::Step_0__Spec<TModel> Build<TModel>(in global::System.Func<TModel, bool> predicate)
                 {
-                    return new Step_0__Spec<TModel>(predicate);
+                    return new global::Step_0__Spec<TModel>(predicate);
                 }
             }
 
@@ -1526,18 +1526,18 @@ public class FluentFactoryGeneratorMergeTests
                 ///     <seealso cref="MultiAssertionExplanationWithNamePropositionFactory{TModel}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_1__Spec<TModel> WhenTrue(in string trueBecause)
+                public global::Step_1__Spec<TModel> WhenTrue(in string trueBecause)
                 {
-                    return new Step_1__Spec<TModel>(this._predicate__parameter, trueBecause);
+                    return new global::Step_1__Spec<TModel>(this._predicate__parameter, trueBecause);
                 }
 
                 /// <summary>
                 ///     <seealso cref="ExplanationPropositionFactory{TModel}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public Step_2__Spec<TModel> WhenTrue(in global::System.Func<TModel, string> whenTrue)
+                public global::Step_2__Spec<TModel> WhenTrue(in global::System.Func<TModel, string> whenTrue)
                 {
-                    return new Step_2__Spec<TModel>(this._predicate__parameter, global::WhenTrueOverloads.WhenTrue<TModel, string>(whenTrue));
+                    return new global::Step_2__Spec<TModel>(this._predicate__parameter, global::WhenTrueOverloads.WhenTrue<TModel, string>(whenTrue));
                 }
             }
 
@@ -1748,36 +1748,36 @@ public class FluentFactoryGeneratorMergeTests
                     ///     <seealso cref="Test.Namespace.MyEnumerableBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<T2>> resultFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<T2>> resultFactory)
                     {
-                        return new Step_0__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.EnumerableOverloads.Build<T1, T2>(resultFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.EnumerableOverloads.Build<T1, T2>(resultFactory));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyEnumerableBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<string>> resultFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<string>> resultFactory)
                     {
-                        return new Step_0__Test_Namespace_Factory<T1, string>(global::Test.Namespace.EnumerableOverloads.Build<T1>(resultFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string>(global::Test.Namespace.EnumerableOverloads.Build<T1>(resultFactory));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyCollectionBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.ICollection<T2>> resultFactory)
+                    public static global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.ICollection<T2>> resultFactory)
                     {
-                        return new Step_1__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.CollectionOverloads.Build<T1, T2>(resultFactory));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.CollectionOverloads.Build<T1, T2>(resultFactory));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyCollectionBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.ICollection<string>> resultFactory)
+                    public static global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.ICollection<string>> resultFactory)
                     {
-                        return new Step_1__Test_Namespace_Factory<T1, string>(global::Test.Namespace.CollectionOverloads.Build<T1>(resultFactory));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string>(global::Test.Namespace.CollectionOverloads.Build<T1>(resultFactory));
                     }
                 }
 

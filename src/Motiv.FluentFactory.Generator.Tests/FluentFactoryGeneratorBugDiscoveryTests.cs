@@ -41,27 +41,27 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
-                        return new Step_0__Test_Namespace_MyTarget(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_MyTarget(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Namespace_MyTarget WithName(in string name)
+                    public static global::Test.Namespace.Step_1__Test_Namespace_MyTarget WithName(in string name)
                     {
-                        return new Step_1__Test_Namespace_MyTarget(name);
+                        return new global::Test.Namespace.Step_1__Test_Namespace_MyTarget(name);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_2__Test_Namespace_MyTarget WithAmount(in double amount)
+                    public static global::Test.Namespace.Step_2__Test_Namespace_MyTarget WithAmount(in double amount)
                     {
-                        return new Step_2__Test_Namespace_MyTarget(amount);
+                        return new global::Test.Namespace.Step_2__Test_Namespace_MyTarget(amount);
                     }
                 }
 
@@ -188,18 +188,18 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
-                        return new Step_0__Test_Namespace_MyTarget(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_MyTarget(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Namespace_MyTarget WithName(in string name)
+                    public static global::Test.Namespace.Step_1__Test_Namespace_MyTarget WithName(in string name)
                     {
-                        return new Step_1__Test_Namespace_MyTarget(name);
+                        return new global::Test.Namespace.Step_1__Test_Namespace_MyTarget(name);
                     }
 
                     /// <summary>
@@ -336,9 +336,9 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
-                        return new Step_0__Test_Namespace_MyTarget(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_MyTarget(value);
                     }
                 }
 
@@ -514,18 +514,18 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyRecordA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Namespace_MyTarget WithValue(in string value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_MyTarget WithValue(in string value)
                     {
-                        return new Step_0__Test_Namespace_MyTarget(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_MyTarget(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyRecordB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_1__Test_Namespace_MyTarget WithValue(in int value)
+                    public static global::Test.Namespace.Step_1__Test_Namespace_MyTarget WithValue(in int value)
                     {
-                        return new Step_1__Test_Namespace_MyTarget(value);
+                        return new global::Test.Namespace.Step_1__Test_Namespace_MyTarget(value);
                     }
                 }
 

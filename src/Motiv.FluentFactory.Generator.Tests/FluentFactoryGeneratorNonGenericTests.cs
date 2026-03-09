@@ -41,9 +41,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 
@@ -129,9 +129,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
                     {
-                        return new Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Factory(number);
                     }
                 }
 
@@ -219,9 +219,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
                     {
-                        return new Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Factory(number);
                     }
                 }
 
@@ -241,9 +241,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithText(in string text)
+                    public global::Test.Step_1__Test_Factory WithText(in string text)
                     {
-                        return new Step_1__Test_Factory(this._number__parameter, text);
+                        return new global::Test.Step_1__Test_Factory(this._number__parameter, text);
                     }
                 }
 
@@ -338,9 +338,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
                     {
-                        return new Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Factory(number);
                     }
                 }
 
@@ -360,9 +360,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithText(in string text)
+                    public global::Test.Step_1__Test_Factory WithText(in string text)
                     {
-                        return new Step_1__Test_Factory(this._number__parameter, text);
+                        return new global::Test.Step_1__Test_Factory(this._number__parameter, text);
                     }
                 }
 
@@ -384,9 +384,9 @@ public class FluentFactoryGeneratorNonGenericTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_2__Test_Factory WithId(in global::System.Guid id)
+                    public global::Test.Step_2__Test_Factory WithId(in global::System.Guid id)
                     {
-                        return new Step_2__Test_Factory(this._number__parameter, this._text__parameter, id);
+                        return new global::Test.Step_2__Test_Factory(this._number__parameter, this._text__parameter, id);
                     }
                 }
 

@@ -48,9 +48,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 
@@ -136,9 +136,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 
@@ -245,9 +245,9 @@ public class FluentFactoryXmlDocumentationTests
                     /// </summary>
                     /// <param name="value">The string value to set.</param>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory SetValue(in string value)
+                    public static global::Test.Step_0__Test_Factory SetValue(in string value)
                     {
-                        return new Step_0__Test_Factory(global::Test.Methods.SetValue(value));
+                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.SetValue(value));
                     }
 
                     /// <summary>
@@ -257,9 +257,9 @@ public class FluentFactoryXmlDocumentationTests
                     /// </summary>
                     /// <param name="value">The integer value to convert.</param>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory SetValue(in int value)
+                    public static global::Test.Step_0__Test_Factory SetValue(in int value)
                     {
-                        return new Step_0__Test_Factory(global::Test.Methods.SetValue(value));
+                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.SetValue(value));
                     }
                 }
 
@@ -349,9 +349,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Factory WithName(in string name)
                     {
-                        return new Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Factory(name);
                     }
                 }
 
@@ -373,9 +373,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithValue(in int value)
+                    public global::Test.Step_1__Test_Factory WithValue(in int value)
                     {
-                        return new Step_1__Test_Factory(this._name__parameter, value);
+                        return new global::Test.Step_1__Test_Factory(this._name__parameter, value);
                     }
                 }
 
@@ -464,9 +464,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
                     {
-                        return new Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Factory(value);
                     }
                 }
 
@@ -561,9 +561,9 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory Process(in string input)
+                    public static global::Test.Step_0__Test_Factory Process(in string input)
                     {
-                        return new Step_0__Test_Factory(global::Test.Methods.Process(input));
+                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.Process(input));
                     }
                 }
 

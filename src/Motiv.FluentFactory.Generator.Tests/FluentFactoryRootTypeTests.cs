@@ -346,9 +346,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Factory(value1);
                     }
                 }
 
@@ -368,9 +368,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory WithValue2(in global::Test.MyParameterValue value2)
+                    public global::Test.Step_1__Test_Factory WithValue2(in global::Test.MyParameterValue value2)
                     {
-                        return new Step_1__Test_Factory(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory(this._value1__parameter, value2);
                     }
                 }
 
@@ -459,9 +459,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::Test.MyParameterValue<T1, T2> value1)
+                    public static global::Test.Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::Test.MyParameterValue<T1, T2> value1)
                     {
-                        return new Step_0__Test_Factory<T1, T2>(value1);
+                        return new global::Test.Step_0__Test_Factory<T1, T2>(value1);
                     }
                 }
 
@@ -481,9 +481,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_1__Test_Factory<T1, T2> WithValue2(in global::Test.MyParameterValue<T1, T2> value2)
+                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2(in global::Test.MyParameterValue<T1, T2> value2)
                     {
-                        return new Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -586,9 +586,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Factory(value1);
                     }
                 }
 
@@ -623,9 +623,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
+                    public global::Test.Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
                     {
-                        return new Step_2__Test_Factory(this.Value1, this.Value2, value3);
+                        return new global::Test.Step_2__Test_Factory(this.Value1, this.Value2, value3);
                     }
                 }
 
@@ -705,9 +705,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Factory(value1);
                     }
                 }
 
@@ -742,9 +742,9 @@ public class FluentFactoryRootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
+                    public global::Test.Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
                     {
-                        return new Step_2__Test_Factory(value1, value2, value3);
+                        return new global::Test.Step_2__Test_Factory(value1, value2, value3);
                     }
                 }
 
