@@ -3,7 +3,7 @@
 ## Milestones
 
 - [x] **v1.0 Initial Release** - Phases 1-5 (shipped 2026-03-09)
-- [ ] **v1.1 Code Generation Quality** - Phase 6 (in progress)
+- [x] **v1.1 Code Generation Quality** - Phase 6 (completed 2026-03-09)
 
 ## Phases
 
@@ -16,7 +16,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 
 ### v1.1 Code Generation Quality
 
-- [ ] **Phase 6: Generated Code Hardening** - Fully qualify all type references and add GeneratedCode attribution to all generated output
+- [x] **Phase 6: Generated Code Hardening** - Fully qualify all type references and add GeneratedCode attribution to all generated output
 
 ## Phase Details
 
@@ -32,8 +32,8 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 **Plans:** 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Replace type rendering with global:: qualification, remove usings, add headers, add GeneratedCode attribute
-- [ ] 06-02-PLAN.md — Bulk-update test expected outputs and add namespace conflict + GeneratedCode validation tests
+- [x] 06-01-PLAN.md — Replace type rendering with global:: qualification, remove usings, add headers, add GeneratedCode attribute
+- [x] 06-02-PLAN.md — Bulk-update test expected outputs and add namespace conflict + GeneratedCode validation tests
 
 ## Progress
 
@@ -42,4 +42,4 @@ Phases execute in numeric order: 6
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 6. Generated Code Hardening | v1.1 | 0/2 | Not started | - |
+| 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
