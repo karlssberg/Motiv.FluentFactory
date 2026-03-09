@@ -21,6 +21,7 @@ internal static class ExistingPartialTypeStepDeclaration
 
         var identifier = IdentifierName(step.Name).Identifier;
         return CreateTypeDeclarationSyntax(step, identifier)
+            .WithAttributeLists(SingletonList(Shared.GeneratedCodeAttributeSyntax.Create()))
             .WithMembers(List<MemberDeclarationSyntax>([
                 ..parameterFieldDeclaration,
                 ..methodDeclarationSyntaxes,

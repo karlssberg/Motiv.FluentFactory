@@ -7,11 +7,11 @@ internal static class AggressiveInliningAttributeSyntax
 {
     public static AttributeSyntax Create() =>
         Attribute(
-            ParseName("System.Runtime.CompilerServices.MethodImpl"),
+            ParseName("global::System.Runtime.CompilerServices.MethodImpl"),
             AttributeArgumentList(
                 SingletonSeparatedList(
                     AttributeArgument(
-                        ParseExpression("System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining")
+                        ParseExpression("global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining")
                     )
                 )
             )

@@ -60,6 +60,9 @@ internal static class RootTypeDeclaration
                     .WithConstraintClauses(CreateTypeParameterConstraints(file.RootType))
         };
 
+        typeDeclaration = typeDeclaration.WithAttributeLists(
+            SingletonList(Shared.GeneratedCodeAttributeSyntax.Create()));
+
         return typeDeclaration.WithMembers(
             List(rootMethodDeclarations.OfType<MemberDeclarationSyntax>()));
     }
