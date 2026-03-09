@@ -29,11 +29,11 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
   2. Every type reference in generated .g.cs files uses `global::` prefix (no bare or partially qualified type names)
   3. Every generated type and member carries a `[GeneratedCode("Motiv.FluentFactory", "version")]` attribute
   4. Existing tests pass with updated generated output (no regressions)
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — Replace type rendering with global:: qualification, remove usings, add headers, add GeneratedCode attribute
+- [ ] 06-02-PLAN.md — Bulk-update test expected outputs and add namespace conflict + GeneratedCode validation tests
 
 ## Progress
 
@@ -42,4 +42,4 @@ Phases execute in numeric order: 6
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 6. Generated Code Hardening | v1.1 | 0/? | Not started | - |
+| 6. Generated Code Hardening | v1.1 | 0/2 | Not started | - |
