@@ -32,16 +32,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
 
         const string expected =
             """
-            using System;
-
             namespace Test.Namespace
             {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public partial class MyTarget
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
                         return new Step_0__Test_Namespace_MyTarget(value);
@@ -50,7 +49,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_1__Test_Namespace_MyTarget WithName(in string name)
                     {
                         return new Step_1__Test_Namespace_MyTarget(name);
@@ -59,13 +58,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_2__Test_Namespace_MyTarget WithAmount(in double amount)
                     {
                         return new Step_2__Test_Namespace_MyTarget(amount);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -82,13 +82,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget Create()
                     {
-                        return new MyBuildTarget(this._value__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -105,13 +106,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget Create()
                     {
-                        return new MyBuildTarget(this._name__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._name__parameter);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -128,13 +130,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget Create()
                     {
-                        return new MyBuildTarget(this._amount__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._amount__parameter);
                     }
                 }
-            }
+            }// <auto-generated/>
+            #nullable enable
+
             """;
 
         await new VerifyCS.Test
@@ -175,16 +179,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
 
         const string expected =
             """
-            using System;
-
             namespace Test.Namespace
             {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public partial class MyTarget
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
                         return new Step_0__Test_Namespace_MyTarget(value);
@@ -193,7 +196,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_1__Test_Namespace_MyTarget WithName(in string name)
                     {
                         return new Step_1__Test_Namespace_MyTarget(name);
@@ -202,13 +205,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static MyBuildTarget WithAmount(in double amount)
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Namespace.MyBuildTarget WithAmount(in double amount)
                     {
-                        return new MyBuildTarget(amount);
+                        return new global::Test.Namespace.MyBuildTarget(amount);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -225,13 +229,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget Create()
                     {
-                        return new MyBuildTarget(this._value__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -248,13 +253,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget Create()
                     {
-                        return new MyBuildTarget(this._name__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._name__parameter);
                     }
                 }
-            }
+            }// <auto-generated/>
+            #nullable enable
+
             """;
 
         await new VerifyCS.Test
@@ -320,22 +327,22 @@ public class FluentFactoryGeneratorBugDiscoveryTests
 
         const string expected =
             """
-            using System;
-
             namespace Test.Namespace
             {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public partial class MyTarget
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_0__Test_Namespace_MyTarget WithValue(in int value)
                     {
                         return new Step_0__Test_Namespace_MyTarget(value);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
@@ -352,10 +359,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget CreateFirst()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget CreateFirst()
                     {
-                        return new MyBuildTarget(this._value__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
 
                     /// <summary>
@@ -363,13 +370,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyBuildTarget CreateSecond()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyBuildTarget CreateSecond()
                     {
-                        return new MyBuildTarget(this._value__parameter);
+                        return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
                 }
-            }
+            }// <auto-generated/>
+            #nullable enable
+
             """;
 
         await new VerifyCS.Test
@@ -496,16 +505,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
 
         const string expected =
             """
-            using System;
-
             namespace Test.Namespace
             {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public partial class MyTarget
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyRecordA"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_0__Test_Namespace_MyTarget WithValue(in string value)
                     {
                         return new Step_0__Test_Namespace_MyTarget(value);
@@ -514,13 +522,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyRecordB"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static Step_1__Test_Namespace_MyTarget WithValue(in int value)
                     {
                         return new Step_1__Test_Namespace_MyTarget(value);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordA"/>
                 /// </summary>
@@ -537,13 +546,14 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyRecordA"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyRecordA Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyRecordA Create()
                     {
-                        return new MyRecordA(this._value__parameter);
+                        return new global::Test.Namespace.MyRecordA(this._value__parameter);
                     }
                 }
 
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordB"/>
                 /// </summary>
@@ -560,13 +570,15 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///
                     ///     <seealso cref="Test.Namespace.MyRecordB"/>
                     /// </summary>
-                    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public MyRecordB Create()
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.Namespace.MyRecordB Create()
                     {
-                        return new MyRecordB(this._value__parameter);
+                        return new global::Test.Namespace.MyRecordB(this._value__parameter);
                     }
                 }
-            }
+            }// <auto-generated/>
+            #nullable enable
+
             """;
 
         await new VerifyCS.Test

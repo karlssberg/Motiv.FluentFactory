@@ -231,7 +231,7 @@ public class FluentFactoryGenerator : IIncrementalGenerator
         if (builder.IsEmpty)
             return;
 
-        var source = CompilationUnit.CreateCompilationUnit(builder).NormalizeWhitespace().ToString();
+        var source = CompilationUnit.CreateCompilationUnit(builder).NormalizeWhitespace(eol: "\n").ToString();
         context.AddSource($"{builder.RootType.ToFileName()}.g.cs", source);
     }
 
