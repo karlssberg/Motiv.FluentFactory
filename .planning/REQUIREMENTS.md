@@ -9,8 +9,8 @@ Requirements for NuGet publication readiness. Each maps to roadmap phases.
 
 ### Code Generation Quality
 
-- [ ] **QUAL-01**: All type references in generated code use fully qualified `global::` names to prevent namespace conflicts
-- [ ] **QUAL-02**: All generated types/members are decorated with `[global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "version")]` attribute
+- [x] **QUAL-01**: All type references in generated code use fully qualified `global::` names to prevent namespace conflicts
+- [x] **QUAL-02**: All generated types/members are decorated with `[global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "version")]` attribute
 
 ## Future Requirements
 
@@ -30,8 +30,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| QUAL-01 | Phase 6 | Pending |
-| QUAL-02 | Phase 6 | Pending |
+| QUAL-01 | Phase 6 | Complete |
+| QUAL-02 | Phase 6 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 2 total
