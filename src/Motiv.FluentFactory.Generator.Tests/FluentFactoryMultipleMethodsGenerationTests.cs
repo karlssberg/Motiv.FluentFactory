@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
-using static Motiv.FluentFactory.Generator.FluentFactoryGenerator;
+using static Motiv.FluentFactory.Generator.Diagnostics.FluentDiagnostics;
 
 namespace Motiv.FluentFactory.Generator.Tests;
 using VerifyCS = CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
