@@ -56,6 +56,8 @@ Recent decisions affecting current work:
 - [Phase 06]: Used ParseTypeName instead of IdentifierName at all call sites for global:: strings
 - [Phase 06-02]: Fixed NormalizeWhitespace line ending to use LF consistently (eol: "\n")
 - [Phase 06-02]: New test files must use LF line endings to match generator output
+- [Phase 07-01]: Diagnostic descriptors centralized in FluentDiagnostics public static class
+- [Phase 07-01]: Pipeline helpers extracted to FluentConstructorContextFactory internal static class
 - [Phase 07-02]: SemanticModel passed as method parameter to strategies, keeping them stateless
 - [Phase 07-02]: Initializer chain resolution stays in ConstructorAnalyzer (recursive self-call requirement)
 - [Phase 07-02]: Strategy ordering enforced via static array: Record > PrimaryConstructor > ExplicitConstructor

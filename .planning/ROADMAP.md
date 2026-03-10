@@ -57,7 +57,7 @@ Plans:
   2. FluentFactoryGenerator's pipeline stages are individually named types that can be understood in isolation
   3. ConstructorAnalyzer's storage detection patterns are separated into distinct types rather than living in one large class
   4. All existing tests pass with identical generated output after decomposition
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 07-01-PLAN.md -- Extract FluentDiagnostics and FluentConstructorContextFactory from FluentFactoryGenerator
@@ -114,7 +114,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
-| 7. Core Pipeline Decomposition | v1.2 | 0/3 | Planned | - |
+| 7. Core Pipeline Decomposition | 2/3 | In Progress|  | - |
 | 8. Syntax Generator Decomposition | v1.2 | 0/? | Not started | - |
 | 9. Extension Consolidation | v1.2 | 0/? | Not started | - |
 | 10. Screaming Architecture Reorganization | v1.2 | 0/? | Not started | - |
