@@ -312,7 +312,7 @@ internal class FluentModelFactory(Compilation compilation)
             _diagnostics.AddRange(
             [
                 Diagnostic.Create(
-                    FluentFactoryGenerator.AllFluentMethodTemplatesIncompatible,
+                    FluentDiagnostics.AllFluentMethodTemplatesIncompatible,
                     parameter.ParameterSymbol
                         .GetAttribute(TypeName.MultipleFluentMethodsAttribute)?
                         .GetLocationAtIndex(0),

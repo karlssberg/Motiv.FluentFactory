@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Motiv.FluentFactory.Generator.Analysis;
+using Motiv.FluentFactory.Generator.Diagnostics;
 using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator.Model;
@@ -24,7 +25,7 @@ internal static class FluentConstructorValidatorExtensions
 
         foreach (var context in constructorContexts)
             yield return Diagnostic.Create(
-                FluentFactoryGenerator.FluentConstructorTargetTypeMissingFluentFactory,
+                FluentDiagnostics.FluentConstructorTargetTypeMissingFluentFactory,
                 FindRootTypeLocation(context.AttributeData, context),
                 context.RootType.ToDisplayString());
     }
@@ -43,7 +44,7 @@ internal static class FluentConstructorValidatorExtensions
         foreach (var context in constructorContextWithInvalidCreateMethodName)
         {
             yield return Diagnostic.Create(
-                FluentFactoryGenerator.InvalidCreateMethodName,
+                FluentDiagnostics.InvalidCreateMethodName,
                 FindCreateMethodNameArgumentLocation(context));
         }
 
@@ -72,7 +73,7 @@ internal static class FluentConstructorValidatorExtensions
                 .Select(FindCreateMethodNameArgumentLocation);
 
             yield return Diagnostic.Create(
-                FluentFactoryGenerator.DuplicateCreateMethodName,
+                FluentDiagnostics.DuplicateCreateMethodName,
                 primaryLocation,
                 additionalLocations: additionalLocations);
         }
@@ -95,7 +96,7 @@ internal static class FluentConstructorValidatorExtensions
         foreach (var context in conflictedMethodNameFluentConstructorContexts)
         {
             yield return Diagnostic.Create(
-                FluentFactoryGenerator.CreateMethodNameWithNoCreateMethod,
+                FluentDiagnostics.CreateMethodNameWithNoCreateMethod,
                 context.AttributeData.ApplicationSyntaxReference?.GetSyntax() switch
                 {
                     AttributeSyntax attributeSyntax => attributeSyntax.GetLocation(),

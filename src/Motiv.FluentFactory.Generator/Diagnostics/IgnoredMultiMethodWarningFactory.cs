@@ -42,7 +42,7 @@ internal class IgnoredMultiMethodWarningFactory(
             var ctorDisplayString = ignoredMethod.ToDisplayString();
 
             yield return Diagnostic.Create(
-                FluentFactoryGenerator.ContainsSupersededFluentMethodTemplate,
+                FluentDiagnostics.ContainsSupersededFluentMethodTemplate,
                 ignoredMethod.SourceParameter.GetAttribute(TypeName.MultipleFluentMethodsAttribute)?.GetLocationAtIndex(0)
                     ?? ignoredMethod.SourceParameter.Locations.FirstOrDefault(),
                 selectedMethod.SourceParameter?.Locations,
@@ -54,7 +54,7 @@ internal class IgnoredMultiMethodWarningFactory(
             foreach (var location in ignoredMethod.ParameterConverter.Locations)
             {
                 yield return Diagnostic.Create(
-                    FluentFactoryGenerator.FluentMethodTemplateSuperseded,
+                    FluentDiagnostics.FluentMethodTemplateSuperseded,
                     location,
                     ignoredMethod.ParameterConverter.ToFullDisplayString(),
                     ignoredMethod.SourceParameter.ToFullDisplayString(),

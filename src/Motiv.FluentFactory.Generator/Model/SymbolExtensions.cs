@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Motiv.FluentFactory.Generator.Diagnostics;
 using Motiv.FluentFactory.Generator.Generation;
 
 namespace Motiv.FluentFactory.Generator.Model;
@@ -76,7 +77,7 @@ internal static class SymbolExtensions
 
                 if (!method.IsStatic)
                     diagnostics.Add(Diagnostic.Create(
-                        FluentFactoryGenerator.FluentMethodTemplateAttributeNotStatic,
+                        FluentDiagnostics.FluentMethodTemplateAttributeNotStatic,
                         location,
                         method.Locations,
                         method.ToFullDisplayString(),
@@ -87,7 +88,7 @@ internal static class SymbolExtensions
                     diagnostics.AddRange(
                     [
                         Diagnostic.Create(
-                            FluentFactoryGenerator.IncompatibleFluentMethodTemplate,
+                            FluentDiagnostics.IncompatibleFluentMethodTemplate,
                             location,
                             method.Locations,
                             ImmutableDictionary.Create<string, string?>()

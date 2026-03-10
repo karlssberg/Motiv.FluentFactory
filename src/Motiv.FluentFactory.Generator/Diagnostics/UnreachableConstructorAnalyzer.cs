@@ -38,7 +38,7 @@ internal class UnreachableConstructorAnalyzer
         return GetUnreachableConstructors()
             .Select(constructor =>
                 Diagnostic.Create(
-                    FluentFactoryGenerator.UnreachableConstructor,
+                    FluentDiagnostics.UnreachableConstructor,
                     constructor.Locations.FirstOrDefault(),
                     constructor.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)));
     }
