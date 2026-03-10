@@ -16,3 +16,12 @@
 - 10 diagnostics for validation errors
 - Primary constructor support
 - NuGet packaging with bundled generator and attributes
+
+## v1.1 — Code Generation Quality
+
+**Shipped:** 2026-03-09
+**Phases:** 6
+
+### What Shipped
+- All generated type references use fully qualified `global::` names to avoid namespace conflicts
+- All generated types/members decorated with `[GeneratedCode("Motiv.FluentFactory", "version")]` attribute

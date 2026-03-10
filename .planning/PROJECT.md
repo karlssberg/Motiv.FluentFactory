@@ -24,20 +24,36 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - ✓ 10 diagnostics for validation errors — v1.0
 - ✓ Primary constructor support — v1.0
 - ✓ NuGet packaging (generator + attributes bundled) — v1.0
+- ✓ All generated type references use fully qualified `global::` names — v1.1
+- ✓ All generated types/members decorated with `[GeneratedCode]` attribute — v1.1
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] All generated type references use fully qualified `global::` names to avoid namespace conflicts
-- [ ] All generated types/members decorated with `[GeneratedCode("Motiv.FluentFactory", "version")]` attribute
+- [ ] Generator project reorganized with screaming architecture (key concepts at root, details in subdirectories)
+- [ ] Vertical slicing replaces horizontal layering (by feature/concern, not by technical layer)
+- [ ] God classes decomposed into bite-sized, single-responsibility types
+- [ ] All existing tests continue to pass (behavior-preserving refactor)
 
 ### Out of Scope
 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
-- New attribute features — focus is on code generation quality, not new capabilities
-- Runtime API changes — this milestone is generator output only
+- New features or attribute changes — pure refactoring milestone
+- Runtime API changes — internal generator structure only
+- Test refactoring — focus is on production code organization
+- Generated output changes — refactoring must not alter generated .g.cs files
+
+## Current Milestone: v1.2 Architecture Refactoring
+
+**Goal:** Reorganize the Generator project for screaming architecture with vertical slicing, and decompose god classes into bite-sized, single-responsibility types.
+
+**Target features:**
+- Screaming architecture — important concepts at project root, implementation details in subdirectories
+- Vertical slicing — organize by feature/concern instead of horizontal layers (Analysis/, Model/, Generation/)
+- God class decomposition — break FluentModelFactory (438 lines), FluentFactoryGenerator (376 lines), and other large classes into focused types
+- Bite-sized files — each class has a single, clear responsibility
 
 ## Context
 
@@ -57,8 +73,10 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Use `global::` for all type references | Prevents namespace conflicts in consumer code | — Pending |
-| Tool name "Motiv.FluentFactory" for GeneratedCode attribute | Matches NuGet package name for discoverability | — Pending |
+| Use `global::` for all type references | Prevents namespace conflicts in consumer code | ✓ Good |
+| Tool name "Motiv.FluentFactory" for GeneratedCode attribute | Matches NuGet package name for discoverability | ✓ Good |
+| Screaming architecture over horizontal layering | Key concepts visible at project root, details nested | — Pending |
+| Vertical slicing over technical layers | Organize by feature/concern, not Analysis/Model/Generation | — Pending |
 
 ---
-*Last updated: 2026-03-09 after milestone v1.1 initialization*
+*Last updated: 2026-03-10 after milestone v1.2 initialization*
