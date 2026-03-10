@@ -11,7 +11,7 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 - [ ] **DECOMP-01**: FluentModelFactory is decomposed into focused types with single responsibilities (method selection, step building, trie construction, storage resolution)
 - [ ] **DECOMP-02**: FluentFactoryGenerator pipeline stages are extracted into distinct, named types
-- [ ] **DECOMP-03**: ConstructorAnalyzer storage detection patterns are separated into focused types
+- [x] **DECOMP-03**: ConstructorAnalyzer storage detection patterns are separated into focused types
 - [ ] **DECOMP-04**: No individual class exceeds ~150 lines (bite-sized threshold)
 
 ### File Organization
@@ -34,8 +34,8 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 ### Cross-Cutting
 
-- [ ] **XCUT-01**: All existing tests continue to pass — behavior-preserving refactor
-- [ ] **XCUT-02**: Generated .g.cs output is identical before and after refactoring
+- [x] **XCUT-01**: All existing tests continue to pass — behavior-preserving refactor
+- [x] **XCUT-02**: Generated .g.cs output is identical before and after refactoring
 
 ## Previous Milestones
 
@@ -66,7 +66,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | DECOMP-01 | Phase 7 | Pending |
 | DECOMP-02 | Phase 7 | Pending |
-| DECOMP-03 | Phase 7 | Pending |
+| DECOMP-03 | Phase 7 | Complete |
 | DECOMP-04 | Phase 10 | Pending |
 | ORG-01 | Phase 10 | Pending |
 | ORG-02 | Phase 10 | Pending |
@@ -77,8 +77,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SYNTAX-01 | Phase 8 | Pending |
 | SYNTAX-02 | Phase 8 | Pending |
 | SYNTAX-03 | Phase 8 | Pending |
-| XCUT-01 | Phase 7, 8, 9, 10 | Pending |
-| XCUT-02 | Phase 7, 8, 9, 10 | Pending |
+| XCUT-01 | Phase 7, 8, 9, 10 | Complete |
+| XCUT-02 | Phase 7, 8, 9, 10 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 15 total
