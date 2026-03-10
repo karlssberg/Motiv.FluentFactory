@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis;
 using Motiv.FluentFactory.Generator.Analysis;
 using Motiv.FluentFactory.Generator.Diagnostics;
 using Motiv.FluentFactory.Generator.Generation;
-using Motiv.FluentFactory.Generator.Generation.Shared;
 using Motiv.FluentFactory.Generator.Model.Methods;
 using Motiv.FluentFactory.Generator.Model.Steps;
 using Motiv.FluentFactory.Generator.Model.Storage;
@@ -18,6 +17,7 @@ internal class FluentModelFactory(Compilation compilation)
     private readonly UnreachableConstructorAnalyzer _unreachableConstructorAnalyzer = new();
 
     private FluentMethodSelector _methodSelector = null!;
+    private FluentStepBuilder _stepBuilder = null!;
 
     public FluentFactoryCompilationUnit CreateFluentFactoryCompilationUnit(
         INamedTypeSymbol rootType,
@@ -28,6 +28,7 @@ internal class FluentModelFactory(Compilation compilation)
         _unreachableConstructorAnalyzer.Clear();
         _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
+        _stepBuilder = new FluentStepBuilder(_regularFluentSteps);
 
         var usings = GetUsingStatements(fluentConstructorContexts);
 
@@ -46,7 +47,7 @@ internal class FluentModelFactory(Compilation compilation)
             .Select(m => m.Return)
             .OfType<IFluentStep>();
 
-        var descendentFluentSteps = GetDescendentFluentSteps(childFluentSteps);
+        var descendentFluentSteps = FluentStepBuilder.GetDescendentFluentSteps(childFluentSteps);
         var fluentBuilderSteps = descendentFluentSteps
             .DistinctBy(step => step.KnownConstructorParameters)
             .Select((step, index) =>
@@ -85,98 +86,11 @@ internal class FluentModelFactory(Compilation compilation)
         [
             .._methodSelector.ConvertNodeToFluentMethods(
                 type, node, valueStorages,
-                (rootType, child) => ConvertNodeToFluentStep(rootType, child)),
+                (rootType, child) => _stepBuilder.ConvertNodeToFluentStep(rootType, child, ConvertNodeToFluentFluentMethods)),
             ..ConvertNodeToCreationMethods(type, node, valueStorages)
         ];
 
         return fluentMethods;
-    }
-
-    private IFluentStep? ConvertNodeToFluentStep(
-        INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node)
-    {
-        var knownConstructorParameters = new ParameterSequence(node.Key);
-        var constructorMetadata = node.EndValues.FirstOrDefault();
-        var useExistingTypeAsStep = UseExistingTypeAsStep();
-
-        var valueStorages = GetValueStorages();
-
-        var fluentMethods = ConvertNodeToFluentFluentMethods(rootType, node, valueStorages);
-        return fluentMethods.Length > 0
-            ? CreateStep(valueStorages)
-            : null;
-
-        bool UseExistingTypeAsStep()
-        {
-            if (constructorMetadata is null) return false;
-
-            var containingType = constructorMetadata.Constructor.ContainingType;
-            var doNotGenerateCreateMethod = constructorMetadata.Options.HasFlag(NoCreateMethod);
-
-            // FUTURE ENHANCEMENT: Create a dedicated analyzer to validate that target types are partial and instantiatable.
-            // This would help avoid issues where constructors with similar build steps might be hidden.
-            // Currently handled by the CanBeCustomStep() extension method.
-            return containingType.CanBeCustomStep() && doNotGenerateCreateMethod;
-        }
-
-        IFluentStep CreateStep(OrderedDictionary<IParameterSymbol, IFluentValueStorage> storage)
-        {
-            return (useExistingTypeAsStep, constructorMetadata) switch
-            {
-                (true, { } metadata) =>
-                    new ExistingTypeFluentStep(metadata)
-                    {
-                        KnownConstructorParameters = knownConstructorParameters,
-                        FluentMethods = fluentMethods,
-                        ValueStorage = storage,
-                        CandidateConstructors =
-                        [
-                            ..node.Values
-                                .SelectMany(value => value.CandidateConstructors)
-                                .Distinct<IMethodSymbol>(SymbolEqualityComparer.Default)
-                        ]
-                    },
-                _ =>
-                    _regularFluentSteps.GetOrAdd(
-                        knownConstructorParameters,
-                        () =>
-                            new RegularFluentStep(
-                                rootType,
-                                node.Values
-                                    .SelectMany(metadata => metadata.CandidateConstructors)
-                                    .Distinct(SymbolEqualityComparer.Default)
-                                    .OfType<IMethodSymbol>())
-                            {
-                                KnownConstructorParameters = knownConstructorParameters,
-                                FluentMethods = fluentMethods,
-                                IsEndStep = node.IsEnd,
-                                ValueStorage = storage
-                            })
-            };
-        }
-
-        OrderedDictionary<IParameterSymbol, IFluentValueStorage> GetValueStorages()
-        {
-            return (useExistingTypeAsStep, constructorMetadata) switch
-            {
-                (true, not null and var metadata) => metadata.ValueStorage,
-                _ => CreateRegularStepValueStorage(rootType, knownConstructorParameters)
-            };
-        }
-    }
-
-    private static OrderedDictionary<IParameterSymbol, IFluentValueStorage> CreateRegularStepValueStorage(
-        INamedTypeSymbol rootType,
-        ParameterSequence knownConstructorParameters)
-    {
-        var parameterStoragePairs =
-            from parameter in knownConstructorParameters
-            let fieldStorage = new FieldStorage(parameter.Name.ToParameterFieldName(), parameter.Type,
-                rootType.ContainingNamespace)
-            select new KeyValuePair<IParameterSymbol, IFluentValueStorage>(parameter, fieldStorage);
-
-        return new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(parameterStoragePairs);
     }
 
     private IEnumerable<IFluentMethod> ConvertNodeToCreationMethods(INamedTypeSymbol rootType,
@@ -227,21 +141,6 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         return trie;
-    }
-
-    private static IEnumerable<IFluentStep> GetDescendentFluentSteps(IEnumerable<IFluentStep> fluentSteps)
-    {
-        foreach (var fluentStep in fluentSteps)
-        {
-            yield return fluentStep;
-
-            var childSteps = fluentStep.FluentMethods
-                .Select(m => m.Return)
-                .OfType<IFluentStep>();
-
-            foreach (var underlyingFluentStep in GetDescendentFluentSteps(childSteps))
-                yield return underlyingFluentStep;
-        }
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(
