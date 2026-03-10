@@ -41,7 +41,7 @@ Plans:
 
 **Cross-cutting requirements:** XCUT-01 (all tests pass) and XCUT-02 (generated output unchanged) apply to every phase below. Each phase must leave the test suite green and generated output identical.
 
-- [ ] **Phase 7: Core Pipeline Decomposition** - Decompose FluentModelFactory, FluentFactoryGenerator, and ConstructorAnalyzer into focused single-responsibility types
+- [x] **Phase 7: Core Pipeline Decomposition** - Decompose FluentModelFactory, FluentFactoryGenerator, and ConstructorAnalyzer into focused single-responsibility types (completed 2026-03-10)
 - [ ] **Phase 8: Syntax Generator Decomposition** - Decompose FluentStepMethodDeclaration, FluentRootFactoryMethodDeclaration, and FluentMethodSummaryDocXml into focused types
 - [ ] **Phase 9: Extension Consolidation** - Merge duplicate SymbolExtensions and organize extension methods by concern
 - [ ] **Phase 10: Screaming Architecture Reorganization** - Restructure folders for vertical slicing with domain concepts at root and details nested
@@ -57,7 +57,7 @@ Plans:
   2. FluentFactoryGenerator's pipeline stages are individually named types that can be understood in isolation
   3. ConstructorAnalyzer's storage detection patterns are separated into distinct types rather than living in one large class
   4. All existing tests pass with identical generated output after decomposition
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [ ] 07-01-PLAN.md -- Extract FluentDiagnostics and FluentConstructorContextFactory from FluentFactoryGenerator
@@ -114,7 +114,7 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
-| 7. Core Pipeline Decomposition | 2/3 | In Progress|  | - |
+| 7. Core Pipeline Decomposition | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Syntax Generator Decomposition | v1.2 | 0/? | Not started | - |
 | 9. Extension Consolidation | v1.2 | 0/? | Not started | - |
 | 10. Screaming Architecture Reorganization | v1.2 | 0/? | Not started | - |

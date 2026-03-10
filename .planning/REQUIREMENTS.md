@@ -9,7 +9,7 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 ### God Class Decomposition
 
-- [ ] **DECOMP-01**: FluentModelFactory is decomposed into focused types with single responsibilities (method selection, step building, trie construction, storage resolution)
+- [x] **DECOMP-01**: FluentModelFactory is decomposed into focused types with single responsibilities (method selection, step building, trie construction, storage resolution)
 - [x] **DECOMP-02**: FluentFactoryGenerator pipeline stages are extracted into distinct, named types
 - [x] **DECOMP-03**: ConstructorAnalyzer storage detection patterns are separated into focused types
 - [ ] **DECOMP-04**: No individual class exceeds ~150 lines (bite-sized threshold)
@@ -64,7 +64,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DECOMP-01 | Phase 7 | Pending |
+| DECOMP-01 | Phase 7 | Complete |
 | DECOMP-02 | Phase 7 | Complete |
 | DECOMP-03 | Phase 7 | Complete |
 | DECOMP-04 | Phase 10 | Pending |
