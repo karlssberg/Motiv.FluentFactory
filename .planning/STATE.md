@@ -4,13 +4,13 @@ milestone: v1.2
 milestone_name: Architecture Refactoring
 status: executing
 stopped_at: Phase 8 context gathered
-last_updated: "2026-03-11T00:08:33.066Z"
+last_updated: "2026-03-11T00:31:12.285Z"
 last_activity: 2026-03-10 -- Completed 07-03 FluentModelFactory decomposition
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  completed_phases: 3
+  total_plans: 8
+  completed_plans: 8
 ---
 
 ---
@@ -35,29 +35,30 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
-**Current focus:** Phase 7 - Core Pipeline Decomposition
+**Current focus:** Phase 8 - Syntax Generator Decomposition
 
 ## Current Position
 
-Phase: 7 of 10 (Core Pipeline Decomposition)
-Plan: 3 of 3 complete
-Status: phase-complete
-Last activity: 2026-03-10 -- Completed 07-03 FluentModelFactory decomposition
+Phase: 8 of 10 (Syntax Generator Decomposition)
+Plan: 2 of 3 complete
+Status: executing
+Last activity: 2026-03-11 -- Completed 08-02 FluentStepMethodDeclaration and FluentMethodSummaryDocXml decomposition
 
 Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
+- Total plans completed: 7
 - Average duration: ~4min
-- Total execution time: ~21min
+- Total execution time: ~31min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 07 | 3 | ~13min | ~4min |
+| 08 | 2 | ~10min | ~5min |
 
 ## Accumulated Context
 
@@ -79,6 +80,8 @@ Recent decisions affecting current work:
 - [Phase 07]: SemanticModel passed as method parameter to strategies, keeping them stateless
 - [Phase 07-03]: Func delegates used for mutual recursion wiring between orchestrator, selector, and step builder
 - [Phase 07-03]: Collaborators initialized in entry point method after state clear to share same instances
+- [Phase 08-01]: Canonical constraint ordering: reference type, value type, type constraints, constructor (matches C# convention)
+- [Phase 08-01]: All constraint types use ToGlobalDisplayString() via shared TypeParameterConstraintBuilder
 
 ### Pending Todos
 
@@ -86,10 +89,10 @@ None yet.
 
 ### Blockers/Concerns
 
-None - Phase 07 complete, all three god classes decomposed.
+None - Phase 08-01 complete, TypeParameterConstraintBuilder extracted.
 
 ## Session Continuity
 
-Last session: 2026-03-11T00:08:33.064Z
-Stopped at: Phase 8 context gathered
-Resume file: .planning/phases/08-syntax-generator-decomposition/08-CONTEXT.md
+Last session: 2026-03-11T00:30:24Z
+Stopped at: Completed 08-01-PLAN.md
+Resume file: .planning/phases/08-syntax-generator-decomposition/08-01-SUMMARY.md
