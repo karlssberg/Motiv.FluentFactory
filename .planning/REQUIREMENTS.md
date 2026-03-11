@@ -30,7 +30,7 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 - [x] **SYNTAX-01**: FluentStepMethodDeclaration is decomposed into focused types (type parameter handling, constraint generation, method body)
 - [x] **SYNTAX-02**: FluentRootFactoryMethodDeclaration is decomposed into focused types
-- [ ] **SYNTAX-03**: FluentMethodSummaryDocXml (165 lines) is decomposed if responsibilities can be separated
+- [x] **SYNTAX-03**: FluentMethodSummaryDocXml (165 lines) is decomposed if responsibilities can be separated
 
 ### Cross-Cutting
 
@@ -76,7 +76,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | EXT-02 | Phase 9 | Pending |
 | SYNTAX-01 | Phase 8 | Complete |
 | SYNTAX-02 | Phase 8 | Complete |
-| SYNTAX-03 | Phase 8 | Pending |
+| SYNTAX-03 | Phase 8 | Complete |
 | XCUT-01 | Phase 7, 8, 9, 10 | Complete |
 | XCUT-02 | Phase 7, 8, 9, 10 | Complete |
 
