@@ -11,6 +11,9 @@ internal static class FluentMethodSummaryDocXml
         genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
         miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
 
+    /// <summary>
+    /// Creates XML documentation trivia with a summary block from the given lines of text.
+    /// </summary>
     public static SyntaxTriviaList Create(
         IEnumerable<object?> linesOfText)
     {
@@ -24,88 +27,11 @@ internal static class FluentMethodSummaryDocXml
         ];
 
         return TriviaList(triviaList);
-
-        IEnumerable<SyntaxTrivia> ConvertLine(object? line)
-        {
-            return line switch
-            {
-                null => [],
-                "" => [Comment("///")],
-                SyntaxTrivia trivia => [trivia],
-                _ when string.IsNullOrWhiteSpace(line.ToString()) => [Comment("///")],
-                _ => ConvertLineEndings(line.ToString())
-            };
-        }
-
-        IEnumerable<SyntaxTrivia> ConvertLineEndings(string line)
-        {
-            return line
-                .Split(["\r\n", "\n", "\r"], default)
-                .SelectMany(IEnumerable<SyntaxTrivia> (embeddedLines)  =>
-                    embeddedLines switch
-                    {
-                        null => [],
-                        "" => [Comment("///")],
-                        _ => [Comment($"/// {embeddedLines}")]
-                    });
-        }
-    }
-
-
-    public static IEnumerable<SyntaxTrivia> GenerateCandidateConstructors(
-        IEnumerable<IMethodSymbol> candidateConstructors)
-    {
-        return candidateConstructors
-            .Distinct<IMethodSymbol>(SymbolEqualityComparer.Default)
-            .OrderBy(type => type.Name)
-            .Select(str => Comment($"///     {str.ToDisplayString()}"));
-    }
-
-    public static IEnumerable<SyntaxTrivia> GenerateCandidateConstructorTypeSeeAlsoLinks(
-        IEnumerable<IMethodSymbol> candidateConstructors)
-    {
-        return candidateConstructors
-            .Select(ctor => ctor.ContainingType)
-            .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
-            .OrderBy(type => type.Name)
-            .Select(CreateSeeAlsoLink);
-    }
-
-    private static SyntaxTrivia CreateSeeAlsoLink(INamedTypeSymbol typeSymbol)
-    {
-        // Get the cref format of the type symbol
-        var crefValue = GetCrefAttributeValue(typeSymbol);
-
-        // Create the <seealso> comment
-        var commentText = $"///     <seealso cref=\"{crefValue}\"/>";
-        return Comment(commentText);
     }
 
     /// <summary>
-    /// Gets the formatted cref attribute value from a type symbol
+    /// Creates XML documentation trivia with a summary block and parameter documentation.
     /// </summary>
-    private static string GetCrefAttributeValue(INamedTypeSymbol typeSymbol)
-    {
-        // For non-generic types, just use the full type name
-        if (!typeSymbol.IsGenericType)
-        {
-            return typeSymbol.ToDisplayString(FullyQualifiedWithoutGlobal);
-        }
-
-        // For generic types, we need special handling
-        var baseTypeName = typeSymbol.ToDisplayString(
-            new SymbolDisplayFormat(
-                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-                genericsOptions: SymbolDisplayGenericsOptions.None));
-
-        // Build the type arguments portion (T1, T2, etc.)
-        var typeArgs = string.Join(", ", typeSymbol.TypeArguments.Select(t =>
-            t.ToDisplayString(FullyQualifiedWithoutGlobal)));
-
-        // Format as NameSpace.TypeName{T1, T2}
-        return $"{baseTypeName}{{{typeArgs}}}";
-    }
-
     public static SyntaxTriviaList CreateWithParameters(
         IEnumerable<object?> linesOfText,
         Dictionary<string, string>? parameterDocumentation,
@@ -136,30 +62,73 @@ internal static class FluentMethodSummaryDocXml
         }
 
         return TriviaList(triviaList);
+    }
 
-        IEnumerable<SyntaxTrivia> ConvertLine(object? line)
+    /// <summary>
+    /// Generates seealso XML documentation links for the containing types of candidate constructors.
+    /// </summary>
+    public static IEnumerable<SyntaxTrivia> GenerateCandidateConstructorTypeSeeAlsoLinks(
+        IEnumerable<IMethodSymbol> candidateConstructors)
+    {
+        return candidateConstructors
+            .Select(ctor => ctor.ContainingType)
+            .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
+            .OrderBy(type => type.Name)
+            .Select(CreateSeeAlsoLink);
+    }
+
+    private static SyntaxTrivia CreateSeeAlsoLink(INamedTypeSymbol typeSymbol)
+    {
+        var crefValue = GetCrefAttributeValue(typeSymbol);
+        var commentText = $"///     <seealso cref=\"{crefValue}\"/>";
+        return Comment(commentText);
+    }
+
+    /// <summary>
+    /// Gets the formatted cref attribute value from a type symbol.
+    /// </summary>
+    private static string GetCrefAttributeValue(INamedTypeSymbol typeSymbol)
+    {
+        if (!typeSymbol.IsGenericType)
         {
-            return line switch
-            {
-                null => [],
-                "" => [Comment("///")],
-                SyntaxTrivia trivia => [trivia],
-                _ when string.IsNullOrWhiteSpace(line.ToString()) => [Comment("///")],
-                _ => ConvertLineEndings(line.ToString())
-            };
+            return typeSymbol.ToDisplayString(FullyQualifiedWithoutGlobal);
         }
 
-        IEnumerable<SyntaxTrivia> ConvertLineEndings(string line)
+        var baseTypeName = typeSymbol.ToDisplayString(
+            new SymbolDisplayFormat(
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+                genericsOptions: SymbolDisplayGenericsOptions.None));
+
+        var typeArgs = string.Join(", ", typeSymbol.TypeArguments.Select(t =>
+            t.ToDisplayString(FullyQualifiedWithoutGlobal)));
+
+        return $"{baseTypeName}{{{typeArgs}}}";
+    }
+
+    private static IEnumerable<SyntaxTrivia> ConvertLine(object? line)
+    {
+        return line switch
         {
-            return line
-                .Split(["\r\n", "\n", "\r"], default)
-                .SelectMany(IEnumerable<SyntaxTrivia> (embeddedLines)  =>
-                    embeddedLines switch
-                    {
-                        null => [],
-                        "" => [Comment("///")],
-                        _ => [Comment($"/// {embeddedLines}")]
-                    });
-        }
+            null => [],
+            "" => [Comment("///")],
+            SyntaxTrivia trivia => [trivia],
+            _ when string.IsNullOrWhiteSpace(line.ToString()) => [Comment("///")],
+            _ => ConvertLineEndings(line.ToString())
+        };
+    }
+
+    private static IEnumerable<SyntaxTrivia> ConvertLineEndings(string? line)
+    {
+        if (line is null) return [];
+
+        return line
+            .Split(["\r\n", "\n", "\r"], default)
+            .SelectMany(IEnumerable<SyntaxTrivia> (embeddedLines) =>
+                embeddedLines switch
+                {
+                    null => [],
+                    "" => [Comment("///")],
+                    _ => [Comment($"/// {embeddedLines}")]
+                });
     }
 }
