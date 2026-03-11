@@ -1,9 +1,14 @@
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Motiv.FluentFactory.Generator.Generation;
+namespace Motiv.FluentFactory.Generator;
 
+/// <summary>
+/// Extension methods for symbol display formatting, type analysis,
+/// accessibility conversion, and attribute inspection.
+/// </summary>
 internal static class SymbolExtensions
 {
     private static readonly SymbolDisplayFormat TypeNameOnlyFormat = new(
@@ -16,11 +21,26 @@ internal static class SymbolExtensions
             SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
             SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 
+    private static readonly SymbolDisplayFormat FullFormat = new(
+        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+        genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters |
+                         SymbolDisplayGenericsOptions.IncludeTypeConstraints,
+        memberOptions: SymbolDisplayMemberOptions.IncludeParameters |
+                       SymbolDisplayMemberOptions.IncludeContainingType |
+                       SymbolDisplayMemberOptions.IncludeType,
+        parameterOptions: SymbolDisplayParameterOptions.IncludeType |
+                          SymbolDisplayParameterOptions.IncludeName |
+                          SymbolDisplayParameterOptions.IncludeDefaultValue,
+        miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
+                              SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
     /// <summary>
     /// Returns the global::-qualified display string for a type symbol.
     /// Type parameters (T, TResult) are returned as their name only.
     /// C# keyword aliases (int, string, bool) are preserved via UseSpecialTypes.
     /// </summary>
+    /// <param name="typeSymbol">The type symbol to format.</param>
+    /// <returns>The global::-qualified display string.</returns>
     public static string ToGlobalDisplayString(this ITypeSymbol typeSymbol)
     {
         return typeSymbol switch
@@ -30,6 +50,30 @@ internal static class SymbolExtensions
         };
     }
 
+    /// <summary>
+    /// Returns the full display string for a symbol including namespace,
+    /// containing types, type parameters, constraints, and member details.
+    /// </summary>
+    /// <param name="symbol">The symbol to format.</param>
+    /// <returns>The full display string.</returns>
+    public static string ToFullDisplayString(this ISymbol symbol)
+    {
+        return symbol.ToDisplayString(FullFormat);
+    }
+
+    /// <summary>
+    /// Returns the unqualified (name-only) display string for a type symbol.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol to format.</param>
+    /// <returns>The unqualified display string.</returns>
+    public static string ToUnqualifiedDisplayString(this ITypeSymbol typeSymbol) =>
+        typeSymbol.ToDisplayString(TypeNameOnlyFormat);
+
+    /// <summary>
+    /// Determines whether a type symbol is an open generic type (contains unbound type parameters).
+    /// </summary>
+    /// <param name="type">The type symbol to check.</param>
+    /// <returns><c>true</c> if the type contains unbound generic type parameters; otherwise, <c>false</c>.</returns>
     public static bool IsOpenGenericType(this ITypeSymbol type)
     {
         return type switch
@@ -52,87 +96,40 @@ internal static class SymbolExtensions
                namedType.IsUnboundGenericType;
     }
 
-    public static IEnumerable<TypeParameterSyntax> GetGenericTypeParameterSyntaxList(this IEnumerable<ITypeSymbol> types)
+    /// <summary>
+    /// Determines whether a type symbol is declared as partial.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol to check.</param>
+    /// <returns><c>true</c> if the type is declared with the partial modifier; otherwise, <c>false</c>.</returns>
+    public static bool IsPartial(this ITypeSymbol typeSymbol)
     {
-        return types.GetGenericTypeParameters()
-            .Select(ToTypeParameterSyntax);
+        return typeSymbol.DeclaringSyntaxReferences
+            .Select(r => r.GetSyntax())
+            .OfType<TypeDeclarationSyntax>()
+            .Any(c => c.Modifiers.Any(m => m.IsKind(SyntaxKind.PartialKeyword)));
     }
 
-    public static IEnumerable<TypeParameterSyntax> GetGenericTypeParameterSyntaxList(this ITypeSymbol type)
+    /// <summary>
+    /// Determines whether a named type symbol can be used as a custom step
+    /// (must be partial and non-static).
+    /// </summary>
+    /// <param name="containingType">The named type symbol to check.</param>
+    /// <returns><c>true</c> if the type can be a custom step; otherwise, <c>false</c>.</returns>
+    public static bool CanBeCustomStep(this INamedTypeSymbol containingType)
     {
-        return new[] { type }.GetGenericTypeParameterSyntaxList();
+        var isPartial = containingType.IsPartial();
+        var isStatic = containingType.IsStatic;
+        return isPartial && !isStatic;
     }
 
-    public static IEnumerable<ITypeParameterSymbol> GetGenericTypeParameters(this IEnumerable<ITypeSymbol> type)
-    {
-        return type
-            .SelectMany(symbol => symbol.GetGenericTypeParameters())
-            .DistinctBy(symbol => symbol.ToDisplayString());
-    }
-
-    public static TypeParameterSyntax ToTypeParameterSyntax(this ITypeParameterSymbol typeParameter)
-    {
-        var typeParameterSyntax = SyntaxFactory.TypeParameter(SyntaxFactory.Identifier(typeParameter.Name));
-
-        // Add constraints if they exist
-        var constraints = new List<TypeParameterConstraintSyntax>();
-
-        // Add value type constraint
-        if (typeParameter.HasValueTypeConstraint)
-        {
-            constraints.Add(SyntaxFactory.ClassOrStructConstraint(SyntaxKind.StructConstraint));
-        }
-
-        // Add reference type constraint
-        if (typeParameter.HasReferenceTypeConstraint)
-        {
-            constraints.Add(SyntaxFactory.ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-        }
-
-        // Add constructor constraint
-        if (typeParameter.HasConstructorConstraint)
-        {
-            constraints.Add(SyntaxFactory.ConstructorConstraint());
-        }
-
-        // Add type constraints
-        foreach (var constraintType in typeParameter.ConstraintTypes)
-        {
-            constraints.Add(SyntaxFactory.TypeConstraint(
-                SyntaxFactory.ParseTypeName(constraintType.ToGlobalDisplayString())));
-        }
-
-        return typeParameterSyntax;
-    }
-
-    public static IEnumerable<ITypeParameterSymbol> GetGenericTypeParameters(this ITypeSymbol type)
-    {
-        return type switch
-        {
-            ITypeParameterSymbol typeParameter => [typeParameter],
-            INamedTypeSymbol namedType => namedType.TypeArguments
-                .SelectMany(typeArg => typeArg.GetGenericTypeParameters())
-                .Distinct<ITypeParameterSymbol>(SymbolEqualityComparer.Default),
-            _ => []
-        };
-    }
-
-    public static IEnumerable<ITypeParameterSymbol> GetGenericTypeArguments(this ITypeSymbol type)
-    {
-        return GenericTypeArgumentsInternal(type).DistinctBy(t => t.Name);
-    }
-
-    private static IEnumerable<ITypeParameterSymbol> GenericTypeArgumentsInternal(ITypeSymbol type)
-    {
-        return type switch
-        {
-            ITypeParameterSymbol typeParameter => [typeParameter],
-            INamedTypeSymbol namedType => namedType.TypeArguments
-                .SelectMany(t => t.GetGenericTypeArguments()),
-            _ => []
-        };
-    }
-
+    /// <summary>
+    /// Determines whether a type from one compilation context is assignable to a type
+    /// from another context, including generic type parameter constraint checking.
+    /// </summary>
+    /// <param name="compilation">The compilation context for type conversion checks.</param>
+    /// <param name="typeDefinition">The source type being assigned from.</param>
+    /// <param name="typeUsage">The target type being assigned to.</param>
+    /// <returns><c>true</c> if the assignment is valid; otherwise, <c>false</c>.</returns>
     public static bool IsAssignable(this Compilation compilation, ITypeSymbol? typeDefinition, ITypeSymbol? typeUsage)
     {
         if (typeDefinition is null || typeUsage is null)
@@ -203,42 +200,82 @@ internal static class SymbolExtensions
         }
     }
 
-    public static IEnumerable<ITypeParameterSymbol> Union(
-       this IEnumerable<ITypeParameterSymbol> first,
-       IEnumerable<ITypeParameterSymbol> second)
-   {
-       return first
-           .Union<ITypeParameterSymbol>(second, SymbolEqualityComparer.IncludeNullability)
-           .OrderBy(symbol => symbol.Name);
-   }
+    /// <summary>
+    /// Converts a <see cref="Accessibility"/> value to the corresponding syntax kind keywords.
+    /// </summary>
+    /// <param name="accessibility">The accessibility to convert.</param>
+    /// <returns>An enumerable of <see cref="SyntaxKind"/> values representing the access modifier keywords.</returns>
+    public static IEnumerable<SyntaxKind> AccessibilityToSyntaxKind(this Accessibility accessibility) =>
+        accessibility switch
+        {
+            Accessibility.Public => [SyntaxKind.PublicKeyword],
+            Accessibility.Private => [SyntaxKind.PrivateKeyword],
+            Accessibility.Protected => [SyntaxKind.ProtectedKeyword],
+            Accessibility.Internal => [SyntaxKind.InternalKeyword],
+            Accessibility.ProtectedOrInternal => [SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword],
+            Accessibility.ProtectedAndInternal => [SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword],
+            _ => [SyntaxKind.None]
+        };
 
+    /// <summary>
+    /// Replaces type parameters in a generic named type symbol using the provided replacements map.
+    /// Recursively processes nested generic type arguments.
+    /// </summary>
+    /// <param name="type">The named type symbol to transform.</param>
+    /// <param name="replacements">A mapping from type parameters to their replacement types.</param>
+    /// <returns>A new named type symbol with type parameters replaced.</returns>
+    public static INamedTypeSymbol ReplaceTypeParameters(
+        this INamedTypeSymbol type,
+        ImmutableDictionary<ITypeParameterSymbol, ITypeSymbol> replacements)
+    {
+        if (!type.IsGenericType)
+            return type;
 
-    public static IEnumerable<ITypeParameterSymbol> Except(
-       this IEnumerable<ITypeParameterSymbol> collection,
-       IEnumerable<ITypeParameterSymbol> exclusions)
-   {
-       var exclusionSet = new HashSet<string>(exclusions.Select(parameter => parameter.ToDisplayString()));
+        var newTypeArgs = type.TypeArguments.Select(arg =>
+            arg is ITypeParameterSymbol tp && replacements.TryGetValue(tp, out var replacement)
+                ? replacement
+                : arg is INamedTypeSymbol namedArg
+                    ? ReplaceTypeParameters(namedArg, replacements)
+                    : arg);
 
-       foreach (var item in collection)
-       {
-          if (!exclusionSet.Contains(item.ToDisplayString()))
-            yield return item;
-       }
-   }
+        return type.OriginalDefinition.Construct(newTypeArgs.ToArray());
+    }
 
-   public static IEnumerable<SyntaxKind> AccessibilityToSyntaxKind(this Accessibility accessibility) =>
-       accessibility switch
-       {
-           Accessibility.Public => [SyntaxKind.PublicKeyword],
-           Accessibility.Private => [SyntaxKind.PrivateKeyword],
-           Accessibility.Protected => [SyntaxKind.ProtectedKeyword],
-           Accessibility.Internal => [SyntaxKind.InternalKeyword],
-           Accessibility.ProtectedOrInternal => [SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword], // Note: This will need both protected and internal
-           Accessibility.ProtectedAndInternal => [SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword],
-           _ => [SyntaxKind.None]
-       };
+    /// <summary>
+    /// Determines whether a symbol has an attribute matching the specified type name.
+    /// </summary>
+    /// <param name="type">The symbol to check.</param>
+    /// <param name="attribute">The attribute type name to look for.</param>
+    /// <returns><c>true</c> if the symbol has the specified attribute; otherwise, <c>false</c>.</returns>
+    public static bool HasAttribute(this ISymbol type, TypeName attribute) =>
+        GetAttributes(type, attribute).Any();
 
-   public static string ToUnqualifiedDisplayString(this ITypeSymbol typeSymbol) =>
-       typeSymbol.ToDisplayString(TypeNameOnlyFormat);
+    /// <summary>
+    /// Determines whether a symbol has an attribute of the specified generic type.
+    /// </summary>
+    /// <typeparam name="TAttribute">The attribute type to look for.</typeparam>
+    /// <param name="type">The symbol to check.</param>
+    /// <returns><c>true</c> if the symbol has the specified attribute; otherwise, <c>false</c>.</returns>
+    public static bool HasAttribute<TAttribute>(this ISymbol type) where TAttribute : Attribute =>
+        GetAttributes<TAttribute>(type).Any();
 
+    /// <summary>
+    /// Gets all attribute data instances matching the specified type name from a symbol.
+    /// </summary>
+    /// <param name="type">The symbol to inspect.</param>
+    /// <param name="attribute">The attribute type name to match.</param>
+    /// <returns>An enumerable of matching <see cref="AttributeData"/> instances.</returns>
+    public static IEnumerable<AttributeData> GetAttributes(this ISymbol type, TypeName attribute) =>
+        type.GetAttributes()
+            .Where(attr => attr.AttributeClass?.ToDisplayString() == attribute);
+
+    /// <summary>
+    /// Gets all attribute data instances of the specified generic type from a symbol.
+    /// </summary>
+    /// <typeparam name="TAttribute">The attribute type to match.</typeparam>
+    /// <param name="type">The symbol to inspect.</param>
+    /// <returns>An enumerable of matching <see cref="AttributeData"/> instances.</returns>
+    public static IEnumerable<AttributeData> GetAttributes<TAttribute>(this ISymbol type) where TAttribute : Attribute =>
+        type.GetAttributes()
+            .Where(attr => attr.AttributeClass?.ToDisplayString() == typeof(TAttribute).FullName);
 }

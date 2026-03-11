@@ -88,10 +88,10 @@ Plans:
   1. A single SymbolExtensions location exists (the duplicate across Model and Generation namespaces is eliminated)
   2. Extension methods are grouped by the domain concern they serve, not by the old horizontal layer they lived in
   3. All existing tests pass with identical generated output after consolidation
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] 09-01: TBD
+- [ ] 09-01-PLAN.md -- Consolidate all extension files by concern: TypeParameterExtensions, SymbolExtensions, FluentModelExtensions, StringExtensions
 
 ### Phase 10: Screaming Architecture Reorganization
 **Goal**: The project folder structure communicates what the system does at a glance, with key concepts at the root and implementation details nested in subdirectories
@@ -118,5 +118,5 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
 | 7. Core Pipeline Decomposition | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Syntax Generator Decomposition | 3/3 | Complete   | 2026-03-11 | - |
-| 9. Extension Consolidation | v1.2 | 0/? | Not started | - |
+| 9. Extension Consolidation | v1.2 | 0/1 | Not started | - |
 | 10. Screaming Architecture Reorganization | v1.2 | 0/? | Not started | - |
