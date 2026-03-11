@@ -73,10 +73,12 @@ Plans:
   2. FluentRootFactoryMethodDeclaration is decomposed into types with clear single responsibilities
   3. FluentMethodSummaryDocXml responsibilities are separated if distinct concerns exist, or documented as appropriately sized if not
   4. All existing tests pass with identical generated output after decomposition
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 08-01: TBD
+- [ ] 08-01-PLAN.md -- Extract TypeParameterConstraintBuilder to shared, replace in all 4 consumers, fix constraint qualification bug
+- [ ] 08-02-PLAN.md -- Decompose FluentStepMethodDeclaration into thin orchestrator, consolidate FluentMethodSummaryDocXml
+- [ ] 08-03-PLAN.md -- Decompose FluentRootFactoryMethodDeclaration into thin orchestrator
 
 ### Phase 9: Extension Consolidation
 **Goal**: Extension methods are unified and organized by the concern they serve rather than by which layer they originated in
@@ -115,6 +117,6 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 |-------|-----------|----------------|--------|-----------|
 | 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
 | 7. Core Pipeline Decomposition | 3/3 | Complete   | 2026-03-10 | - |
-| 8. Syntax Generator Decomposition | v1.2 | 0/? | Not started | - |
+| 8. Syntax Generator Decomposition | v1.2 | 0/3 | Planned | - |
 | 9. Extension Consolidation | v1.2 | 0/? | Not started | - |
 | 10. Screaming Architecture Reorganization | v1.2 | 0/? | Not started | - |

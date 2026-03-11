@@ -70,153 +70,127 @@ internal static class FluentStepMethodDeclaration
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
             .WithBody(Block(ReturnStatement(returnObjectExpression)))
-            .WithLeadingTrivia(
-                method switch
-                {
-                    { ParameterDocumentation: not null, MethodParameters.Length: > 0 } =>
-                        FluentMethodSummaryDocXml.CreateWithParameters(
-                            GetDocumentationLinesWithParameters(method),
-                            method.ParameterDocumentation,
-                            method.MethodParameters.Select(p => p.ParameterSymbol.Name.ToCamelCase())),
-                    _ =>
-                        FluentMethodSummaryDocXml.Create(GetDocumentationLinesWithParameters(method))
-                });
+            .WithLeadingTrivia(GetDocumentationTrivia(method));
 
-        if (method.MethodParameters.Length > 0)
+        methodDeclaration = AttachParameterList(method, methodDeclaration);
+
+        return AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration);
+    }
+
+    /// <summary>
+    /// Gets the XML documentation trivia for the method declaration.
+    /// </summary>
+    private static SyntaxTriviaList GetDocumentationTrivia(IFluentMethod method)
+    {
+        return method switch
         {
-            methodDeclaration = methodDeclaration
-                .WithParameterList(
-                    ParameterList(SeparatedList(
-                        method.MethodParameters
-                            .Select(parameter =>
-                                Parameter(
-                                        Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
-                                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
-                                    .WithType(
-                                        ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
-        }
+            { ParameterDocumentation: not null, MethodParameters.Length: > 0 } =>
+                FluentMethodSummaryDocXml.CreateWithParameters(
+                    GetDocumentationLinesWithParameters(method),
+                    method.ParameterDocumentation,
+                    method.MethodParameters.Select(p => p.ParameterSymbol.Name.ToCamelCase())),
+            _ =>
+                FluentMethodSummaryDocXml.Create(GetDocumentationLinesWithParameters(method))
+        };
+    }
 
-        if (!method.TypeParameters.Any())
+    /// <summary>
+    /// Attaches the parameter list to the method declaration if the method has parameters.
+    /// </summary>
+    private static MethodDeclarationSyntax AttachParameterList(
+        IFluentMethod method,
+        MethodDeclarationSyntax methodDeclaration)
+    {
+        if (method.MethodParameters.Length == 0)
             return methodDeclaration;
 
-        // Get root type parameters to exclude from method-level type parameters
-        var rootTypeParameters = ambientTypeParameters
-            .Select(tp => new FluentTypeParameter(tp))
-            .ToArray() ?? [];
-        var rootTypeParametersSet = new HashSet<FluentTypeParameter>(rootTypeParameters);
+        return methodDeclaration
+            .WithParameterList(
+                ParameterList(SeparatedList(
+                    method.MethodParameters
+                        .Select(parameter =>
+                            Parameter(
+                                    Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
+                                .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                                .WithType(
+                                    ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
+    }
 
-        var typeParameterSyntaxes = method.TypeParameters
+    /// <summary>
+    /// Filters the method's type parameters by excluding known constructor parameters
+    /// and ambient type parameters, returning the type parameter syntaxes to add to the method.
+    /// </summary>
+    private static ImmutableArray<TypeParameterSyntax> GetMethodTypeParameterSyntaxes(
+        IFluentMethod method,
+        ParameterSequence knownConstructorParameters,
+        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
+    {
+        var rootTypeParametersSet = new HashSet<FluentTypeParameter>(
+            ambientTypeParameters.Select(tp => new FluentTypeParameter(tp)));
+
+        return method.TypeParameters
             .Except(knownConstructorParameters
                 .SelectMany(parameter => parameter.Type.GetGenericTypeParameters())
                 .Select(genericTypeParameters => new FluentTypeParameter(genericTypeParameters)))
-            .Except(rootTypeParametersSet) // Exclude root type parameters
+            .Except(rootTypeParametersSet)
             .Select(fluentTypeParameter => fluentTypeParameter.TypeParameterSymbol.ToTypeParameterSyntax())
             .ToImmutableArray();
+    }
+
+    /// <summary>
+    /// Attaches type parameter list and constraint clauses to the method declaration
+    /// if the method has type parameters that are not already covered by constructor
+    /// parameters or ambient type parameters.
+    /// </summary>
+    private static MethodDeclarationSyntax AttachTypeParameters(
+        IFluentMethod method,
+        ParameterSequence knownConstructorParameters,
+        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters,
+        MethodDeclarationSyntax methodDeclaration)
+    {
+        if (!method.TypeParameters.Any())
+            return methodDeclaration;
+
+        var typeParameterSyntaxes = GetMethodTypeParameterSyntaxes(method, knownConstructorParameters, ambientTypeParameters);
 
         if (typeParameterSyntaxes.Length == 0)
             return methodDeclaration;
 
-        var methodWithTypeParameters = methodDeclaration.WithTypeParameterList(
+        methodDeclaration = methodDeclaration.WithTypeParameterList(
             TypeParameterList(SeparatedList([..typeParameterSyntaxes])));
 
-        // Add constraint clauses for type parameters
-        var constraintClauses = GetConstraintClauses(method, ambientTypeParameters);
+        var combinedTypeParameters = GetCombinedTypeParameters(method, ambientTypeParameters);
+        var constraintClauses = TypeParameterConstraintBuilder.Create(combinedTypeParameters);
         if (constraintClauses.Length > 0)
         {
-            methodWithTypeParameters = methodWithTypeParameters
+            methodDeclaration = methodDeclaration
                 .WithConstraintClauses(List(constraintClauses));
         }
 
-        return methodWithTypeParameters;
+        return methodDeclaration;
     }
 
-    private static ImmutableArray<TypeParameterConstraintClauseSyntax> GetConstraintClauses(IFluentMethod method, ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
+    /// <summary>
+    /// Collects type parameters from both the target type (for non-generic root types)
+    /// and the method's own type parameters into a single array for constraint building.
+    /// </summary>
+    private static ImmutableArray<ITypeParameterSymbol> GetCombinedTypeParameters(
+        IFluentMethod method,
+        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
     {
-        var constraintClauses = new List<TypeParameterConstraintClauseSyntax>();
+        var typeParameters = new List<ITypeParameterSymbol>();
 
-        // Get target type parameters and their constraints for non-generic root types
+        // Include target type parameters for non-generic root types
         if (ambientTypeParameters.IsEmpty && method.Return is TargetTypeReturn targetTypeReturn &&
             targetTypeReturn.Constructor.ContainingType.IsGenericType)
         {
-            foreach (var typeParam in targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters)
-            {
-                var constraints = new List<TypeParameterConstraintSyntax>();
-
-                // Add value type constraint
-                if (typeParam.HasValueTypeConstraint)
-                {
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-                }
-
-                // Add reference type constraint
-                if (typeParam.HasReferenceTypeConstraint)
-                {
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-                }
-
-                // Add constructor constraint
-                if (typeParam.HasConstructorConstraint)
-                {
-                    constraints.Add(ConstructorConstraint());
-                }
-
-                // Add type constraints
-                foreach (var constraintType in typeParam.ConstraintTypes)
-                {
-                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
-                }
-
-                if (constraints.Count > 0)
-                {
-                    constraintClauses.Add(
-                        TypeParameterConstraintClause(
-                            IdentifierName(typeParam.Name))
-                        .WithConstraints(SeparatedList(constraints)));
-                }
-            }
+            typeParameters.AddRange(targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters);
         }
 
-        // Add constraints from method type parameters
-        foreach (var typeParam in method.TypeParameters)
-        {
-            var constraints = new List<TypeParameterConstraintSyntax>();
+        // Include method type parameters
+        typeParameters.AddRange(method.TypeParameters.Select(tp => tp.TypeParameterSymbol));
 
-            // Add value type constraint
-            if (typeParam.TypeParameterSymbol.HasValueTypeConstraint)
-            {
-                constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-            }
-
-            // Add reference type constraint
-            if (typeParam.TypeParameterSymbol.HasReferenceTypeConstraint)
-            {
-                constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-            }
-
-            // Add constructor constraint
-            if (typeParam.TypeParameterSymbol.HasConstructorConstraint)
-            {
-                constraints.Add(ConstructorConstraint());
-            }
-
-            // Add type constraints
-            foreach (var constraintType in typeParam.TypeParameterSymbol.ConstraintTypes)
-            {
-                var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                    .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                constraints.Add(TypeConstraint(ParseTypeName(typeName)));
-            }
-
-            if (constraints.Count > 0)
-            {
-                constraintClauses.Add(
-                    TypeParameterConstraintClause(
-                        IdentifierName(typeParam.TypeParameterSymbol.Name))
-                    .WithConstraints(SeparatedList(constraints)));
-            }
-        }
-
-        return [..constraintClauses];
+        return [..typeParameters];
     }
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
