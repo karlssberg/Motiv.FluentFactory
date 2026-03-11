@@ -1,6 +1,8 @@
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Motiv.FluentFactory.Generator.Generation.Shared;
 using Motiv.FluentFactory.Generator.Generation.SyntaxElements.Constructors;
 using Motiv.FluentFactory.Generator.Generation.SyntaxElements.Methods;
 using Motiv.FluentFactory.Generator.Generation.SyntaxElements.ValueStorage;
@@ -124,34 +126,8 @@ internal static class FluentStepDeclaration
         if (typeParameters.Count == 0)
             return List<TypeParameterConstraintClauseSyntax>();
 
-        var constraintClauses = typeParameters
-            .Where(tp => tp.HasConstructorConstraint || tp.HasReferenceTypeConstraint || tp.HasValueTypeConstraint || tp.ConstraintTypes.Length > 0)
-            .Select(tp =>
-            {
-                var constraints = new List<TypeParameterConstraintSyntax>();
-
-                // Add reference type constraint (class)
-                if (tp.HasReferenceTypeConstraint)
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-
-                // Add value type constraint (struct)
-                if (tp.HasValueTypeConstraint)
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-
-                // Add type constraints
-                foreach (var constraintType in tp.ConstraintTypes)
-                {
-                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
-                }
-
-                // Add constructor constraint (new())
-                if (tp.HasConstructorConstraint)
-                    constraints.Add(ConstructorConstraint());
-
-                return TypeParameterConstraintClause(tp.Name)
-                    .WithConstraints(SeparatedList(constraints));
-            })
-            .ToArray();
+        ImmutableArray<ITypeParameterSymbol> immutableTypeParameters = [..typeParameters];
+        var constraintClauses = TypeParameterConstraintBuilder.Create(immutableTypeParameters);
 
         return List(constraintClauses);
     }

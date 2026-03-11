@@ -48,7 +48,8 @@ internal static class FluentRootFactoryMethodDeclaration
             .WithTypeParameterList(
                 TypeParameterList(SeparatedList([..typeParameterSyntaxes])));
 
-        var constraintClauses = GetConstraintClauses(method, rootType);
+        var combinedTypeParameters = GetCombinedTypeParameters(method, rootType);
+        var constraintClauses = TypeParameterConstraintBuilder.Create(combinedTypeParameters);
         if (constraintClauses.Length > 0)
         {
             methodWithTypeParameters = methodWithTypeParameters
@@ -93,55 +94,27 @@ internal static class FluentRootFactoryMethodDeclaration
         return [..allTypeParameters];
     }
 
-    private static ImmutableArray<TypeParameterConstraintClauseSyntax> GetConstraintClauses(
+    /// <summary>
+    /// Collects type parameters from both the target type (for non-generic root types)
+    /// and the method's own type parameters into a single array for constraint building.
+    /// </summary>
+    private static ImmutableArray<ITypeParameterSymbol> GetCombinedTypeParameters(
         IFluentMethod method,
         INamedTypeSymbol? rootType)
     {
-        var shouldIncludeTargetTypeConstraints = rootType?.IsGenericType != true;
+        var typeParameters = new List<ITypeParameterSymbol>();
 
-        var constraintClauses = new List<TypeParameterConstraintClauseSyntax>();
-
-        if (shouldIncludeTargetTypeConstraints && method.Return is TargetTypeReturn targetTypeReturn)
+        // Include target type parameters for non-generic root types
+        if (rootType?.IsGenericType != true && method.Return is TargetTypeReturn targetTypeReturn &&
+            targetTypeReturn.Constructor.ContainingType.IsGenericType)
         {
-            foreach (var typeParam in targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters)
-            {
-                var clause = BuildConstraintClause(typeParam);
-                if (clause is not null)
-                    constraintClauses.Add(clause);
-            }
+            typeParameters.AddRange(targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters);
         }
 
-        foreach (var typeParam in method.TypeParameters)
-        {
-            var clause = BuildConstraintClause(typeParam.TypeParameterSymbol);
-            if (clause is not null)
-                constraintClauses.Add(clause);
-        }
+        // Include method type parameters
+        typeParameters.AddRange(method.TypeParameters.Select(tp => tp.TypeParameterSymbol));
 
-        return [..constraintClauses];
-    }
-
-    private static TypeParameterConstraintClauseSyntax? BuildConstraintClause(ITypeParameterSymbol typeParam)
-    {
-        var constraints = new List<TypeParameterConstraintSyntax>();
-
-        if (typeParam.HasValueTypeConstraint)
-            constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-
-        if (typeParam.HasReferenceTypeConstraint)
-            constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-
-        if (typeParam.HasConstructorConstraint)
-            constraints.Add(ConstructorConstraint());
-
-        foreach (var constraintType in typeParam.ConstraintTypes)
-            constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
-
-        if (constraints.Count == 0)
-            return null;
-
-        return TypeParameterConstraintClause(IdentifierName(typeParam.Name))
-            .WithConstraints(SeparatedList(constraints));
+        return [..typeParameters];
     }
 
     private static MethodDeclarationSyntax CreateBaseMethodDeclaration(

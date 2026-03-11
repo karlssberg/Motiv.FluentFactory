@@ -1,14 +1,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Motiv.FluentFactory.Generator.Generation.Shared;
 using Motiv.FluentFactory.Generator.Generation.SyntaxElements.Methods;
 using Motiv.FluentFactory.Generator.Model;
 using Motiv.FluentFactory.Generator.Model.Methods;
 using Motiv.FluentFactory.Generator.Model.Steps;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-
-// ReSharper disable once RedundantUsingDirective - needed for ToGlobalDisplayString extension method
-using Motiv.FluentFactory.Generator.Generation;
 
 namespace Motiv.FluentFactory.Generator.Generation.SyntaxElements;
 
@@ -84,34 +82,7 @@ internal static class RootTypeDeclaration
         if (!rootType.IsGenericType || rootType.TypeParameters.Length == 0)
             return List<TypeParameterConstraintClauseSyntax>();
 
-        var constraintClauses = rootType.TypeParameters
-            .Where(tp => tp.HasConstructorConstraint || tp.HasReferenceTypeConstraint || tp.HasValueTypeConstraint || tp.ConstraintTypes.Length > 0)
-            .Select(tp =>
-            {
-                var constraints = new List<TypeParameterConstraintSyntax>();
-
-                // Add reference type constraint (class)
-                if (tp.HasReferenceTypeConstraint)
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-
-                // Add value type constraint (struct)
-                if (tp.HasValueTypeConstraint)
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-
-                // Add type constraints
-                foreach (var constraintType in tp.ConstraintTypes)
-                {
-                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
-                }
-
-                // Add constructor constraint (new())
-                if (tp.HasConstructorConstraint)
-                    constraints.Add(ConstructorConstraint());
-
-                return TypeParameterConstraintClause(tp.Name)
-                    .WithConstraints(SeparatedList(constraints));
-            })
-            .ToArray();
+        var constraintClauses = TypeParameterConstraintBuilder.Create(rootType.TypeParameters);
 
         return List(constraintClauses);
     }

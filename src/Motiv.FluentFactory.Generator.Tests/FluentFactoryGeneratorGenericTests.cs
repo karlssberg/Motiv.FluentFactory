@@ -830,7 +830,7 @@ public class FluentFactoryGeneratorGenericTests
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue<T>(in T value)
-                        where T : struct, System.IComparable<T>
+                        where T : struct, global::System.IComparable<T>
                     {
                         return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(value);
                     }
@@ -928,7 +928,7 @@ public class FluentFactoryGeneratorGenericTests
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue1<T>(in T value1)
-                        where T : struct, System.IComparable<T>
+                        where T : struct, global::System.IComparable<T>
                     {
                         return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(value1);
                     }
