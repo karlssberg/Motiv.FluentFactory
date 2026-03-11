@@ -8,9 +8,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_0__Motiv_FluentFactory_Example_Circle____<T> WithRadius(in T radius)
+        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Circle____<T> WithRadius(in T radius)
         {
-            return new Step_0__Motiv_FluentFactory_Example_Circle____<T>(radius);
+            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Circle____<T>(radius);
         }
     }
 

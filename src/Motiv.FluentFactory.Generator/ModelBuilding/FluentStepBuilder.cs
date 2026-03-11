@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Motiv.FluentFactory.Generator.SyntaxGeneration;
 using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator.ModelBuilding;

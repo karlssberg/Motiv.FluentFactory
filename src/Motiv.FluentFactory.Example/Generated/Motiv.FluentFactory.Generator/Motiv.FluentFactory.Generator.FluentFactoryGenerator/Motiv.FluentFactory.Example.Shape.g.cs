@@ -10,20 +10,20 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_0__Motiv_FluentFactory_Example_Shape<T> WithWidth<T>(in T width)
-            where T : System.Numerics.INumber<T>
+        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Shape<T> WithWidth<T>(in T width)
+            where T : global::System.Numerics.INumber<T>
         {
-            return new Step_0__Motiv_FluentFactory_Example_Shape<T>(width);
+            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Shape<T>(width);
         }
 
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_3__Motiv_FluentFactory_Example_Shape<T> WithRadius<T>(in T radius)
-            where T : System.Numerics.INumber<T>
+        public static global::Motiv.FluentFactory.Example.Step_3__Motiv_FluentFactory_Example_Shape<T> WithRadius<T>(in T radius)
+            where T : global::System.Numerics.INumber<T>
         {
-            return new Step_3__Motiv_FluentFactory_Example_Shape<T>(radius);
+            return new global::Motiv.FluentFactory.Example.Step_3__Motiv_FluentFactory_Example_Shape<T>(radius);
         }
     }
 
@@ -48,9 +48,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Step_1__Motiv_FluentFactory_Example_Shape<T> WithHeight(in T height)
+        public global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Shape<T> WithHeight(in T height)
         {
-            return new Step_1__Motiv_FluentFactory_Example_Shape<T>(this._width__parameter, height);
+            return new global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Shape<T>(this._width__parameter, height);
         }
 
         /// <summary>
@@ -85,9 +85,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Step_2__Motiv_FluentFactory_Example_Shape<T> WithDepth(in T depth)
+        public global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Shape<T> WithDepth(in T depth)
         {
-            return new Step_2__Motiv_FluentFactory_Example_Shape<T>(this._width__parameter, this._height__parameter, depth);
+            return new global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Shape<T>(this._width__parameter, this._height__parameter, depth);
         }
 
         /// <summary>

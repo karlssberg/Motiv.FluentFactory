@@ -68,16 +68,16 @@ internal static class FluentStepDeclaration
         var constraintTypeParameters = GetConstraintTypeParameters(step);
 
         var structDeclaration = StructDeclaration(identifier)
-        .WithModifiers(accessibilityToken)
-        .WithLeadingTrivia(xmlDocTrivia)
-        .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
-        .WithTypeParameterList(typeParameterList)
-        .WithConstraintClauses(CreateTypeParameterConstraints(constraintTypeParameters))
-        .WithMembers(List<MemberDeclarationSyntax>([
-            ..fieldDeclarations,
-            constructor,
-            ..methodDeclarationSyntaxes,
-        ]));
+            .WithModifiers(accessibilityToken)
+            .WithLeadingTrivia(xmlDocTrivia)
+            .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
+            .WithTypeParameterList(typeParameterList)
+            .WithConstraintClauses(CreateTypeParameterConstraints(constraintTypeParameters))
+            .WithMembers(List<MemberDeclarationSyntax>([
+                ..fieldDeclarations,
+                constructor,
+                ..methodDeclarationSyntaxes,
+            ]));
 
         return structDeclaration;
     }

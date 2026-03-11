@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Motiv.FluentFactory.Generator.Diagnostics;
 using Motiv.FluentFactory.Generator.SyntaxGeneration.Helpers;
-using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator.ModelBuilding;
 

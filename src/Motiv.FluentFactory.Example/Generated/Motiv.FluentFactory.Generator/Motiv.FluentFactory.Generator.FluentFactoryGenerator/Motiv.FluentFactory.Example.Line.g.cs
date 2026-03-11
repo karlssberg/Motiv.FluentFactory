@@ -8,10 +8,10 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_0__Motiv_FluentFactory_Example_Line<T> X<T>(in T x)
-            where T : System.Numerics.INumber<T>
+        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Line<T> X<T>(in T x)
+            where T : global::System.Numerics.INumber<T>
         {
-            return new Step_0__Motiv_FluentFactory_Example_Line<T>(x);
+            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Line<T>(x);
         }
     }
 
@@ -33,9 +33,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Step_1__Motiv_FluentFactory_Example_Line<T> Y(in T y)
+        public global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Line<T> Y(in T y)
         {
-            return new Step_1__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, y);
+            return new global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, y);
         }
     }
 
@@ -58,9 +58,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Step_2__Motiv_FluentFactory_Example_Line<T> Z(in T z)
+        public global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Line<T> Z(in T z)
         {
-            return new Step_2__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, this._y__parameter, z);
+            return new global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, this._y__parameter, z);
         }
 
         /// <summary>

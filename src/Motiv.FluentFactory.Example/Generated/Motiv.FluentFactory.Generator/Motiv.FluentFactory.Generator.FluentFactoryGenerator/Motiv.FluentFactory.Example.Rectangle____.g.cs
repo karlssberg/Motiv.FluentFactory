@@ -8,9 +8,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_0__Motiv_FluentFactory_Example_Rectangle____<T> WithWidth(in T width)
+        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Rectangle____<T> WithWidth(in T width)
         {
-            return new Step_0__Motiv_FluentFactory_Example_Rectangle____<T>(width);
+            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Rectangle____<T>(width);
         }
     }
 
@@ -30,9 +30,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public Step_1__Motiv_FluentFactory_Example_Rectangle____<T> WithHeight(in T height)
+        public global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Rectangle____<T> WithHeight(in T height)
         {
-            return new Step_1__Motiv_FluentFactory_Example_Rectangle____<T>(this._width__parameter, height);
+            return new global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Rectangle____<T>(this._width__parameter, height);
         }
     }
 

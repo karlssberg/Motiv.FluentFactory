@@ -69,6 +69,4 @@ internal static class ExistingPartialTypeMethodDeclaration
             : methodDeclaration.WithTypeParameterList(
                 TypeParameterList(SeparatedList([..typeParameterSyntaxes])));
     }
-
-
 }

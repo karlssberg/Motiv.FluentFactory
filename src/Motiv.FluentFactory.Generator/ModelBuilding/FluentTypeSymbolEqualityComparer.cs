@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Motiv.FluentFactory.Generator.SyntaxGeneration;
 
 namespace Motiv.FluentFactory.Generator.ModelBuilding;
 

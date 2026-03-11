@@ -8,9 +8,9 @@
         ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static Step_0__Motiv_FluentFactory_Example_Square____<T> WithWidth(in T width)
+        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Square____<T> WithWidth(in T width)
         {
-            return new Step_0__Motiv_FluentFactory_Example_Square____<T>(width);
+            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Square____<T>(width);
         }
     }
 

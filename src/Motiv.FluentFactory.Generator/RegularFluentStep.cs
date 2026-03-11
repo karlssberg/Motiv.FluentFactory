@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Motiv.FluentFactory.Generator.SyntaxGeneration;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Motiv.FluentFactory.Generator;
