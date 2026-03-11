@@ -71,7 +71,7 @@ internal static class FluentStepMethodDeclaration
 
         methodDeclaration = AttachParameterList(method, methodDeclaration);
 
-        return AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration);
+        return StepMethodTypeParameterResolver.AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration);
     }
 
     /// <summary>
@@ -111,83 +111,6 @@ internal static class FluentStepMethodDeclaration
                                 .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                 .WithType(
                                     ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
-    }
-
-    /// <summary>
-    /// Filters the method's type parameters by excluding known constructor parameters
-    /// and ambient type parameters, returning the type parameter syntaxes to add to the method.
-    /// </summary>
-    private static ImmutableArray<TypeParameterSyntax> GetMethodTypeParameterSyntaxes(
-        IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
-        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
-    {
-        var rootTypeParametersSet = new HashSet<FluentTypeParameter>(
-            ambientTypeParameters.Select(tp => new FluentTypeParameter(tp)));
-
-        return method.TypeParameters
-            .Except(knownConstructorParameters
-                .SelectMany(parameter => parameter.Type.GetGenericTypeParameters())
-                .Select(genericTypeParameters => new FluentTypeParameter(genericTypeParameters)))
-            .Except(rootTypeParametersSet)
-            .Select(fluentTypeParameter => fluentTypeParameter.TypeParameterSymbol.ToTypeParameterSyntax())
-            .ToImmutableArray();
-    }
-
-    /// <summary>
-    /// Attaches type parameter list and constraint clauses to the method declaration
-    /// if the method has type parameters that are not already covered by constructor
-    /// parameters or ambient type parameters.
-    /// </summary>
-    private static MethodDeclarationSyntax AttachTypeParameters(
-        IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
-        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters,
-        MethodDeclarationSyntax methodDeclaration)
-    {
-        if (!method.TypeParameters.Any())
-            return methodDeclaration;
-
-        var typeParameterSyntaxes = GetMethodTypeParameterSyntaxes(method, knownConstructorParameters, ambientTypeParameters);
-
-        if (typeParameterSyntaxes.Length == 0)
-            return methodDeclaration;
-
-        methodDeclaration = methodDeclaration.WithTypeParameterList(
-            TypeParameterList(SeparatedList([..typeParameterSyntaxes])));
-
-        var combinedTypeParameters = GetCombinedTypeParameters(method, ambientTypeParameters);
-        var constraintClauses = TypeParameterConstraintBuilder.Create(combinedTypeParameters);
-        if (constraintClauses.Length > 0)
-        {
-            methodDeclaration = methodDeclaration
-                .WithConstraintClauses(List(constraintClauses));
-        }
-
-        return methodDeclaration;
-    }
-
-    /// <summary>
-    /// Collects type parameters from both the target type (for non-generic root types)
-    /// and the method's own type parameters into a single array for constraint building.
-    /// </summary>
-    private static ImmutableArray<ITypeParameterSymbol> GetCombinedTypeParameters(
-        IFluentMethod method,
-        ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
-    {
-        var typeParameters = new List<ITypeParameterSymbol>();
-
-        // Include target type parameters for non-generic root types
-        if (ambientTypeParameters.IsEmpty && method.Return is TargetTypeReturn targetTypeReturn &&
-            targetTypeReturn.Constructor.ContainingType.IsGenericType)
-        {
-            typeParameters.AddRange(targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters);
-        }
-
-        // Include method type parameters
-        typeParameters.AddRange(method.TypeParameters.Select(tp => tp.TypeParameterSymbol));
-
-        return [..typeParameters];
     }
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
