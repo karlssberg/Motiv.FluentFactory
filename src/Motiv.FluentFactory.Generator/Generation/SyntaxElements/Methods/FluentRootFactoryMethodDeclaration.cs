@@ -11,12 +11,14 @@ namespace Motiv.FluentFactory.Generator.Generation.SyntaxElements.Methods;
 
 internal static class FluentRootFactoryMethodDeclaration
 {
+    /// <summary>
+    /// Creates a method declaration syntax for a root factory method.
+    /// </summary>
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,
         INamedTypeSymbol rootType)
     {
         var fieldSourcedArguments = GetFieldSourcedArguments(method);
-
         var methodSourcedArguments = GetMethodSourcedArguments(method);
 
         var returnObjectExpression = TargetTypeObjectCreationExpression.Create(
@@ -24,15 +26,17 @@ internal static class FluentRootFactoryMethodDeclaration
             fieldSourcedArguments,
             methodSourcedArguments);
 
-        var methodDeclaration = GetMethodDeclarationSyntax(method, returnObjectExpression);
+        var methodDeclaration = CreateBaseMethodDeclaration(method, returnObjectExpression);
 
-        // Check if we have method type parameters or target type parameters for non-generic root types
-        var hasMethodTypeParameters = method.TypeParameters.Any();
-        var shouldIncludeTargetTypeParameters = rootType?.IsGenericType != true &&
-                                               method.Return is TargetTypeReturn targetTypeReturn &&
-                                               targetTypeReturn.Constructor.ContainingType.IsGenericType;
+        return AttachTypeParametersAndConstraints(methodDeclaration, method, rootType);
+    }
 
-        if (!hasMethodTypeParameters && !shouldIncludeTargetTypeParameters)
+    private static MethodDeclarationSyntax AttachTypeParametersAndConstraints(
+        MethodDeclarationSyntax methodDeclaration,
+        IFluentMethod method,
+        INamedTypeSymbol rootType)
+    {
+        if (!HasTypeParametersToAdd(method, rootType))
             return methodDeclaration;
 
         var typeParameterSyntaxes = GetTypeParameterSyntaxes(method, rootType);
@@ -44,7 +48,6 @@ internal static class FluentRootFactoryMethodDeclaration
             .WithTypeParameterList(
                 TypeParameterList(SeparatedList([..typeParameterSyntaxes])));
 
-        // Add constraint clauses for type parameters
         var constraintClauses = GetConstraintClauses(method, rootType);
         if (constraintClauses.Length > 0)
         {
@@ -55,10 +58,20 @@ internal static class FluentRootFactoryMethodDeclaration
         return methodWithTypeParameters;
     }
 
-    private static ImmutableArray<TypeParameterSyntax> GetTypeParameterSyntaxes(IFluentMethod method, INamedTypeSymbol? rootType)
+    private static bool HasTypeParametersToAdd(IFluentMethod method, INamedTypeSymbol rootType)
     {
-        // For generic root types, don't add type parameters that are already defined by the root type
-        // For non-generic root types, we need to include all target type parameters
+        var hasMethodTypeParameters = method.TypeParameters.Any();
+        var shouldIncludeTargetTypeParameters = rootType?.IsGenericType != true &&
+                                               method.Return is TargetTypeReturn targetTypeReturn &&
+                                               targetTypeReturn.Constructor.ContainingType.IsGenericType;
+
+        return hasMethodTypeParameters || shouldIncludeTargetTypeParameters;
+    }
+
+    private static ImmutableArray<TypeParameterSyntax> GetTypeParameterSyntaxes(
+        IFluentMethod method,
+        INamedTypeSymbol? rootType)
+    {
         var shouldIncludeTargetTypeParameters = rootType?.IsGenericType != true;
 
         var targetTypeParameterSyntaxes = shouldIncludeTargetTypeParameters
@@ -80,99 +93,59 @@ internal static class FluentRootFactoryMethodDeclaration
         return [..allTypeParameters];
     }
 
-    private static ImmutableArray<TypeParameterConstraintClauseSyntax> GetConstraintClauses(IFluentMethod method, INamedTypeSymbol? rootType)
+    private static ImmutableArray<TypeParameterConstraintClauseSyntax> GetConstraintClauses(
+        IFluentMethod method,
+        INamedTypeSymbol? rootType)
     {
-        // For generic root types, don't add constraint clauses for type parameters already defined by the root type
-        // For non-generic root types, we need to include all target type constraints
         var shouldIncludeTargetTypeConstraints = rootType?.IsGenericType != true;
 
         var constraintClauses = new List<TypeParameterConstraintClauseSyntax>();
 
-        // Get target type parameters and their constraints
         if (shouldIncludeTargetTypeConstraints && method.Return is TargetTypeReturn targetTypeReturn)
         {
             foreach (var typeParam in targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters)
             {
-                var constraints = new List<TypeParameterConstraintSyntax>();
-
-                // Add value type constraint
-                if (typeParam.HasValueTypeConstraint)
-                {
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-                }
-
-                // Add reference type constraint
-                if (typeParam.HasReferenceTypeConstraint)
-                {
-                    constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-                }
-
-                // Add constructor constraint
-                if (typeParam.HasConstructorConstraint)
-                {
-                    constraints.Add(ConstructorConstraint());
-                }
-
-                // Add type constraints
-                foreach (var constraintType in typeParam.ConstraintTypes)
-                {
-                    constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
-                }
-
-                if (constraints.Count > 0)
-                {
-                    constraintClauses.Add(
-                        TypeParameterConstraintClause(
-                            IdentifierName(typeParam.Name))
-                        .WithConstraints(SeparatedList(constraints)));
-                }
+                var clause = BuildConstraintClause(typeParam);
+                if (clause is not null)
+                    constraintClauses.Add(clause);
             }
         }
 
-        // Add constraints from method type parameters
         foreach (var typeParam in method.TypeParameters)
         {
-            var constraints = new List<TypeParameterConstraintSyntax>();
-
-            // Add value type constraint
-            if (typeParam.TypeParameterSymbol.HasValueTypeConstraint)
-            {
-                constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
-            }
-
-            // Add reference type constraint
-            if (typeParam.TypeParameterSymbol.HasReferenceTypeConstraint)
-            {
-                constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
-            }
-
-            // Add constructor constraint
-            if (typeParam.TypeParameterSymbol.HasConstructorConstraint)
-            {
-                constraints.Add(ConstructorConstraint());
-            }
-
-            // Add type constraints
-            foreach (var constraintType in typeParam.TypeParameterSymbol.ConstraintTypes)
-            {
-                var typeName = constraintType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat
-                    .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted));
-                constraints.Add(TypeConstraint(ParseTypeName(typeName)));
-            }
-
-            if (constraints.Count > 0)
-            {
-                constraintClauses.Add(
-                    TypeParameterConstraintClause(
-                        IdentifierName(typeParam.TypeParameterSymbol.Name))
-                    .WithConstraints(SeparatedList(constraints)));
-            }
+            var clause = BuildConstraintClause(typeParam.TypeParameterSymbol);
+            if (clause is not null)
+                constraintClauses.Add(clause);
         }
 
         return [..constraintClauses];
     }
 
-    private static MethodDeclarationSyntax GetMethodDeclarationSyntax(IFluentMethod method,
+    private static TypeParameterConstraintClauseSyntax? BuildConstraintClause(ITypeParameterSymbol typeParam)
+    {
+        var constraints = new List<TypeParameterConstraintSyntax>();
+
+        if (typeParam.HasValueTypeConstraint)
+            constraints.Add(ClassOrStructConstraint(SyntaxKind.StructConstraint));
+
+        if (typeParam.HasReferenceTypeConstraint)
+            constraints.Add(ClassOrStructConstraint(SyntaxKind.ClassConstraint));
+
+        if (typeParam.HasConstructorConstraint)
+            constraints.Add(ConstructorConstraint());
+
+        foreach (var constraintType in typeParam.ConstraintTypes)
+            constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
+
+        if (constraints.Count == 0)
+            return null;
+
+        return TypeParameterConstraintClause(IdentifierName(typeParam.Name))
+            .WithConstraints(SeparatedList(constraints));
+    }
+
+    private static MethodDeclarationSyntax CreateBaseMethodDeclaration(
+        IFluentMethod method,
         ObjectCreationExpressionSyntax returnObjectExpression)
     {
         var methodDeclaration = MethodDeclaration(
