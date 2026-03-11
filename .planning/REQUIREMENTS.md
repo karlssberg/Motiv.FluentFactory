@@ -16,10 +16,10 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 ### File Organization
 
-- [ ] **ORG-01**: Project root surfaces key domain concepts (generator entry point, core model types, pipeline stages)
-- [ ] **ORG-02**: Implementation details (syntax helpers, extensions, data structures) are nested in subdirectories
-- [ ] **ORG-03**: Vertical slicing replaces horizontal layering — files grouped by feature/concern, not by technical layer
-- [ ] **ORG-04**: Folder and file names communicate what the system does, not how it's structured
+- [x] **ORG-01**: Project root surfaces key domain concepts (generator entry point, core model types, pipeline stages)
+- [x] **ORG-02**: Implementation details (syntax helpers, extensions, data structures) are nested in subdirectories
+- [x] **ORG-03**: Vertical slicing replaces horizontal layering — files grouped by feature/concern, not by technical layer
+- [x] **ORG-04**: Folder and file names communicate what the system does, not how it's structured
 
 ### Extension Consolidation
 
@@ -68,10 +68,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DECOMP-02 | Phase 7 | Complete |
 | DECOMP-03 | Phase 7 | Complete |
 | DECOMP-04 | Phase 10 | Pending |
-| ORG-01 | Phase 10 | Pending |
-| ORG-02 | Phase 10 | Pending |
-| ORG-03 | Phase 10 | Pending |
-| ORG-04 | Phase 10 | Pending |
+| ORG-01 | Phase 10 | Complete |
+| ORG-02 | Phase 10 | Complete |
+| ORG-03 | Phase 10 | Complete |
+| ORG-04 | Phase 10 | Complete |
 | EXT-01 | Phase 9 | Complete |
 | EXT-02 | Phase 9 | Complete |
 | SYNTAX-01 | Phase 8 | Complete |

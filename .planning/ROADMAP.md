@@ -103,7 +103,7 @@ Plans:
   3. The old horizontal layer folders (Analysis/, Model/, Generation/) are replaced with feature/concern-based groupings
   4. No individual source file exceeds approximately 150 lines
   5. All existing tests pass with identical generated output after reorganization
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 10-01-PLAN.md -- Reorganize folder structure from horizontal layers to screaming architecture with domain concepts at root
@@ -120,4 +120,4 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 7. Core Pipeline Decomposition | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Syntax Generator Decomposition | 3/3 | Complete   | 2026-03-11 | - |
 | 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
-| 10. Screaming Architecture Reorganization | v1.2 | 0/2 | Not started | - |
+| 10. Screaming Architecture Reorganization | 1/2 | In Progress|  | - |

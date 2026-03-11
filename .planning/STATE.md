@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Architecture Refactoring
 status: executing
-stopped_at: Completed 09-01-PLAN.md
-last_updated: "2026-03-11T01:33:44.572Z"
-last_activity: 2026-03-11 -- Completed 09-01 Extension Method Consolidation
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-03-11T08:18:40.944Z"
+last_activity: 2026-03-11 -- Completed 10-01 Screaming Architecture Reorganization
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 11
+  completed_plans: 10
 ---
 
 ---
@@ -35,16 +35,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
-**Current focus:** Phase 9 - Extension Consolidation
+**Current focus:** Phase 10 - Screaming Architecture Reorganization
 
 ## Current Position
 
-Phase: 9 of 10 (Extension Consolidation)
-Plan: 1 of 1 complete
-Status: phase-complete
-Last activity: 2026-03-11 -- Completed 09-01 Extension Method Consolidation
+Phase: 10 of 10 (Screaming Architecture Reorganization)
+Plan: 1 of 2
+Status: executing
+Last activity: 2026-03-11 -- Completed 10-01 Screaming Architecture Reorganization
 
-Progress: [██████████] 100%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [██████████] 100%
 | 08 | 2 | ~10min | ~5min |
 | Phase 08 P02 | 5min | 2 tasks | 6 files |
 | 09 | 1 | ~7min | ~7min |
+| Phase 10-screaming-architecture-reorganization P01 | 6min | 2 tasks | 65 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,7 @@ Recent decisions affecting current work:
 - [Phase 08-02]: ConvertLine/ConvertLineEndings extracted from local functions to private static methods in FluentMethodSummaryDocXml
 - [Phase 09-01]: All consolidated extension classes use shared root namespace Motiv.FluentFactory.Generator for cross-layer accessibility
 - [Phase 09-01]: Separate FullFormat fields in SymbolExtensions vs FluentModelExtensions due to different SymbolDisplayFormat options
+- [Phase 10]: Core domain types promoted to root namespace; pipeline builders in ModelBuilding; extension classes keep root namespace despite Extensions/ directory
 
 ### Pending Todos
 
@@ -101,6 +103,6 @@ None - Phase 09 complete, extension methods consolidated.
 
 ## Session Continuity
 
-Last session: 2026-03-11T01:28:00Z
-Stopped at: Completed 09-01-PLAN.md
-Resume file: .planning/phases/09-extension-consolidation/09-01-SUMMARY.md
+Last session: 2026-03-11T08:18:40.942Z
+Stopped at: Completed 10-01-PLAN.md
+Resume file: None
