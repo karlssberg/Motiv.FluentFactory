@@ -1,4 +1,21 @@
 # Milestones
+## v1.2 — Architecture Refactoring
+
+**Shipped:** 2026-03-11
+**Phases:** 7-10 (4 phases, 9 plans)
+**Git range:** `286be64..c5d3865` (32 commits)
+**Stats:** 104 files changed, +3,815 / -2,357 lines, 5,708 LOC total
+
+### What Shipped
+- Decomposed 3 god classes (FluentModelFactory, FluentFactoryGenerator, ConstructorAnalyzer) into 11 focused single-responsibility types
+- Extracted shared TypeParameterConstraintBuilder, fixing a constraint qualification bug
+- Decomposed syntax generation classes into thin orchestrators with focused helpers
+- Consolidated duplicate extension methods into 4 concern-based extension files
+- Reorganized project to screaming architecture with domain concepts at root
+- Split all files to ~150 lines with single responsibilities
+
+---
+
 
 ## v1.0 — Initial Release
 

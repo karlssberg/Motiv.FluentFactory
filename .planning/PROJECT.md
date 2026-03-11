@@ -26,34 +26,23 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - ✓ NuGet packaging (generator + attributes bundled) — v1.0
 - ✓ All generated type references use fully qualified `global::` names — v1.1
 - ✓ All generated types/members decorated with `[GeneratedCode]` attribute — v1.1
+- ✓ Generator project reorganized with screaming architecture — v1.2
+- ✓ Vertical slicing replaces horizontal layering — v1.2
+- ✓ God classes decomposed into bite-sized, single-responsibility types — v1.2
+- ✓ All existing tests continue to pass (behavior-preserving refactor) — v1.2
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Generator project reorganized with screaming architecture (key concepts at root, details in subdirectories)
-- [ ] Vertical slicing replaces horizontal layering (by feature/concern, not by technical layer)
-- [ ] God classes decomposed into bite-sized, single-responsibility types
-- [ ] All existing tests continue to pass (behavior-preserving refactor)
+(None — planning next milestone)
 
 ### Out of Scope
 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
-- New features or attribute changes — pure refactoring milestone
-- Runtime API changes — internal generator structure only
-- Test refactoring — focus is on production code organization
-- Generated output changes — refactoring must not alter generated .g.cs files
-
-## Current Milestone: v1.2 Architecture Refactoring
-
-**Goal:** Reorganize the Generator project for screaming architecture with vertical slicing, and decompose god classes into bite-sized, single-responsibility types.
-
-**Target features:**
-- Screaming architecture — important concepts at project root, implementation details in subdirectories
-- Vertical slicing — organize by feature/concern instead of horizontal layers (Analysis/, Model/, Generation/)
-- God class decomposition — break FluentModelFactory (438 lines), FluentFactoryGenerator (376 lines), and other large classes into focused types
-- Bite-sized files — each class has a single, clear responsibility
+- Test refactoring — production code is well-organized, test refactoring can be its own milestone if needed
+- Generated output changes — current output format works well, changes would break consumers
 
 ## Context
 
@@ -62,6 +51,9 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - Generated output is .g.cs files added to compilation
 - Existing tests use CSharpSourceGeneratorVerifier with expected output comparison
 - Package version is 1.0.0, published as Motiv.FluentFactory on NuGet
+- Shipped v1.2 with 5,708 LOC C# in the generator project
+- Generator project uses screaming architecture: domain types at root, implementation in subdirectories (ConstructorAnalysis, ModelBuilding, SyntaxGeneration, Extensions)
+- All source files ~150 lines or less with single responsibilities
 
 ## Constraints
 
@@ -75,8 +67,12 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 |----------|-----------|---------|
 | Use `global::` for all type references | Prevents namespace conflicts in consumer code | ✓ Good |
 | Tool name "Motiv.FluentFactory" for GeneratedCode attribute | Matches NuGet package name for discoverability | ✓ Good |
-| Screaming architecture over horizontal layering | Key concepts visible at project root, details nested | — Pending |
-| Vertical slicing over technical layers | Organize by feature/concern, not Analysis/Model/Generation | — Pending |
+| Screaming architecture over horizontal layering | Key concepts visible at project root, details nested | ✓ Good |
+| Vertical slicing over technical layers | Organize by feature/concern, not Analysis/Model/Generation | ✓ Good |
+| Strategy pattern for constructor analysis | Pluggable storage detection, stateless strategies with semantic model parameter | ✓ Good |
+| Thin orchestrator pattern for syntax generation | Method declarations delegate to focused helpers, easier to understand | ✓ Good |
+| Shared TypeParameterConstraintBuilder | Single source of truth for constraint generation, fixed qualification bug | ✓ Good |
+| Concern-based extension organization | Extensions grouped by domain concern (symbols, type params, fluent model, strings) | ✓ Good |
 
 ---
-*Last updated: 2026-03-10 after milestone v1.2 initialization*
+*Last updated: 2026-03-11 after v1.2 milestone*
