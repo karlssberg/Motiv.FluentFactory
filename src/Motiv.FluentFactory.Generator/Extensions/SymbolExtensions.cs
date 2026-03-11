@@ -6,69 +6,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Motiv.FluentFactory.Generator;
 
 /// <summary>
-/// Extension methods for symbol display formatting, type analysis,
-/// accessibility conversion, and attribute inspection.
+/// Extension methods for type analysis, assignability checking,
+/// and type parameter replacement.
 /// </summary>
 internal static class SymbolExtensions
 {
-    private static readonly SymbolDisplayFormat TypeNameOnlyFormat = new(
-        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
-        genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters
-    );
-
-    private static readonly SymbolDisplayFormat GlobalQualifiedFormat = SymbolDisplayFormat.FullyQualifiedFormat
-        .WithMiscellaneousOptions(
-            SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
-            SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-
-    private static readonly SymbolDisplayFormat FullFormat = new(
-        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-        genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters |
-                         SymbolDisplayGenericsOptions.IncludeTypeConstraints,
-        memberOptions: SymbolDisplayMemberOptions.IncludeParameters |
-                       SymbolDisplayMemberOptions.IncludeContainingType |
-                       SymbolDisplayMemberOptions.IncludeType,
-        parameterOptions: SymbolDisplayParameterOptions.IncludeType |
-                          SymbolDisplayParameterOptions.IncludeName |
-                          SymbolDisplayParameterOptions.IncludeDefaultValue,
-        miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes |
-                              SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-
-    /// <summary>
-    /// Returns the global::-qualified display string for a type symbol.
-    /// Type parameters (T, TResult) are returned as their name only.
-    /// C# keyword aliases (int, string, bool) are preserved via UseSpecialTypes.
-    /// </summary>
-    /// <param name="typeSymbol">The type symbol to format.</param>
-    /// <returns>The global::-qualified display string.</returns>
-    public static string ToGlobalDisplayString(this ITypeSymbol typeSymbol)
-    {
-        return typeSymbol switch
-        {
-            ITypeParameterSymbol tp => tp.Name,
-            _ => typeSymbol.ToDisplayString(GlobalQualifiedFormat)
-        };
-    }
-
-    /// <summary>
-    /// Returns the full display string for a symbol including namespace,
-    /// containing types, type parameters, constraints, and member details.
-    /// </summary>
-    /// <param name="symbol">The symbol to format.</param>
-    /// <returns>The full display string.</returns>
-    public static string ToFullDisplayString(this ISymbol symbol)
-    {
-        return symbol.ToDisplayString(FullFormat);
-    }
-
-    /// <summary>
-    /// Returns the unqualified (name-only) display string for a type symbol.
-    /// </summary>
-    /// <param name="typeSymbol">The type symbol to format.</param>
-    /// <returns>The unqualified display string.</returns>
-    public static string ToUnqualifiedDisplayString(this ITypeSymbol typeSymbol) =>
-        typeSymbol.ToDisplayString(TypeNameOnlyFormat);
-
     /// <summary>
     /// Determines whether a type symbol is an open generic type (contains unbound type parameters).
     /// </summary>
@@ -201,23 +143,6 @@ internal static class SymbolExtensions
     }
 
     /// <summary>
-    /// Converts a <see cref="Accessibility"/> value to the corresponding syntax kind keywords.
-    /// </summary>
-    /// <param name="accessibility">The accessibility to convert.</param>
-    /// <returns>An enumerable of <see cref="SyntaxKind"/> values representing the access modifier keywords.</returns>
-    public static IEnumerable<SyntaxKind> AccessibilityToSyntaxKind(this Accessibility accessibility) =>
-        accessibility switch
-        {
-            Accessibility.Public => [SyntaxKind.PublicKeyword],
-            Accessibility.Private => [SyntaxKind.PrivateKeyword],
-            Accessibility.Protected => [SyntaxKind.ProtectedKeyword],
-            Accessibility.Internal => [SyntaxKind.InternalKeyword],
-            Accessibility.ProtectedOrInternal => [SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword],
-            Accessibility.ProtectedAndInternal => [SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword],
-            _ => [SyntaxKind.None]
-        };
-
-    /// <summary>
     /// Replaces type parameters in a generic named type symbol using the provided replacements map.
     /// Recursively processes nested generic type arguments.
     /// </summary>
@@ -241,41 +166,4 @@ internal static class SymbolExtensions
         return type.OriginalDefinition.Construct(newTypeArgs.ToArray());
     }
 
-    /// <summary>
-    /// Determines whether a symbol has an attribute matching the specified type name.
-    /// </summary>
-    /// <param name="type">The symbol to check.</param>
-    /// <param name="attribute">The attribute type name to look for.</param>
-    /// <returns><c>true</c> if the symbol has the specified attribute; otherwise, <c>false</c>.</returns>
-    public static bool HasAttribute(this ISymbol type, TypeName attribute) =>
-        GetAttributes(type, attribute).Any();
-
-    /// <summary>
-    /// Determines whether a symbol has an attribute of the specified generic type.
-    /// </summary>
-    /// <typeparam name="TAttribute">The attribute type to look for.</typeparam>
-    /// <param name="type">The symbol to check.</param>
-    /// <returns><c>true</c> if the symbol has the specified attribute; otherwise, <c>false</c>.</returns>
-    public static bool HasAttribute<TAttribute>(this ISymbol type) where TAttribute : Attribute =>
-        GetAttributes<TAttribute>(type).Any();
-
-    /// <summary>
-    /// Gets all attribute data instances matching the specified type name from a symbol.
-    /// </summary>
-    /// <param name="type">The symbol to inspect.</param>
-    /// <param name="attribute">The attribute type name to match.</param>
-    /// <returns>An enumerable of matching <see cref="AttributeData"/> instances.</returns>
-    public static IEnumerable<AttributeData> GetAttributes(this ISymbol type, TypeName attribute) =>
-        type.GetAttributes()
-            .Where(attr => attr.AttributeClass?.ToDisplayString() == attribute);
-
-    /// <summary>
-    /// Gets all attribute data instances of the specified generic type from a symbol.
-    /// </summary>
-    /// <typeparam name="TAttribute">The attribute type to match.</typeparam>
-    /// <param name="type">The symbol to inspect.</param>
-    /// <returns>An enumerable of matching <see cref="AttributeData"/> instances.</returns>
-    public static IEnumerable<AttributeData> GetAttributes<TAttribute>(this ISymbol type) where TAttribute : Attribute =>
-        type.GetAttributes()
-            .Where(attr => attr.AttributeClass?.ToDisplayString() == typeof(TAttribute).FullName);
 }

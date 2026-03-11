@@ -17,7 +17,7 @@ internal static class TypeParameterConstraintBuilder
     /// Creates type parameter constraint clauses for the given type parameters.
     /// Constraints are ordered: reference type (class), value type (struct),
     /// type constraints, constructor constraint (new()).
-    /// All type constraints use globally-qualified names via <see cref="SymbolExtensions.ToGlobalDisplayString"/>.
+    /// All type constraints use globally-qualified names via <see cref="SymbolDisplayExtensions.ToGlobalDisplayString"/>.
     /// </summary>
     /// <param name="typeParameters">The type parameters to generate constraint clauses for.</param>
     /// <returns>An immutable array of constraint clause syntax nodes for type parameters that have constraints.</returns>
