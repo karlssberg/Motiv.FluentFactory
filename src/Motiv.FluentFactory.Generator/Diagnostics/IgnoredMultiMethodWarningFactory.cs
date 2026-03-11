@@ -1,7 +1,5 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Motiv.FluentFactory.Generator.Model;
-using Motiv.FluentFactory.Generator.Model.Methods;
 
 namespace Motiv.FluentFactory.Generator.Diagnostics;
 

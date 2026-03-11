@@ -1,8 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Motiv.FluentFactory.Generator.Analysis;
-using Motiv.FluentFactory.Generator.Generation.SyntaxElements;
-using Motiv.FluentFactory.Generator.Model;
+using Motiv.FluentFactory.Generator.ConstructorAnalysis;
+using Motiv.FluentFactory.Generator.SyntaxGeneration;
 
 namespace Motiv.FluentFactory.Generator;
 

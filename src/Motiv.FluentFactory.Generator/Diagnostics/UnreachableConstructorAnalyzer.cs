@@ -1,6 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Motiv.FluentFactory.Generator.Model.Methods;
-using Motiv.FluentFactory.Generator.Model.Steps;
 
 namespace Motiv.FluentFactory.Generator.Diagnostics;
 
