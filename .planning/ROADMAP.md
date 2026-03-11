@@ -43,7 +43,7 @@ Plans:
 
 - [x] **Phase 7: Core Pipeline Decomposition** - Decompose FluentModelFactory, FluentFactoryGenerator, and ConstructorAnalyzer into focused single-responsibility types (completed 2026-03-10)
 - [x] **Phase 8: Syntax Generator Decomposition** - Decompose FluentStepMethodDeclaration, FluentRootFactoryMethodDeclaration, and FluentMethodSummaryDocXml into focused types (completed 2026-03-11)
-- [ ] **Phase 9: Extension Consolidation** - Merge duplicate SymbolExtensions and organize extension methods by concern
+- [x] **Phase 9: Extension Consolidation** - Merge duplicate SymbolExtensions and organize extension methods by concern (completed 2026-03-11)
 - [ ] **Phase 10: Screaming Architecture Reorganization** - Restructure folders for vertical slicing with domain concepts at root and details nested
 
 ## Phase Details
@@ -88,10 +88,10 @@ Plans:
   1. A single SymbolExtensions location exists (the duplicate across Model and Generation namespaces is eliminated)
   2. Extension methods are grouped by the domain concern they serve, not by the old horizontal layer they lived in
   3. All existing tests pass with identical generated output after consolidation
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 09-01-PLAN.md -- Consolidate all extension files by concern: TypeParameterExtensions, SymbolExtensions, FluentModelExtensions, StringExtensions
+- [x] 09-01-PLAN.md -- Consolidate all extension files by concern: TypeParameterExtensions, SymbolExtensions, FluentModelExtensions, StringExtensions
 
 ### Phase 10: Screaming Architecture Reorganization
 **Goal**: The project folder structure communicates what the system does at a glance, with key concepts at the root and implementation details nested in subdirectories
@@ -118,5 +118,5 @@ Phases execute in numeric order: 7 -> 8 -> 9 -> 10
 | 6. Generated Code Hardening | v1.1 | 2/2 | Complete | 2026-03-09 |
 | 7. Core Pipeline Decomposition | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Syntax Generator Decomposition | 3/3 | Complete   | 2026-03-11 | - |
-| 9. Extension Consolidation | v1.2 | 0/1 | Not started | - |
+| 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
 | 10. Screaming Architecture Reorganization | v1.2 | 0/? | Not started | - |

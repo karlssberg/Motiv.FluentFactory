@@ -23,8 +23,8 @@ Requirements for Architecture Refactoring milestone. Each maps to roadmap phases
 
 ### Extension Consolidation
 
-- [ ] **EXT-01**: Duplicate SymbolExtensions (Model + Generation namespaces) are merged into a single location
-- [ ] **EXT-02**: Extension methods are organized by the concern they serve, not by the layer they live in
+- [x] **EXT-01**: Duplicate SymbolExtensions (Model + Generation namespaces) are merged into a single location
+- [x] **EXT-02**: Extension methods are organized by the concern they serve, not by the layer they live in
 
 ### Syntax Generator Decomposition
 
@@ -72,8 +72,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ORG-02 | Phase 10 | Pending |
 | ORG-03 | Phase 10 | Pending |
 | ORG-04 | Phase 10 | Pending |
-| EXT-01 | Phase 9 | Pending |
-| EXT-02 | Phase 9 | Pending |
+| EXT-01 | Phase 9 | Complete |
+| EXT-02 | Phase 9 | Complete |
 | SYNTAX-01 | Phase 8 | Complete |
 | SYNTAX-02 | Phase 8 | Complete |
 | SYNTAX-03 | Phase 8 | Complete |
@@ -87,4 +87,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-10*
-*Last updated: 2026-03-10 after roadmap creation*
+*Last updated: 2026-03-11 after phase 09 completion*
