@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Edge Case Stress Testing
 status: executing
-stopped_at: Completed 14-01-PLAN.md
-last_updated: "2026-03-14T17:42:28.361Z"
-last_activity: 2026-03-14 — Completed 11-02 (MFFG0011 unsupported parameter modifier diagnostic)
+stopped_at: Completed 15-01-PLAN.md
+last_updated: "2026-03-14T18:55:27.000Z"
+last_activity: 2026-03-14 — Completed 15-01 (MFFG0012 inaccessible constructor + MFFG0013 missing partial modifier diagnostics)
 progress:
   total_phases: 5
   completed_phases: 4
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-12)
 
 **Core value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
-**Current focus:** Phase 11 — Type System Edge Cases
+**Current focus:** Phase 15 — Scope and Accessibility Diagnostics
 
 ## Current Position
 
-Phase: 11 of 15 (Type System Edge Cases)
-Plan: 2 of TBD in current phase
+Phase: 15 of 15 (Scope and Accessibility Diagnostics)
+Plan: 1 of TBD in current phase
 Status: In progress
-Last activity: 2026-03-14 — Completed 11-02 (MFFG0011 unsupported parameter modifier diagnostic)
+Last activity: 2026-03-14 — Completed 15-01 (MFFG0012 inaccessible constructor + MFFG0013 missing partial modifier diagnostics)
 
-Progress: [██░░░░░░░░] 10% (v1.3 plan 02 complete)
+Progress: [██████████] ~90% (15-01 complete)
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [██░░░░░░░░] 10% (v1.3 plan 02 complete)
 | Phase 13-internal-correctness P02 | 8 | 2 tasks | 2 files |
 | Phase 14-diagnostic-edge-cases P02 | 2min | 1 tasks | 1 files |
 | Phase 14-diagnostic-edge-cases P01 | 8 | 2 tasks | 2 files |
+| Phase 15-scope-and-accessibility-diagnostics P01 | 5min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase 14-diagnostic-edge-cases]: Empirical span discovery: write test with approximate spans, run, read actual spans from failure output, update test
 - [Phase 14-diagnostic-edge-cases]: Generator emits output for CS0449 invalid class+struct constraints, forwarding them as-is; CompilerDiagnostics.None + explicit GeneratedSources required for resilience tests
 - [Phase 14-diagnostic-edge-cases]: MFFG0009 and MFFG0007 both fire independently confirming no short-circuit after first error
+- [Phase 15-scope-and-accessibility-diagnostics]: MFFG0012 implemented via FilterInaccessibleConstructors in FluentModelFactory (same pattern as MFFG0011) — ensures constructors filtered before generation for 'no output' behavior
+- [Phase 15-scope-and-accessibility-diagnostics]: MFFG0013 implemented via ValidateMissingPartialModifier in FluentConstructorValidator chained into GetDiagnostics() — Error severity triggers existing short-circuit at FluentModelFactory line 45-48
+- [Phase 15-scope-and-accessibility-diagnostics]: CompilerDiagnostics.None required for MFFG0013 test to suppress C# compiler errors on non-partial types
 
 ### Pending Todos
 
@@ -83,10 +87,10 @@ None.
 
 ### Blockers/Concerns
 
-- [Phase 15]: SCOPE-01 through SCOPE-04 likely require new diagnostic rule implementations in the generator before tests can pass — plan-phase should account for implementation work, not just test writing
+None.
 
 ## Session Continuity
 
-Last session: 2026-03-14T17:42:28.359Z
-Stopped at: Completed 14-01-PLAN.md
+Last session: 2026-03-14T18:55:27.000Z
+Stopped at: Completed 15-01-PLAN.md
 Resume file: None

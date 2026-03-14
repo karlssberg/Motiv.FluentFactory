@@ -32,15 +32,15 @@ Requirements for edge case stress testing milestone. Each maps to roadmap phases
 
 ### Diagnostics
 
-- [ ] **DIAG-01**: Generator reports diagnostic for malformed attribute usage
-- [ ] **DIAG-02**: Generator reports diagnostic for invalid generic constraint combinations
+- [x] **DIAG-01**: Generator reports diagnostic for malformed attribute usage
+- [x] **DIAG-02**: Generator reports diagnostic for invalid generic constraint combinations
 - [x] **DIAG-03**: Generator gracefully handles user code with compilation errors
 
 ### Scope & Accessibility
 
-- [ ] **SCOPE-01**: Generator reports diagnostic for private/protected constructors marked `[FluentConstructor]`
+- [x] **SCOPE-01**: Generator reports diagnostic for private/protected constructors marked `[FluentConstructor]`
 - [ ] **SCOPE-02**: Generator reports diagnostic for inaccessible parameter types in public factory
-- [ ] **SCOPE-03**: Generator reports diagnostic for missing `partial` modifier on factory root type
+- [x] **SCOPE-03**: Generator reports diagnostic for missing `partial` modifier on factory root type
 - [ ] **SCOPE-04**: Generator reports diagnostic for accessibility mismatch (e.g., public factory for internal type)
 - [ ] **SCOPE-05**: Generator handles nested private classes as factory targets
 
@@ -77,12 +77,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COMP-02 | Phase 13 | Complete |
 | COMP-03 | Phase 13 | Complete |
 | COMP-04 | Phase 13 | Complete |
-| DIAG-01 | Phase 14 | Pending |
-| DIAG-02 | Phase 14 | Pending |
+| DIAG-01 | Phase 14 | Complete |
+| DIAG-02 | Phase 14 | Complete |
 | DIAG-03 | Phase 14 | Complete |
-| SCOPE-01 | Phase 15 | Pending |
+| SCOPE-01 | Phase 15 | Complete |
 | SCOPE-02 | Phase 15 | Pending |
-| SCOPE-03 | Phase 15 | Pending |
+| SCOPE-03 | Phase 15 | Complete |
 | SCOPE-04 | Phase 15 | Pending |
 | SCOPE-05 | Phase 15 | Pending |
 

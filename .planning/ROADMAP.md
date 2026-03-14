@@ -118,7 +118,11 @@ Plans:
   3. The generator emits a diagnostic when the factory root type is missing the `partial` modifier, and a test verifies this
   4. The generator emits a diagnostic for accessibility mismatch (e.g., public factory over internal type), and a test verifies this
   5. A test exists for nested private classes as factory targets and documents the generator's behavior (pass or diagnostic)
-**Plans**: TBD
+**Plans:** 1/2 plans executed
+
+Plans:
+- [ ] 15-01-PLAN.md — Constructor accessibility and missing partial modifier diagnostics (SCOPE-01, SCOPE-03)
+- [ ] 15-02-PLAN.md — Inaccessible parameter types, accessibility mismatch, and nested private class tests (SCOPE-02, SCOPE-04, SCOPE-05)
 
 ## Progress
 
@@ -137,4 +141,4 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
 | 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
 | 14. Diagnostic Edge Cases | 2/2 | Complete   | 2026-03-14 | - |
-| 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
+| 15. Scope and Accessibility Diagnostics | 1/2 | In Progress|  | - |
