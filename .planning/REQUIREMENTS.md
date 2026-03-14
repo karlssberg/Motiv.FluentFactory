@@ -17,11 +17,11 @@ Requirements for edge case stress testing milestone. Each maps to roadmap phases
 
 ### Constructor Variations
 
-- [ ] **CTOR-01**: Generator handles constructors with 5+ parameters
-- [ ] **CTOR-02**: Generator handles records with explicit constructors alongside positional parameters
+- [x] **CTOR-01**: Generator handles constructors with 5+ parameters
+- [x] **CTOR-02**: Generator handles records with explicit constructors alongside positional parameters
 - [x] **CTOR-03**: Generator handles constructor chaining (`this(...)` calls)
 - [x] **CTOR-04**: Generator handles named arguments in constructor chaining
-- [ ] **CTOR-05**: Generator handles records mixing positional and explicit members
+- [x] **CTOR-05**: Generator handles records mixing positional and explicit members
 
 ### Parameter Comparison
 
@@ -68,11 +68,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TYPE-03 | Phase 11 | Tests written (11-01) |
 | TYPE-04 | Phase 11 | Tests written (11-01) |
 | TYPE-05 | Phase 11 | Tests written (11-01) |
-| CTOR-01 | Phase 12 | Pending |
-| CTOR-02 | Phase 12 | Pending |
+| CTOR-01 | Phase 12 | Complete |
+| CTOR-02 | Phase 12 | Complete |
 | CTOR-03 | Phase 12 | Complete |
 | CTOR-04 | Phase 12 | Complete |
-| CTOR-05 | Phase 12 | Pending |
+| CTOR-05 | Phase 12 | Complete |
 | COMP-01 | Phase 13 | Pending |
 | COMP-02 | Phase 13 | Pending |
 | COMP-03 | Phase 13 | Pending |
