@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Edge Case Stress Testing
 status: in_progress
-stopped_at: "Completed 11-01-PLAN.md"
-last_updated: "2026-03-14T15:57:40Z"
-last_activity: 2026-03-14 — Phase 11, Plan 01 completed
+stopped_at: "Completed 11-02-PLAN.md"
+last_updated: "2026-03-14T17:00:00Z"
+last_activity: 2026-03-14 — Phase 11, Plan 02 completed
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 1
-  completed_plans: 1
-  percent: 5
+  total_plans: 2
+  completed_plans: 2
+  percent: 10
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-12)
 ## Current Position
 
 Phase: 11 of 15 (Type System Edge Cases)
-Plan: 1 of TBD in current phase
+Plan: 2 of TBD in current phase
 Status: In progress
-Last activity: 2026-03-14 — Completed 11-01 (nullable + generic array + partially open + deep nested tests)
+Last activity: 2026-03-14 — Completed 11-02 (MFFG0011 unsupported parameter modifier diagnostic)
 
-Progress: [█░░░░░░░░░] 5% (v1.3 plan 01 complete)
+Progress: [██░░░░░░░░] 10% (v1.3 plan 02 complete)
 
 ## Performance Metrics
 
@@ -43,7 +43,7 @@ Progress: [█░░░░░░░░░] 5% (v1.3 plan 01 complete)
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 11-type-system-edge-cases | 1 | 2m | 2m |
+| 11-type-system-edge-cases | 2 | ~47m | ~23m |
 
 *Updated after each plan completion*
 
@@ -58,6 +58,7 @@ Recent decisions affecting current work:
 - [v1.2]: Strategy pattern for constructor analysis (pluggable storage detection)
 - [v1.3]: Failing tests = discovered shortcomings = milestone success (not failure)
 - [11-01]: Tests assert DESIRED output — all 11 new edge case tests fail, documenting 4 generator shortcomings
+- [11-02]: `in` parameters are supported (drop modifier at call site); only ref/out/ref-readonly trigger MFFG0011
 
 ### Pending Todos
 
@@ -69,6 +70,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-14T15:57:40Z
-Stopped at: Completed 11-01-PLAN.md
-Resume file: .planning/phases/11-type-system-edge-cases/11-01-SUMMARY.md
+Last session: 2026-03-14T17:00:00Z
+Stopped at: Completed 11-02-PLAN.md
+Resume file: .planning/phases/11-type-system-edge-cases/11-02-SUMMARY.md

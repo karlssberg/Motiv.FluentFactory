@@ -39,7 +39,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 
 ## Phase Summary Checklist
 
-- [ ] **Phase 11: Type System Edge Cases** - Tests covering nullable annotations, parameter modifiers, arrays of generics, and deeply nested generic types
+- [x] **Phase 11: Type System Edge Cases** - Tests covering nullable annotations, parameter modifiers, arrays of generics, and deeply nested generic types
 - [ ] **Phase 12: Constructor Variation Edge Cases** - Tests covering large parameter counts, records with explicit constructors, and constructor chaining
 - [ ] **Phase 13: Internal Correctness** - Tests covering parameter equality, hash code contracts, overlapping method names, and Trie key collision behavior
 - [ ] **Phase 14: Diagnostic Edge Cases** - Tests covering malformed attribute usage, invalid generic constraint combinations, and user code with compilation errors
@@ -61,7 +61,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 
 Plans:
 - [x] 11-01-PLAN.md — Nullable, generic array, partially open generic, and deep nested generic tests (TYPE-01, TYPE-03, TYPE-04, TYPE-05)
-- [ ] 11-02-PLAN.md — Parameter modifier diagnostic implementation and tests (TYPE-02)
+- [x] 11-02-PLAN.md — Parameter modifier diagnostic implementation and tests (TYPE-02)
 
 ### Phase 12: Constructor Variation Edge Cases
 **Goal**: The generator's behavior under unusual constructor patterns is documented and observable via passing or failing tests
@@ -121,7 +121,7 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 8. Syntax Generator Decomposition | v1.2 | 3/3 | Complete | 2026-03-11 |
 | 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
-| 11. Type System Edge Cases | v1.3 | 1/2 | In progress | - |
+| 11. Type System Edge Cases | v1.3 | 2/2 | Complete | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | v1.3 | 0/TBD | Not started | - |
 | 13. Internal Correctness | v1.3 | 0/TBD | Not started | - |
 | 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
