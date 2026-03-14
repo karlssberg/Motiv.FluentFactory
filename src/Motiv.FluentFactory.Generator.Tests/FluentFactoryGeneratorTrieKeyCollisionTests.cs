@@ -1,0 +1,255 @@
+using VerifyCS =
+    Motiv.FluentFactory.Generator.Tests.CSharpSourceGeneratorVerifier<Motiv.FluentFactory.Generator.FluentFactoryGenerator>;
+
+namespace Motiv.FluentFactory.Generator.Tests;
+
+public class FluentFactoryGeneratorTrieKeyCollisionTests
+{
+    private const string SourceFile = "Source.cs";
+
+    /// <summary>
+    /// Tests that two constructors with identical parameter type sequences but different parameter names
+    /// are NOT merged by the Trie, because <c>FluentMethodParameter</c> equality uses <c>Names.Overlaps</c>
+    /// and non-overlapping names with the same type are NOT equal in the Trie.
+    /// Expected: Factory has both <c>WithName</c> and <c>WithLabel</c> as separate entry points,
+    /// each leading to its own step chain.
+    /// </summary>
+    [Fact]
+    internal async Task Given_two_constructors_with_same_type_sequence_but_different_names_Should_generate_separate_entry_points()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public class TargetA
+            {
+                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                public TargetA(string name, int age)
+                {
+                    Name = name;
+                    Age = age;
+                }
+
+                public string Name { get; set; }
+                public int Age { get; set; }
+            }
+
+            public class TargetB
+            {
+                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                public TargetB(string label, int count)
+                {
+                    Label = label;
+                    Count = count;
+                }
+
+                public string Label { get; set; }
+                public int Count { get; set; }
+            }
+            """;
+
+        const string expected =
+            """
+            namespace Test
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    {
+                        return new global::Test.Step_0__Test_Factory(name);
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetB"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Step_1__Test_Factory WithLabel(in string label)
+                    {
+                        return new global::Test.Step_1__Test_Factory(label);
+                    }
+                }
+
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                /// <summary>
+                ///     <seealso cref="Test.TargetA"/>
+                /// </summary>
+                public struct Step_0__Test_Factory
+                {
+                    private readonly string _name__parameter;
+                    internal Step_0__Test_Factory(in string name)
+                    {
+                        this._name__parameter = name;
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetA WithAge(in int age)
+                    {
+                        return new global::Test.TargetA(this._name__parameter, age);
+                    }
+                }
+
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                /// <summary>
+                ///     <seealso cref="Test.TargetB"/>
+                /// </summary>
+                public struct Step_1__Test_Factory
+                {
+                    private readonly string _label__parameter;
+                    internal Step_1__Test_Factory(in string label)
+                    {
+                        this._label__parameter = label;
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetB"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetB WithCount(in int count)
+                    {
+                        return new global::Test.TargetB(this._label__parameter, count);
+                    }
+                }
+            }// <auto-generated/>
+            #nullable enable
+
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
+
+    /// <summary>
+    /// Tests that two constructors with a shared parameter prefix are correctly merged by the Trie
+    /// at the common node, then branch into separate steps for the diverging parameters.
+    /// TargetA: <c>(string name, int age)</c> and TargetB: <c>(string name, bool isActive)</c>
+    /// share <c>string name</c> as the first parameter. The Trie merges at <c>WithName</c>,
+    /// producing a shared Step_0 with both <c>WithAge</c> and <c>WithIsActive</c> as continuation methods.
+    /// </summary>
+    [Fact]
+    internal async Task Given_two_constructors_with_shared_prefix_Should_merge_at_common_node_and_branch_for_diverging_parameters()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public class TargetA
+            {
+                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                public TargetA(string name, int age)
+                {
+                    Name = name;
+                    Age = age;
+                }
+
+                public string Name { get; set; }
+                public int Age { get; set; }
+            }
+
+            public class TargetB
+            {
+                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                public TargetB(string name, bool isActive)
+                {
+                    Name = name;
+                    IsActive = isActive;
+                }
+
+                public string Name { get; set; }
+                public bool IsActive { get; set; }
+            }
+            """;
+
+        const string expected =
+            """
+            namespace Test
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA"/>
+                    ///     <seealso cref="Test.TargetB"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    {
+                        return new global::Test.Step_0__Test_Factory(name);
+                    }
+                }
+
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                /// <summary>
+                ///     <seealso cref="Test.TargetA"/>
+                ///     <seealso cref="Test.TargetB"/>
+                /// </summary>
+                public struct Step_0__Test_Factory
+                {
+                    private readonly string _name__parameter;
+                    internal Step_0__Test_Factory(in string name)
+                    {
+                        this._name__parameter = name;
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetA WithAge(in int age)
+                    {
+                        return new global::Test.TargetA(this._name__parameter, age);
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetB"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetB WithIsActive(in bool isActive)
+                    {
+                        return new global::Test.TargetB(this._name__parameter, isActive);
+                    }
+                }
+            }// <auto-generated/>
+            #nullable enable
+
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
+}
