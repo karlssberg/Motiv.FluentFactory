@@ -43,7 +43,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 - [x] **Phase 12: Constructor Variation Edge Cases** - Tests covering large parameter counts, records with explicit constructors, and constructor chaining (completed 2026-03-14)
 - [x] **Phase 13: Internal Correctness** - Tests covering parameter equality, hash code contracts, overlapping method names, and Trie key collision behavior (completed 2026-03-14)
 - [x] **Phase 14: Diagnostic Edge Cases** - Tests covering malformed attribute usage, invalid generic constraint combinations, and user code with compilation errors (completed 2026-03-14)
-- [ ] **Phase 15: Scope and Accessibility Diagnostics** - New diagnostic rules and tests covering constructor accessibility, inaccessible parameter types, missing partial modifier, and accessibility mismatches
+- [x] **Phase 15: Scope and Accessibility Diagnostics** - New diagnostic rules and tests covering constructor accessibility, inaccessible parameter types, missing partial modifier, and accessibility mismatches (completed 2026-03-14)
 
 ## Phase Details
 
@@ -118,7 +118,7 @@ Plans:
   3. The generator emits a diagnostic when the factory root type is missing the `partial` modifier, and a test verifies this
   4. The generator emits a diagnostic for accessibility mismatch (e.g., public factory over internal type), and a test verifies this
   5. A test exists for nested private classes as factory targets and documents the generator's behavior (pass or diagnostic)
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 15-01-PLAN.md — Constructor accessibility and missing partial modifier diagnostics (SCOPE-01, SCOPE-03)
@@ -141,4 +141,4 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
 | 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
 | 14. Diagnostic Edge Cases | 2/2 | Complete   | 2026-03-14 | - |
-| 15. Scope and Accessibility Diagnostics | 1/2 | In Progress|  | - |
+| 15. Scope and Accessibility Diagnostics | 2/2 | Complete   | 2026-03-14 | - |

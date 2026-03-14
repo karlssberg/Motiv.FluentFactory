@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Edge Case Stress Testing
 status: executing
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-03-14T18:55:27.000Z"
+stopped_at: Completed 15-02-PLAN.md
+last_updated: "2026-03-14T19:08:27.831Z"
 last_activity: 2026-03-14 — Completed 15-01 (MFFG0012 inaccessible constructor + MFFG0013 missing partial modifier diagnostics)
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 8
-  completed_plans: 8
-  percent: 10
+  completed_phases: 5
+  total_plans: 10
+  completed_plans: 10
+  percent: 90
 ---
 
 # Project State
@@ -53,6 +53,7 @@ Progress: [██████████] ~90% (15-01 complete)
 | Phase 14-diagnostic-edge-cases P02 | 2min | 1 tasks | 1 files |
 | Phase 14-diagnostic-edge-cases P01 | 8 | 2 tasks | 2 files |
 | Phase 15-scope-and-accessibility-diagnostics P01 | 5min | 2 tasks | 5 files |
+| Phase 15-scope-and-accessibility-diagnostics P02 | 9min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 15-scope-and-accessibility-diagnostics]: MFFG0012 implemented via FilterInaccessibleConstructors in FluentModelFactory (same pattern as MFFG0011) — ensures constructors filtered before generation for 'no output' behavior
 - [Phase 15-scope-and-accessibility-diagnostics]: MFFG0013 implemented via ValidateMissingPartialModifier in FluentConstructorValidator chained into GetDiagnostics() — Error severity triggers existing short-circuit at FluentModelFactory line 45-48
 - [Phase 15-scope-and-accessibility-diagnostics]: CompilerDiagnostics.None required for MFFG0013 test to suppress C# compiler errors on non-partial types
+- [Phase 15-scope-and-accessibility-diagnostics]: MFFG0014/MFFG0015 are Warning severity - generator still produces output, unlike Error-severity MFFG0013 which blocks generation
+- [Phase 15-scope-and-accessibility-diagnostics]: Nested private class (SCOPE-05) correctly triggers MFFG0015 - Roslyn reports Private for nested class DeclaredAccessibility, comparison fires correctly
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-14T18:55:27.000Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-03-14T19:08:27.829Z
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None

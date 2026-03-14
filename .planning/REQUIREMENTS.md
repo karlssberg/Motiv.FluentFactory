@@ -39,10 +39,10 @@ Requirements for edge case stress testing milestone. Each maps to roadmap phases
 ### Scope & Accessibility
 
 - [x] **SCOPE-01**: Generator reports diagnostic for private/protected constructors marked `[FluentConstructor]`
-- [ ] **SCOPE-02**: Generator reports diagnostic for inaccessible parameter types in public factory
+- [x] **SCOPE-02**: Generator reports diagnostic for inaccessible parameter types in public factory
 - [x] **SCOPE-03**: Generator reports diagnostic for missing `partial` modifier on factory root type
-- [ ] **SCOPE-04**: Generator reports diagnostic for accessibility mismatch (e.g., public factory for internal type)
-- [ ] **SCOPE-05**: Generator handles nested private classes as factory targets
+- [x] **SCOPE-04**: Generator reports diagnostic for accessibility mismatch (e.g., public factory for internal type)
+- [x] **SCOPE-05**: Generator handles nested private classes as factory targets
 
 ## Future Requirements
 
@@ -81,10 +81,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DIAG-02 | Phase 14 | Complete |
 | DIAG-03 | Phase 14 | Complete |
 | SCOPE-01 | Phase 15 | Complete |
-| SCOPE-02 | Phase 15 | Pending |
+| SCOPE-02 | Phase 15 | Complete |
 | SCOPE-03 | Phase 15 | Complete |
-| SCOPE-04 | Phase 15 | Pending |
-| SCOPE-05 | Phase 15 | Pending |
+| SCOPE-04 | Phase 15 | Complete |
+| SCOPE-05 | Phase 15 | Complete |
 
 **Coverage:**
 - v1.3 requirements: 22 total
