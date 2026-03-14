@@ -25,10 +25,10 @@ Requirements for edge case stress testing milestone. Each maps to roadmap phases
 
 ### Parameter Comparison
 
-- [ ] **COMP-01**: Generator correctly distinguishes same-named types from different namespaces
-- [ ] **COMP-02**: Generator handles overlapping FluentMethod names across parameters
-- [ ] **COMP-03**: Generator maintains hash code contract consistency for parameter equality
-- [ ] **COMP-04**: Generator handles Trie key collisions from ambiguous parameter sequences
+- [x] **COMP-01**: Generator correctly distinguishes same-named types from different namespaces
+- [x] **COMP-02**: Generator handles overlapping FluentMethod names across parameters
+- [x] **COMP-03**: Generator maintains hash code contract consistency for parameter equality
+- [x] **COMP-04**: Generator handles Trie key collisions from ambiguous parameter sequences
 
 ### Diagnostics
 
@@ -73,10 +73,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CTOR-03 | Phase 12 | Complete |
 | CTOR-04 | Phase 12 | Complete |
 | CTOR-05 | Phase 12 | Complete |
-| COMP-01 | Phase 13 | Pending |
-| COMP-02 | Phase 13 | Pending |
-| COMP-03 | Phase 13 | Pending |
-| COMP-04 | Phase 13 | Pending |
+| COMP-01 | Phase 13 | Complete |
+| COMP-02 | Phase 13 | Complete |
+| COMP-03 | Phase 13 | Complete |
+| COMP-04 | Phase 13 | Complete |
 | DIAG-01 | Phase 14 | Pending |
 | DIAG-02 | Phase 14 | Pending |
 | DIAG-03 | Phase 14 | Pending |

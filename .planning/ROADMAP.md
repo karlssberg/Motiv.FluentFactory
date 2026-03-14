@@ -41,7 +41,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 
 - [x] **Phase 11: Type System Edge Cases** - Tests covering nullable annotations, parameter modifiers, arrays of generics, and deeply nested generic types
 - [x] **Phase 12: Constructor Variation Edge Cases** - Tests covering large parameter counts, records with explicit constructors, and constructor chaining (completed 2026-03-14)
-- [ ] **Phase 13: Internal Correctness** - Tests covering parameter equality, hash code contracts, overlapping method names, and Trie key collision behavior
+- [x] **Phase 13: Internal Correctness** - Tests covering parameter equality, hash code contracts, overlapping method names, and Trie key collision behavior (completed 2026-03-14)
 - [ ] **Phase 14: Diagnostic Edge Cases** - Tests covering malformed attribute usage, invalid generic constraint combinations, and user code with compilation errors
 - [ ] **Phase 15: Scope and Accessibility Diagnostics** - New diagnostic rules and tests covering constructor accessibility, inaccessible parameter types, missing partial modifier, and accessibility mismatches
 
@@ -88,7 +88,7 @@ Plans:
   2. A test exists that exercises overlapping FluentMethod names across parameters and produces a known result
   3. A test exists that validates hash code contract consistency — equal parameters must produce equal hash codes
   4. A test exists that exercises Trie key collisions from ambiguous parameter sequences and produces a known result
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 13-01-PLAN.md — Namespace disambiguation and hash code contract tests (COMP-01, COMP-03)
@@ -131,6 +131,6 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
-| 13. Internal Correctness | v1.3 | 0/2 | Not started | - |
+| 13. Internal Correctness | 2/2 | Complete   | 2026-03-14 | - |
 | 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
