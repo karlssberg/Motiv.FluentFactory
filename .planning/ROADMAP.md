@@ -88,7 +88,11 @@ Plans:
   2. A test exists that exercises overlapping FluentMethod names across parameters and produces a known result
   3. A test exists that validates hash code contract consistency — equal parameters must produce equal hash codes
   4. A test exists that exercises Trie key collisions from ambiguous parameter sequences and produces a known result
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — Namespace disambiguation and hash code contract tests (COMP-01, COMP-03)
+- [ ] 13-02-PLAN.md — Overlapping FluentMethod names and Trie key collision tests (COMP-02, COMP-04)
 
 ### Phase 14: Diagnostic Edge Cases
 **Goal**: The generator's error reporting is exercised with malformed inputs, verifying it produces appropriate diagnostics rather than crashing or silently misbehaving
@@ -126,7 +130,7 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
-| 12. Constructor Variation Edge Cases | 2/2 | Complete   | 2026-03-14 | - |
-| 13. Internal Correctness | v1.3 | 0/TBD | Not started | - |
+| 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
+| 13. Internal Correctness | v1.3 | 0/2 | Not started | - |
 | 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
