@@ -102,7 +102,11 @@ Plans:
   1. A test exists for malformed attribute usage (e.g., conflicting attribute arguments) that verifies the expected diagnostic is emitted
   2. A test exists for invalid generic constraint combinations that verifies the expected diagnostic is emitted or the generator handles it gracefully
   3. A test exists with user code containing compilation errors that verifies the generator exits cleanly without throwing an unhandled exception
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 14-01-PLAN.md — Malformed attribute usage and invalid generic constraint tests (DIAG-01, DIAG-02)
+- [ ] 14-02-PLAN.md — Compilation error resilience tests (DIAG-03)
 
 ### Phase 15: Scope and Accessibility Diagnostics
 **Goal**: The generator emits diagnostics when constructors or types violate accessibility rules, and those diagnostic rules are implemented and tested
@@ -131,6 +135,6 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
-| 13. Internal Correctness | 2/2 | Complete   | 2026-03-14 | - |
-| 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
+| 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
+| 14. Diagnostic Edge Cases | v1.3 | 0/2 | Not started | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
