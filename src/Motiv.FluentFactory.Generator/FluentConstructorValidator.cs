@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Motiv.FluentFactory.Generator.ConstructorAnalysis;
 using Motiv.FluentFactory.Generator.Diagnostics;
@@ -12,9 +13,37 @@ internal static class FluentConstructorValidatorExtensions
     public static IEnumerable<Diagnostic> GetDiagnostics(this ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
         return ValidateRootTypeAttributes(fluentConstructorContexts)
+            .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
             .Concat(ValidateCreateMethodNames(fluentConstructorContexts))
             .Concat(ValidateDuplicateCreateMethodNames(fluentConstructorContexts))
             .Concat(ValidateCreateMethodNameConflicts(fluentConstructorContexts));
+    }
+
+    private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var rootTypesWithoutPartial = fluentConstructorContexts
+            .GroupBy(context => context.RootType, SymbolEqualityComparer.Default)
+            .Where(group => !HasPartialModifier(group.Key as INamedTypeSymbol));
+
+        foreach (var group in rootTypesWithoutPartial)
+        {
+            var rootType = (INamedTypeSymbol)group.Key!;
+            var location = rootType.Locations.FirstOrDefault() ?? Location.None;
+            yield return Diagnostic.Create(
+                FluentDiagnostics.MissingPartialModifier,
+                location,
+                rootType.ToDisplayString());
+        }
+    }
+
+    private static bool HasPartialModifier(INamedTypeSymbol? rootType)
+    {
+        if (rootType is null) return false;
+
+        return rootType.DeclaringSyntaxReferences
+            .Select(r => r.GetSyntax())
+            .OfType<TypeDeclarationSyntax>()
+            .Any(declaration => declaration.Modifiers.Any(SyntaxKind.PartialKeyword));
     }
 
     private static IEnumerable<Diagnostic> ValidateRootTypeAttributes(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)

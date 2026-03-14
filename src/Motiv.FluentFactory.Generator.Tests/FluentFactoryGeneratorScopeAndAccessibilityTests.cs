@@ -101,4 +101,48 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
             }
         }.RunAsync();
     }
+
+    /// <summary>
+    /// A factory root type without the <c>partial</c> modifier cannot receive generated fluent methods.
+    /// The generator should emit MFFG0013 error and produce no generated source output.
+    /// </summary>
+    [Fact]
+    internal async Task Should_emit_diagnostic_when_factory_root_type_missing_partial_modifier()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static class Factory;
+
+            public class MyTarget
+            {
+                [FluentConstructor(typeof(Factory))]
+                public MyTarget(int value)
+                {
+                    Value = value;
+                }
+
+                public int Value { get; set; }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            CompilerDiagnostics = Microsoft.CodeAnalysis.Testing.CompilerDiagnostics.None,
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(MissingPartialModifier.Id)
+                        .WithSpan(SourceFile, 6, 21, 6, 28)
+                        .WithArguments("Test.Factory")
+                }
+            }
+        }.RunAsync();
+    }
 }
