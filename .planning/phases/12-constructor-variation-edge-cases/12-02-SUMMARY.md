@@ -63,7 +63,7 @@ Each task was committed atomically:
 
 1. **Task 1: Create constructor chaining test file (CTOR-03, CTOR-04)** - `5c9ad48` (test)
 
-**Plan metadata:** _(pending final metadata commit)_
+**Plan metadata:** `3f124a4` (docs: complete plan)
 
 ## Files Created/Modified
 - `src/Motiv.FluentFactory.Generator.Tests/FluentFactoryGeneratorConstructorChainingTests.cs` - 4 edge case tests for constructor chaining with positional and named this() arguments

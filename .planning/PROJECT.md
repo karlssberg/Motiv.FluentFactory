@@ -31,11 +31,20 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - ✓ God classes decomposed into bite-sized, single-responsibility types — v1.2
 - ✓ All existing tests continue to pass (behavior-preserving refactor) — v1.2
 
+## Current Milestone: v1.3 Edge Case Stress Testing
+
+**Goal:** Systematically stress test the generator with edge cases to uncover bugs and shortcomings before NuGet publish.
+
+**Target features:**
+- Fixed edge case tests targeting identified code weak spots
+- Parameter modifier coverage (ref, out, ref readonly)
+- Type system edge cases (nullable, complex generics, nested types)
+- Constructor variation edge cases (chaining, records, large param counts)
+- Trie merging and method selection correctness under unusual inputs
+
 ### Active
 
 <!-- Current scope. Building toward these. -->
-
-(None — planning next milestone)
 
 ### Out of Scope
 
@@ -43,6 +52,7 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 
 - Test refactoring — production code is well-organized, test refactoring can be its own milestone if needed
 - Generated output changes — current output format works well, changes would break consumers
+- Bug fixes — this milestone identifies issues; fixes are a separate milestone
 
 ## Context
 
@@ -75,4 +85,4 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 | Concern-based extension organization | Extensions grouped by domain concern (symbols, type params, fluent model, strings) | ✓ Good |
 
 ---
-*Last updated: 2026-03-11 after v1.2 milestone*
+*Last updated: 2026-03-12 after v1.3 milestone start*
