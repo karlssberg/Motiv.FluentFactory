@@ -15,3 +15,6 @@ MFFG0007 | FluentFactory | Error | Invalid CreateMethodName
 MFFG0008 | FluentFactory | Error | Duplicate CreateMethodName
 MFFG0009 | FluentFactory | Error | FluentConstructor target type missing FluentFactory attribute
 MFFG0010 | FluentFactory | Error | CreateMethodName specified with NoCreateMethod option
+MFFG0011 | FluentFactory | Warning | Unsupported parameter modifier
+MFFG0012 | FluentFactory | Warning | Inaccessible constructor
+MFFG0013 | FluentFactory | Error | Factory type missing partial modifier

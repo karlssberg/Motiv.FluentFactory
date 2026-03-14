@@ -29,6 +29,12 @@ internal class FluentModelFactory(Compilation compilation)
 
         _diagnostics.AddRange(unsupportedModifierDiagnostics);
 
+        var (accessibleContexts, inaccessibleConstructorDiagnostics) =
+            FilterInaccessibleConstructors(validContexts);
+
+        _diagnostics.AddRange(inaccessibleConstructorDiagnostics);
+        validContexts = accessibleContexts;
+
         if (validContexts.IsEmpty)
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
 
@@ -165,6 +171,38 @@ internal class FluentModelFactory(Compilation compilation)
                 .OrderBy(ns => ns.displayString)
                 .Select(ns => ns.namespaceSymbol)
         ];
+    }
+
+    private static (ImmutableArray<FluentConstructorContext> Valid, IEnumerable<Diagnostic> Diagnostics)
+        FilterInaccessibleConstructors(
+            ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var diagnostics = new List<Diagnostic>();
+        var validContexts = ImmutableArray.CreateBuilder<FluentConstructorContext>(fluentConstructorContexts.Length);
+
+        foreach (var context in fluentConstructorContexts)
+        {
+            var accessibility = context.Constructor.DeclaredAccessibility;
+            var isInaccessible = accessibility is
+                Accessibility.Private or
+                Accessibility.Protected or
+                Accessibility.ProtectedAndInternal;
+
+            if (!isInaccessible)
+            {
+                validContexts.Add(context);
+                continue;
+            }
+
+            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+            diagnostics.Add(Diagnostic.Create(
+                FluentDiagnostics.InaccessibleConstructor,
+                location,
+                context.Constructor.ToDisplayString(),
+                accessibility.ToString()));
+        }
+
+        return (validContexts.ToImmutable(), diagnostics);
     }
 
     private static (ImmutableArray<FluentConstructorContext> Valid, IEnumerable<Diagnostic> Diagnostics)

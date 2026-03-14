@@ -135,4 +135,26 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for constructors with inaccessible accessibility (private, protected).
+    /// </summary>
+    public static readonly DiagnosticDescriptor InaccessibleConstructor = new(
+        id: "MFFG0012",
+        title: "Inaccessible constructor",
+        messageFormat: "Constructor '{0}' has '{1}' accessibility and cannot be used by the fluent factory. Only public and internal constructors are supported.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for factory root types missing the partial modifier.
+    /// </summary>
+    public static readonly DiagnosticDescriptor MissingPartialModifier = new(
+        id: "MFFG0013",
+        title: "Factory type missing partial modifier",
+        messageFormat: "Factory type '{0}' must be declared as partial to receive generated fluent methods",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }
