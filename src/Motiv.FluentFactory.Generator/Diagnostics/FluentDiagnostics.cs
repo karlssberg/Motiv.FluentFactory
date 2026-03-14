@@ -124,4 +124,15 @@ public static class FluentDiagnostics
         messageFormat: "CreateMethodName cannot be used with NoCreateMethod option",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for constructors with unsupported parameter modifiers (ref, out, in, ref readonly).
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnsupportedParameterModifier = new(
+        id: "MFFG0011",
+        title: "Unsupported parameter modifier",
+        messageFormat: "Constructor '{0}' has parameter '{1}' with unsupported modifier '{2}'. Fluent factory generation requires value-type parameters. This constructor will be skipped.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 }

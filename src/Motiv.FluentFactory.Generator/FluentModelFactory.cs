@@ -23,6 +23,17 @@ internal class FluentModelFactory(Compilation compilation)
         _regularFluentSteps.Clear();
         _diagnostics.Clear();
         _unreachableConstructorAnalyzer.Clear();
+
+        var (validContexts, unsupportedModifierDiagnostics) =
+            FilterUnsupportedParameterModifierConstructors(fluentConstructorContexts);
+
+        _diagnostics.AddRange(unsupportedModifierDiagnostics);
+
+        if (validContexts.IsEmpty)
+            return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
+
+        fluentConstructorContexts = validContexts;
+
         _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps);
@@ -31,7 +42,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         _diagnostics.AddRange(fluentConstructorContexts.GetDiagnostics());
 
-        if (_diagnostics.Any())
+        if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
         {
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
         }
@@ -154,5 +165,43 @@ internal class FluentModelFactory(Compilation compilation)
                 .OrderBy(ns => ns.displayString)
                 .Select(ns => ns.namespaceSymbol)
         ];
+    }
+
+    private static (ImmutableArray<FluentConstructorContext> Valid, IEnumerable<Diagnostic> Diagnostics)
+        FilterUnsupportedParameterModifierConstructors(
+            ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var diagnostics = new List<Diagnostic>();
+        var validContexts = ImmutableArray.CreateBuilder<FluentConstructorContext>(fluentConstructorContexts.Length);
+
+        foreach (var context in fluentConstructorContexts)
+        {
+            var unsupportedParameter = context.Constructor.Parameters
+                .FirstOrDefault(p => p.RefKind is RefKind.Ref or RefKind.Out or RefKind.RefReadOnlyParameter);
+
+            if (unsupportedParameter is null)
+            {
+                validContexts.Add(context);
+                continue;
+            }
+
+            var modifierText = unsupportedParameter.RefKind switch
+            {
+                RefKind.Ref => "ref",
+                RefKind.Out => "out",
+                RefKind.RefReadOnlyParameter => "ref readonly",
+                _ => unsupportedParameter.RefKind.ToString().ToLowerInvariant()
+            };
+
+            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+            diagnostics.Add(Diagnostic.Create(
+                FluentDiagnostics.UnsupportedParameterModifier,
+                location,
+                context.Constructor.ToDisplayString(),
+                unsupportedParameter.Name,
+                modifierText));
+        }
+
+        return (validContexts.ToImmutable(), diagnostics);
     }
 }
