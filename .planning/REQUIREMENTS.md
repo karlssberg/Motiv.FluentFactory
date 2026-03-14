@@ -34,7 +34,7 @@ Requirements for edge case stress testing milestone. Each maps to roadmap phases
 
 - [ ] **DIAG-01**: Generator reports diagnostic for malformed attribute usage
 - [ ] **DIAG-02**: Generator reports diagnostic for invalid generic constraint combinations
-- [ ] **DIAG-03**: Generator gracefully handles user code with compilation errors
+- [x] **DIAG-03**: Generator gracefully handles user code with compilation errors
 
 ### Scope & Accessibility
 
@@ -79,7 +79,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COMP-04 | Phase 13 | Complete |
 | DIAG-01 | Phase 14 | Pending |
 | DIAG-02 | Phase 14 | Pending |
-| DIAG-03 | Phase 14 | Pending |
+| DIAG-03 | Phase 14 | Complete |
 | SCOPE-01 | Phase 15 | Pending |
 | SCOPE-02 | Phase 15 | Pending |
 | SCOPE-03 | Phase 15 | Pending |
