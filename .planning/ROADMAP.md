@@ -57,7 +57,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
   3. A test exists that exercises arrays of generic types (e.g., `T[]`, `List<T>[]`) and produces a known result
   4. A test exists that exercises partially open generic types (e.g., `Dictionary<string, T>`) and produces a known result
   5. A test exists that exercises deeply nested generics (3+ levels) and produces a known result
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 11-01-PLAN.md — Nullable, generic array, partially open generic, and deep nested generic tests (TYPE-01, TYPE-03, TYPE-04, TYPE-05)
@@ -73,7 +73,11 @@ Plans:
   3. A test exists for constructor chaining via `this(...)` calls and produces a known result
   4. A test exists for named arguments in constructor chaining and produces a known result
   5. A test exists for records mixing positional and explicit members and produces a known result
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Large parameter count tests and record variation tests (CTOR-01, CTOR-02, CTOR-05)
+- [ ] 12-02-PLAN.md — Constructor chaining and named argument tests (CTOR-03, CTOR-04)
 
 ### Phase 13: Internal Correctness
 **Goal**: The generator's internal parameter comparison and Trie merging logic is exercised with edge case inputs that reveal correctness issues
@@ -121,8 +125,8 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 8. Syntax Generator Decomposition | v1.2 | 3/3 | Complete | 2026-03-11 |
 | 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
-| 11. Type System Edge Cases | v1.3 | 2/2 | Complete | 2026-03-14 |
-| 12. Constructor Variation Edge Cases | v1.3 | 0/TBD | Not started | - |
+| 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
+| 12. Constructor Variation Edge Cases | v1.3 | 0/2 | Not started | - |
 | 13. Internal Correctness | v1.3 | 0/TBD | Not started | - |
 | 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
