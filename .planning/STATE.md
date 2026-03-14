@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Edge Case Stress Testing
 status: executing
-stopped_at: Completed 14-02-PLAN.md
-last_updated: "2026-03-14T17:39:28.529Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-03-14T17:42:28.361Z"
 last_activity: 2026-03-14 — Completed 11-02 (MFFG0011 unsupported parameter modifier diagnostic)
 progress:
   total_phases: 5
@@ -51,6 +51,7 @@ Progress: [██░░░░░░░░] 10% (v1.3 plan 02 complete)
 | Phase 13-internal-correctness P01 | 15min | 2 tasks | 2 files |
 | Phase 13-internal-correctness P02 | 8 | 2 tasks | 2 files |
 | Phase 14-diagnostic-edge-cases P02 | 2min | 1 tasks | 1 files |
+| Phase 14-diagnostic-edge-cases P01 | 8 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,9 @@ Recent decisions affecting current work:
 - [Phase 13-internal-correctness]: Trie merges only when FluentMethodParameter.Names.Overlaps returns true -- same type different names produces separate entry points
 - [Phase 14-diagnostic-edge-cases]: Generator generates output even when constructor parameters have IErrorTypeSymbol types (shortcoming documented by Tests 1 and 3)
 - [Phase 14-diagnostic-edge-cases]: CompilerDiagnostics.None used in resilience tests to suppress C# compiler error verification and focus on generator crash-safety
+- [Phase 14-diagnostic-edge-cases]: Empirical span discovery: write test with approximate spans, run, read actual spans from failure output, update test
+- [Phase 14-diagnostic-edge-cases]: Generator emits output for CS0449 invalid class+struct constraints, forwarding them as-is; CompilerDiagnostics.None + explicit GeneratedSources required for resilience tests
+- [Phase 14-diagnostic-edge-cases]: MFFG0009 and MFFG0007 both fire independently confirming no short-circuit after first error
 
 ### Pending Todos
 
@@ -83,6 +87,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-14T17:34:52.825Z
-Stopped at: Completed 14-02-PLAN.md
+Last session: 2026-03-14T17:42:28.359Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None

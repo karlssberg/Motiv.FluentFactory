@@ -136,5 +136,5 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
 | 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
-| 14. Diagnostic Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
+| 14. Diagnostic Edge Cases | 2/2 | Complete   | 2026-03-14 | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
