@@ -42,7 +42,7 @@ Phases 1-5 delivered the initial release: attribute-based API, fluent step struc
 - [x] **Phase 11: Type System Edge Cases** - Tests covering nullable annotations, parameter modifiers, arrays of generics, and deeply nested generic types
 - [x] **Phase 12: Constructor Variation Edge Cases** - Tests covering large parameter counts, records with explicit constructors, and constructor chaining (completed 2026-03-14)
 - [x] **Phase 13: Internal Correctness** - Tests covering parameter equality, hash code contracts, overlapping method names, and Trie key collision behavior (completed 2026-03-14)
-- [ ] **Phase 14: Diagnostic Edge Cases** - Tests covering malformed attribute usage, invalid generic constraint combinations, and user code with compilation errors
+- [x] **Phase 14: Diagnostic Edge Cases** - Tests covering malformed attribute usage, invalid generic constraint combinations, and user code with compilation errors (completed 2026-03-14)
 - [ ] **Phase 15: Scope and Accessibility Diagnostics** - New diagnostic rules and tests covering constructor accessibility, inaccessible parameter types, missing partial modifier, and accessibility mismatches
 
 ## Phase Details
@@ -102,7 +102,7 @@ Plans:
   1. A test exists for malformed attribute usage (e.g., conflicting attribute arguments) that verifies the expected diagnostic is emitted
   2. A test exists for invalid generic constraint combinations that verifies the expected diagnostic is emitted or the generator handles it gracefully
   3. A test exists with user code containing compilation errors that verifies the generator exits cleanly without throwing an unhandled exception
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 14-01-PLAN.md — Malformed attribute usage and invalid generic constraint tests (DIAG-01, DIAG-02)
@@ -136,5 +136,5 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
 | 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
-| 14. Diagnostic Edge Cases | 1/2 | In Progress|  | - |
+| 14. Diagnostic Edge Cases | 2/2 | Complete   | 2026-03-14 | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
