@@ -16,7 +16,9 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
             .Concat(ValidateCreateMethodNames(fluentConstructorContexts))
             .Concat(ValidateDuplicateCreateMethodNames(fluentConstructorContexts))
-            .Concat(ValidateCreateMethodNameConflicts(fluentConstructorContexts));
+            .Concat(ValidateCreateMethodNameConflicts(fluentConstructorContexts))
+            .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
+            .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts));
     }
 
     private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -131,6 +133,61 @@ internal static class FluentConstructorValidatorExtensions
                     AttributeSyntax attributeSyntax => attributeSyntax.GetLocation(),
                     _ => Location.None,
                 });
+        }
+    }
+
+    private static IEnumerable<Diagnostic> ValidateParameterTypeAccessibility(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        foreach (var context in fluentConstructorContexts)
+        {
+            var factoryAccessibility = context.RootType.DeclaredAccessibility;
+
+            foreach (var parameter in context.Constructor.Parameters)
+            {
+                var paramType = parameter.Type;
+
+                // Skip built-in types (string, int, etc.) — SpecialType.None means it's a user-defined type
+                if (paramType.SpecialType != SpecialType.None)
+                    continue;
+
+                // Skip type parameters — their DeclaredAccessibility is NotApplicable
+                if (paramType.DeclaredAccessibility == Accessibility.NotApplicable)
+                    continue;
+
+                if ((int)paramType.DeclaredAccessibility < (int)factoryAccessibility)
+                {
+                    var location = parameter.Locations.FirstOrDefault() ?? Location.None;
+                    yield return Diagnostic.Create(
+                        FluentDiagnostics.InaccessibleParameterType,
+                        location,
+                        parameter.Name,
+                        paramType.ToDisplayString(),
+                        context.Constructor.ToDisplayString(),
+                        context.RootType.ToDisplayString());
+                }
+            }
+        }
+    }
+
+    private static IEnumerable<Diagnostic> ValidateAccessibilityMismatch(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        foreach (var context in fluentConstructorContexts)
+        {
+            var targetType = context.Constructor.ContainingType;
+            var factoryAccessibility = context.RootType.DeclaredAccessibility;
+            var targetAccessibility = targetType.DeclaredAccessibility;
+
+            if ((int)targetAccessibility < (int)factoryAccessibility)
+            {
+                var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+                yield return Diagnostic.Create(
+                    FluentDiagnostics.AccessibilityMismatch,
+                    location,
+                    context.RootType.ToDisplayString(),
+                    factoryAccessibility.ToString(),
+                    targetType.ToDisplayString(),
+                    targetAccessibility.ToString());
+            }
         }
     }
 

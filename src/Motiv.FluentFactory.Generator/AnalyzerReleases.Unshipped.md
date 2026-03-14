@@ -18,3 +18,5 @@ MFFG0010 | FluentFactory | Error | CreateMethodName specified with NoCreateMetho
 MFFG0011 | FluentFactory | Warning | Unsupported parameter modifier
 MFFG0012 | FluentFactory | Warning | Inaccessible constructor
 MFFG0013 | FluentFactory | Error | Factory type missing partial modifier
+MFFG0014 | FluentFactory | Warning | Inaccessible parameter type in fluent factory
+MFFG0015 | FluentFactory | Warning | Factory accessibility exceeds target type

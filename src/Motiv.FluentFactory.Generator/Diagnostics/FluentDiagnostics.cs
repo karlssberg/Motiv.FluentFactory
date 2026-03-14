@@ -157,4 +157,26 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for constructor parameter types less accessible than the factory type.
+    /// </summary>
+    public static readonly DiagnosticDescriptor InaccessibleParameterType = new(
+        id: "MFFG0014",
+        title: "Inaccessible parameter type in fluent factory",
+        messageFormat: "Parameter '{0}' of type '{1}' in constructor '{2}' is less accessible than the factory type '{3}' and the generated fluent method will expose an inaccessible type",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for factory accessibility exceeding target type accessibility.
+    /// </summary>
+    public static readonly DiagnosticDescriptor AccessibilityMismatch = new(
+        id: "MFFG0015",
+        title: "Factory accessibility exceeds target type",
+        messageFormat: "Factory '{0}' is {1} but target type '{2}' is {3} and the generated factory may expose an inaccessible type",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 }
