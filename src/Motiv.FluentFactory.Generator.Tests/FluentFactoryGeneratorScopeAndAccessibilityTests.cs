@@ -373,6 +373,57 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
     }
 
     /// <summary>
+    /// A nested private class with [FluentConstructor] pointing to an outer public factory.
+    /// The private nested class is less accessible than the public factory (Private &lt; Public),
+    /// so MFFG0015 (accessibility mismatch) should fire.
+    /// This test documents the generator's behavior for nested private classes as factory targets.
+    /// </summary>
+    [Fact]
+    internal async Task Should_handle_nested_private_class_as_factory_target()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class OuterFactory;
+
+            public class OuterContainer
+            {
+                private class NestedTarget
+                {
+                    [FluentConstructor(typeof(OuterFactory))]
+                    public NestedTarget(int value)
+                    {
+                        Value = value;
+                    }
+
+                    public int Value { get; set; }
+                }
+            }
+            """;
+
+        // MFFG0015 fires because the nested private class (Private) is less accessible
+        // than the public factory (Public). This documents the generator's behavior.
+        await new VerifyCS.Test
+        {
+            CompilerDiagnostics = Microsoft.CodeAnalysis.Testing.CompilerDiagnostics.None,
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerWarning(AccessibilityMismatch.Id)
+                        .WithSpan(SourceFile, 1, 1, 1, 1)
+                        .WithArguments("Test.OuterFactory", "Public", "Test.OuterContainer.NestedTarget", "Private")
+                }
+            }
+        }.RunAsync();
+    }
+
+    /// <summary>
     /// A factory root type without the <c>partial</c> modifier cannot receive generated fluent methods.
     /// The generator should emit MFFG0013 error and produce no generated source output.
     /// </summary>
