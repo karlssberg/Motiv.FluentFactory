@@ -73,7 +73,7 @@ Plans:
   3. A test exists for constructor chaining via `this(...)` calls and produces a known result
   4. A test exists for named arguments in constructor chaining and produces a known result
   5. A test exists for records mixing positional and explicit members and produces a known result
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 12-01-PLAN.md — Large parameter count tests and record variation tests (CTOR-01, CTOR-02, CTOR-05)
@@ -126,7 +126,7 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 9. Extension Consolidation | v1.2 | 1/1 | Complete | 2026-03-11 |
 | 10. Screaming Architecture Reorganization | v1.2 | 2/2 | Complete | 2026-03-11 |
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
-| 12. Constructor Variation Edge Cases | v1.3 | 0/2 | Not started | - |
+| 12. Constructor Variation Edge Cases | 1/2 | In Progress|  | - |
 | 13. Internal Correctness | v1.3 | 0/TBD | Not started | - |
 | 14. Diagnostic Edge Cases | v1.3 | 0/TBD | Not started | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
