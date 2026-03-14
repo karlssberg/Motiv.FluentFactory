@@ -102,7 +102,7 @@ Plans:
   1. A test exists for malformed attribute usage (e.g., conflicting attribute arguments) that verifies the expected diagnostic is emitted
   2. A test exists for invalid generic constraint combinations that verifies the expected diagnostic is emitted or the generator handles it gracefully
   3. A test exists with user code containing compilation errors that verifies the generator exits cleanly without throwing an unhandled exception
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 14-01-PLAN.md — Malformed attribute usage and invalid generic constraint tests (DIAG-01, DIAG-02)
@@ -136,5 +136,5 @@ Phases execute in numeric order: 11 → 12 → 13 → 14 → 15
 | 11. Type System Edge Cases | v1.3 | Complete    | 2026-03-14 | 2026-03-14 |
 | 12. Constructor Variation Edge Cases | 2/2 | Complete    | 2026-03-14 | - |
 | 13. Internal Correctness | 2/2 | Complete    | 2026-03-14 | - |
-| 14. Diagnostic Edge Cases | v1.3 | 0/2 | Not started | - |
+| 14. Diagnostic Edge Cases | 1/2 | In Progress|  | - |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 0/TBD | Not started | - |
