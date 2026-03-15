@@ -104,6 +104,6 @@ internal static class RootMethodTypeParameterResolver
         // Include method type parameters
         typeParameters.AddRange(method.TypeParameters.Select(tp => tp.TypeParameterSymbol));
 
-        return [..typeParameters];
+        return [..typeParameters.DistinctBy(tp => tp.Name)];
     }
 }

@@ -35,6 +35,8 @@ internal class FluentModelFactory(Compilation compilation)
         _diagnostics.AddRange(inaccessibleConstructorDiagnostics);
         validContexts = accessibleContexts;
 
+        validContexts = FilterErrorTypeConstructors(validContexts);
+
         if (validContexts.IsEmpty)
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
 
@@ -166,6 +168,7 @@ internal class FluentModelFactory(Compilation compilation)
                 .SelectMany(ctx => ctx.Constructor.Parameters)
                 .Select(parameter => parameter.Type.ContainingNamespace)
                 .Concat(fluentConstructorContexts.Select(ctx => ctx.Constructor.ContainingType.ContainingNamespace))
+                .Where(namespaceSymbol => namespaceSymbol is not null)
                 .Select(namespaceSymbol => (namespaceSymbol, displayString: namespaceSymbol.ToDisplayString()))
                 .DistinctBy(ns => ns.displayString)
                 .OrderBy(ns => ns.displayString)
@@ -241,5 +244,16 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         return (validContexts.ToImmutable(), diagnostics);
+    }
+
+    private static ImmutableArray<FluentConstructorContext> FilterErrorTypeConstructors(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        return
+        [
+            ..fluentConstructorContexts
+                .Where(ctx => ctx.Constructor.Parameters
+                    .All(p => p.Type.TypeKind != TypeKind.Error))
+        ];
     }
 }

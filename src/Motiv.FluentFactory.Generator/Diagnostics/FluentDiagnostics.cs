@@ -179,4 +179,16 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for ambiguous fluent method chains across different target types.
+    /// </summary>
+    public static readonly DiagnosticDescriptor AmbiguousFluentMethodChain = new(
+        id: "MFFG0016",
+        title: "Ambiguous fluent method chain",
+        messageFormat:
+        "Parameter '{0}' in constructor '{1}' produces fluent method '{2}' that creates an ambiguous fluent method chain across types {3}",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

@@ -42,7 +42,12 @@ internal static class SymbolDisplayExtensions
     {
         return typeSymbol switch
         {
-            ITypeParameterSymbol tp => tp.Name,
+            ITypeParameterSymbol { NullableAnnotation: NullableAnnotation.Annotated } tp =>
+                $"{tp.Name}?",
+            
+            ITypeParameterSymbol tp =>
+                tp.Name,
+            
             _ => typeSymbol.ToDisplayString(GlobalQualifiedFormat)
         };
     }

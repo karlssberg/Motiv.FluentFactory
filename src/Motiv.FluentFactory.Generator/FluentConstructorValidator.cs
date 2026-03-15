@@ -18,7 +18,8 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateDuplicateCreateMethodNames(fluentConstructorContexts))
             .Concat(ValidateCreateMethodNameConflicts(fluentConstructorContexts))
             .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
-            .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts));
+            .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
+            .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts));
     }
 
     private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -233,5 +234,121 @@ internal static class FluentConstructorValidatorExtensions
         }
 
         return location;
+    }
+
+    private static IEnumerable<Diagnostic> ValidateAmbiguousFluentMethodChains(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        // Skip constructors with [MultipleFluentMethods] parameters since their
+        // fluent method names are resolved from template methods, not GetFluentMethodName()
+        var eligibleContexts = fluentConstructorContexts
+            .Where(ctx => !ctx.Constructor.Parameters.Any(
+                p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
+
+        var ambiguousGroups = eligibleContexts
+            .GroupBy(GetFluentParameterChainKey)
+            .Where(HasAmbiguousCreateMethods);
+
+        foreach (var group in ambiguousGroups)
+        {
+            var participatingTypes = group
+                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Distinct()
+                .OrderBy(t => t);
+
+            var typesString = string.Join(", ", participatingTypes);
+
+            foreach (var context in group)
+            {
+                foreach (var parameter in context.Constructor.Parameters)
+                {
+                    var methodName = parameter.GetFluentMethodName();
+                    var location = FindFluentMethodOrParameterLocation(parameter);
+
+                    yield return Diagnostic.Create(
+                        FluentDiagnostics.AmbiguousFluentMethodChain,
+                        location,
+                        parameter.Name,
+                        context.Constructor.ToDisplayString(),
+                        methodName,
+                        typesString);
+                }
+            }
+        }
+    }
+
+    private static bool HasAmbiguousCreateMethods(IGrouping<string, FluentConstructorContext> group)
+    {
+        // Must have constructors from at least 2 different types
+        var distinctTypes = group
+            .Select(ctx => ctx.Constructor.ContainingType)
+            .Distinct(SymbolEqualityComparer.Default)
+            .Count();
+
+        if (distinctTypes <= 1)
+            return false;
+
+        // Separate constructors with NoCreateMethod from those that produce Create methods
+        var constructorsWithCreate = group
+            .Where(ctx => !ctx.Options.HasFlag(NoCreateMethod))
+            .ToList();
+
+        var constructorsWithNoCreate = group
+            .Where(ctx => ctx.Options.HasFlag(NoCreateMethod))
+            .ToList();
+
+        // NoCreateMethod constructors use the containing type as the step, so at most one
+        // distinct type can use NoCreateMethod at the same chain position
+        var distinctNoCreateTypes = constructorsWithNoCreate
+            .Select(ctx => ctx.Constructor.ContainingType)
+            .Distinct(SymbolEqualityComparer.Default)
+            .Count();
+
+        if (distinctNoCreateTypes <= 1
+            && constructorsWithNoCreate.Count > 0
+            && AreCreateMethodsDisambiguated(constructorsWithCreate))
+            return false;
+
+        // Allow groups where all constructors have distinct, non-null CreateMethodName values
+        if (AreCreateMethodsDisambiguated(group.ToList()))
+            return false;
+
+        return true;
+    }
+
+    private static bool AreCreateMethodsDisambiguated(List<FluentConstructorContext> constructors)
+    {
+        // Zero or one constructor with Create methods cannot be ambiguous
+        if (constructors.Count <= 1)
+            return true;
+
+        // All must have distinct, non-null CreateMethodName values
+        var constructorsWithCreateMethodName = constructors
+            .Where(ctx => !string.IsNullOrEmpty(ctx.CreateMethodName))
+            .ToList();
+
+        if (constructorsWithCreateMethodName.Count != constructors.Count)
+            return false;
+
+        var distinctNames = constructorsWithCreateMethodName
+            .Select(ctx => ctx.CreateMethodName)
+            .Distinct()
+            .Count();
+
+        return distinctNames == constructorsWithCreateMethodName.Count;
+    }
+
+    private static string GetFluentParameterChainKey(FluentConstructorContext context) =>
+        string.Join("|", context.Constructor.Parameters
+            .Select(p => $"{p.GetFluentMethodName()}:{p.Type.ToDisplayString()}"));
+
+    private static Location FindFluentMethodOrParameterLocation(IParameterSymbol parameter)
+    {
+        var fluentMethodAttribute = parameter.GetAttribute(TypeName.FluentMethodAttribute);
+
+        if (fluentMethodAttribute?.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
+            return attributeSyntax.GetLocation();
+
+        return parameter.Locations.FirstOrDefault() ?? Location.None;
     }
 }
