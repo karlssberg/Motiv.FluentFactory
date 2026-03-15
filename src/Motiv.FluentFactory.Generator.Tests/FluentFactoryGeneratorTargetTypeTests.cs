@@ -18,7 +18,7 @@ public class FluentFactoryGeneratorTargetTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -76,7 +76,7 @@ public class FluentFactoryGeneratorTargetTypeTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -132,7 +132,7 @@ public class FluentFactoryGeneratorTargetTypeTests
 
             public struct MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -189,7 +189,7 @@ public class FluentFactoryGeneratorTargetTypeTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public struct MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -245,7 +245,7 @@ public class FluentFactoryGeneratorTargetTypeTests
 
             public record MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -302,7 +302,7 @@ public class FluentFactoryGeneratorTargetTypeTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public record MyBuildTarget(int Value)
             {
                 public int Value { get; set; } = Value;
@@ -355,7 +355,7 @@ public class FluentFactoryGeneratorTargetTypeTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethodName = "CreateMyBuildTarget")]
+            [FluentConstructor(typeof(Factory))]
             public record MyBuildTarget(int Value)
             {
                 public int Value { get; set; } = Value;
@@ -381,10 +381,10 @@ public class FluentFactoryGeneratorTargetTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -432,13 +432,13 @@ public class FluentFactoryGeneratorTargetTypeTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethodName = "CreateMyBuildTargetA")]
+            [FluentConstructor(typeof(Factory))]
             public record MyBuildTargetA(int Value)
             {
                 public int Value { get; set; } = Value;
             }
 
-            [FluentConstructor(typeof(Factory), CreateMethodName = "CreateMyBuildTargetB")]
+            [FluentConstructor(typeof(Factory))]
             public record MyBuildTargetB(int Value)
             {
                 public int Value { get; set; } = Value;
@@ -465,11 +465,11 @@ public class FluentFactoryGeneratorTargetTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;

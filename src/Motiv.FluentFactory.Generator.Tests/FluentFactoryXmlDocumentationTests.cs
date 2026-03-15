@@ -56,10 +56,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
@@ -74,7 +74,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._value__parameter);
                     }
@@ -144,10 +144,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
@@ -162,7 +162,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._value__parameter);
                     }
@@ -265,10 +265,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
@@ -283,7 +283,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._value__parameter);
                     }
@@ -357,10 +357,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -381,10 +381,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -401,7 +401,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._name__parameter, this._value__parameter);
                     }
@@ -472,10 +472,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
@@ -490,7 +490,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._value__parameter);
                     }
@@ -569,10 +569,10 @@ public class FluentFactoryXmlDocumentationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _processor__parameter;
@@ -587,7 +587,7 @@ public class FluentFactoryXmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._processor__parameter);
                     }

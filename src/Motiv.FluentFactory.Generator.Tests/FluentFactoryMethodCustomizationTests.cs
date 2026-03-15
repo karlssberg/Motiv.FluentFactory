@@ -24,7 +24,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget([FluentMethod("SetValue")]T value)
                 {
                     Value = value;
@@ -82,7 +82,7 @@ public class FluentFactoryMethodCustomizationTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public class MyBuildTarget<T1, T2, T3>(
                 int x,
                 [MultipleFluentMethods(typeof(Methods))]Func<IEnumerable<T1>, T2, T3> function)
@@ -125,10 +125,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _x__parameter;
@@ -185,7 +185,7 @@ public class FluentFactoryMethodCustomizationTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public class MyBuildTarget<T>([MultipleFluentMethods(typeof(Converter))]IEnumerable<IEnumerable<T>> function)
             {
                 public IEnumerable<IEnumerable<T>> Value { get; set; } = function;
@@ -264,7 +264,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2)
@@ -298,10 +298,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -349,7 +349,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -387,10 +387,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -409,10 +409,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -462,7 +462,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -504,10 +504,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -526,10 +526,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -550,10 +550,10 @@ public class FluentFactoryMethodCustomizationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -604,7 +604,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -683,7 +683,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -762,7 +762,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]string value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]string value2)
@@ -833,10 +833,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory
             {
                 private readonly string _value1__parameter;
@@ -891,7 +891,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]T value2)
@@ -962,10 +962,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T>
             {
                 private readonly T _value1__parameter;
@@ -1020,7 +1020,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T1 value1,
                     [MultipleFluentMethods(typeof(Value2Methods))]T2 value2,
@@ -1114,10 +1114,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1>
             {
                 private readonly T1 _value1__parameter;
@@ -1145,10 +1145,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_1__Factory<T1, T2>
             {
                 private readonly T1 _value1__parameter;
@@ -1205,7 +1205,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T1A, T1B>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory)
                 {
@@ -1284,7 +1284,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T1A, T1B, T2A, T2B, T3A, T3B>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2A, T2B> factory2,
@@ -1372,10 +1372,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1A, T1B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
@@ -1403,10 +1403,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_1__Factory<T1A, T1B, T2A, T2B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
@@ -1463,7 +1463,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClass<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2, T3> factory2,
@@ -1551,10 +1551,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1582,10 +1582,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_1__Factory<T1, T2, T3>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1642,7 +1642,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassACreateMethods))]Func<T1, T2, string> factory2)
@@ -1657,7 +1657,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassBCreateMethods))]Func<T1, T2, int> factory2)
@@ -1744,11 +1744,11 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1821,7 +1821,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [FluentMethod("Value")]Func<T1, T2> factory1,
                     [FluentMethod("Value")]Func<T1, T2, string> factory2)
@@ -1836,7 +1836,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2, int> factory2)
@@ -1899,11 +1899,11 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1998,7 +1998,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(FirstStep))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(SecondStep))]Func<T1, T2, string> factory2)
@@ -2013,7 +2013,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value1")]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, int> factory2)
@@ -2085,11 +2085,11 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -2174,7 +2174,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, string> factory2)
@@ -2189,7 +2189,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(CreateMethods))]Func<T1, T2, int> factory2)
@@ -2261,11 +2261,11 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -2330,7 +2330,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T> value1,
                     [FluentMethod("Create")]Func<T> value2)
@@ -2345,7 +2345,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value")]string value1,
                     [FluentMethod("Create")]Func<string> value2)
@@ -2360,7 +2360,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassC
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassC(
                     [MultipleFluentMethods(typeof(Overloads))]Func<string> value1,
                     [FluentMethod("Create")]Func<int> value2)
@@ -2415,10 +2415,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassA{T}"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_0__Factory<T>
             {
                 private readonly global::System.Func<T> _value1__parameter;
@@ -2437,10 +2437,10 @@ public class FluentFactoryMethodCustomizationTests
                 }
             }
 
-            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             /// <summary>
             ///     <seealso cref="MyClassB"/>
             /// </summary>
+            [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
             public struct Step_1__Factory
             {
                 private readonly string _value1__parameter;
@@ -2505,7 +2505,7 @@ public class FluentFactoryMethodCustomizationTests
 
              public class MyClassA<T>
              {
-                 [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                 [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                  public MyClassA(
                      [MultipleFluentMethods(typeof(Overloads), Priority=1)]Func<T> value1,
                      [FluentMethod("Create")]Func<T> value2)
@@ -2520,7 +2520,7 @@ public class FluentFactoryMethodCustomizationTests
 
              public class MyClassB
              {
-                 [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                 [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                  public MyClassB(
                      [FluentMethod("Value")]string value1,
                      [FluentMethod("Create")]Func<string> value2)
@@ -2535,7 +2535,7 @@ public class FluentFactoryMethodCustomizationTests
 
              public class MyClassC
              {
-                 [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                 [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                  public MyClassC(
                      [MultipleFluentMethods(typeof(Overloads), Priority=2)]Func<string> value1,
                      [FluentMethod("Create")]Func<int> value2)
@@ -2590,10 +2590,10 @@ public class FluentFactoryMethodCustomizationTests
                  }
              }
 
-             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
              /// <summary>
              ///     <seealso cref="MyClassA{T}"/>
              /// </summary>
+             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
              public struct Step_0__Factory<T>
              {
                  private readonly global::System.Func<T> _value1__parameter;
@@ -2612,10 +2612,10 @@ public class FluentFactoryMethodCustomizationTests
                  }
              }
 
-             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
              /// <summary>
              ///     <seealso cref="MyClassC"/>
              /// </summary>
+             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
              public struct Step_1__Factory
              {
                  private readonly global::System.Func<string> _value1__parameter;
@@ -2661,7 +2661,7 @@ public class FluentFactoryMethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory)
                 {

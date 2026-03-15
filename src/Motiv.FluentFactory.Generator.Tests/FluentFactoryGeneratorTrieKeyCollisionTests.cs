@@ -28,7 +28,7 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -41,7 +41,7 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetB(string label, int count)
                 {
                     Label = label;
@@ -81,10 +81,10 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.TargetA"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -103,10 +103,10 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly string _label__parameter;
@@ -161,7 +161,7 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -174,7 +174,7 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetB(string name, bool isActive)
                 {
                     Name = name;
@@ -206,11 +206,11 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.TargetA"/>
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;

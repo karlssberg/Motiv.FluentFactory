@@ -24,7 +24,7 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> value)
                 {
                     Value = value;
@@ -87,7 +87,7 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(Func<int, T> selector)
                 {
                     Selector = selector;
@@ -152,7 +152,7 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> lookup, List<int> counts, Func<T, bool> predicate)
                 {
                     Lookup = lookup;
@@ -185,10 +185,10 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
@@ -207,10 +207,10 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;

@@ -34,7 +34,7 @@ public class FluentFactoryGeneratorHashCodeContractTests
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetA([FluentMethod("SetValue")] string text)
                 {
                     Text = text;
@@ -45,7 +45,7 @@ public class FluentFactoryGeneratorHashCodeContractTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetB([FluentMethod("WithText")] string text)
                 {
                     Text = text;
@@ -119,7 +119,7 @@ public class FluentFactoryGeneratorHashCodeContractTests
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetA(string value)
                 {
                     Value = value;
@@ -130,7 +130,7 @@ public class FluentFactoryGeneratorHashCodeContractTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetB([FluentMethod("WithValue")] string value)
                 {
                     Value = value;

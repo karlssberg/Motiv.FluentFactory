@@ -66,12 +66,12 @@ internal static class FluentStepMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)))
-            .WithLeadingTrivia(GetDocumentationTrivia(method));
+            .WithBody(Block(ReturnStatement(returnObjectExpression)));
 
         methodDeclaration = AttachParameterList(method, methodDeclaration);
 
-        return StepMethodTypeParameterResolver.AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration);
+        return StepMethodTypeParameterResolver.AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration)
+            .WithLeadingTrivia(GetDocumentationTrivia(method));
     }
 
     /// <summary>

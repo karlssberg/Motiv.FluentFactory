@@ -50,10 +50,10 @@ public class FluentFactoryXmlHeaderTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
@@ -68,7 +68,7 @@ public class FluentFactoryXmlHeaderTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._value__parameter);
                     }

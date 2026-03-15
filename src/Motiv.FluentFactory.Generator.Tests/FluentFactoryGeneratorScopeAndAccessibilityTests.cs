@@ -155,10 +155,10 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly global::Test.InternalParam _param__parameter;
@@ -173,7 +173,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyTarget Create()
+                    public global::Test.MyTarget CreateMyTarget()
                     {
                         return new global::Test.MyTarget(this._param__parameter);
                     }
@@ -246,10 +246,10 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -264,7 +264,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyTarget Create()
+                    public global::Test.MyTarget CreateMyTarget()
                     {
                         return new global::Test.MyTarget(this._value__parameter);
                     }
@@ -336,10 +336,10 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 internal struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -354,7 +354,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyTarget Create()
+                    public global::Test.MyTarget CreateMyTarget()
                     {
                         return new global::Test.MyTarget(this._value__parameter);
                     }
@@ -427,10 +427,10 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_OuterFactory
                 {
                     private readonly int _value__parameter;
@@ -445,7 +445,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                     ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.OuterContainer.NestedTarget Create()
+                    public global::Test.OuterContainer.NestedTarget CreateOuterContainer_NestedTarget()
                     {
                         return new global::Test.OuterContainer.NestedTarget(this._value__parameter);
                     }

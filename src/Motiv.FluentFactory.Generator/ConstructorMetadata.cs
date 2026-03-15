@@ -11,7 +11,7 @@ internal class ConstructorMetadata(FluentConstructorContext constructorContext)
 
     public IList<IMethodSymbol> CandidateConstructors { get; } = [constructorContext.Constructor];
 
-    public FluentFactoryGeneratorOptions Options { get; set; } = constructorContext.Options;
+    public CreateMethodMode CreateMethod { get; set; } = constructorContext.CreateMethod;
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         constructorContext.ValueStorage;

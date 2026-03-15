@@ -202,10 +202,10 @@ public class FluentFactoryGeneratorParameterModifierTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -220,7 +220,7 @@ public class FluentFactoryGeneratorParameterModifierTests
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyTarget Create()
+                    public global::Test.MyTarget CreateMyTarget()
                     {
                         return new global::Test.MyTarget(this._value__parameter);
                     }

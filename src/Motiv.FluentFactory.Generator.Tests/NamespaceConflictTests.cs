@@ -52,10 +52,10 @@ public class NamespaceConflictTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
@@ -74,10 +74,10 @@ public class NamespaceConflictTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
@@ -94,7 +94,7 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::ConflictTest.Target Create()
+                    public global::ConflictTest.Target CreateTarget()
                     {
                         return new global::ConflictTest.Target(this._name__parameter, this._value__parameter);
                     }
@@ -161,10 +161,10 @@ public class NamespaceConflictTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__ConflictTest_Factory
                 {
                     private readonly global::System.Collections.Generic.List<string> _items__parameter;
@@ -179,7 +179,7 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::ConflictTest.Target Create()
+                    public global::ConflictTest.Target CreateTarget()
                     {
                         return new global::ConflictTest.Target(this._items__parameter);
                     }

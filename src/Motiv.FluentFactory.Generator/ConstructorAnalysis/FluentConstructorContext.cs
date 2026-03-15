@@ -18,8 +18,8 @@ internal record FluentConstructorContext
     {
         Constructor = constructor;
         AttributeData = attributeData;
-        Options = metadata.Options;
-        CreateMethodName = metadata.CreateMethodName;
+        CreateMethod = metadata.CreateMethod;
+        CreateVerb = metadata.CreateVerb;
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;
         IsRecord = rootSymbol.IsRecord;
@@ -52,7 +52,7 @@ internal record FluentConstructorContext
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         new(FluentParameterComparer.Default);
 
-    public FluentFactoryGeneratorOptions Options { get; }
+    public CreateMethodMode CreateMethod { get; }
 
     public bool IsRecord { get; }
 
@@ -65,7 +65,7 @@ internal record FluentConstructorContext
     public IMethodSymbol Constructor { get; }
     public AttributeData AttributeData { get; }
 
-    public string? CreateMethodName { get; }
+    public string? CreateVerb { get; }
 
     public bool IsAttributedUsedOnContainingType { get; }
 

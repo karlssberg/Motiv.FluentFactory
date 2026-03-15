@@ -24,7 +24,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(T value1)
                 {
                     Value1 = value1;
@@ -35,7 +35,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(string value1, string value2)
                 {
                     Value1 = value1;
@@ -76,10 +76,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _value1__parameter;
@@ -191,10 +191,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -213,10 +213,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -233,16 +233,16 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value1__parameter, this._value2__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -261,10 +261,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_3__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -285,10 +285,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_4__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -307,7 +307,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget Create()
+                    public global::Test.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget(this._string1__parameter, this._string2__parameter, this._string3__parameter);
                     }
@@ -390,10 +390,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -421,10 +421,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -445,10 +445,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -467,16 +467,16 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value1__parameter, this._value2__parameter, this._value3__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_3__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -493,7 +493,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value1__parameter, this._value3__parameter);
                     }
@@ -582,10 +582,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -604,10 +604,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -624,16 +624,16 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value1__parameter, this._value2__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory<T2>
                 {
                     private readonly T2 _value2__parameter;
@@ -652,10 +652,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_3__Test_Factory<T2, T1>
                 {
                     private readonly T2 _value2__parameter;
@@ -672,7 +672,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value2__parameter, this._value1__parameter);
                     }
@@ -706,20 +706,20 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             [FluentFactory]
             public static partial class Shape;
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial record Square(int Width)
             {
                 public int Width { get; set; } = Width;
             }
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int Width { get; set; } = width;
                 public int Height { get; set; } = height;
             }
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int Width { get; set; } = Width;
@@ -809,7 +809,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -824,7 +824,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [FluentMethod("WithValueB")]string valueB2,
@@ -847,7 +847,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -866,7 +866,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetD<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetD(
                         [FluentMethod("WithValueA")]T valueD1,
                         [FluentMethod("WithValueB")]string valueD2,
@@ -985,7 +985,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -1000,7 +1000,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -1019,7 +1019,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [MultipleFluentMethods(typeof(MultipleMethods))]Func<string> valueB2,
@@ -1119,10 +1119,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__TestFactory_Factory<T>
                 {
                     private readonly T _valueB1__parameter;
@@ -1191,20 +1191,20 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             [FluentFactory]
             public static partial class Shape;
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial record Square(int Width)
             {
                 public int A { get; set; } = Width;
             }
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int B { get; set; } = width;
                 public int C { get; set; } = height;
             }
 
-            [FluentConstructor(typeof(Shape), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int D { get; set; } = Width;
@@ -1296,13 +1296,13 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
             {
             }
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct PolicyResultPredicatePropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate)
             {
             }
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct MultiAssertionExplanationFromPolicyPropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate,
                 [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, PolicyResultBase<TMetadata>, IEnumerable<string>> trueBecause,
@@ -1381,10 +1381,10 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MultiAssertionExplanationFromPolicyPropositionFactory{TModel, TMetadata}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Spec<TModel, TMetadata>
                 {
                     private readonly global::System.Func<TModel, global::Test.PolicyResultBase<TMetadata>> _predicate__parameter;

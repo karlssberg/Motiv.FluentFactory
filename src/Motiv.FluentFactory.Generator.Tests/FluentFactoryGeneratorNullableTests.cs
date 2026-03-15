@@ -24,7 +24,7 @@ public class FluentFactoryGeneratorNullableTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(string? value)
                 {
                     Value = value;
@@ -88,7 +88,7 @@ public class FluentFactoryGeneratorNullableTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(string? name, int count, List<string?> items)
                 {
                     Name = name;
@@ -121,10 +121,10 @@ public class FluentFactoryGeneratorNullableTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string? _name__parameter;
@@ -143,10 +143,10 @@ public class FluentFactoryGeneratorNullableTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly string? _name__parameter;
@@ -201,7 +201,7 @@ public class FluentFactoryGeneratorNullableTests
 
             public class MyBuildTarget<T> where T : class
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(T? value)
                 {
                     Value = value;

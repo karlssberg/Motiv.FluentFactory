@@ -16,10 +16,10 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_0__Motiv_FluentFactory_Example_Square____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;

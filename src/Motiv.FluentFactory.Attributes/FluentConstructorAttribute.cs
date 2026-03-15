@@ -16,12 +16,14 @@ public sealed class FluentConstructorAttribute(Type rootType) : Attribute
     public Type RootType { get; } = rootType;
 
     /// <summary>
-    /// Options for the fluent factory.
+    /// Controls how the terminal Create method is generated.
     /// </summary>
-    public FluentOptions Options { get; set; }
+    public CreateMethod CreateMethod { get; set; }
 
     /// <summary>
-    /// The name of the method to create an instance. If not set, "Create" will be used.
+    /// The verb used for the Create method name. If not set, "Create" will be used.
+    /// In <see cref="Attributes.CreateMethod.Dynamic"/> mode, the target type name is appended (e.g., "Create" + "User" = "CreateUser").
+    /// In <see cref="Attributes.CreateMethod.Fixed"/> mode, the verb is used as-is.
     /// </summary>
-    public string? CreateMethodName { get; set; }
+    public string? CreateVerb { get; set; }
 }

@@ -48,7 +48,7 @@ public class FluentFactoryGeneratorNamespaceDisambiguationTests
             {
                 public class ProductA
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
                     public ProductA(NamespaceA.Config config)
                     {
                         Config = config;
@@ -62,7 +62,7 @@ public class FluentFactoryGeneratorNamespaceDisambiguationTests
             {
                 public class ProductB
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
                     public ProductB(NamespaceB.Config config)
                     {
                         Config = config;
@@ -159,7 +159,7 @@ public class FluentFactoryGeneratorNamespaceDisambiguationTests
             {
                 public class Product
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
                     public Product(NamespaceA.Settings settingsA, NamespaceB.Settings settingsB)
                     {
                         SettingsA = settingsA;
@@ -191,10 +191,10 @@ public class FluentFactoryGeneratorNamespaceDisambiguationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Target.Product"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__MyFactory_Factory
                 {
                     private readonly global::NamespaceA.Settings _settingsA__parameter;

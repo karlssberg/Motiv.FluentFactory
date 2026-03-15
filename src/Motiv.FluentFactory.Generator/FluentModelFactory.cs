@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis;
 using Motiv.FluentFactory.Generator.ConstructorAnalysis;
 using Motiv.FluentFactory.Generator.Diagnostics;
 using Motiv.FluentFactory.Generator.ModelBuilding;
-using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator;
 
@@ -118,13 +117,17 @@ internal class FluentModelFactory(Compilation compilation)
         var creationMethods =
             from value in node.Values
             where value.Constructor.Parameters.Length == node.Key.Length
-            where !value.Options.HasFlag(NoCreateMethod)
+            where value.CreateMethod != CreateMethodMode.None
+            let verb = value.Context.CreateVerb ?? "Create"
+            let methodName = value.CreateMethod == CreateMethodMode.Fixed
+                ? verb
+                : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
             select new CreationMethod(
                 rootType.ContainingNamespace,
                 value,
                 node.Key,
                 valueSources,
-                value.Context.CreateMethodName);
+                methodName);
 
         foreach (var createMethod in creationMethods)
         {

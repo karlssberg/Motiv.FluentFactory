@@ -49,10 +49,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _value__parameter;
@@ -67,7 +67,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._value__parameter);
                     }
@@ -136,10 +136,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -158,10 +158,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -178,7 +178,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2> Create()
+                    public global::Test.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2>(this._value1__parameter, this._value2__parameter);
                     }
@@ -251,10 +251,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -273,10 +273,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -297,10 +297,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -319,7 +319,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2, T3> Create()
+                    public global::Test.MyBuildTarget<T1, T2, T3> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2, T3>(this._value1__parameter, this._value2__parameter, this._value3__parameter);
                     }
@@ -396,10 +396,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -418,10 +418,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -442,10 +442,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -468,10 +468,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_3__Test_Factory<T1, T2, T3, T4>
                 {
                     private readonly T1 _value1__parameter;
@@ -492,7 +492,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyBuildTarget<T1, T2, T3, T4> Create()
+                    public global::Test.MyBuildTarget<T1, T2, T3, T4> CreateMyBuildTarget()
                     {
                         return new global::Test.MyBuildTarget<T1, T2, T3, T4>(this._value1__parameter, this._value2__parameter, this._value3__parameter, this._value4__parameter);
                     }
@@ -557,10 +557,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value__parameter;
@@ -575,7 +575,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._value__parameter);
                     }
@@ -642,10 +642,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value1__parameter;
@@ -664,10 +664,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory____<T, TAlt>
                 {
                     private readonly T _value1__parameter;
@@ -684,7 +684,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T, TAlt> Create()
+                    public global::Test.Namespace.MyBuildTarget<T, TAlt> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T, TAlt>(this._value1__parameter, this._value2__parameter);
                     }
@@ -753,10 +753,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory____<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
@@ -771,7 +771,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._value__parameter);
                     }
@@ -838,10 +838,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
@@ -856,7 +856,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._value__parameter);
                     }
@@ -936,10 +936,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value1__parameter;
@@ -959,10 +959,10 @@ public class FluentFactoryGeneratorGenericTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
                 {
                     private readonly T _value1__parameter;
@@ -979,7 +979,7 @@ public class FluentFactoryGeneratorGenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T, TAlt> Create()
+                    public global::Test.Namespace.MyBuildTarget<T, TAlt> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T, TAlt>(this._value1__parameter, this._value2__parameter);
                     }

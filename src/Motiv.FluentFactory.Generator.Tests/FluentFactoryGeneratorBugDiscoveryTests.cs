@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis.Testing;
+using Microsoft.CodeAnalysis.Testing;
 using VerifyCS =
     Motiv.FluentFactory.Generator.Tests.CSharpSourceGeneratorVerifier<Motiv.FluentFactory.Generator.FluentFactoryGenerator>;
 
@@ -67,10 +67,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -85,16 +85,16 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget Create()
+                    public global::Test.Namespace.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
@@ -109,16 +109,16 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget Create()
+                    public global::Test.Namespace.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget(this._name__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Namespace_MyTarget
                 {
                     private readonly double _amount__parameter;
@@ -133,7 +133,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget Create()
+                    public global::Test.Namespace.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget(this._amount__parameter);
                     }
@@ -171,7 +171,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     public MyBuildTarget(int value) { }
                     public MyBuildTarget(string name) { }
 
-                    [FluentConstructor(typeof(MyTarget), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(double amount) { }
                 }
             }
@@ -214,10 +214,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -232,16 +232,16 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget Create()
+                    public global::Test.Namespace.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget(this._value__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
@@ -256,7 +256,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget Create()
+                    public global::Test.Namespace.MyBuildTarget CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget(this._name__parameter);
                     }
@@ -289,7 +289,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 [FluentFactory]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), Options = FluentOptions.NoCreateMethod, CreateMethodName = "New")]
+                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.None, CreateVerb = "New")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -301,8 +301,8 @@ public class FluentFactoryGeneratorBugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("MFFG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 107)
-                    .WithMessage("CreateMethodName cannot be used with NoCreateMethod option"),
+                    .WithSpan("Source.cs", 8, 6, 8, 95)
+                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }
         }.RunAsync();
     }
@@ -310,7 +310,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
     [Fact]
     internal async Task Should_allow_multiple_fluent_constructor_attributes_with_different_create_method_names()
     {
-        // Tests what happens when multiple FluentConstructor attributes have different CreateMethodName values
+        // Tests what happens when multiple FluentConstructor attributes have different CreateVerb values
         const string source = """
             using Motiv.FluentFactory.Generator;
 
@@ -319,8 +319,8 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 [FluentFactory]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateMethodName = "CreateFirst")]
-                [FluentConstructor(typeof(MyTarget), CreateMethodName = "CreateSecond")]
+                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.Fixed, CreateVerb = "CreateFirst")]
+                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.Fixed, CreateVerb = "CreateSecond")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -344,10 +344,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -398,10 +398,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
     [ClassData(typeof(InvalidMethodNames))]
     public async Task Should_error_when_invalid_create_method_names(string invalidMethodName)
     {
-        // Tests CreateMethodName handling with edge case error values and putting red squiggles on them
+        // Tests CreateVerb handling with edge case error values and putting red squiggles on them
         var createMethodNameArgument =
             $"""
-             CreateMethodName = "{invalidMethodName}"
+             CreateVerb = "{invalidMethodName}"
              """;
 
         var source =
@@ -427,7 +427,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 {
                     DiagnosticResult.CompilerError("MFFG0007")
                         .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
-                        .WithMessage("CreateMethodName must be a valid identifier")
+                        .WithMessage("CreateVerb must be a valid identifier")
                 }
             }
         }.RunAsync();
@@ -436,10 +436,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
     [Theory][InlineData("_")]
     [InlineData("__")]
     [InlineData("_1")]
-    [InlineData("MethodWith数字")]
-    [InlineData("Methodαβγ")]
-    [InlineData("Method_İ")]
-    [InlineData("GetΣΔΦ")]
+    [InlineData("MethodWith??")]
+    [InlineData("Methoda�?")]
+    [InlineData("Method_I")]
+    [InlineData("GetS?F")]
     [InlineData("@class")] // Escaped keyword
     [InlineData("Method__With__Double__Underscores")]
     [InlineData("Create")]
@@ -449,7 +449,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
         // Tests what happens with completely identical FluentConstructor attributes
         var createMethodNameArgument =
             $"""
-             CreateMethodName = "{methodName}"
+             CreateVerb = "{methodName}"
              """;
 
         var source =
@@ -475,7 +475,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 DiagnosticResult.CompilerError("MFFG0008")
                     .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
                     .WithSpan("Source.cs", 9, 42, 9, 42 + createMethodNameArgument.Length)
-                    .WithMessage("CreateMethodName must be unique")
+                    .WithMessage("Create method name must be unique")
             }
         }.RunAsync();
     }
@@ -494,11 +494,11 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 public partial class MyTarget;
 
                 // constructor with a string parameter
-                [FluentConstructor(typeof(MyTarget), CreateMethodName = "Create")]
+                [FluentConstructor(typeof(MyTarget))]
                 public partial record MyRecordA(string Value);
 
                 // constructor with an int parameter
-                [FluentConstructor(typeof(MyTarget), CreateMethodName = "Create")]
+                [FluentConstructor(typeof(MyTarget))]
                 public partial record MyRecordB(int Value);
             }
             """;
@@ -531,10 +531,10 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordA"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly string _value__parameter;
@@ -549,16 +549,16 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyRecordA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyRecordA Create()
+                    public global::Test.Namespace.MyRecordA CreateMyRecordA()
                     {
                         return new global::Test.Namespace.MyRecordA(this._value__parameter);
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -573,7 +573,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="Test.Namespace.MyRecordB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyRecordB Create()
+                    public global::Test.Namespace.MyRecordB CreateMyRecordB()
                     {
                         return new global::Test.Namespace.MyRecordB(this._value__parameter);
                     }
@@ -640,7 +640,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -690,7 +690,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                     ///     <seealso cref="MyNamespace.Company"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::MyNamespace.Company Create()
+                    public global::MyNamespace.Company CreateCompany()
                     {
                         return new global::MyNamespace.Company(this.Name);
                     }

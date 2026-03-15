@@ -112,7 +112,8 @@ internal class FluentMethodFactory(
                 .Except<IMethodSymbol>(merged.CandidateConstructors, SymbolEqualityComparer.Default);
 
             merged.CandidateConstructors.AddRange(mergeableConstructors);
-            merged.Options |= metadata.Options;
+            if (metadata.CreateMethod == CreateMethodMode.None)
+                merged.CreateMethod = CreateMethodMode.None;
             if (metadata.Constructor.Parameters.Length - 1 != node.Key.Length)
                 return merged;
 

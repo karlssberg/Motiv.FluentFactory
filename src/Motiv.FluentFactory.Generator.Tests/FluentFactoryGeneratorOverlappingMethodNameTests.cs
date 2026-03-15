@@ -26,7 +26,7 @@ public class FluentFactoryGeneratorOverlappingMethodNameTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget([FluentMethod("WithValue")]string text, [FluentMethod("WithValue")]int number)
                 {
                     Text = text;
@@ -57,10 +57,10 @@ public class FluentFactoryGeneratorOverlappingMethodNameTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _text__parameter;
@@ -113,7 +113,7 @@ public class FluentFactoryGeneratorOverlappingMethodNameTests
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetA([FluentMethod("Create")]string value)
                 {
                     Value = value;
@@ -124,7 +124,7 @@ public class FluentFactoryGeneratorOverlappingMethodNameTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public TargetB([FluentMethod("Create")]int value)
                 {
                     Value = value;

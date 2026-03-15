@@ -79,10 +79,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -97,7 +97,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._data__parameter);
                     }
@@ -133,7 +133,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -148,7 +148,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -208,11 +208,11 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -270,7 +270,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -288,7 +288,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -340,11 +340,11 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -374,11 +374,11 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -438,7 +438,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -456,7 +456,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [FluentMethod("WithFunction")]Func<T> nativeFunction,
@@ -508,11 +508,11 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -540,10 +540,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -564,10 +564,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -731,10 +731,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -771,10 +771,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -791,7 +791,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTargetA<T> Create()
+                    public global::Test.Namespace.MyBuildTargetA<T> CreateMyBuildTargetA()
                     {
                         return new global::Test.Namespace.MyBuildTargetA<T>(this._number__parameter, this._data__parameter);
                     }
@@ -883,10 +883,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly global::System.Threading.Tasks.Task<T> _data__parameter;
@@ -901,7 +901,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T> Create()
+                    public global::Test.Namespace.MyBuildTarget<T> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T>(this._data__parameter);
                     }
@@ -1032,10 +1032,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
@@ -1072,10 +1072,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly T1 _first__parameter;
@@ -1092,7 +1092,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.MyBuildTarget<T1, T2> Create()
+                    public global::Test.Namespace.MyBuildTarget<T1, T2> CreateMyBuildTarget()
                     {
                         return new global::Test.Namespace.MyBuildTarget<T1, T2>(this._first__parameter, this._second__parameter);
                     }
@@ -1129,7 +1129,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -1223,10 +1223,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
@@ -1294,7 +1294,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<KeyValuePair<T1, T2>> first,
                         string second)
@@ -1348,10 +1348,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> _first__parameter;
@@ -1401,7 +1401,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> first,
                         string second)
@@ -1453,10 +1453,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _first__parameter;
@@ -1506,7 +1506,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public partial class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(
                         string first)
                     {
@@ -1518,7 +1518,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTarget(
                         string first,
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> second,
@@ -1591,10 +1591,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly string _first__parameter;
@@ -1659,7 +1659,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
             public readonly partial struct MyTypeA<TModel, TPredicateResult>
             {
 
-                [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
                 public MyTypeA(
                     [FluentMethod("From")]Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, BooleanResultBase<string>, IEnumerable<string>> trueBecause,
@@ -1718,10 +1718,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -1740,10 +1740,10 @@ public class FluentFactoryMultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -1796,7 +1796,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
             [FluentFactory]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(MyTypeB<,>.WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
             {

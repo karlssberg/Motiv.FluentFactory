@@ -16,10 +16,10 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_0__Motiv_FluentFactory_Example_Diamond____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -38,10 +38,10 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_1__Motiv_FluentFactory_Example_Diamond____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;

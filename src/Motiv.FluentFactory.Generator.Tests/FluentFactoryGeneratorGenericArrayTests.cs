@@ -23,7 +23,7 @@ public class FluentFactoryGeneratorGenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(T[] values)
                 {
                     Values = values;
@@ -86,7 +86,7 @@ public class FluentFactoryGeneratorGenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(List<T>[] values)
                 {
                     Values = values;
@@ -148,7 +148,7 @@ public class FluentFactoryGeneratorGenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(T[][] values)
                 {
                     Values = values;

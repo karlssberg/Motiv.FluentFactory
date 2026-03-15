@@ -27,68 +27,56 @@ internal static class FluentFactoryMetadataReader
                 if (typeArg.IsNull || typeArg.Value is not INamedTypeSymbol typeSymbol)
                     return FluentFactoryMetadata.Invalid;
 
-                // Grab the options flags symbol
-                var optionsArgument = attribute.NamedArguments
-                    .FirstOrDefault(namedArg => namedArg.Key == "Options")
+                // Grab the CreateMethod enum value
+                var createMethodArgument = attribute.NamedArguments
+                    .FirstOrDefault(namedArg => namedArg.Key == "CreateMethod")
                     .Value;
-                var options = ConvertToFluentFactoryGeneratorOptions(optionsArgument);
+                var createMethod = ConvertToCreateMethodMode(createMethodArgument);
 
-                // Grab the create method name
-                var createMethodNameArgument = attribute.NamedArguments
-                    .FirstOrDefault(namedArg => namedArg.Key == "CreateMethodName")
+                // Grab the create verb
+                var createVerbArgument = attribute.NamedArguments
+                    .FirstOrDefault(namedArg => namedArg.Key == "CreateVerb")
                     .Value;
-                var createMethodName = createMethodNameArgument.Value as string;
+                var createVerb = createVerbArgument.Value as string;
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
-                    Options = options,
+                    CreateMethod = createMethod,
                     RootTypeFullName = typeSymbol.ToDisplayString(),
-                    CreateMethodName = createMethodName,
+                    CreateVerb = createVerb,
                     AttributeData = attribute,
                 };
             });
     }
 
     /// <summary>
-    /// Converts a typed constant from an attribute argument to FluentFactoryGeneratorOptions.
+    /// Converts a typed constant from an attribute argument to CreateMethodMode.
     /// </summary>
-    /// <param name="namedAttributeArgument">The typed constant representing the options argument.</param>
-    /// <returns>The parsed generator options flags.</returns>
-    public static FluentFactoryGeneratorOptions ConvertToFluentFactoryGeneratorOptions(
+    /// <param name="namedAttributeArgument">The typed constant representing the CreateMethod argument.</param>
+    /// <returns>The parsed CreateMethodMode value.</returns>
+    public static CreateMethodMode ConvertToCreateMethodMode(
         TypedConstant namedAttributeArgument)
     {
         if (namedAttributeArgument.Kind != TypedConstantKind.Enum)
-            return FluentFactoryGeneratorOptions.None;
+            return CreateMethodMode.Dynamic;
 
         // Get the underlying int value
         var value = (int?)namedAttributeArgument.Value ?? 0;
 
         // Get the type symbol for the enum
         if (namedAttributeArgument.Type is not INamedTypeSymbol enumType)
-            return FluentFactoryGeneratorOptions.None;
+            return CreateMethodMode.Dynamic;
 
-        // Get all the declared members of the enum
-        var flagMembers = enumType.GetMembers()
+        // Find the matching member by value
+        var matchingMember = enumType.GetMembers()
             .OfType<IFieldSymbol>()
-            .Where(f => f.HasConstantValue && f.ConstantValue is int)
-            .ToList();
+            .FirstOrDefault(f => f.HasConstantValue && f.ConstantValue is int memberValue && memberValue == value);
 
-        // Check which flags are set
-        var setFlags = flagMembers
-            .Where(member =>
-            {
-                var memberValue = (int?)member.ConstantValue ?? 0;
-                return memberValue != 0 && (value & memberValue) == memberValue;
-            })
-            .ToList();
+        if (matchingMember is null)
+            return CreateMethodMode.Dynamic;
 
-        if (setFlags.Count == 0)
-            return FluentFactoryGeneratorOptions.None;
-
-        return setFlags
-            .Select(flag => Enum.TryParse<FluentFactoryGeneratorOptions>(flag.Name, true, out var option)
-                ? option
-                : FluentFactoryGeneratorOptions.None)
-            .Aggregate((prev, next) => prev | next);
+        return Enum.TryParse<CreateMethodMode>(matchingMember.Name, true, out var mode)
+            ? mode
+            : CreateMethodMode.Dynamic;
     }
 }

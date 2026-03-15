@@ -31,13 +31,7 @@ internal static class ExistingPartialTypeMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)))
-            .WithLeadingTrivia(
-                FluentMethodSummaryDocXml.Create(
-                    [
-                        method.DocumentationSummary,
-                        ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
-                    ]));
+            .WithBody(Block(ReturnStatement(returnObjectExpression)));
 
         if (method.MethodParameters.Length > 0)
         {
@@ -52,6 +46,13 @@ internal static class ExistingPartialTypeMethodDeclaration
                                     .WithType(
                                         ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
         }
+
+        methodDeclaration = methodDeclaration.WithLeadingTrivia(
+            FluentMethodSummaryDocXml.Create(
+                [
+                    method.DocumentationSummary,
+                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+                ]));
 
         if (!method.TypeParameters.Any())
             return methodDeclaration;

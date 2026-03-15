@@ -19,7 +19,7 @@ public class FluentFactoryRootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -78,7 +78,7 @@ public class FluentFactoryRootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -137,7 +137,7 @@ public class FluentFactoryRootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -196,7 +196,7 @@ public class FluentFactoryRootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -255,7 +255,7 @@ public class FluentFactoryRootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(in MyParameterValue value)
                 {
                     Value = value;
@@ -319,7 +319,7 @@ public class FluentFactoryRootTypeTests
 
             public partial class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3)
                 {
                     Value1 = value1;
@@ -354,10 +354,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -376,10 +376,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -432,7 +432,7 @@ public class FluentFactoryRootTypeTests
 
             public partial class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(in MyParameterValue<T1, T2> value1, in MyParameterValue<T1, T2> value2, MyParameterValue<T1, T2> value3)
                 {
                     Value1 = value1;
@@ -467,10 +467,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
@@ -489,10 +489,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
@@ -543,7 +543,7 @@ public class FluentFactoryRootTypeTests
 
             public partial class MyBuildTargetA
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTargetA(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3, MyParameterValue value4)
                 {
                     Value1 = value1;
@@ -560,7 +560,7 @@ public class FluentFactoryRootTypeTests
 
             public partial class MyBuildTargetB
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTargetB(in MyParameterValue value1, in MyParameterValue value2)
                 {
                     Value1 = value1;
@@ -594,11 +594,11 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -631,10 +631,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -684,10 +684,10 @@ public class FluentFactoryRootTypeTests
             [FluentFactory]
             public partial record struct Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public partial class MyBuildTargetA(MyParameterValue value1, MyParameterValue value2, MyParameterValue value3, MyParameterValue value4);
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public partial class MyBuildTargetB(MyParameterValue value1, MyParameterValue value2);
 
             public record MyParameterValue();
@@ -713,11 +713,11 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -750,10 +750,10 @@ public class FluentFactoryRootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;

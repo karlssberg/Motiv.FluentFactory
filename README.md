@@ -29,7 +29,7 @@ public class Person
 var person = PersonFactory
     .WithName("John")
     .WithAge(30)
-    .Create();
+    .CreatePerson();
 ```
 
 ## 📦 Installation
@@ -71,7 +71,7 @@ public class Book
 }
 
 // Usage:
-var book = BookFactory.WithTitle("The C# Guide").Create();
+var book = BookFactory.WithTitle("The C# Guide").CreateBook();
 ```
 
 **Generated Code:**
@@ -93,7 +93,7 @@ public struct Step_0__BookFactory
         this._title__parameter = title;
     }
     
-    public Book Create()
+    public Book CreateBook()
     {
         return new Book(this._title__parameter);
     }
@@ -128,12 +128,14 @@ var product = ProductFactory
     .WithName("Laptop")
     .WithPrice(999.99m)
     .WithStock(50)
-    .Create();
+    .CreateProduct();
 ```
 
 ### Naming Create Methods
 
-Customize the final create method name using the `CreateMethodName` parameter:
+By default, the create method name includes the target type name (Dynamic mode): `CreateCar()`, `CreateAddress()`, etc. This automatically disambiguates when a factory serves multiple types.
+
+Customize the create verb using the `CreateVerb` parameter:
 
 ```csharp
 [FluentFactory]
@@ -141,7 +143,7 @@ public static partial class VehicleFactory;
 
 public class Car
 {
-    [FluentConstructor(typeof(VehicleFactory), CreateMethodName = "BuildCar")]
+    [FluentConstructor(typeof(VehicleFactory), CreateMethod = CreateMethod.Fixed, CreateVerb = "BuildCar")]
     public Car(string make, string model)
     {
         Make = make;
@@ -156,17 +158,17 @@ public class Car
 var car = VehicleFactory
     .WithMake("Toyota")
     .WithModel("Camry")
-    .BuildCar(); // Custom method name instead of Create()
+    .BuildCar(); // Fixed method name
 ```
 
 ### Skipping the Create() Method
 
-Use `FluentOptions.NoCreateMethod` to eliminate the final `Create()` call:
+Use `CreateMethod = CreateMethod.None` to eliminate the final Create call:
 
 ```csharp
 public class Address
 {
-    [FluentConstructor(typeof(AddressFactory), Options = FluentOptions.NoCreateMethod)]
+    [FluentConstructor(typeof(AddressFactory), CreateMethod = CreateMethod.None)]
     public Address(string street, string city)
     {
         Street = street;
@@ -183,7 +185,7 @@ var address = AddressFactory
     .WithCity("New York");
 ```
 
-**Note:** You cannot use `CreateMethodName` together with `FluentOptions.NoCreateMethod` as there would be no create method to name.
+**Note:** You cannot use `CreateVerb` together with `CreateMethod.None` as there would be no create method to name.
 
 ### Custom Method Names
 
@@ -209,24 +211,24 @@ public class User
 var user = UserFactory
     .SetName("Alice")
     .SetEmail("alice@example.com")
-    .Create();
+    .CreateUser();
 ```
 
 ### Advanced: Custom Partial Types as Fluent Steps
 
-When using `FluentOptions.NoCreateMethod`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
+When using `CreateMethod.None`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
 
 ```csharp
 [FluentFactory]
 public static partial class Line;
 
-[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+[FluentConstructor(typeof(Dimension), CreateMethod = CreateMethod.None)]
 public partial record Line1D([FluentMethod("X")]int X);
 
-[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+[FluentConstructor(typeof(Dimension), CreateMethod = CreateMethod.None)]
 public partial record Line2D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y);
 
-[FluentConstructor(typeof(Dimension), Options = FluentOptions.NoCreateMethod)]
+[FluentConstructor(typeof(Dimension), CreateMethod = CreateMethod.None)]
 public partial record Line3D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y, [FluentMethod("Z")]int Z);
 ```
 
@@ -296,7 +298,7 @@ var order = OrderFactory
     .SetCustomer("John")
     .SetDate(DateTime.Now)
     .AddItem("Widget")
-    .Create();
+    .CreateOrder();
 ```
 
 ### Working with Generics
@@ -324,12 +326,12 @@ public class Container<T>
 var intContainer = ContainerFactory
     .WithValue(42)
     .WithLabel("Number")
-    .Create();
+    .CreateContainer();
 
 var stringContainer = ContainerFactory
     .WithValue("Hello")
     .WithLabel("Greeting")
-    .Create();
+    .CreateContainer();
 ```
 
 ### Advanced: Multiple Method Variants
@@ -370,9 +372,9 @@ public static class OperationMethods
 }
 
 // Multiple ways to create:
-var addCalc = CalculatorFactory.Add().Create();
-var multiplyCalc = CalculatorFactory.Multiply().Create();
-var customCalc = CalculatorFactory.Custom((a, b) => a - b).Create();
+var addCalc = CalculatorFactory.Add().CreateCalculator();
+var multiplyCalc = CalculatorFactory.Multiply().CreateCalculator();
+var customCalc = CalculatorFactory.Custom((a, b) => a - b).CreateCalculator();
 ```
 
 ## 🔧 API Reference
@@ -390,12 +392,13 @@ Marks a constructor to generate fluent methods for.
 
 **Parameters:**
 - `factoryType` - The factory class type to generate methods in
-- `Options` - Configuration flags (optional)
-- `CreateMethodName` - Custom name for the Create method (optional)
+- `CreateMethod` - Controls create method generation (optional)
+- `CreateVerb` - Custom verb for the Create method (optional, default: "Create")
 
-**Options:**
-- `FluentOptions.None` - Default behavior
-- `FluentOptions.NoCreateMethod` - Skip generating the Create() method
+**CreateMethod values:**
+- `CreateMethod.Dynamic` - Default; appends type name to verb (e.g., `CreateUser()`)
+- `CreateMethod.Fixed` - Uses verb as-is (e.g., `Create()`)
+- `CreateMethod.None` - Skip generating the Create method
 
 #### `[FluentMethod(string methodName)]`
 Customizes the fluent method name for a parameter.

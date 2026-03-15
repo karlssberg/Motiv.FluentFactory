@@ -13,7 +13,7 @@ public class FluentFactoryGeneratorMalformedAttributeTests
     private const string SourceFile = "Source.cs";
 
     /// <summary>
-    /// Exercises MFFG0010 on a primary constructor record — combining the NoCreateMethod/CreateMethodName conflict
+    /// Exercises MFFG0010 on a primary constructor record — combining the NoCreateMethod/CreateVerb conflict
     /// with record primary-constructor syntax. This is a distinct scenario from the explicit-constructor case
     /// already covered in FluentFactoryGeneratorBugDiscoveryTests.
     /// </summary>
@@ -29,12 +29,12 @@ public class FluentFactoryGeneratorMalformedAttributeTests
                 [FluentFactory]
                 public partial class Factory;
 
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod, CreateMethodName = "Build")]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
                 public partial record MyRecord(int Value, string Name);
             }
             """;
 
-        // Line 8: [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod, CreateMethodName = "Build")]
+        // Line 8: [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
         // Attribute starts at col 6 (1-based), ends after closing bracket.
         // The entire attribute span is expected for MFFG0010.
         await new VerifyCS.Test
@@ -43,8 +43,8 @@ public class FluentFactoryGeneratorMalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("MFFG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 108)
-                    .WithMessage("CreateMethodName cannot be used with NoCreateMethod option"),
+                    .WithSpan("Source.cs", 8, 6, 8, 96)
+                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }
         }.RunAsync();
     }
@@ -52,7 +52,7 @@ public class FluentFactoryGeneratorMalformedAttributeTests
     /// <summary>
     /// Exercises multiple simultaneous validation errors on a single FluentConstructor attribute:
     /// (1) the target type lacks [FluentFactory] (MFFG0009), and
-    /// (2) the CreateMethodName is an invalid identifier (MFFG0007).
+    /// (2) the CreateVerb is an invalid identifier (MFFG0007).
     /// Tests assert DESIRED behavior where both diagnostics fire independently.
     /// If only one fires, the test documents the validation short-circuit.
     /// </summary>
@@ -68,13 +68,13 @@ public class FluentFactoryGeneratorMalformedAttributeTests
                 // Missing [FluentFactory] attribute on purpose
                 public partial class NonFactoryType;
 
-                [FluentConstructor(typeof(NonFactoryType), CreateMethodName = "123invalid")]
+                [FluentConstructor(typeof(NonFactoryType), CreateVerb = "123invalid")]
                 public partial record MyRecord(int Value);
             }
             """;
 
         // MFFG0009 fires on the typeof(NonFactoryType) argument expression
-        // MFFG0007 fires on the CreateMethodName = "123invalid" named argument
+        // MFFG0007 fires on the CreateVerb = "123invalid" named argument
         // DESIRED: both MFFG0009 and MFFG0007 fire. If only MFFG0009 fires, this test will fail,
         // documenting that validation short-circuits after the missing-FluentFactory error.
         await new VerifyCS.Test
@@ -86,15 +86,15 @@ public class FluentFactoryGeneratorMalformedAttributeTests
                     .WithSpan("Source.cs", 8, 24, 8, 46)
                     .WithMessage("FluentConstructor references type 'Test.Namespace.NonFactoryType' which does not have the FluentFactory attribute"),
                 DiagnosticResult.CompilerError("MFFG0007")
-                    .WithSpan("Source.cs", 8, 48, 8, 79)
-                    .WithMessage("CreateMethodName must be a valid identifier"),
+                    .WithSpan("Source.cs", 8, 48, 8, 73)
+                    .WithMessage("CreateVerb must be a valid identifier"),
             }
         }.RunAsync();
     }
 
     /// <summary>
     /// Exercises cascading validation errors across two constructors on the same type:
-    /// both use CreateMethodName = "Build" (triggering MFFG0008 — duplicate),
+    /// both use CreateVerb = "Build" (triggering MFFG0008 — duplicate),
     /// and one also has NoCreateMethod (triggering MFFG0010 — conflict).
     /// Tests assert DESIRED behavior where both independent errors are reported.
     /// </summary>
@@ -112,16 +112,16 @@ public class FluentFactoryGeneratorMalformedAttributeTests
 
                 public partial class MyTarget
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethodName = "Build")]
+                    [FluentConstructor(typeof(Factory), CreateVerb = "Build")]
                     public MyTarget(int value) { }
 
-                    [FluentConstructor(typeof(Factory), CreateMethodName = "Build", Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateVerb = "Build", CreateMethod = CreateMethod.None)]
                     public MyTarget(string name) { }
                 }
             }
             """;
 
-        // MFFG0008 fires on the CreateMethodName argument of both constructors (duplicate)
+        // MFFG0008 fires on the CreateVerb argument of both constructors (duplicate)
         // MFFG0010 fires on the entire attribute of the second constructor (NoCreateMethod conflict)
         await new VerifyCS.Test
         {
@@ -129,12 +129,12 @@ public class FluentFactoryGeneratorMalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("MFFG0008")
-                    .WithSpan("Source.cs", 10, 45, 10, 71)
-                    .WithSpan("Source.cs", 13, 45, 13, 71)
-                    .WithMessage("CreateMethodName must be unique"),
+                    .WithSpan("Source.cs", 10, 45, 10, 65)
+                    .WithSpan("Source.cs", 13, 45, 13, 65)
+                    .WithMessage("Create method name must be unique"),
                 DiagnosticResult.CompilerError("MFFG0010")
-                    .WithSpan("Source.cs", 13, 10, 13, 112)
-                    .WithMessage("CreateMethodName cannot be used with NoCreateMethod option"),
+                    .WithSpan("Source.cs", 13, 10, 13, 100)
+                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }
         }.RunAsync();
     }

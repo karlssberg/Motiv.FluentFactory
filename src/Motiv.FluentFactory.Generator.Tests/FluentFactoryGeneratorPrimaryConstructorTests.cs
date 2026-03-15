@@ -18,7 +18,7 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -74,7 +74,7 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public record MyBuildTarget(int Number, string text);
             """;
 
@@ -97,10 +97,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -148,7 +148,7 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public record MyBuildTarget(
                 int Number,
                 string text)
@@ -175,10 +175,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -225,7 +225,7 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public struct MyBuildTarget(
                 int number,
                 string text,
@@ -258,10 +258,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -280,10 +280,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -333,7 +333,7 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
             [FluentFactory]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
             public ref struct MyBuildTarget(
                 int number,
                 string text,
@@ -369,10 +369,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -391,10 +391,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly int _number__parameter;
@@ -415,10 +415,10 @@ public class FluentFactoryGeneratorPrimaryConstructorTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_2__Test_Factory
                 {
                     private readonly int _number__parameter;

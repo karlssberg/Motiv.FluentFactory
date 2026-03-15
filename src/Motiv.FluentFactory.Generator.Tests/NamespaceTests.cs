@@ -22,7 +22,7 @@ public class NamespaceTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Test.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Test.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -40,7 +40,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -100,11 +100,11 @@ public class NamespaceTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.NamespaceA.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -165,7 +165,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Test.Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Test.Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -183,7 +183,7 @@ public class NamespaceTests
             {
                 public partial class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {

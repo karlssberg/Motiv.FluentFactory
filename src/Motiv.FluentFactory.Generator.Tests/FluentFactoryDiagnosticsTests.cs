@@ -26,7 +26,7 @@ public class FluentFactoryDiagnosticsTests
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -37,7 +37,7 @@ public class FluentFactoryDiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public Company(string name)
                     {
                         Name = name;
@@ -81,7 +81,7 @@ public class FluentFactoryDiagnosticsTests
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -92,7 +92,7 @@ public class FluentFactoryDiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                     public Company([MultipleFluentMethods(typeof(Convert))]int? id)
                     {
                         Id = id;
@@ -171,7 +171,7 @@ public class FluentFactoryDiagnosticsTests
             [FluentFactory]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, MyNamespace.BooleanResultBase<string>, string> trueBecause);
 
@@ -228,7 +228,7 @@ public class FluentFactoryDiagnosticsTests
             [FluentFactory]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, string> trueBecause);
 
@@ -320,19 +320,19 @@ public class FluentFactoryDiagnosticsTests
             [FluentFactory]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, BooleanResultBase<string>, string> trueBecause);
 
-            [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
             public readonly partial struct ExplanationWithNameExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [FluentMethod("WhenTrue")]string trueBecause);
 
             public readonly partial struct MultiAssertionExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>
             {
-                [FluentConstructor(typeof(Spec), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
                 public MultiAssertionExplanationExpressionTreePropositionFactory(
                     Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
@@ -378,12 +378,12 @@ public class FluentFactoryDiagnosticsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.ExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 ///     <seealso cref="Test.ExplanationWithNameExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -489,10 +489,10 @@ public class FluentFactoryDiagnosticsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Square"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Shape
                 {
                     private readonly int _width__parameter;
@@ -507,7 +507,7 @@ public class FluentFactoryDiagnosticsTests
                     ///     <seealso cref="Test.Square"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Square Create()
+                    public global::Test.Square CreateSquare()
                     {
                         return new global::Test.Square(this._width__parameter);
                     }

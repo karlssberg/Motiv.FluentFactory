@@ -51,13 +51,7 @@ internal static class FluentFactoryMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)))
-            .WithLeadingTrivia(
-                FluentMethodSummaryDocXml.Create(
-                [
-                    method.DocumentationSummary,
-                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
-                ]));
+            .WithBody(Block(ReturnStatement(returnObjectExpression)));
 
         if (method.SourceParameter is not null)
         {
@@ -70,7 +64,12 @@ internal static class FluentFactoryMethodDeclaration
                             ParseTypeName(method.SourceParameter.Type.ToGlobalDisplayString())))));
         }
 
-        return methodDeclaration;
+        return methodDeclaration.WithLeadingTrivia(
+            FluentMethodSummaryDocXml.Create(
+            [
+                method.DocumentationSummary,
+                ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+            ]));
     }
 
     private static ImmutableArray<TypeParameterSyntax> GetTypeParameterSyntaxes(IFluentMethod method, IFluentStep step)

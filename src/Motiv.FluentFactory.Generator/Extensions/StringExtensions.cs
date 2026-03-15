@@ -76,4 +76,24 @@ internal static class StringExtensions
             .Replace(">", "__")
             .Replace(',', '_');
     }
+
+    /// <summary>
+    /// Derives a Create method suffix from a named type symbol by walking the containing type
+    /// chain for nested types and joining with underscores (e.g., <c>Outer_Inner_Target</c>).
+    /// </summary>
+    /// <param name="symbol">The named type symbol to derive a suffix from.</param>
+    /// <returns>A suffix string suitable for appending to a Create method verb.</returns>
+    public static string ToCreateMethodSuffix(this INamedTypeSymbol symbol)
+    {
+        var names = new List<string>();
+        var current = symbol;
+        while (current is not null)
+        {
+            names.Add(current.Name);
+            current = current.ContainingType;
+        }
+
+        names.Reverse();
+        return string.Join("_", names);
+    }
 }

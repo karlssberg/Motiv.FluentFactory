@@ -69,8 +69,8 @@ internal static class FluentStepDeclaration
 
         var structDeclaration = StructDeclaration(identifier)
             .WithModifiers(accessibilityToken)
-            .WithLeadingTrivia(xmlDocTrivia)
             .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
+            .WithLeadingTrivia(xmlDocTrivia)
             .WithTypeParameterList(typeParameterList)
             .WithConstraintClauses(CreateTypeParameterConstraints(constraintTypeParameters))
             .WithMembers(List<MemberDeclarationSyntax>([

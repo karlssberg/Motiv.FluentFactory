@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator.ModelBuilding;
 
@@ -46,7 +45,7 @@ internal class FluentStepBuilder(
             if (constructorMetadata is null) return false;
 
             var containingType = constructorMetadata.Constructor.ContainingType;
-            var doNotGenerateCreateMethod = constructorMetadata.Options.HasFlag(NoCreateMethod);
+            var doNotGenerateCreateMethod = constructorMetadata.CreateMethod == CreateMethodMode.None;
 
             // FUTURE ENHANCEMENT: Create a dedicated analyzer to validate that target types are partial and instantiatable.
             // This would help avoid issues where constructors with similar build steps might be hidden.

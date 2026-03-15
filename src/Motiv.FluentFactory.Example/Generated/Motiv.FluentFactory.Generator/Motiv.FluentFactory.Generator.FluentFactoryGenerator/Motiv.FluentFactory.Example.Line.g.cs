@@ -17,11 +17,11 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_0__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _x__parameter;
@@ -41,11 +41,11 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_1__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _x__parameter;
@@ -71,16 +71,16 @@ namespace Motiv.FluentFactory.Example
         ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Line2D<T> Create()
+        public global::Motiv.FluentFactory.Example.Line2D<T> Create2D()
         {
             return new global::Motiv.FluentFactory.Example.Line2D<T>(this._x__parameter, this._y__parameter);
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_2__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _x__parameter;
@@ -99,7 +99,7 @@ namespace Motiv.FluentFactory.Example
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Line3D<T> Create()
+        public global::Motiv.FluentFactory.Example.Line3D<T> Create3D()
         {
             return new global::Motiv.FluentFactory.Example.Line3D<T>(this._x__parameter, this._y__parameter, this._z__parameter);
         }

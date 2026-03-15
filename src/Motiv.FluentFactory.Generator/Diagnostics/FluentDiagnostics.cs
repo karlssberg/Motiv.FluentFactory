@@ -82,13 +82,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for invalid create method name.
+    /// Diagnostic for invalid create verb.
     /// </summary>
-    public static readonly DiagnosticDescriptor InvalidCreateMethodName = new(
+    public static readonly DiagnosticDescriptor InvalidCreateVerb = new(
         id: "MFFG0007",
-        title: "Invalid CreateMethodName",
+        title: "Invalid CreateVerb",
         category: Category,
-        messageFormat: "CreateMethodName must be a valid identifier",
+        messageFormat: "CreateVerb must be a valid identifier",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -97,9 +97,9 @@ public static class FluentDiagnostics
     /// </summary>
     public static readonly DiagnosticDescriptor DuplicateCreateMethodName = new(
         id: "MFFG0008",
-        title: "Duplicate CreateMethodName",
+        title: "Duplicate create method name",
         category: Category,
-        messageFormat: "CreateMethodName must be unique",
+        messageFormat: "Create method name must be unique",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -115,13 +115,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for CreateMethodName specified with NoCreateMethod option.
+    /// Diagnostic for CreateVerb specified with CreateMethod.None.
     /// </summary>
-    public static readonly DiagnosticDescriptor CreateMethodNameWithNoCreateMethod = new(
+    public static readonly DiagnosticDescriptor CreateVerbWithNone = new(
         "MFFG0010",
-        title: "CreateMethodName specified with NoCreateMethod option",
+        title: "CreateVerb specified with CreateMethod.None",
         category: Category,
-        messageFormat: "CreateMethodName cannot be used with NoCreateMethod option",
+        messageFormat: "CreateVerb cannot be used with CreateMethod.None",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 

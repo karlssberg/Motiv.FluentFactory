@@ -25,7 +25,7 @@ public class FluentFactoryGeneratorDeepNestedGenericTests
 
             public class MyBuildTarget<T, U>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(Dictionary<string, List<KeyValuePair<T, U>>> value)
                 {
                     Value = value;
@@ -90,7 +90,7 @@ public class FluentFactoryGeneratorDeepNestedGenericTests
 
             public class MyBuildTarget<T, U>
             {
-                [FluentConstructor(typeof(Factory), Options = FluentOptions.NoCreateMethod)]
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
                 public MyBuildTarget(IReadOnlyDictionary<string, IEnumerable<Tuple<T, List<U>>>> value)
                 {
                     Value = value;

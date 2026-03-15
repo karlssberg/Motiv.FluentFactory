@@ -1,10 +1,9 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Motiv.FluentFactory.Generator.ConstructorAnalysis;
 using Motiv.FluentFactory.Generator.Diagnostics;
-using static Motiv.FluentFactory.Generator.FluentFactoryGeneratorOptions;
 
 namespace Motiv.FluentFactory.Generator;
 
@@ -14,9 +13,9 @@ internal static class FluentConstructorValidatorExtensions
     {
         return ValidateRootTypeAttributes(fluentConstructorContexts)
             .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
-            .Concat(ValidateCreateMethodNames(fluentConstructorContexts))
-            .Concat(ValidateDuplicateCreateMethodNames(fluentConstructorContexts))
-            .Concat(ValidateCreateMethodNameConflicts(fluentConstructorContexts))
+            .Concat(ValidateCreateVerb(fluentConstructorContexts))
+            .Concat(ValidateDuplicateCreateMethods(fluentConstructorContexts))
+            .Concat(ValidateCreateVerbConflicts(fluentConstructorContexts))
             .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
             .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
             .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts));
@@ -62,47 +61,47 @@ internal static class FluentConstructorValidatorExtensions
                 context.RootType.ToDisplayString());
     }
 
-    private static IEnumerable<Diagnostic> ValidateCreateMethodNames(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateCreateVerb(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
         // Get contexts that have duplicates - we'll skip MFFG0007 for these since MFFG0008 will be reported
         var duplicateContexts = new HashSet<FluentConstructorContext>(GetDuplicateConstructorContexts(fluentConstructorContexts)
             .SelectMany(group => group));
 
-        // Check for valid CreateMethodName values, but skip those that are duplicates
-        var constructorContextWithInvalidCreateMethodName = fluentConstructorContexts
+        // Check for valid CreateVerb values, but skip those that are duplicates
+        var constructorContextWithInvalidCreateVerb = fluentConstructorContexts
             .Except(duplicateContexts)
-            .Where(IsMethodNameValid);
+            .Where(IsVerbInvalid);
 
-        foreach (var context in constructorContextWithInvalidCreateMethodName)
+        foreach (var context in constructorContextWithInvalidCreateVerb)
         {
             yield return Diagnostic.Create(
-                FluentDiagnostics.InvalidCreateMethodName,
-                FindCreateMethodNameArgumentLocation(context));
+                FluentDiagnostics.InvalidCreateVerb,
+                FindCreateVerbArgumentLocation(context));
         }
 
         yield break;
 
-        bool IsMethodNameValid(FluentConstructorContext context)
+        bool IsVerbInvalid(FluentConstructorContext context)
         {
-            var isFirstCharValid = context.CreateMethodName?.Select(char.IsLetter).FirstOrDefault() ?? true;
-            var areRemainingCharsValid = context.CreateMethodName?.Skip(1).All(char.IsLetterOrDigit) ?? true;
+            var isFirstCharValid = context.CreateVerb?.Select(char.IsLetter).FirstOrDefault() ?? true;
+            var areRemainingCharsValid = context.CreateVerb?.Skip(1).All(char.IsLetterOrDigit) ?? true;
             return !(isFirstCharValid && areRemainingCharsValid);
         }
     }
 
-    private static IEnumerable<Diagnostic> ValidateDuplicateCreateMethodNames(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateDuplicateCreateMethods(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
-        // Check for duplicate CreateMethodName values within the same type
+        // Check for duplicate resolved create method names within the same type
         var duplicateGroups = GetDuplicateConstructorContexts(fluentConstructorContexts);
 
         foreach (var group in duplicateGroups)
         {
 
             var contexts = group.ToList();
-            var primaryLocation = FindCreateMethodNameArgumentLocation(contexts[0]);
+            var primaryLocation = FindCreateVerbArgumentLocation(contexts[0]);
             var additionalLocations = contexts
                 .Skip(1)
-                .Select(FindCreateMethodNameArgumentLocation);
+                .Select(FindCreateVerbArgumentLocation);
 
             yield return Diagnostic.Create(
                 FluentDiagnostics.DuplicateCreateMethodName,
@@ -111,24 +110,35 @@ internal static class FluentConstructorValidatorExtensions
         }
     }
 
-    private static IEnumerable<IGrouping<(string? CreateMethodName, string TypeName), FluentConstructorContext>> GetDuplicateConstructorContexts(
+    private static IEnumerable<IGrouping<(string ResolvedName, string TypeName), FluentConstructorContext>> GetDuplicateConstructorContexts(
         ImmutableArray<FluentConstructorContext> fluentConstructorContexts) =>
         fluentConstructorContexts
-            .Where(context => !string.IsNullOrEmpty(context.CreateMethodName))
-            .GroupBy(context =>(context.CreateMethodName, TypeName: context.Constructor.ContainingType.ToDisplayString()))
+            .Where(context => !string.IsNullOrEmpty(context.CreateVerb))
+            .Select(context => (Context: context, ResolvedName: ResolveCreateMethodName(context)))
+            .GroupBy(x => (x.ResolvedName, TypeName: x.Context.Constructor.ContainingType.ToDisplayString()), x => x.Context)
             .Where(group => group.Count() > 1);
 
-    private static IEnumerable<Diagnostic> ValidateCreateMethodNameConflicts(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static string ResolveCreateMethodName(FluentConstructorContext context)
     {
-        // Check for NoCreateMethod option used with CreateMethodName
-        var conflictedMethodNameFluentConstructorContexts = fluentConstructorContexts.AsEnumerable().Where(context =>
-            context.Options.HasFlag(NoCreateMethod)
-            && !string.IsNullOrEmpty(context.CreateMethodName));
+        var verb = context.CreateVerb ?? "Create";
+        return context.CreateMethod switch
+        {
+            CreateMethodMode.Fixed => verb,
+            _ => $"{verb}{context.Constructor.ContainingType.ToCreateMethodSuffix()}"
+        };
+    }
 
-        foreach (var context in conflictedMethodNameFluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateCreateVerbConflicts(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        // Check for CreateMethod.None used with CreateVerb
+        var conflictedContexts = fluentConstructorContexts.AsEnumerable().Where(context =>
+            context.CreateMethod == CreateMethodMode.None
+            && !string.IsNullOrEmpty(context.CreateVerb));
+
+        foreach (var context in conflictedContexts)
         {
             yield return Diagnostic.Create(
-                FluentDiagnostics.CreateMethodNameWithNoCreateMethod,
+                FluentDiagnostics.CreateVerbWithNone,
                 context.AttributeData.ApplicationSyntaxReference?.GetSyntax() switch
                 {
                     AttributeSyntax attributeSyntax => attributeSyntax.GetLocation(),
@@ -214,18 +224,18 @@ internal static class FluentConstructorValidatorExtensions
         return location;
     }
 
-    private static Location FindCreateMethodNameArgumentLocation(FluentConstructorContext context)
+    private static Location FindCreateVerbArgumentLocation(FluentConstructorContext context)
     {
         Location location;
         if (context.AttributeData.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
         {
-            // Find the CreateMethodName named argument
-            var createMethodNameArg = attributeSyntax.ArgumentList?.Arguments
+            // Find the CreateVerb named argument
+            var createVerbArg = attributeSyntax.ArgumentList?.Arguments
                 .OfType<AttributeArgumentSyntax>()
-                .FirstOrDefault(arg => arg.NameEquals?.Name.Identifier.ValueText == "CreateMethodName");
+                .FirstOrDefault(arg => arg.NameEquals?.Name.Identifier.ValueText == "CreateVerb");
 
-            location = createMethodNameArg != null
-                ? createMethodNameArg.GetLocation()
+            location = createVerbArg != null
+                ? createVerbArg.GetLocation()
                 : attributeSyntax.GetLocation();
         }
         else
@@ -288,13 +298,13 @@ internal static class FluentConstructorValidatorExtensions
         if (distinctTypes <= 1)
             return false;
 
-        // Separate constructors with NoCreateMethod from those that produce Create methods
+        // Separate constructors with None from those that produce Create methods
         var constructorsWithCreate = group
-            .Where(ctx => !ctx.Options.HasFlag(NoCreateMethod))
+            .Where(ctx => ctx.CreateMethod != CreateMethodMode.None)
             .ToList();
 
         var constructorsWithNoCreate = group
-            .Where(ctx => ctx.Options.HasFlag(NoCreateMethod))
+            .Where(ctx => ctx.CreateMethod == CreateMethodMode.None)
             .ToList();
 
         // NoCreateMethod constructors use the containing type as the step, so at most one
@@ -309,7 +319,7 @@ internal static class FluentConstructorValidatorExtensions
             && AreCreateMethodsDisambiguated(constructorsWithCreate))
             return false;
 
-        // Allow groups where all constructors have distinct, non-null CreateMethodName values
+        // Allow groups where all constructors have distinct resolved create method names
         if (AreCreateMethodsDisambiguated(group.ToList()))
             return false;
 
@@ -322,20 +332,22 @@ internal static class FluentConstructorValidatorExtensions
         if (constructors.Count <= 1)
             return true;
 
-        // All must have distinct, non-null CreateMethodName values
-        var constructorsWithCreateMethodName = constructors
-            .Where(ctx => !string.IsNullOrEmpty(ctx.CreateMethodName))
+        // Constructors with None don't produce create methods and can't be disambiguated by name
+        var constructorsWithCreate = constructors
+            .Where(ctx => ctx.CreateMethod != CreateMethodMode.None)
             .ToList();
 
-        if (constructorsWithCreateMethodName.Count != constructors.Count)
+        if (constructorsWithCreate.Count != constructors.Count)
             return false;
 
-        var distinctNames = constructorsWithCreateMethodName
-            .Select(ctx => ctx.CreateMethodName)
-            .Distinct()
-            .Count();
+        // All constructors produce create methods — check resolved names are distinct
+        var resolvedNames = constructorsWithCreate
+            .Select(ResolveCreateMethodName)
+            .ToList();
 
-        return distinctNames == constructorsWithCreateMethodName.Count;
+        var distinctNames = resolvedNames.Distinct().Count();
+
+        return distinctNames == resolvedNames.Count;
     }
 
     private static string GetFluentParameterChainKey(FluentConstructorContext context) =>

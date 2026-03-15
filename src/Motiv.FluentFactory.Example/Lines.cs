@@ -6,13 +6,13 @@ namespace Motiv.FluentFactory.Example;
 [FluentFactory]
 internal static partial class Line;
 
-[FluentConstructor(typeof(Line))]
+[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.Fixed, CreateVerb = "Create2D")]
 internal partial record Line2D<T>(
     [FluentMethod("X")]T X,
     [FluentMethod("Y")]T Y)
     where T : INumber<T>;
 
-[FluentConstructor(typeof(Line))]
+[FluentConstructor(typeof(Line),  CreateMethod = CreateMethod.Fixed, CreateVerb = "Create3D")]
 internal partial record Line3D<T>(
     [FluentMethod("X")]T X,
     [FluentMethod("Y")]T Y,

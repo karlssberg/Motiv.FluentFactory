@@ -25,7 +25,13 @@ internal static class FluentRootFactoryMethodDeclaration
 
         var methodDeclaration = CreateBaseMethodDeclaration(method, returnObjectExpression);
 
-        return RootMethodTypeParameterResolver.AttachTypeParametersAndConstraints(methodDeclaration, method, rootType);
+        return RootMethodTypeParameterResolver.AttachTypeParametersAndConstraints(methodDeclaration, method, rootType)
+            .WithLeadingTrivia(
+                FluentMethodSummaryDocXml.Create(
+                [
+                    method.DocumentationSummary,
+                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+                ]));
     }
 
     private static MethodDeclarationSyntax CreateBaseMethodDeclaration(
@@ -42,13 +48,7 @@ internal static class FluentRootFactoryMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)))
-            .WithLeadingTrivia(
-                FluentMethodSummaryDocXml.Create(
-                [
-                    method.DocumentationSummary,
-                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
-                ]));
+            .WithBody(Block(ReturnStatement(returnObjectExpression)));
 
         if (method.MethodParameters.Length > 0)
         {

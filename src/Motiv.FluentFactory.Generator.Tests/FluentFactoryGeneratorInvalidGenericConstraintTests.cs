@@ -65,10 +65,10 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.Container{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T> where T : struct
                 {
                     private readonly T _value__parameter;
@@ -83,7 +83,7 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                     ///     <seealso cref="Test.Namespace.Container{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Container<T> Create()
+                    public global::Test.Namespace.Container<T> CreateContainer()
                     {
                         return new global::Test.Namespace.Container<T>(this._value__parameter);
                     }
@@ -165,10 +165,10 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.BrokenConstraint{T}"/>
                 /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
                 public struct Step_0__Test_Namespace_Factory<T> where T : class, struct
                 {
                     private readonly T _value__parameter;
@@ -183,7 +183,7 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                     ///     <seealso cref="Test.Namespace.BrokenConstraint{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.BrokenConstraint<T> Create()
+                    public global::Test.Namespace.BrokenConstraint<T> CreateBrokenConstraint()
                     {
                         return new global::Test.Namespace.BrokenConstraint<T>(this._value__parameter);
                     }

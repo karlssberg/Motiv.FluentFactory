@@ -29,13 +29,13 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_0__Motiv_FluentFactory_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -67,12 +67,12 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_1__Motiv_FluentFactory_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -115,10 +115,10 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_2__Motiv_FluentFactory_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -143,10 +143,10 @@ namespace Motiv.FluentFactory.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     /// <summary>
     ///     <seealso cref="Motiv.FluentFactory.Example.Circle{T}"/>
     /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal struct Step_3__Motiv_FluentFactory_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _radius__parameter;
