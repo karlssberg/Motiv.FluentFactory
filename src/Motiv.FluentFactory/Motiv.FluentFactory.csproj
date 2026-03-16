@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,12 +9,21 @@
         <PackageTags>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" PrivateAssets="all"/>
-      <ProjectReference Include="..\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj" PrivateAssets="all"/>
+      <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" PrivateAssets="all" />
+      <ProjectReference Include="..\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj" PrivateAssets="all" />
     </ItemGroup>
+
+    <!-- Ensure dependencies are built before packing, since IncludeBuildOutput=false
+         causes MSBuild to skip building this project (and its dependencies) before pack -->
+    <Target Name="BuildDependenciesBeforePack" BeforeTargets="GenerateNuspec">
+      <MSBuild Projects="@(ProjectReference)" Targets="Build" Properties="Configuration=$(Configuration)" />
+    </Target>
 
     <ItemGroup>
         <None Include="..\..\README.md" Pack="true" PackagePath="\" />
