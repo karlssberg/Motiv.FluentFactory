@@ -18,7 +18,7 @@ internal record FluentConstructorContext
     {
         Constructor = constructor;
         AttributeData = attributeData;
-        CreateMethod = metadata.CreateMethod;
+        CreateMethod = metadata.CreateMethod ?? CreateMethodMode.Dynamic;
         CreateVerb = metadata.CreateVerb;
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;

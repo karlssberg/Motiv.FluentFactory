@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
 namespace Motiv.FluentFactory.Generator.ConstructorAnalysis;
@@ -8,6 +9,9 @@ namespace Motiv.FluentFactory.Generator.ConstructorAnalysis;
 /// </summary>
 internal static class FluentFactoryMetadataReader
 {
+    private const string CreateMethodKey = "CreateMethod";
+    private const string CreateVerbKey = "CreateVerb";
+
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentConstructor attributes.
     /// </summary>
@@ -27,17 +31,7 @@ internal static class FluentFactoryMetadataReader
                 if (typeArg.IsNull || typeArg.Value is not INamedTypeSymbol typeSymbol)
                     return FluentFactoryMetadata.Invalid;
 
-                // Grab the CreateMethod enum value
-                var createMethodArgument = attribute.NamedArguments
-                    .FirstOrDefault(namedArg => namedArg.Key == "CreateMethod")
-                    .Value;
-                var createMethod = ConvertToCreateMethodMode(createMethodArgument);
-
-                // Grab the create verb
-                var createVerbArgument = attribute.NamedArguments
-                    .FirstOrDefault(namedArg => namedArg.Key == "CreateVerb")
-                    .Value;
-                var createVerb = createVerbArgument.Value as string;
+                var (createMethod, createVerb) = ReadCreateMethodAndVerb(attribute.NamedArguments);
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
@@ -47,6 +41,51 @@ internal static class FluentFactoryMetadataReader
                     AttributeData = attribute,
                 };
             });
+    }
+
+    /// <summary>
+    /// Reads factory-level defaults from the [FluentFactory] attribute on the root type.
+    /// </summary>
+    /// <param name="rootType">The root type symbol that has the [FluentFactory] attribute.</param>
+    /// <returns>Factory defaults with nullable values (null = not explicitly set).</returns>
+    public static FluentFactoryDefaults GetFluentFactoryDefaults(INamedTypeSymbol rootType)
+    {
+        var attribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
+
+        if (attribute is null)
+            return new FluentFactoryDefaults(null, null);
+
+        var (createMethod, createVerb) = ReadCreateMethodAndVerb(attribute.NamedArguments);
+
+        return new FluentFactoryDefaults(createMethod, createVerb);
+    }
+
+    /// <summary>
+    /// Reads CreateMethod and CreateVerb from an attribute's named arguments.
+    /// Returns null for each value not explicitly present.
+    /// </summary>
+    /// <param name="namedArguments">The named arguments from an attribute.</param>
+    /// <returns>A tuple of nullable CreateMethod and CreateVerb values.</returns>
+    private static (CreateMethodMode? CreateMethod, string? CreateVerb) ReadCreateMethodAndVerb(
+        ImmutableArray<KeyValuePair<string, TypedConstant>> namedArguments)
+    {
+        CreateMethodMode? createMethod = null;
+        string? createVerb = null;
+
+        foreach (var arg in namedArguments)
+        {
+            switch (arg.Key)
+            {
+                case CreateMethodKey:
+                    createMethod = ConvertToCreateMethodMode(arg.Value);
+                    break;
+                case CreateVerbKey:
+                    createVerb = arg.Value.Value as string;
+                    break;
+            }
+        }
+
+        return (createMethod, createVerb);
     }
 
     /// <summary>

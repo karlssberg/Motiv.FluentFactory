@@ -9,26 +9,26 @@ internal partial class Shape<T> where T : INumber<T>;
 [FluentFactory]
 internal partial class Shape;
 
-[FluentFactory]
-[FluentConstructor(typeof(Square<>), CreateMethod = CreateMethod.Fixed)]
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentConstructor(typeof(Square<>))]
 [FluentConstructor(typeof(Shape))]
 [FluentConstructor(typeof(Shape<>))]
 internal partial record Square<T>(T Width) where T : INumber<T>;
 
-[FluentFactory]
-[FluentConstructor(typeof(Rectangle<>), CreateMethod = CreateMethod.Fixed)]
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentConstructor(typeof(Rectangle<>))]
 [FluentConstructor(typeof(Shape))]
 [FluentConstructor(typeof(Shape<>))]
 internal partial record Rectangle<T>(T Width, T Height) where T : INumber<T>;
 
-[FluentFactory]
-[FluentConstructor(typeof(Circle<>), CreateMethod = CreateMethod.Fixed)]
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentConstructor(typeof(Circle<>))]
 [FluentConstructor(typeof(Shape))]
 [FluentConstructor(typeof(Shape<>))]
 internal partial record Circle<T>(T Radius) where T : INumber<T>;
 
-[FluentFactory]
-[FluentConstructor(typeof(Diamond<>), CreateMethod = CreateMethod.Fixed)]
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentConstructor(typeof(Diamond<>))]
 [FluentConstructor(typeof(Shape))]
 [FluentConstructor(typeof(Shape<>))]
 internal partial record Diamond<T>(T Width, T Height) where T : INumber<T>;

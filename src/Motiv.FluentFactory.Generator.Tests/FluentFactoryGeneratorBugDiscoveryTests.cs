@@ -413,7 +413,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 [FluentFactory]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), {{createMethodNameArgument}})]
+                [FluentConstructor(typeof(MyTarget), {{createMethodNameArgument}}, CreateMethod = CreateMethod.Fixed)]
                 public partial record EmptyName(int Value);
             }
             """;

@@ -3,16 +3,16 @@ using Motiv.FluentFactory.Attributes;
 
 namespace Motiv.FluentFactory.Example;
 
-[FluentFactory]
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
 internal static partial class Line;
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.Fixed, CreateVerb = "Create2D")]
+[FluentConstructor(typeof(Line), CreateVerb = "Create2D")]
 internal partial record Line2D<T>(
     [FluentMethod("X")]T X,
     [FluentMethod("Y")]T Y)
     where T : INumber<T>;
 
-[FluentConstructor(typeof(Line),  CreateMethod = CreateMethod.Fixed, CreateVerb = "Create3D")]
+[FluentConstructor(typeof(Line), CreateVerb = "Create3D")]
 internal partial record Line3D<T>(
     [FluentMethod("X")]T X,
     [FluentMethod("Y")]T Y,

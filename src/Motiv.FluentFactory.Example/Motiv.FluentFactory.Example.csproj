@@ -16,9 +16,6 @@
         <None Include="**/*.g.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Generated\" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="..\Motiv.FluentFactory.Attributes\Motiv.FluentFactory.Attributes.csproj" />
       <ProjectReference Include="..\Motiv.FluentFactory.Generator\Motiv.FluentFactory.Generator.csproj" OutputItemType="Analyzer" />
     </ItemGroup>

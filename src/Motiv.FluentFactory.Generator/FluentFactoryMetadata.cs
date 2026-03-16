@@ -9,13 +9,13 @@ internal record FluentFactoryMetadata(INamedTypeSymbol RootTypeSymbol)
     public bool AttributePresent => AttributeData is not null;
     public INamedTypeSymbol RootTypeSymbol { get; } = RootTypeSymbol;
     public string RootTypeFullName { get; set; } = string.Empty;
-    public CreateMethodMode CreateMethod { get; set; } = CreateMethodMode.Dynamic;
+    public CreateMethodMode? CreateMethod { get; set; }
     public string? CreateVerb { get; set; }
     public AttributeData? AttributeData { get; set; }
 
     public static FluentFactoryMetadata Invalid => new(default(INamedTypeSymbol)!);
 
-    public void Deconstruct(out bool attributePresent, out string rootTypeFullName, out CreateMethodMode createMethod)
+    public void Deconstruct(out bool attributePresent, out string rootTypeFullName, out CreateMethodMode? createMethod)
     {
         attributePresent = AttributePresent;
         rootTypeFullName = RootTypeFullName;

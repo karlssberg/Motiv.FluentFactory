@@ -38,6 +38,10 @@ internal static class FluentConstructorContextFactory
                     if (!attributePresent || string.IsNullOrWhiteSpace(rootTypeFullName))
                         return [];
 
+                    var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
+                    metadata.CreateMethod ??= defaults.CreateMethod ?? CreateMethodMode.Dynamic;
+                    metadata.CreateVerb ??= defaults.CreateVerb;
+
                     return symbol switch
                     {
                         IMethodSymbol constructor =>

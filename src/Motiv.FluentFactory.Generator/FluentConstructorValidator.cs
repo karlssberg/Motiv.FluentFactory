@@ -13,6 +13,7 @@ internal static class FluentConstructorValidatorExtensions
     {
         return ValidateRootTypeAttributes(fluentConstructorContexts)
             .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
+            .Concat(ValidateFactoryDefaults(fluentConstructorContexts))
             .Concat(ValidateCreateVerb(fluentConstructorContexts))
             .Concat(ValidateDuplicateCreateMethods(fluentConstructorContexts))
             .Concat(ValidateCreateVerbConflicts(fluentConstructorContexts))
@@ -48,6 +49,36 @@ internal static class FluentConstructorValidatorExtensions
             .Any(declaration => declaration.Modifiers.Any(SyntaxKind.PartialKeyword));
     }
 
+    private static IEnumerable<Diagnostic> ValidateFactoryDefaults(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var rootTypes = fluentConstructorContexts
+            .Select(context => context.RootType)
+            .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+
+        foreach (var rootType in rootTypes)
+        {
+            var factoryAttribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
+            if (factoryAttribute is null)
+                continue;
+
+            var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
+            var location = GetAttributeLocation(factoryAttribute);
+
+            if (defaults.CreateVerb is not null && !IsValidCreateVerb(defaults.CreateVerb))
+                yield return Diagnostic.Create(FluentDiagnostics.InvalidCreateVerb, location);
+
+            if (defaults.CreateMethod == CreateMethodMode.None && !string.IsNullOrEmpty(defaults.CreateVerb))
+                yield return Diagnostic.Create(FluentDiagnostics.CreateVerbWithNone, location);
+        }
+    }
+
+    private static Location GetAttributeLocation(AttributeData attributeData) =>
+        attributeData.ApplicationSyntaxReference?.GetSyntax() switch
+        {
+            AttributeSyntax attributeSyntax => attributeSyntax.GetLocation(),
+            _ => Location.None,
+        };
+
     private static IEnumerable<Diagnostic> ValidateRootTypeAttributes(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
         // Check if the target type has the FluentFactory attribute
@@ -67,10 +98,11 @@ internal static class FluentConstructorValidatorExtensions
         var duplicateContexts = new HashSet<FluentConstructorContext>(GetDuplicateConstructorContexts(fluentConstructorContexts)
             .SelectMany(group => group));
 
-        // Check for valid CreateVerb values, but skip those that are duplicates
+        // Only validate constructors that explicitly set CreateVerb (not inherited from factory)
         var constructorContextWithInvalidCreateVerb = fluentConstructorContexts
             .Except(duplicateContexts)
-            .Where(IsVerbInvalid);
+            .Where(HasExplicitCreateVerb)
+            .Where(context => !IsValidCreateVerb(context.CreateVerb));
 
         foreach (var context in constructorContextWithInvalidCreateVerb)
         {
@@ -78,15 +110,14 @@ internal static class FluentConstructorValidatorExtensions
                 FluentDiagnostics.InvalidCreateVerb,
                 FindCreateVerbArgumentLocation(context));
         }
+    }
 
-        yield break;
+    private static bool IsValidCreateVerb(string? verb)
+    {
+        if (verb is null || verb.Length == 0)
+            return true;
 
-        bool IsVerbInvalid(FluentConstructorContext context)
-        {
-            var isFirstCharValid = context.CreateVerb?.Select(char.IsLetter).FirstOrDefault() ?? true;
-            var areRemainingCharsValid = context.CreateVerb?.Skip(1).All(char.IsLetterOrDigit) ?? true;
-            return !(isFirstCharValid && areRemainingCharsValid);
-        }
+        return char.IsLetter(verb[0]) && verb.Skip(1).All(char.IsLetterOrDigit);
     }
 
     private static IEnumerable<Diagnostic> ValidateDuplicateCreateMethods(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -130,20 +161,17 @@ internal static class FluentConstructorValidatorExtensions
 
     private static IEnumerable<Diagnostic> ValidateCreateVerbConflicts(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
-        // Check for CreateMethod.None used with CreateVerb
+        // Check for CreateMethod.None used with CreateVerb, only when the constructor explicitly sets at least one
         var conflictedContexts = fluentConstructorContexts.AsEnumerable().Where(context =>
             context.CreateMethod == CreateMethodMode.None
-            && !string.IsNullOrEmpty(context.CreateVerb));
+            && !string.IsNullOrEmpty(context.CreateVerb)
+            && (HasExplicitCreateVerb(context) || HasExplicitCreateMethod(context)));
 
         foreach (var context in conflictedContexts)
         {
             yield return Diagnostic.Create(
                 FluentDiagnostics.CreateVerbWithNone,
-                context.AttributeData.ApplicationSyntaxReference?.GetSyntax() switch
-                {
-                    AttributeSyntax attributeSyntax => attributeSyntax.GetLocation(),
-                    _ => Location.None,
-                });
+                GetAttributeLocation(context.AttributeData));
         }
     }
 
@@ -201,6 +229,12 @@ internal static class FluentConstructorValidatorExtensions
             }
         }
     }
+
+    private static bool HasExplicitCreateVerb(FluentConstructorContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "CreateVerb");
+
+    private static bool HasExplicitCreateMethod(FluentConstructorContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "CreateMethod");
 
     private static Location FindRootTypeLocation(AttributeData? fluentConstructorAttribute, FluentConstructorContext context)
     {
