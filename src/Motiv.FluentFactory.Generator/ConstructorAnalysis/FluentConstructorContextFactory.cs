@@ -41,6 +41,7 @@ internal static class FluentConstructorContextFactory
                     var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
                     metadata.CreateMethod ??= defaults.CreateMethod ?? CreateMethodMode.Dynamic;
                     metadata.CreateVerb ??= defaults.CreateVerb;
+                    metadata.MethodPrefix ??= defaults.MethodPrefix;
 
                     return symbol switch
                     {

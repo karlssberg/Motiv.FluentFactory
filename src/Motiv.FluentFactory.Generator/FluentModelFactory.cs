@@ -142,6 +142,7 @@ internal class FluentModelFactory(Compilation compilation)
         var trie = new Trie<FluentMethodParameter, ConstructorMetadata>();
         foreach (var constructorContext in fluentConstructorContexts)
         {
+            var methodPrefix = constructorContext.MethodPrefix ?? "With";
             var fluentParameters =
                 constructorContext.Constructor.Parameters
                     .Select(parameter =>
@@ -149,7 +150,7 @@ internal class FluentModelFactory(Compilation compilation)
                         var methodNames = compilation
                             .GetMultipleFluentMethodSymbols(parameter)
                             .Select(methodInfo => methodInfo.Method.Name)
-                            .DefaultIfEmpty(parameter.GetFluentMethodName());
+                            .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix));
 
                         return new FluentMethodParameter(parameter, methodNames);
                     });

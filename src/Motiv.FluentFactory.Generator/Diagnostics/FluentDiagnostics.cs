@@ -202,4 +202,15 @@ public static class FluentDiagnostics
         messageFormat: "CreateVerb has no effect with CreateMethod.None",
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for invalid method prefix.
+    /// </summary>
+    public static readonly DiagnosticDescriptor InvalidMethodPrefix = new(
+        id: "MFFG0018",
+        title: "Invalid MethodPrefix",
+        category: Category,
+        messageFormat: "MethodPrefix must be a valid identifier",
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

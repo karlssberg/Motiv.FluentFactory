@@ -4,22 +4,23 @@ using Shape = Motiv.FluentFactory.Example.Shape;
 
 // Examples of consuming the generated code
 
-Rectangle<int>.WithWidth(10).WithHeight(20).Create();
-Square<decimal>.WithWidth(10).Create();
-Circle<double>.WithRadius(5).Create();
-Cuboid<long>.WithWidth(10).WithHeight(20).WithDepth(30).Create();
+Square<decimal> square1 = Square<decimal>.WithWidth(10).Create();
+Rectangle<int> rectangle1 = Rectangle<int>.WithWidth(10).WithHeight(20).Create();
+Circle<double> circle1 = Circle<double>.WithRadius(5).Create();
+Cuboid<long> cuboid1 = Cuboid<long>.WithWidth(10).WithHeight(20).WithDepth(30).Create();
 
-Shape<int>.WithWidth(10).CreateSquare();
-Shape<decimal>.WithWidth(10).WithHeight(20).CreateRectangle();
-Shape<double>.WithWidth(10).WithHeight(20).CreateDiamond();
-Shape<float>.WithWidth(10).WithHeight(20).WithDepth(30).CreateCuboid();
-Shape<long>.WithRadius(5).CreateCircle();
+Square<int> square2 = Shape<int>.Width(10).CreateSquare();
+Rectangle<decimal> rectangle2 = Shape<decimal>.Width(10).Height(20).CreateRectangle();
+Diamond<double> diamond2 = Shape<double>.Width(10).Height(20).CreateDiamond();
+Cuboid<float> cuboid2 = Shape<float>.Width(10).Height(20).Depth(30).CreateCuboid();
+Circle<long> circle2 = Shape<long>.Radius(5).CreateCircle();
 
-Shape.WithWidth(10).CreateSquare();
-Shape.WithWidth(10m).WithHeight(20m).CreateRectangle();
-Shape.WithWidth(10d).WithHeight(20d).CreateDiamond();
-Shape.WithWidth(10f).WithHeight(20f).WithDepth(30f).CreateCuboid();
-Shape.WithRadius(5L).CreateCircle();
+Square<int> square3 = Shape.Width(10).CreateSquare();
+Rectangle<decimal> rectangle3 = Shape.Width(10m).Height(20m).CreateRectangle();
+Diamond<double> diamond3 = Shape.Width(10d).Height(20d).CreateDiamond();
+Cuboid<float> cuboid3 = Shape.Width(10f).Height(20f).Depth(30f).CreateCuboid();
+Circle<long> circle3 = Shape.Radius(5L).CreateCircle();
 
-Line.X(10).Y(20).Create2D();
-Line.X(10d).Y(20d).Z(30d).Create3D();
+Line1D<decimal> line1D = Line.X(10m);
+Line2D<int> line2D = Line.X(10).Y(20);
+Line3D<double> line3D = Line.X(10d).Y(20d).Z(30d);

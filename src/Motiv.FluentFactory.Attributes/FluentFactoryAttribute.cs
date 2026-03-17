@@ -20,4 +20,12 @@ public class FluentFactoryAttribute : Attribute
     /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.CreateVerb"/>.
     /// </summary>
     public string? CreateVerb { get; set; }
+
+    /// <summary>
+    /// The default prefix used for fluent method names across all constructors in this factory.
+    /// For example, setting this to "Having" generates "HavingValue" instead of "WithValue".
+    /// An empty string produces bare parameter names (e.g., "Value").
+    /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.MethodPrefix"/>.
+    /// </summary>
+    public string? MethodPrefix { get; set; }
 }

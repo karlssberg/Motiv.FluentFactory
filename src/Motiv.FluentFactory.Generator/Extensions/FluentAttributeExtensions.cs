@@ -16,8 +16,9 @@ internal static class FluentAttributeExtensions
     /// FluentMethodAttribute or MultipleFluentMethodsAttribute.
     /// </summary>
     /// <param name="parameterSymbol">The parameter symbol to get the fluent method name for.</param>
+    /// <param name="methodPrefix">The prefix to use for the method name when no explicit attribute is set. Defaults to "With".</param>
     /// <returns>The fluent method name.</returns>
-    public static string GetFluentMethodName(this IParameterSymbol parameterSymbol)
+    public static string GetFluentMethodName(this IParameterSymbol parameterSymbol, string methodPrefix = "With")
     {
         var regularMethodAttribute = parameterSymbol.GetAttribute(TypeName.FluentMethodAttribute);
         var multipleMethodAttribute = parameterSymbol.GetAttribute(TypeName.MultipleFluentMethodsAttribute);
@@ -28,7 +29,7 @@ internal static class FluentAttributeExtensions
                 args.First().Value!.ToString(),
             (_, { ConstructorArguments: { Length: 1 } args }) when args.First().Value is INamedTypeSymbol =>
                 args.First().Value!.ToString(),
-            _ => $"With{parameterSymbol.Name.Capitalize()}"
+            _ => $"{methodPrefix}{parameterSymbol.Name.Capitalize()}"
         };
 
         return name;

@@ -26,4 +26,11 @@ public sealed class FluentConstructorAttribute(Type rootType) : Attribute
     /// In <see cref="Attributes.CreateMethod.Fixed"/> mode, the verb is used as-is.
     /// </summary>
     public string? CreateVerb { get; set; }
+
+    /// <summary>
+    /// The prefix used for fluent method names. If not set, inherits from the factory default or "With".
+    /// For example, setting this to "Having" generates "HavingValue" instead of "WithValue".
+    /// An empty string produces bare parameter names (e.g., "Value").
+    /// </summary>
+    public string? MethodPrefix { get; set; }
 }

@@ -17,6 +17,7 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
             .Concat(ValidateFactoryDefaults(fluentConstructorContexts))
             .Concat(ValidateCreateVerb(fluentConstructorContexts))
+            .Concat(ValidateMethodPrefix(fluentConstructorContexts))
             .Concat(ValidateDuplicateCreateMethods(fluentConstructorContexts))
             .Concat(ValidateCreateVerbConflicts(fluentConstructorContexts))
             .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
@@ -72,15 +73,18 @@ internal static class FluentConstructorValidatorExtensions
                         when !IsValidCreateVerbForMode(defaults.CreateVerb, defaults.CreateMethod ?? CreateMethodMode.Dynamic):
                     yield return Diagnostic.Create(FluentDiagnostics.InvalidCreateVerb, location);
                     break;
-                    
+
                 case { CreateMethod: CreateMethodMode.None,  CreateVerb.Length: > 0 }:
                     yield return Diagnostic.Create(FluentDiagnostics.CreateVerbWithNone, location);
                     break;
-                    
+
                 case { CreateMethod: CreateMethodMode.None, CreateVerb: "" }:
                     yield return Diagnostic.Create(FluentDiagnostics.EmptyCreateVerbWithNone, location);
                     break;
             }
+
+            if (defaults.MethodPrefix is not null && !IsValidMethodPrefix(defaults.MethodPrefix))
+                yield return Diagnostic.Create(FluentDiagnostics.InvalidMethodPrefix, location);
         }
     }
 
@@ -122,6 +126,28 @@ internal static class FluentConstructorValidatorExtensions
                 FluentDiagnostics.InvalidCreateVerb,
                 FindCreateVerbArgumentLocation(context));
         }
+    }
+
+    private static IEnumerable<Diagnostic> ValidateMethodPrefix(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var constructorsWithInvalidPrefix = fluentConstructorContexts
+            .Where(HasExplicitMethodPrefix)
+            .Where(context => !IsValidMethodPrefix(context.MethodPrefix));
+
+        foreach (var context in constructorsWithInvalidPrefix)
+        {
+            yield return Diagnostic.Create(
+                FluentDiagnostics.InvalidMethodPrefix,
+                FindMethodPrefixArgumentLocation(context));
+        }
+    }
+
+    private static bool IsValidMethodPrefix(string? prefix)
+    {
+        if (prefix is null or { Length: 0 })
+            return true;
+
+        return char.IsLetter(prefix[0]) && prefix.Skip(1).All(char.IsLetterOrDigit);
     }
 
     private static bool IsValidCreateVerbForMode(string? verb, CreateMethodMode mode)
@@ -272,6 +298,9 @@ internal static class FluentConstructorValidatorExtensions
     private static bool HasExplicitCreateMethod(FluentConstructorContext context) =>
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "CreateMethod");
 
+    private static bool HasExplicitMethodPrefix(FluentConstructorContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "MethodPrefix");
+
     private static Location FindRootTypeLocation(AttributeData? fluentConstructorAttribute, FluentConstructorContext context)
     {
         Location location;
@@ -294,18 +323,23 @@ internal static class FluentConstructorValidatorExtensions
         return location;
     }
 
-    private static Location FindCreateVerbArgumentLocation(FluentConstructorContext context)
+    private static Location FindCreateVerbArgumentLocation(FluentConstructorContext context) =>
+        FindNamedArgumentLocation(context, "CreateVerb");
+
+    private static Location FindMethodPrefixArgumentLocation(FluentConstructorContext context) =>
+        FindNamedArgumentLocation(context, "MethodPrefix");
+
+    private static Location FindNamedArgumentLocation(FluentConstructorContext context, string argumentName)
     {
         Location location;
         if (context.AttributeData.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
         {
-            // Find the CreateVerb named argument
-            var createVerbArg = attributeSyntax.ArgumentList?.Arguments
+            var namedArg = attributeSyntax.ArgumentList?.Arguments
                 .OfType<AttributeArgumentSyntax>()
-                .FirstOrDefault(arg => arg.NameEquals?.Name.Identifier.ValueText == "CreateVerb");
+                .FirstOrDefault(arg => arg.NameEquals?.Name.Identifier.ValueText == argumentName);
 
-            location = createVerbArg != null
-                ? createVerbArg.GetLocation()
+            location = namedArg != null
+                ? namedArg.GetLocation()
                 : attributeSyntax.GetLocation();
         }
         else
@@ -342,7 +376,7 @@ internal static class FluentConstructorValidatorExtensions
             {
                 foreach (var parameter in context.Constructor.Parameters)
                 {
-                    var methodName = parameter.GetFluentMethodName();
+                    var methodName = parameter.GetFluentMethodName(context.MethodPrefix ?? "With");
                     var location = FindFluentMethodOrParameterLocation(parameter);
 
                     yield return Diagnostic.Create(
@@ -422,7 +456,7 @@ internal static class FluentConstructorValidatorExtensions
 
     private static string GetFluentParameterChainKey(FluentConstructorContext context) =>
         string.Join("|", context.Constructor.Parameters
-            .Select(p => $"{p.GetFluentMethodName()}:{p.Type.ToDisplayString()}"));
+            .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
 
     private static Location FindFluentMethodOrParameterLocation(IParameterSymbol parameter)
     {

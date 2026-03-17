@@ -3,10 +3,10 @@ using Motiv.FluentFactory.Attributes;
 
 namespace Motiv.FluentFactory.Example;
 
-[FluentFactory]
+[FluentFactory(MethodPrefix = "")]
 internal partial class Shape<T> where T : INumber<T>;
 
-[FluentFactory]
+[FluentFactory(MethodPrefix = "")]
 internal partial class Shape;
 
 [FluentFactory(CreateMethod = CreateMethod.Fixed)]
