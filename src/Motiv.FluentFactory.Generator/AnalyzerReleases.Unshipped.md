@@ -20,3 +20,5 @@ MFFG0012 | FluentFactory | Warning | Inaccessible constructor
 MFFG0013 | FluentFactory | Error | Factory type missing partial modifier
 MFFG0014 | FluentFactory | Warning | Inaccessible parameter type in fluent factory
 MFFG0015 | FluentFactory | Warning | Factory accessibility exceeds target type
+MFFG0016 | FluentFactory | Error | Ambiguous fluent method chain
+MFFG0017 | FluentFactory | Warning | Empty CreateVerb with CreateMethod.None

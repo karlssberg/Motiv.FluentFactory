@@ -191,4 +191,15 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for empty CreateVerb used with CreateMethod.None.
+    /// </summary>
+    public static readonly DiagnosticDescriptor EmptyCreateVerbWithNone = new(
+        id: "MFFG0017",
+        title: "Empty CreateVerb with CreateMethod.None",
+        category: Category,
+        messageFormat: "CreateVerb has no effect with CreateMethod.None",
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 }

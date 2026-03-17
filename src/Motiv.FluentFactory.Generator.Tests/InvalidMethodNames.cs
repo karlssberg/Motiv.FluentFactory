@@ -7,7 +7,6 @@ public class InvalidMethodNames : IEnumerable<object[]>
     public IEnumerator<object[]> GetEnumerator()
     {
         // Single character invalids
-        yield return [""];
         yield return [" "];
         yield return ["!"];
         yield return ["@"];

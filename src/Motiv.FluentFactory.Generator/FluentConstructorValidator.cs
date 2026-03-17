@@ -9,6 +9,8 @@ namespace Motiv.FluentFactory.Generator;
 
 internal static class FluentConstructorValidatorExtensions
 {
+    private const string DefaultCreateVerb = "Create";
+
     public static IEnumerable<Diagnostic> GetDiagnostics(this ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
         return ValidateRootTypeAttributes(fluentConstructorContexts)
@@ -64,11 +66,21 @@ internal static class FluentConstructorValidatorExtensions
             var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
             var location = GetAttributeLocation(factoryAttribute);
 
-            if (defaults.CreateVerb is not null && !IsValidCreateVerb(defaults.CreateVerb))
-                yield return Diagnostic.Create(FluentDiagnostics.InvalidCreateVerb, location);
-
-            if (defaults.CreateMethod == CreateMethodMode.None && !string.IsNullOrEmpty(defaults.CreateVerb))
-                yield return Diagnostic.Create(FluentDiagnostics.CreateVerbWithNone, location);
+            switch (defaults)
+            {
+                case { CreateVerb: not null }
+                        when !IsValidCreateVerbForMode(defaults.CreateVerb, defaults.CreateMethod ?? CreateMethodMode.Dynamic):
+                    yield return Diagnostic.Create(FluentDiagnostics.InvalidCreateVerb, location);
+                    break;
+                    
+                case { CreateMethod: CreateMethodMode.None,  CreateVerb.Length: > 0 }:
+                    yield return Diagnostic.Create(FluentDiagnostics.CreateVerbWithNone, location);
+                    break;
+                    
+                case { CreateMethod: CreateMethodMode.None, CreateVerb: "" }:
+                    yield return Diagnostic.Create(FluentDiagnostics.EmptyCreateVerbWithNone, location);
+                    break;
+            }
         }
     }
 
@@ -102,7 +114,7 @@ internal static class FluentConstructorValidatorExtensions
         var constructorContextWithInvalidCreateVerb = fluentConstructorContexts
             .Except(duplicateContexts)
             .Where(HasExplicitCreateVerb)
-            .Where(context => !IsValidCreateVerb(context.CreateVerb));
+            .Where(context => !IsValidCreateVerbForMode(context.CreateVerb, context.CreateMethod));
 
         foreach (var context in constructorContextWithInvalidCreateVerb)
         {
@@ -112,10 +124,21 @@ internal static class FluentConstructorValidatorExtensions
         }
     }
 
+    private static bool IsValidCreateVerbForMode(string? verb, CreateMethodMode mode)
+    {
+        if (verb is { Length: 0 } && mode is CreateMethodMode.Dynamic or CreateMethodMode.None)
+            return true;
+
+        return IsValidCreateVerb(verb);
+    }
+
     private static bool IsValidCreateVerb(string? verb)
     {
-        if (verb is null || verb.Length == 0)
+        if (verb is null)
             return true;
+
+        if (verb.Length == 0)
+            return false;
 
         return char.IsLetter(verb[0]) && verb.Skip(1).All(char.IsLetterOrDigit);
     }
@@ -151,7 +174,7 @@ internal static class FluentConstructorValidatorExtensions
 
     private static string ResolveCreateMethodName(FluentConstructorContext context)
     {
-        var verb = context.CreateVerb ?? "Create";
+        var verb = context.CreateVerb ?? DefaultCreateVerb;
         return context.CreateMethod switch
         {
             CreateMethodMode.Fixed => verb,
@@ -161,7 +184,7 @@ internal static class FluentConstructorValidatorExtensions
 
     private static IEnumerable<Diagnostic> ValidateCreateVerbConflicts(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
-        // Check for CreateMethod.None used with CreateVerb, only when the constructor explicitly sets at least one
+        // Check for CreateMethod.None used with non-empty CreateVerb, only when the constructor explicitly sets at least one
         var conflictedContexts = fluentConstructorContexts.AsEnumerable().Where(context =>
             context.CreateMethod == CreateMethodMode.None
             && !string.IsNullOrEmpty(context.CreateVerb)
@@ -172,6 +195,19 @@ internal static class FluentConstructorValidatorExtensions
             yield return Diagnostic.Create(
                 FluentDiagnostics.CreateVerbWithNone,
                 GetAttributeLocation(context.AttributeData));
+        }
+
+        // Empty CreateVerb + None → warning MFFG0017
+        var emptyVerbWithNone = fluentConstructorContexts.AsEnumerable().Where(context =>
+            context.CreateMethod == CreateMethodMode.None
+            && context.CreateVerb is ""
+            && HasExplicitCreateVerb(context));
+
+        foreach (var context in emptyVerbWithNone)
+        {
+            yield return Diagnostic.Create(
+                FluentDiagnostics.EmptyCreateVerbWithNone,
+                FindCreateVerbArgumentLocation(context));
         }
     }
 
