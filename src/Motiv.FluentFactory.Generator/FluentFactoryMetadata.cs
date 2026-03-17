@@ -12,6 +12,7 @@ internal record FluentFactoryMetadata(INamedTypeSymbol RootTypeSymbol)
     public CreateMethodMode? CreateMethod { get; set; }
     public string? CreateVerb { get; set; }
     public string? MethodPrefix { get; set; }
+    public INamedTypeSymbol? ReturnType { get; set; }
     public AttributeData? AttributeData { get; set; }
 
     public static FluentFactoryMetadata Invalid => new(default(INamedTypeSymbol)!);

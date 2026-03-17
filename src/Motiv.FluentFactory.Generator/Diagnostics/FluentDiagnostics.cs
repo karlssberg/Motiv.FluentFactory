@@ -213,4 +213,37 @@ public static class FluentDiagnostics
         messageFormat: "MethodPrefix must be a valid identifier",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for target type not assignable to the specified ReturnType.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ReturnTypeNotAssignable = new(
+        id: "MFFG0019",
+        title: "Target type not assignable to ReturnType",
+        category: Category,
+        messageFormat: "Target type '{0}' is not assignable to ReturnType '{1}'",
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for ReturnType specified with CreateMethod.None.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ReturnTypeWithNone = new(
+        id: "MFFG0021",
+        title: "ReturnType specified with CreateMethod.None",
+        category: Category,
+        messageFormat: "ReturnType cannot be used with CreateMethod.None because no creation method is generated",
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for ReturnType that equals the concrete target type (pointless usage).
+    /// </summary>
+    public static readonly DiagnosticDescriptor PointlessReturnType = new(
+        id: "MFFG0020",
+        title: "ReturnType equals concrete target type",
+        category: Category,
+        messageFormat: "ReturnType '{0}' is the same as the concrete target type and has no effect",
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 }

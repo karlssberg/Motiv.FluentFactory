@@ -12,6 +12,7 @@ internal static class FluentFactoryMetadataReader
     private const string CreateMethodKey = "CreateMethod";
     private const string CreateVerbKey = "CreateVerb";
     private const string MethodPrefixKey = "MethodPrefix";
+    private const string ReturnTypeKey = "ReturnType";
 
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentConstructor attributes.
@@ -32,7 +33,7 @@ internal static class FluentFactoryMetadataReader
                 if (typeArg.IsNull || typeArg.Value is not INamedTypeSymbol typeSymbol)
                     return FluentFactoryMetadata.Invalid;
 
-                var (createMethod, createVerb, methodPrefix) = ReadNamedArguments(attribute.NamedArguments);
+                var (createMethod, createVerb, methodPrefix, returnType) = ReadNamedArguments(attribute.NamedArguments);
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
@@ -40,6 +41,7 @@ internal static class FluentFactoryMetadataReader
                     RootTypeFullName = typeSymbol.ToDisplayString(),
                     CreateVerb = createVerb,
                     MethodPrefix = methodPrefix,
+                    ReturnType = returnType,
                     AttributeData = attribute,
                 };
             });
@@ -55,11 +57,11 @@ internal static class FluentFactoryMetadataReader
         var attribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
 
         if (attribute is null)
-            return new FluentFactoryDefaults(null, null, null);
+            return new FluentFactoryDefaults(null, null, null, null);
 
-        var (createMethod, createVerb, methodPrefix) = ReadNamedArguments(attribute.NamedArguments);
+        var (createMethod, createVerb, methodPrefix, returnType) = ReadNamedArguments(attribute.NamedArguments);
 
-        return new FluentFactoryDefaults(createMethod, createVerb, methodPrefix);
+        return new FluentFactoryDefaults(createMethod, createVerb, methodPrefix, returnType);
     }
 
     /// <summary>
@@ -68,12 +70,13 @@ internal static class FluentFactoryMetadataReader
     /// </summary>
     /// <param name="namedArguments">The named arguments from an attribute.</param>
     /// <returns>A tuple of nullable CreateMethod, CreateVerb, and MethodPrefix values.</returns>
-    private static (CreateMethodMode? CreateMethod, string? CreateVerb, string? MethodPrefix) ReadNamedArguments(
+    private static (CreateMethodMode? CreateMethod, string? CreateVerb, string? MethodPrefix, INamedTypeSymbol? ReturnType) ReadNamedArguments(
         ImmutableArray<KeyValuePair<string, TypedConstant>> namedArguments)
     {
         CreateMethodMode? createMethod = null;
         string? createVerb = null;
         string? methodPrefix = null;
+        INamedTypeSymbol? returnType = null;
 
         foreach (var arg in namedArguments)
         {
@@ -88,10 +91,13 @@ internal static class FluentFactoryMetadataReader
                 case MethodPrefixKey:
                     methodPrefix = arg.Value.Value as string;
                     break;
+                case ReturnTypeKey:
+                    returnType = arg.Value.Value as INamedTypeSymbol;
+                    break;
             }
         }
 
-        return (createMethod, createVerb, methodPrefix);
+        return (createMethod, createVerb, methodPrefix, returnType);
     }
 
     /// <summary>

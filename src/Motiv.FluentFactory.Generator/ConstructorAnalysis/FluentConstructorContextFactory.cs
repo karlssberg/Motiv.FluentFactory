@@ -42,6 +42,7 @@ internal static class FluentConstructorContextFactory
                     metadata.CreateMethod ??= defaults.CreateMethod ?? CreateMethodMode.Dynamic;
                     metadata.CreateVerb ??= defaults.CreateVerb;
                     metadata.MethodPrefix ??= defaults.MethodPrefix;
+                    metadata.ReturnType ??= defaults.ReturnType;
 
                     return symbol switch
                     {

@@ -38,8 +38,12 @@ internal static class FluentRootFactoryMethodDeclaration
         IFluentMethod method,
         ObjectCreationExpressionSyntax returnObjectExpression)
     {
+        var returnType = method.Return is TargetTypeReturn targetTypeReturn
+            ? ParseTypeName(targetTypeReturn.ReturnTypeDisplayString())
+            : returnObjectExpression.Type;
+
         var methodDeclaration = MethodDeclaration(
-                returnObjectExpression.Type,
+                returnType,
                 Identifier(method.Name))
             .WithAttributeLists(
                 SingletonList(

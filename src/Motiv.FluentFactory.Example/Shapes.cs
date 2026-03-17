@@ -3,6 +3,7 @@ using Motiv.FluentFactory.Attributes;
 
 namespace Motiv.FluentFactory.Example;
 
+
 [FluentFactory(MethodPrefix = "")]
 internal partial class Shape<T> where T : INumber<T>;
 

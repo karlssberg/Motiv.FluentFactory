@@ -24,7 +24,8 @@ internal class CreationMethod : IFluentMethod
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
             [..constructorMetadata.CandidateConstructors],
-            new ParameterSequence(availableParameterFields.Select(p => p.ParameterSymbol)));
+            new ParameterSequence(availableParameterFields.Select(p => p.ParameterSymbol)),
+            constructorMetadata.ReturnType);
     }
 
     public string Name { get; }

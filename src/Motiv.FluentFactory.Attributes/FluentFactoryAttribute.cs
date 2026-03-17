@@ -28,4 +28,12 @@ public class FluentFactoryAttribute : Attribute
     /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.MethodPrefix"/>.
     /// </summary>
     public string? MethodPrefix { get; set; }
+
+    /// <summary>
+    /// The default return type for creation methods across all constructors in this factory.
+    /// When set, the generated Create methods return this type instead of the concrete target type.
+    /// The target type must be assignable to this type (e.g., implement the interface or extend the base class).
+    /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.ReturnType"/>.
+    /// </summary>
+    public Type? ReturnType { get; set; }
 }

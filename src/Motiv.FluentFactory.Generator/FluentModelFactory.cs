@@ -115,7 +115,7 @@ internal class FluentModelFactory(Compilation compilation)
         if (!node.IsEnd) yield break;
 
         var creationMethods =
-            from value in node.Values
+            from value in node.EndValues
             where value.Constructor.Parameters.Length == node.Key.Length
             where value.CreateMethod != CreateMethodMode.None
             let verb = value.Context.CreateVerb ?? "Create"

@@ -33,4 +33,11 @@ public sealed class FluentConstructorAttribute(Type rootType) : Attribute
     /// An empty string produces bare parameter names (e.g., "Value").
     /// </summary>
     public string? MethodPrefix { get; set; }
+
+    /// <summary>
+    /// The return type for the creation method. If not set, inherits from the factory default or uses the concrete target type.
+    /// When set, the generated Create method returns this type instead of the concrete target type.
+    /// The target type must be assignable to this type (e.g., implement the interface or extend the base class).
+    /// </summary>
+    public Type? ReturnType { get; set; }
 }

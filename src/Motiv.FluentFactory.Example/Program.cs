@@ -24,3 +24,7 @@ Circle<long> circle3 = Shape.Radius(5L).CreateCircle();
 Line1D<decimal> line1D = Line.X(10m);
 Line2D<int> line2D = Line.X(10).Y(20);
 Line3D<double> line3D = Line.X(10d).Y(20d).Z(30d);
+
+Animal dog = Animal.CreateDog();
+Animal cat = Animal.CreateCat();
+Animal fish = Animal.CreateFish();

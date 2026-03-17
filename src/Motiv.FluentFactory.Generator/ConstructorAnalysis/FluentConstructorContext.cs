@@ -21,6 +21,7 @@ internal record FluentConstructorContext
         CreateMethod = metadata.CreateMethod ?? CreateMethodMode.Dynamic;
         CreateVerb = metadata.CreateVerb;
         MethodPrefix = metadata.MethodPrefix;
+        ReturnType = metadata.ReturnType;
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;
         IsRecord = rootSymbol.IsRecord;
@@ -69,6 +70,8 @@ internal record FluentConstructorContext
     public string? CreateVerb { get; }
 
     public string? MethodPrefix { get; }
+
+    public INamedTypeSymbol? ReturnType { get; }
 
     public bool IsAttributedUsedOnContainingType { get; }
 

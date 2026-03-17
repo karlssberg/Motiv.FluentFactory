@@ -22,7 +22,8 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateCreateVerbConflicts(fluentConstructorContexts))
             .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
             .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
-            .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts));
+            .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts))
+            .Concat(ValidateReturnType(fluentConstructorContexts));
     }
 
     private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -85,6 +86,10 @@ internal static class FluentConstructorValidatorExtensions
 
             if (defaults.MethodPrefix is not null && !IsValidMethodPrefix(defaults.MethodPrefix))
                 yield return Diagnostic.Create(FluentDiagnostics.InvalidMethodPrefix, location);
+
+            if (defaults is { CreateMethod: CreateMethodMode.None, ReturnType: not null })
+                yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
+                    FindNamedArgumentLocation(factoryAttribute, "ReturnType"));
         }
     }
 
@@ -329,25 +334,25 @@ internal static class FluentConstructorValidatorExtensions
     private static Location FindMethodPrefixArgumentLocation(FluentConstructorContext context) =>
         FindNamedArgumentLocation(context, "MethodPrefix");
 
-    private static Location FindNamedArgumentLocation(FluentConstructorContext context, string argumentName)
+    private static Location FindNamedArgumentLocation(FluentConstructorContext context, string argumentName) =>
+        FindNamedArgumentLocation(context.AttributeData, argumentName,
+            context.Constructor.Locations.FirstOrDefault() ?? Location.None);
+
+    private static Location FindNamedArgumentLocation(AttributeData attributeData, string argumentName,
+        Location? fallback = null)
     {
-        Location location;
-        if (context.AttributeData.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
+        if (attributeData.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
         {
             var namedArg = attributeSyntax.ArgumentList?.Arguments
                 .OfType<AttributeArgumentSyntax>()
                 .FirstOrDefault(arg => arg.NameEquals?.Name.Identifier.ValueText == argumentName);
 
-            location = namedArg != null
+            return namedArg != null
                 ? namedArg.GetLocation()
                 : attributeSyntax.GetLocation();
         }
-        else
-        {
-            location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
-        }
 
-        return location;
+        return fallback ?? Location.None;
     }
 
     private static IEnumerable<Diagnostic> ValidateAmbiguousFluentMethodChains(
@@ -466,5 +471,125 @@ internal static class FluentConstructorValidatorExtensions
             return attributeSyntax.GetLocation();
 
         return parameter.Locations.FirstOrDefault() ?? Location.None;
+    }
+
+    private static IEnumerable<Diagnostic> ValidateReturnType(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        // Validate factory-level ReturnType defaults
+        var rootTypes = fluentConstructorContexts
+            .Select(context => context.RootType)
+            .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+
+        foreach (var rootType in rootTypes)
+        {
+            var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
+            if (defaults.ReturnType is null || defaults.CreateMethod == CreateMethodMode.None)
+                continue;
+
+            var factoryAttribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
+            var location = factoryAttribute is not null ? GetAttributeLocation(factoryAttribute) : Location.None;
+
+            var factoryContexts = fluentConstructorContexts
+                .Where(ctx => SymbolEqualityComparer.Default.Equals(ctx.RootType, rootType))
+                .Where(ctx => !HasExplicitReturnType(ctx));
+
+            foreach (var context in factoryContexts)
+            {
+                var diagnostic = ValidateReturnTypeAssignment(
+                    context.Constructor.ContainingType,
+                    defaults.ReturnType,
+                    location,
+                    context.Constructor.Locations.FirstOrDefault() ?? Location.None);
+
+                if (diagnostic is not null)
+                    yield return diagnostic;
+            }
+        }
+
+        // Validate constructor-level ReturnType overrides
+        foreach (var context in fluentConstructorContexts.Where(HasExplicitReturnType))
+        {
+            if (context.ReturnType is null)
+                continue;
+
+            var location = GetAttributeLocation(context.AttributeData);
+
+            if (context.CreateMethod == CreateMethodMode.None)
+            {
+                yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
+                    FindNamedArgumentLocation(context, "ReturnType"));
+                continue;
+            }
+
+            var diagnostic = ValidateReturnTypeAssignment(
+                context.Constructor.ContainingType,
+                context.ReturnType,
+                location,
+                location);
+
+            if (diagnostic is not null)
+                yield return diagnostic;
+        }
+    }
+
+    private static Diagnostic? ValidateReturnTypeAssignment(
+        INamedTypeSymbol targetType,
+        INamedTypeSymbol returnType,
+        Location pointlessLocation,
+        Location notAssignableLocation)
+    {
+        if (SymbolEqualityComparer.Default.Equals(targetType, returnType))
+            return Diagnostic.Create(
+                FluentDiagnostics.PointlessReturnType,
+                pointlessLocation,
+                targetType.ToDisplayString());
+
+        if (!IsAssignableTo(targetType, returnType))
+            return Diagnostic.Create(
+                FluentDiagnostics.ReturnTypeNotAssignable,
+                notAssignableLocation,
+                targetType.ToDisplayString(),
+                returnType.ToDisplayString());
+
+        return null;
+    }
+
+    private static bool HasExplicitReturnType(FluentConstructorContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "ReturnType");
+
+    private static bool IsAssignableTo(INamedTypeSymbol sourceType, INamedTypeSymbol targetType)
+    {
+        if (SymbolEqualityComparer.Default.Equals(sourceType, targetType))
+            return true;
+
+        // Check base types
+        var baseType = sourceType.BaseType;
+        while (baseType is not null)
+        {
+            if (SymbolEqualityComparer.Default.Equals(baseType, targetType))
+                return true;
+
+            if (targetType.IsUnboundGenericType &&
+                baseType.IsGenericType &&
+                SymbolEqualityComparer.Default.Equals(baseType.ConstructUnboundGenericType(), targetType))
+                return true;
+
+            baseType = baseType.BaseType;
+        }
+
+        // Check interfaces
+        foreach (var iface in sourceType.AllInterfaces)
+        {
+            if (SymbolEqualityComparer.Default.Equals(iface, targetType))
+                return true;
+
+            if (targetType.IsUnboundGenericType &&
+                iface.IsGenericType &&
+                SymbolEqualityComparer.Default.Equals(iface.ConstructUnboundGenericType(), targetType))
+                return true;
+        }
+
+        return false;
     }
 }

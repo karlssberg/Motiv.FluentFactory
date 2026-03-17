@@ -6,7 +6,8 @@ namespace Motiv.FluentFactory.Generator;
 internal class TargetTypeReturn(
     IMethodSymbol targetTypeConstructor,
     ImmutableArray<IMethodSymbol> candidateConstructors,
-    ParameterSequence knownConstructorParameters) : IFluentReturn
+    ParameterSequence knownConstructorParameters,
+    INamedTypeSymbol? returnTypeOverride = null) : IFluentReturn
 {
     public ImmutableArray<IParameterSymbol> GenericConstructorParameters { get; } =
     [
@@ -20,23 +21,38 @@ internal class TargetTypeReturn(
 
     public IMethodSymbol Constructor => targetTypeConstructor;
 
-    public string IdentifierDisplayString()
-    {
-        return IdentifierDisplayString(new Dictionary<FluentType, ITypeSymbol>());
-    }
+    public string IdentifierDisplayString() => 
+        IdentifierDisplayString(new Dictionary<FluentType, ITypeSymbol>());
 
     public string IdentifierDisplayString(
+        IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) =>
+        ConstructAndDisplay(targetTypeConstructor.ContainingType, genericTypeArgumentMap);
+
+    /// <summary>
+    /// Returns the display string for the method return type, using the override if set.
+    /// </summary>
+    public string ReturnTypeDisplayString() =>
+        returnTypeOverride?.ToGlobalDisplayString() ?? IdentifierDisplayString();
+
+    /// <summary>
+    /// Returns the display string for the method return type, applying generic type argument mappings.
+    /// </summary>
+    public string ReturnTypeDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) => 
+        ConstructAndDisplay(returnTypeOverride ?? targetTypeConstructor.ContainingType, genericTypeArgumentMap);
+
+    private static string ConstructAndDisplay(
+        INamedTypeSymbol type,
         IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
     {
-        var allArgs = targetTypeConstructor.ContainingType.TypeParameters
-            .Select(typeParameter => genericTypeArgumentMap.TryGetValue(new FluentType(typeParameter), out var type)
-                ? type
+        var allArgs = type.TypeParameters
+            .Select(typeParameter => genericTypeArgumentMap.TryGetValue(new FluentType(typeParameter), out var mapped)
+                ? mapped
                 : typeParameter)
             .ToArray();
 
         var constructedType = allArgs.Length > 0
-            ? targetTypeConstructor.ContainingType.Construct(allArgs)
-            : targetTypeConstructor.ContainingType;
+            ? type.Construct(allArgs)
+            : type;
 
         return constructedType.ToGlobalDisplayString();
     }

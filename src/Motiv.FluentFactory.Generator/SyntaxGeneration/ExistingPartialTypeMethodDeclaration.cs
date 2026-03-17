@@ -21,8 +21,12 @@ internal static class ExistingPartialTypeMethodDeclaration
             _ => FluentStepCreationExpression.Create(method, stepActivationArgs)
         };
 
+        var returnType = method.Return is TargetTypeReturn targetTypeReturn
+            ? ParseTypeName(targetTypeReturn.ReturnTypeDisplayString())
+            : returnObjectExpression.Type;
+
         var methodDeclaration = MethodDeclaration(
-                returnObjectExpression.Type,
+                returnType,
                 Identifier(method.Name))
             .WithAttributeLists(
                 SingletonList(

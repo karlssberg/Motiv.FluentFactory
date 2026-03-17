@@ -13,6 +13,8 @@ internal class ConstructorMetadata(FluentConstructorContext constructorContext)
 
     public CreateMethodMode CreateMethod { get; set; } = constructorContext.CreateMethod;
 
+    public INamedTypeSymbol? ReturnType { get; } = constructorContext.ReturnType;
+
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         constructorContext.ValueStorage;
         

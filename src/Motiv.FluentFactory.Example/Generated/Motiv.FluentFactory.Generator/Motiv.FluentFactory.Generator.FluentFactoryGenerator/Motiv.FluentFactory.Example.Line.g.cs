@@ -6,102 +6,42 @@ namespace Motiv.FluentFactory.Example
     internal static partial class Line
     {
         /// <summary>
+        ///     <seealso cref="Motiv.FluentFactory.Example.Line1D{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Line<T> X<T>(in T x)
+        public static global::Motiv.FluentFactory.Example.Line1D<T> X<T>(in T x)
             where T : global::System.Numerics.INumber<T>
         {
-            return new global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Line<T>(x);
+            return new global::Motiv.FluentFactory.Example.Line1D<T>(x);
         }
     }
 
-    /// <summary>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
-    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_0__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
+    internal partial record Line1D<T>
     {
-        private readonly T _x__parameter;
-        internal Step_0__Motiv_FluentFactory_Example_Line(in T x)
-        {
-            this._x__parameter = x;
-        }
-
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Line<T> Y(in T y)
+        public global::Motiv.FluentFactory.Example.Line2D<T> Y(in T y)
         {
-            return new global::Motiv.FluentFactory.Example.Step_1__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, y);
+            return new global::Motiv.FluentFactory.Example.Line2D<T>(this.X, y);
         }
     }
 
-    /// <summary>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
-    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_1__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
+    internal partial record Line2D<T>
     {
-        private readonly T _x__parameter;
-        private readonly T _y__parameter;
-        internal Step_1__Motiv_FluentFactory_Example_Line(in T x, in T y)
-        {
-            this._x__parameter = x;
-            this._y__parameter = y;
-        }
-
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Line<T> Z(in T z)
+        public global::Motiv.FluentFactory.Example.Line3D<T> Z(in T z)
         {
-            return new global::Motiv.FluentFactory.Example.Step_2__Motiv_FluentFactory_Example_Line<T>(this._x__parameter, this._y__parameter, z);
-        }
-
-        /// <summary>
-        /// Creates a new instance using constructor Motiv.FluentFactory.Example.Line2D&lt;T&gt;.Line2D(T X, T Y).
-        ///
-        ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
-        /// </summary>
-        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Line2D<T> Create2D()
-        {
-            return new global::Motiv.FluentFactory.Example.Line2D<T>(this._x__parameter, this._y__parameter);
-        }
-    }
-
-    /// <summary>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_2__Motiv_FluentFactory_Example_Line<T> where T : global::System.Numerics.INumber<T>
-    {
-        private readonly T _x__parameter;
-        private readonly T _y__parameter;
-        private readonly T _z__parameter;
-        internal Step_2__Motiv_FluentFactory_Example_Line(in T x, in T y, in T z)
-        {
-            this._x__parameter = x;
-            this._y__parameter = y;
-            this._z__parameter = z;
-        }
-
-        /// <summary>
-        /// Creates a new instance using constructor Motiv.FluentFactory.Example.Line3D&lt;T&gt;.Line3D(T X, T Y, T Z).
-        ///
-        ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
-        /// </summary>
-        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Line3D<T> Create3D()
-        {
-            return new global::Motiv.FluentFactory.Example.Line3D<T>(this._x__parameter, this._y__parameter, this._z__parameter);
+            return new global::Motiv.FluentFactory.Example.Line3D<T>(this.X, this.Y, z);
         }
     }
 }

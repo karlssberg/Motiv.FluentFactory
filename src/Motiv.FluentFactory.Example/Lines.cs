@@ -3,6 +3,8 @@ using Motiv.FluentFactory.Attributes;
 
 namespace Motiv.FluentFactory.Example;
 
+interface ILine;
+
 [FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
 internal static partial class Line;
 
