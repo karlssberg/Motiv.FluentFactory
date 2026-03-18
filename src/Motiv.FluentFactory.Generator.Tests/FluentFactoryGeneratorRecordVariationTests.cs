@@ -61,7 +61,7 @@ public class FluentFactoryGeneratorRecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
                     internal Step_0__Test_Factory(in string name)
@@ -83,7 +83,7 @@ public class FluentFactoryGeneratorRecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
@@ -173,7 +173,7 @@ public class FluentFactoryGeneratorRecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _id__parameter;
                     internal Step_0__Test_Factory(in int id)
@@ -262,7 +262,7 @@ public class FluentFactoryGeneratorRecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
                     internal Step_0__Test_Factory(in string name)
@@ -284,7 +284,7 @@ public class FluentFactoryGeneratorRecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly string _name__parameter;
                     private readonly int _priority__parameter;

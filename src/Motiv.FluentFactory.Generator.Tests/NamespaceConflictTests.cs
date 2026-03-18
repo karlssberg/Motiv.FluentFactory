@@ -56,7 +56,7 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__ConflictTest_Factory
+                public readonly struct Step_0__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
                     internal Step_0__ConflictTest_Factory(in string name)
@@ -78,7 +78,7 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__ConflictTest_Factory
+                public readonly struct Step_1__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
                     private readonly int _value__parameter;
@@ -165,7 +165,7 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__ConflictTest_Factory
+                public readonly struct Step_0__ConflictTest_Factory
                 {
                     private readonly global::System.Collections.Generic.List<string> _items__parameter;
                     internal Step_0__ConflictTest_Factory(in global::System.Collections.Generic.List<string> items)

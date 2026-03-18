@@ -72,7 +72,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Dog"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_0__Motiv_FluentFactory_Example_Animal
+    internal readonly struct Step_0__Motiv_FluentFactory_Example_Animal
     {
         private readonly int _legs__parameter;
         internal Step_0__Motiv_FluentFactory_Example_Animal(in int legs)
@@ -107,7 +107,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Fish"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_1__Motiv_FluentFactory_Example_Animal
+    internal readonly struct Step_1__Motiv_FluentFactory_Example_Animal
     {
         private readonly int _finCount__parameter;
         private readonly int _eyeCount__parameter;

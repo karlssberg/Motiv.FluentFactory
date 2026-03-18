@@ -195,7 +195,7 @@ public class FluentFactoryGeneratorNamespaceDisambiguationTests
                 ///     <seealso cref="Target.Product"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__MyFactory_Factory
+                public readonly struct Step_0__MyFactory_Factory
                 {
                     private readonly global::NamespaceA.Settings _settingsA__parameter;
                     internal Step_0__MyFactory_Factory(in global::NamespaceA.Settings settingsA)

@@ -60,7 +60,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
                     internal Step_0__Test_Factory(in string value)
@@ -148,7 +148,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
                     internal Step_0__Test_Factory(in string value)
@@ -269,7 +269,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
                     internal Step_0__Test_Factory(in string value)
@@ -361,7 +361,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
                     internal Step_0__Test_Factory(in string name)
@@ -385,7 +385,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly string _name__parameter;
                     private readonly int _value__parameter;
@@ -476,7 +476,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value__parameter;
                     internal Step_0__Test_Factory(in string value)
@@ -573,7 +573,7 @@ public class FluentFactoryXmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _processor__parameter;
                     internal Step_0__Test_Factory(in string processor)

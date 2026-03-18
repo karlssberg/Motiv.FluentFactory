@@ -71,7 +71,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _id__parameter;
                     internal Step_0__Test_Factory(in int id)
@@ -93,7 +93,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -117,7 +117,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -143,7 +143,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -257,7 +257,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _id__parameter;
                     internal Step_0__Test_Factory(in int id)
@@ -279,7 +279,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -303,7 +303,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -329,7 +329,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -357,7 +357,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_4__Test_Factory
+                public readonly struct Step_4__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -387,7 +387,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_5__Test_Factory
+                public readonly struct Step_5__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -419,7 +419,7 @@ public class FluentFactoryGeneratorLargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_6__Test_Factory
+                public readonly struct Step_6__Test_Factory
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;

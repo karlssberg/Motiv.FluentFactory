@@ -48,14 +48,24 @@ internal static class FluentStepDeclaration
             }
         }
 
-        SyntaxTokenList accessibilityToken = step.Accessibility switch
+        var hasMutableOptionalMethods = step.FluentMethods.OfType<OptionalFluentMethod>().Any()
+                                       && !step.IsAllOptionalStep;
+
+        SyntaxTokenList accessibilityToken = (step.Accessibility, hasMutableOptionalMethods) switch
         {
-            Accessibility.Public => [Token(SyntaxKind.PublicKeyword)],
-            Accessibility.Private => [Token(SyntaxKind.PrivateKeyword)],
-            Accessibility.Protected => [Token(SyntaxKind.ProtectedKeyword)],
-            Accessibility.Internal => [Token(SyntaxKind.InternalKeyword)],
-            Accessibility.ProtectedOrInternal => [Token(SyntaxKind.ProtectedKeyword), Token(SyntaxKind.InternalKeyword)],
-            Accessibility.ProtectedAndInternal => [Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ProtectedKeyword)],
+            (Accessibility.Public, false) => [Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.Public, true) => [Token(SyntaxKind.PublicKeyword)],
+            (Accessibility.Private, false) => [Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.Private, true) => [Token(SyntaxKind.PrivateKeyword)],
+            (Accessibility.Protected, false) => [Token(SyntaxKind.ProtectedKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.Protected, true) => [Token(SyntaxKind.ProtectedKeyword)],
+            (Accessibility.Internal, false) => [Token(SyntaxKind.InternalKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.Internal, true) => [Token(SyntaxKind.InternalKeyword)],
+            (Accessibility.ProtectedOrInternal, false) => [Token(SyntaxKind.ProtectedKeyword), Token(SyntaxKind.InternalKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.ProtectedOrInternal, true) => [Token(SyntaxKind.ProtectedKeyword), Token(SyntaxKind.InternalKeyword)],
+            (Accessibility.ProtectedAndInternal, false) => [Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ProtectedKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
+            (Accessibility.ProtectedAndInternal, true) => [Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ProtectedKeyword)],
+            (_, false) => [Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.ReadOnlyKeyword)],
             _ => [Token(SyntaxKind.PublicKeyword)]
         };
 

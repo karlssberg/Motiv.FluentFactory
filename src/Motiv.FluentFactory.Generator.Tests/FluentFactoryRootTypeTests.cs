@@ -358,7 +358,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
@@ -380,7 +380,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;
@@ -471,7 +471,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1, T2>
+                public readonly struct Step_0__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
                     internal Step_0__Test_Factory(in global::Test.MyParameterValue<T1, T2> value1)
@@ -493,7 +493,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
                     private readonly global::Test.MyParameterValue<T1, T2> _value2__parameter;
@@ -599,7 +599,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
@@ -635,7 +635,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;
@@ -718,7 +718,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
@@ -754,7 +754,7 @@ public class FluentFactoryRootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;

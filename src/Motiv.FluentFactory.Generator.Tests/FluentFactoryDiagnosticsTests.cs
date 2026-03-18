@@ -384,7 +384,7 @@ public class FluentFactoryDiagnosticsTests
                 ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Spec<TModel, TPredicateResult>
+                public readonly struct Step_0__Test_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
                     internal Step_0__Test_Spec(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> expression)
@@ -493,7 +493,7 @@ public class FluentFactoryDiagnosticsTests
                 ///     <seealso cref="Test.Square"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Shape
+                public readonly struct Step_0__Test_Shape
                 {
                     private readonly int _width__parameter;
                     internal Step_0__Test_Shape(in int width)

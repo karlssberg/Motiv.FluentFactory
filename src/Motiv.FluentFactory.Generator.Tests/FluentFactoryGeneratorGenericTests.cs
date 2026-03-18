@@ -53,7 +53,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory(in T value)
@@ -140,7 +140,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -162,7 +162,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -255,7 +255,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -277,7 +277,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -301,7 +301,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -400,7 +400,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -422,7 +422,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -446,7 +446,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -472,7 +472,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory<T1, T2, T3, T4>
+                public readonly struct Step_3__Test_Factory<T1, T2, T3, T4>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -561,7 +561,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory____<T>
+                public readonly struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory____(in T value)
@@ -646,7 +646,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory____<T>
+                public readonly struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value1__parameter;
                     internal Step_0__Test_Namespace_Factory____(in T value1)
@@ -668,7 +668,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory____<T, TAlt>
+                public readonly struct Step_1__Test_Namespace_Factory____<T, TAlt>
                 {
                     private readonly T _value1__parameter;
                     private readonly TAlt _value2__parameter;
@@ -757,7 +757,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory____<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Factory____<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory____(in T value)
@@ -842,7 +842,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory(in T value)
@@ -940,7 +940,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value1__parameter;
                     internal Step_0__Test_Namespace_Factory(in T value1)
@@ -963,7 +963,7 @@ public class FluentFactoryGeneratorGenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
+                public readonly struct Step_1__Test_Namespace_Factory<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
                 {
                     private readonly T _value1__parameter;
                     private readonly TAlt _value2__parameter;

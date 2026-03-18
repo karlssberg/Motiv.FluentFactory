@@ -20,7 +20,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_0__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
+    internal readonly struct Step_0__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         internal Step_0__Motiv_FluentFactory_Example_Cuboid____(in T width)
@@ -42,7 +42,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_1__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
+    internal readonly struct Step_1__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         private readonly T _height__parameter;
@@ -66,7 +66,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal struct Step_2__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
+    internal readonly struct Step_2__Motiv_FluentFactory_Example_Cuboid____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
         private readonly T _height__parameter;

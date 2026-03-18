@@ -69,7 +69,7 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                 ///     <seealso cref="Test.Namespace.Container{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T> where T : struct
+                public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory(in T value)
@@ -169,7 +169,7 @@ public class FluentFactoryGeneratorInvalidGenericConstraintTests
                 ///     <seealso cref="Test.Namespace.BrokenConstraint{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T> where T : class, struct
+                public readonly struct Step_0__Test_Namespace_Factory<T> where T : class, struct
                 {
                     private readonly T _value__parameter;
                     internal Step_0__Test_Namespace_Factory(in T value)

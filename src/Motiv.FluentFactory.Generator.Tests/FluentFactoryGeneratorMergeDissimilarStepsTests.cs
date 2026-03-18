@@ -80,7 +80,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value1__parameter;
                     internal Step_0__Test_Factory(in string value1)
@@ -195,7 +195,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -217,7 +217,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -243,7 +243,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly string _string1__parameter;
                     internal Step_2__Test_Factory(in string string1)
@@ -265,7 +265,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Factory
                 {
                     private readonly string _string1__parameter;
                     private readonly string _string2__parameter;
@@ -289,7 +289,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_4__Test_Factory
+                public readonly struct Step_4__Test_Factory
                 {
                     private readonly string _string1__parameter;
                     private readonly string _string2__parameter;
@@ -394,7 +394,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -425,7 +425,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1>
+                public readonly struct Step_1__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly string _value2__parameter;
@@ -449,7 +449,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory<T1, T2>
+                public readonly struct Step_2__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly string _value2__parameter;
@@ -477,7 +477,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory<T1, T2>
+                public readonly struct Step_3__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value3__parameter;
@@ -586,7 +586,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -608,7 +608,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -634,7 +634,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory<T2>
+                public readonly struct Step_2__Test_Factory<T2>
                 {
                     private readonly T2 _value2__parameter;
                     internal Step_2__Test_Factory(in T2 value2)
@@ -656,7 +656,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_3__Test_Factory<T2, T1>
+                public readonly struct Step_3__Test_Factory<T2, T1>
                 {
                     private readonly T2 _value2__parameter;
                     private readonly T1 _value1__parameter;
@@ -1123,7 +1123,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__TestFactory_Factory<T>
+                public readonly struct Step_1__TestFactory_Factory<T>
                 {
                     private readonly T _valueB1__parameter;
                     private readonly global::System.Func<string> _valueB2__parameter;
@@ -1385,7 +1385,7 @@ public class FluentFactoryGeneratorMergeDissimilarStepsTests
                 ///     <seealso cref="Test.MultiAssertionExplanationFromPolicyPropositionFactory{TModel, TMetadata}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Spec<TModel, TMetadata>
+                public readonly struct Step_1__Test_Spec<TModel, TMetadata>
                 {
                     private readonly global::System.Func<TModel, global::Test.PolicyResultBase<TMetadata>> _predicate__parameter;
                     private readonly global::System.Func<TModel, global::Test.PolicyResultBase<TMetadata>, global::System.Collections.Generic.IEnumerable<string>> _trueBecause__parameter;

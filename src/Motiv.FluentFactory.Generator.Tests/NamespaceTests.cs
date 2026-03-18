@@ -105,7 +105,7 @@ public class NamespaceTests
                 ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly T _data__parameter;
                     internal Step_0__Test_Factory(in T data)

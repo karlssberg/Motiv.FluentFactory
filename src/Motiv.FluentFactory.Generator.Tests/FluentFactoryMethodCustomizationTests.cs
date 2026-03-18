@@ -129,7 +129,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _x__parameter;
                     internal Step_0__Test_Factory(in int x)
@@ -302,7 +302,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -391,7 +391,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -413,7 +413,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -508,7 +508,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
                     internal Step_0__Test_Factory(in T1 value1)
@@ -530,7 +530,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -554,7 +554,7 @@ public class FluentFactoryMethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
@@ -837,7 +837,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory
+            public readonly struct Step_0__Factory
             {
                 private readonly string _value1__parameter;
                 internal Step_0__Factory(in string value1)
@@ -966,7 +966,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T>
+            public readonly struct Step_0__Factory<T>
             {
                 private readonly T _value1__parameter;
                 internal Step_0__Factory(in T value1)
@@ -1118,7 +1118,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1>
+            public readonly struct Step_0__Factory<T1>
             {
                 private readonly T1 _value1__parameter;
                 internal Step_0__Factory(in T1 value1)
@@ -1149,7 +1149,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_1__Factory<T1, T2>
+            public readonly struct Step_1__Factory<T1, T2>
             {
                 private readonly T1 _value1__parameter;
                 private readonly T2 _value2__parameter;
@@ -1376,7 +1376,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1A, T1B>
+            public readonly struct Step_0__Factory<T1A, T1B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1A, T1B> factory1)
@@ -1407,7 +1407,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_1__Factory<T1A, T1B, T2A, T2B>
+            public readonly struct Step_1__Factory<T1A, T1B, T2A, T2B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
                 private readonly global::System.Func<T2A, T2B> _factory2__parameter;
@@ -1555,7 +1555,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
@@ -1586,7 +1586,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_1__Factory<T1, T2, T3>
+            public readonly struct Step_1__Factory<T1, T2, T3>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 private readonly global::System.Func<T2, T3> _factory2__parameter;
@@ -1749,7 +1749,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
@@ -1904,7 +1904,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
@@ -2090,7 +2090,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
@@ -2266,7 +2266,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
@@ -2419,7 +2419,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassA{T}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_0__Factory<T>
+            public readonly struct Step_0__Factory<T>
             {
                 private readonly global::System.Func<T> _value1__parameter;
                 internal Step_0__Factory(in global::System.Func<T> value1)
@@ -2441,7 +2441,7 @@ public class FluentFactoryMethodCustomizationTests
             ///     <seealso cref="MyClassB"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-            public struct Step_1__Factory
+            public readonly struct Step_1__Factory
             {
                 private readonly string _value1__parameter;
                 internal Step_1__Factory(in string value1)
@@ -2594,7 +2594,7 @@ public class FluentFactoryMethodCustomizationTests
              ///     <seealso cref="MyClassA{T}"/>
              /// </summary>
              [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-             public struct Step_0__Factory<T>
+             public readonly struct Step_0__Factory<T>
              {
                  private readonly global::System.Func<T> _value1__parameter;
                  internal Step_0__Factory(in global::System.Func<T> value1)
@@ -2616,7 +2616,7 @@ public class FluentFactoryMethodCustomizationTests
              ///     <seealso cref="MyClassC"/>
              /// </summary>
              [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-             public struct Step_1__Factory
+             public readonly struct Step_1__Factory
              {
                  private readonly global::System.Func<string> _value1__parameter;
                  internal Step_1__Factory(in global::System.Func<string> value1)

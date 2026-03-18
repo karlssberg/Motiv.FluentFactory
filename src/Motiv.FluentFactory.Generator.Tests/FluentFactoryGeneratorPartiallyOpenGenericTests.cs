@@ -189,7 +189,7 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
                     internal Step_0__Test_Factory(in global::System.Collections.Generic.Dictionary<string, T> lookup)
@@ -211,7 +211,7 @@ public class FluentFactoryGeneratorPartiallyOpenGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T>
+                public readonly struct Step_1__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
                     private readonly global::System.Collections.Generic.List<int> _counts__parameter;

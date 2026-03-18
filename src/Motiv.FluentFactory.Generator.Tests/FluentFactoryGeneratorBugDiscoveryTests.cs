@@ -71,7 +71,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_MyTarget
+                public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Namespace_MyTarget(in int value)
@@ -95,7 +95,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_MyTarget
+                public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
                     internal Step_1__Test_Namespace_MyTarget(in string name)
@@ -119,7 +119,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Namespace_MyTarget
+                public readonly struct Step_2__Test_Namespace_MyTarget
                 {
                     private readonly double _amount__parameter;
                     internal Step_2__Test_Namespace_MyTarget(in double amount)
@@ -218,7 +218,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_MyTarget
+                public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Namespace_MyTarget(in int value)
@@ -242,7 +242,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_MyTarget
+                public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
                     internal Step_1__Test_Namespace_MyTarget(in string name)
@@ -348,7 +348,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_MyTarget
+                public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Namespace_MyTarget(in int value)
@@ -535,7 +535,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyRecordA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_MyTarget
+                public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly string _value__parameter;
                     internal Step_0__Test_Namespace_MyTarget(in string value)
@@ -559,7 +559,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyRecordB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_MyTarget
+                public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
                     internal Step_1__Test_Namespace_MyTarget(in int value)
@@ -759,7 +759,7 @@ public class FluentFactoryGeneratorBugDiscoveryTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_MyTarget
+                public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Namespace_MyTarget(in int value)

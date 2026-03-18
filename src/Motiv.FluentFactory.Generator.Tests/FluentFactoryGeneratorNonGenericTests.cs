@@ -53,7 +53,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Factory(in int value)
@@ -141,7 +141,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Factory(in int number)
@@ -231,7 +231,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Factory(in int number)
@@ -253,7 +253,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;
@@ -350,7 +350,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Factory(in int number)
@@ -372,7 +372,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;
@@ -396,7 +396,7 @@ public class FluentFactoryGeneratorNonGenericTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Factory
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;

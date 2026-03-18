@@ -159,7 +159,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.InternalParam _param__parameter;
                     internal Step_0__Test_Factory(in global::Test.InternalParam param)
@@ -250,7 +250,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Factory(in int value)
@@ -340,7 +340,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                internal struct Step_0__Test_Factory
+                internal readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Factory(in int value)
@@ -431,7 +431,7 @@ public class FluentFactoryGeneratorScopeAndAccessibilityTests
                 ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_OuterFactory
+                public readonly struct Step_0__Test_OuterFactory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_OuterFactory(in int value)

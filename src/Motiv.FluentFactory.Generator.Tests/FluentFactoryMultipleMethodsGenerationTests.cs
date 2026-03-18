@@ -83,7 +83,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
                     internal Step_0__Test_Namespace_Factory(in T data)
@@ -213,7 +213,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
                     internal Step_0__Test_Namespace_Factory(in T data)
@@ -345,7 +345,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Namespace_Factory(in int number)
@@ -379,7 +379,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
@@ -513,7 +513,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Namespace_Factory(in int number)
@@ -544,7 +544,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
@@ -568,7 +568,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_2__Test_Namespace_Factory<T>
+                public readonly struct Step_2__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
                     private readonly global::System.Func<T> _nativeFunction__parameter;
@@ -735,7 +735,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
                     internal Step_0__Test_Namespace_Factory(in int number)
@@ -775,7 +775,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
@@ -887,7 +887,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly global::System.Threading.Tasks.Task<T> _data__parameter;
                     internal Step_0__Test_Namespace_Factory(in global::System.Threading.Tasks.Task<T> data)
@@ -1036,7 +1036,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T1>
+                public readonly struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
                     internal Step_0__Test_Namespace_Factory(in T1 first)
@@ -1076,7 +1076,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly T1 _first__parameter;
                     private readonly T2 _second__parameter;
@@ -1227,7 +1227,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T1>
+                public readonly struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
                     internal Step_0__Test_Namespace_Factory(in T1 first)
@@ -1352,7 +1352,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> _first__parameter;
                     internal Step_0__Test_Namespace_Factory(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> first)
@@ -1457,7 +1457,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _first__parameter;
                     internal Step_0__Test_Namespace_Factory(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> first)
@@ -1595,7 +1595,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly string _first__parameter;
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _second__parameter;
@@ -1722,7 +1722,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__MyNamespace_Spec<TModel, TPredicateResult>
+                public readonly struct Step_0__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
                     internal Step_0__MyNamespace_Spec(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> expression)
@@ -1744,7 +1744,7 @@ public class FluentFactoryMultipleMethodsGenerationTests
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__MyNamespace_Spec<TModel, TPredicateResult>
+                public readonly struct Step_1__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
                     private readonly global::System.Func<TModel, global::MyNamespace.BooleanResultBase<string>, global::System.Collections.Generic.IEnumerable<string>> _trueBecause__parameter;

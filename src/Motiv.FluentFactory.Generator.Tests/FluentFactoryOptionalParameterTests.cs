@@ -154,7 +154,7 @@ public class FluentFactoryOptionalParameterTests
                 ///     <seealso cref="Test.MyHandler"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _host__parameter;
                     internal Step_0__Test_Factory(in string host)
@@ -546,7 +546,7 @@ public class FluentFactoryOptionalParameterTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Animal
+                public readonly struct Step_0__Test_Animal
                 {
                     private readonly int _legs__parameter;
                     internal Step_0__Test_Animal(in int legs)
@@ -581,7 +581,7 @@ public class FluentFactoryOptionalParameterTests
                 ///     <seealso cref="Test.Fish"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Animal
+                public readonly struct Step_1__Test_Animal
                 {
                     private readonly int _finCount__parameter;
                     private readonly int _eyeCount__parameter;

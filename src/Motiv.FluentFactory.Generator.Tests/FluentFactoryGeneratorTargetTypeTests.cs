@@ -385,7 +385,7 @@ public class FluentFactoryGeneratorTargetTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Factory(in int value)
@@ -470,7 +470,7 @@ public class FluentFactoryGeneratorTargetTypeTests
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
                     internal Step_0__Test_Factory(in int value)

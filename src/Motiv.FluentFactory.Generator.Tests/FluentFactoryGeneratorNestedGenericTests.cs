@@ -118,7 +118,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
                     internal Step_0__Test_Factory(in global::System.Func<T1, bool> value1)
@@ -206,7 +206,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> _value1__parameter;
                     internal Step_0__Test_Factory(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
@@ -298,7 +298,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
                     internal Step_0__Test_Factory(in global::System.Func<T1, bool> value1)
@@ -320,7 +320,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
                     private readonly global::System.Collections.Generic.IEnumerable<T2> _value2__parameter;
@@ -412,7 +412,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_0__Test_Factory<T1, T2>
+                public readonly struct Step_0__Test_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;
                     internal Step_0__Test_Factory(in global::System.Func<T1, T2> value1)
@@ -434,7 +434,7 @@ public class FluentFactoryGeneratorNestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-                public struct Step_1__Test_Factory<T1, T2, T3, T4>
+                public readonly struct Step_1__Test_Factory<T1, T2, T3, T4>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;
                     private readonly global::System.Func<T3, T4> _value2__parameter;
