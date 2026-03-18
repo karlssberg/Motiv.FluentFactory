@@ -3,13 +3,13 @@ using Motiv.FluentFactory.Attributes;
 namespace Motiv.FluentFactory.Example;
 
 [FluentFactory(ReturnType = typeof(Animal))]
-internal abstract partial class Animal;
+internal abstract partial record Animal;
 
 [FluentConstructor(typeof(Animal))]
-internal class Dog() : Animal;
+internal record Dog(int Legs = 4) : Animal;
 
 [FluentConstructor(typeof(Animal))]
-internal class Cat() : Animal;
+internal record Cat(int Legs = 4) : Animal;
 
 [FluentConstructor(typeof(Animal))]
-internal class Fish() : Animal;
+internal record Fish(int FinCount = 1, int EyeCount = 2) : Animal;

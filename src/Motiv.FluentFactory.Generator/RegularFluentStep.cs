@@ -39,6 +39,12 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public bool IsEndStep { get; set; }
 
+    /// <summary>
+    /// Indicates this step was created for constructors where all parameters are optional.
+    /// When true, the step constructor will have default parameter values.
+    /// </summary>
+    public bool IsAllOptionalStep { get; set; }
+
     public TypeKind TypeKind { get; set; } = TypeKind.Class;
 
     public bool IsRecord { get; set; }  = false;

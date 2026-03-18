@@ -26,13 +26,15 @@ internal static class FieldAndPropertySyntax
 
     private static FieldDeclarationSyntax CreateFieldDeclaration(FieldStorage fieldStorage)
     {
+        var modifiers = fieldStorage.IsReadOnly
+            ? TokenList(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword))
+            : TokenList(Token(SyntaxKind.PrivateKeyword));
+
         return FieldDeclaration(
                 VariableDeclaration(ParseTypeName(fieldStorage.Type.ToGlobalDisplayString()))
                     .AddVariables(VariableDeclarator(
                         Identifier(fieldStorage.IdentifierName))))
-            .WithModifiers(TokenList(
-                Token(SyntaxKind.PrivateKeyword),
-                Token(SyntaxKind.ReadOnlyKeyword)));
+            .WithModifiers(modifiers);
     }
 
     private static PropertyDeclarationSyntax CreatePropertyDeclaration(PropertyStorage propertyStorage)

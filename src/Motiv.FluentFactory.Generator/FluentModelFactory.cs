@@ -76,6 +76,13 @@ internal class FluentModelFactory(Compilation compilation)
             })
             .ToImmutableArray();
 
+        // Handle multi-param all-optional constructors via post-processing
+        var (gatewayMethods, gatewaySteps) = CreateAllOptionalStepsAndGatewayMethods(
+            rootType, stepTrie.Root, fluentBuilderSteps.Length);
+
+        fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
+        fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
+
         _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
         var sampleConstructorContext = fluentConstructorContexts.First();
 
@@ -101,11 +108,67 @@ internal class FluentModelFactory(Compilation compilation)
         [
             .._methodSelector.ConvertNodeToFluentMethods(
                 type, node, valueStorages,
-                (rootType, child) => _stepBuilder.ConvertNodeToFluentStep(rootType, child, ConvertNodeToFluentFluentMethods)),
+                (rootType, child) => _stepBuilder.ConvertNodeToFluentStep(
+                    rootType, child, ConvertNodeToFluentFluentMethods, AddOptionalMethodsToStep)),
             ..ConvertNodeToCreationMethods(type, node, valueStorages)
         ];
 
         return fluentMethods;
+    }
+
+    private void AddOptionalMethodsToStep(
+        INamedTypeSymbol rootType,
+        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        IFluentStep step,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        if (!node.IsEnd) return;
+
+        // Exclude optional params already in the trie path (handled as regular step methods)
+        var knownParamFieldNames = new HashSet<string>(
+            step.KnownConstructorParameters.Select(p => p.Name.ToParameterFieldName()));
+
+        var optionalParameters = node.EndValues
+            .SelectMany(v => v.OptionalParameters)
+            .DistinctBy(p => p.Name.ToParameterFieldName())
+            .Where(p => !knownParamFieldNames.Contains(p.Name.ToParameterFieldName()))
+            .ToList();
+
+        if (optionalParameters.Count == 0) return;
+
+        // Add optional parameter fields to the step's value storage
+        foreach (var parameter in optionalParameters)
+        {
+            if (!valueStorages.ContainsKey(parameter))
+            {
+                var fieldStorage = new FieldStorage(
+                    parameter.Name.ToParameterFieldName(),
+                    parameter.Type,
+                    rootType.ContainingNamespace)
+                {
+                    IsReadOnly = false
+                };
+                valueStorages.Add(parameter, fieldStorage);
+            }
+        }
+
+        var methodPrefix = node.EndValues
+            .Select(v => v.Context.MethodPrefix)
+            .FirstOrDefault() ?? "With";
+
+        // Add optional methods to the step
+        foreach (var parameter in optionalParameters)
+        {
+            var methodName = parameter.GetFluentMethodName(methodPrefix);
+            var optionalMethod = new OptionalFluentMethod(
+                methodName,
+                parameter,
+                step,
+                rootType.ContainingNamespace,
+                [..node.Key],
+                valueStorages);
+            step.FluentMethods.Add(optionalMethod);
+        }
     }
 
     private IEnumerable<IFluentMethod> ConvertNodeToCreationMethods(INamedTypeSymbol rootType,
@@ -114,18 +177,32 @@ internal class FluentModelFactory(Compilation compilation)
     {
         if (!node.IsEnd) yield break;
 
+        var methodPrefix = node.EndValues
+            .Select(v => v.Context.MethodPrefix)
+            .FirstOrDefault() ?? "With";
+
         var creationMethods =
             from value in node.EndValues
-            where value.Constructor.Parameters.Length == node.Key.Length
+            where node.Key.Length >= value.RequiredParameterCount
+            where node.Key.Length <= value.Constructor.Parameters.Length
             where value.CreateMethod != CreateMethodMode.None
             let verb = value.Context.CreateVerb ?? "Create"
             let methodName = value.CreateMethod == CreateMethodMode.Fixed
                 ? verb
                 : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
+            let keyParamFieldNames = new HashSet<string>(
+                node.Key.Select(k => k.ParameterSymbol.Name.ToParameterFieldName()))
+            let optionalParamFields = value.OptionalParameters
+                .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
+                .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))
+            let hasStep = node.Key.Length > 0
+            let allParameterFields = hasStep
+                ? node.Key.AddRange(optionalParamFields)
+                : node.Key
             select new CreationMethod(
                 rootType.ContainingNamespace,
                 value,
-                node.Key,
+                allParameterFields,
                 valueSources,
                 methodName);
 
@@ -143,24 +220,154 @@ internal class FluentModelFactory(Compilation compilation)
         foreach (var constructorContext in fluentConstructorContexts)
         {
             var methodPrefix = constructorContext.MethodPrefix ?? "With";
-            var fluentParameters =
-                constructorContext.Constructor.Parameters
-                    .Select(parameter =>
-                    {
-                        var methodNames = compilation
-                            .GetMultipleFluentMethodSymbols(parameter)
-                            .Select(methodInfo => methodInfo.Method.Name)
-                            .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix));
 
-                        return new FluentMethodParameter(parameter, methodNames);
-                    });
+            FluentMethodParameter ToFluentMethodParameter(IParameterSymbol parameter)
+            {
+                var methodNames = compilation
+                    .GetMultipleFluentMethodSymbols(parameter)
+                    .Select(methodInfo => methodInfo.Method.Name)
+                    .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix));
 
-            trie.Insert(
-                fluentParameters,
-                new ConstructorMetadata(constructorContext));
+                return new FluentMethodParameter(parameter, methodNames);
+            }
+
+            var requiredParameters = constructorContext.Constructor.Parameters
+                .Where(p => !p.HasExplicitDefaultValue)
+                .Select(ToFluentMethodParameter);
+
+            var metadata = new ConstructorMetadata(constructorContext);
+
+            // Always insert the required-only path (marks root as end when all params are optional)
+            trie.Insert(requiredParameters, metadata);
+
+            // When all params are optional with exactly one param, insert it as a trie path
+            // so that step methods are generated (e.g., Animal.WithLegs(2).CreateDog())
+            // Multi-param all-optional constructors are handled by CreateAllOptionalStepsAndGatewayMethods
+            if (metadata.RequiredParameterCount == 0 && metadata.OptionalParameters.Length == 1)
+            {
+                var optionalParameters = constructorContext.Constructor.Parameters
+                    .Where(p => p.HasExplicitDefaultValue)
+                    .Select(ToFluentMethodParameter);
+
+                trie.Insert(optionalParameters, metadata.Clone());
+            }
         }
 
         return trie;
+    }
+
+    private (ImmutableArray<IFluentMethod> GatewayMethods, ImmutableArray<IFluentStep> Steps)
+        CreateAllOptionalStepsAndGatewayMethods(
+            INamedTypeSymbol rootType,
+            Trie<FluentMethodParameter, ConstructorMetadata>.Node rootNode,
+            int nextStepIndex)
+    {
+        if (!rootNode.IsEnd) return ([], []);
+
+        // Find all-optional constructors with multiple params (not handled by trie insertion)
+        var allOptionalConstructors = rootNode.EndValues
+            .Where(v => v.RequiredParameterCount == 0 && v.OptionalParameters.Length > 1)
+            .ToList();
+
+        if (allOptionalConstructors.Count == 0) return ([], []);
+
+        // Group constructors that share the same set of optional parameters
+        var groups = allOptionalConstructors
+            .GroupBy(v => string.Join(",", v.OptionalParameters
+                .Select(p => $"{p.Type.ToGlobalDisplayString()}:{p.Name}")
+                .OrderBy(s => s)))
+            .ToList();
+
+        var gatewayMethods = new List<IFluentMethod>();
+        var steps = new List<IFluentStep>();
+
+        foreach (var group in groups)
+        {
+            var constructors = group.ToList();
+            var allOptionalParams = constructors.First().OptionalParameters;
+
+            // Create value storage with all optional params as readonly fields
+            // Readonly fields enable aggressive inlining; setter methods return new instances
+            var valueStorages = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(
+                allOptionalParams.Select(p =>
+                    new KeyValuePair<IParameterSymbol, IFluentValueStorage>(
+                        p,
+                        new FieldStorage(p.Name.ToParameterFieldName(), p.Type, rootType.ContainingNamespace))));
+
+            var knownConstructorParameters = new ParameterSequence(allOptionalParams);
+
+            // Create the shared step
+            var candidateCtors = constructors
+                .SelectMany(c => c.CandidateConstructors)
+                .Distinct<IMethodSymbol>(SymbolEqualityComparer.Default);
+
+            var step = new RegularFluentStep(rootType, candidateCtors)
+            {
+                KnownConstructorParameters = knownConstructorParameters,
+                FluentMethods = [],
+                IsEndStep = true,
+                IsAllOptionalStep = true,
+                ValueStorage = valueStorages,
+                Index = nextStepIndex + steps.Count
+            };
+
+            // Add optional setter methods to the step
+            var methodPrefix = constructors.First().Context.MethodPrefix ?? "With";
+            foreach (var parameter in allOptionalParams)
+            {
+                var methodName = parameter.GetFluentMethodName(methodPrefix);
+                var optionalMethod = new OptionalFluentMethod(
+                    methodName,
+                    parameter,
+                    step,
+                    rootType.ContainingNamespace,
+                    [],
+                    valueStorages);
+                step.FluentMethods.Add(optionalMethod);
+            }
+
+            // Add creation methods to the step
+            foreach (var metadata in constructors)
+            {
+                if (metadata.CreateMethod == CreateMethodMode.None) continue;
+
+                var verb = metadata.Context.CreateVerb ?? "Create";
+                var createMethodName = metadata.CreateMethod == CreateMethodMode.Fixed
+                    ? verb
+                    : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
+
+                var allParamFields = allOptionalParams
+                    .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))
+                    .ToImmutableArray();
+
+                var creationMethod = new CreationMethod(
+                    rootType.ContainingNamespace,
+                    metadata,
+                    allParamFields,
+                    valueStorages,
+                    createMethodName);
+
+                _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
+                step.FluentMethods.Add(creationMethod);
+            }
+
+            steps.Add(step);
+
+            // Create gateway methods from root to this step (one per optional param)
+            foreach (var parameter in allOptionalParams)
+            {
+                var methodName = parameter.GetFluentMethodName(methodPrefix);
+                var gateway = new OptionalGatewayMethod(
+                    methodName,
+                    parameter,
+                    step,
+                    rootType.ContainingNamespace,
+                    valueStorages);
+                gatewayMethods.Add(gateway);
+            }
+        }
+
+        return ([..gatewayMethods], [..steps.OfType<IFluentStep>()]);
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(

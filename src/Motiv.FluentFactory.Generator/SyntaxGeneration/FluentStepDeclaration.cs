@@ -18,6 +18,7 @@ internal static class FluentStepDeclaration
                 {
                     CreationMethod createMethod => FluentFactoryMethodDeclaration.Create(createMethod, step),
                     MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters),
+                    OptionalFluentMethod optionalMethod => OptionalFluentMethodDeclaration.Create(optionalMethod, step),
                     _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters)
                 });
 

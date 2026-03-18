@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Motiv.FluentFactory.Generator.ConstructorAnalysis;
@@ -17,8 +18,20 @@ internal class ConstructorMetadata(FluentConstructorContext constructorContext)
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         constructorContext.ValueStorage;
-        
+
     public FluentConstructorContext Context { get; } = constructorContext;
+
+    /// <summary>
+    /// Parameters with explicit default values that become optional fluent setter methods.
+    /// </summary>
+    public ImmutableArray<IParameterSymbol> OptionalParameters { get; } =
+        [..constructorContext.Constructor.Parameters.Where(p => p.HasExplicitDefaultValue)];
+
+    /// <summary>
+    /// The count of required (non-optional) parameters in the constructor.
+    /// </summary>
+    public int RequiredParameterCount =>
+        Constructor.Parameters.Length - OptionalParameters.Length;
 
     public ConstructorMetadata Clone()
     {

@@ -22,12 +22,18 @@ internal class FluentStepBuilder(
     /// A callback to the orchestrator's method that returns all fluent methods for a given node.
     /// This enables the mutual recursion between step building and method selection.
     /// </param>
+    /// <param name="postCreateStep">
+    /// An optional callback invoked after step creation, allowing additional methods (e.g., optional parameter setters)
+    /// to be appended to the step.
+    /// </param>
     /// <returns>A fluent step if the node has any fluent methods; null otherwise.</returns>
     public IFluentStep? ConvertNodeToFluentStep(
         INamedTypeSymbol rootType,
         Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
         Func<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node,
-            OrderedDictionary<IParameterSymbol, IFluentValueStorage>, ImmutableArray<IFluentMethod>> getFluentMethods)
+            OrderedDictionary<IParameterSymbol, IFluentValueStorage>, ImmutableArray<IFluentMethod>> getFluentMethods,
+        Action<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node,
+            IFluentStep, OrderedDictionary<IParameterSymbol, IFluentValueStorage>>? postCreateStep = null)
     {
         var knownConstructorParameters = new ParameterSequence(node.Key);
         var constructorMetadata = node.EndValues.FirstOrDefault();
@@ -36,9 +42,11 @@ internal class FluentStepBuilder(
         var valueStorages = GetValueStorages();
 
         var fluentMethods = getFluentMethods(rootType, node, valueStorages);
-        return fluentMethods.Length > 0
-            ? CreateStep(valueStorages)
-            : null;
+        if (fluentMethods.Length == 0) return null;
+
+        var step = CreateStep(valueStorages);
+        postCreateStep?.Invoke(rootType, node, step, valueStorages);
+        return step;
 
         bool UseExistingTypeAsStep()
         {
@@ -61,7 +69,7 @@ internal class FluentStepBuilder(
                     new ExistingTypeFluentStep(metadata)
                     {
                         KnownConstructorParameters = knownConstructorParameters,
-                        FluentMethods = fluentMethods,
+                        FluentMethods = new List<IFluentMethod>(fluentMethods),
                         ValueStorage = storage,
                         CandidateConstructors =
                         [
@@ -82,7 +90,7 @@ internal class FluentStepBuilder(
                                     .OfType<IMethodSymbol>())
                             {
                                 KnownConstructorParameters = knownConstructorParameters,
-                                FluentMethods = fluentMethods,
+                                FluentMethods = new List<IFluentMethod>(fluentMethods),
                                 IsEndStep = node.IsEnd,
                                 ValueStorage = storage
                             })
@@ -132,6 +140,7 @@ internal class FluentStepBuilder(
             yield return fluentStep;
 
             var childSteps = fluentStep.FluentMethods
+                .Where(m => m is not OptionalFluentMethod)
                 .Select(m => m.Return)
                 .OfType<IFluentStep>();
 

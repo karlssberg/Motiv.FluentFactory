@@ -102,6 +102,7 @@ internal static class RootTypeDeclaration
             .Select<IFluentMethod, MethodDeclarationSyntax>(method => method switch
             {
                 { Return: TargetTypeReturn } => FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
+                OptionalGatewayMethod gateway => OptionalGatewayMethodDeclaration.Create(gateway),
                 MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
                 _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
             })
