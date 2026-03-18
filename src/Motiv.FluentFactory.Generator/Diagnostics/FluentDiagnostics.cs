@@ -237,6 +237,18 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
+    /// Diagnostic for optional parameters causing ambiguous fluent method chains across different target types.
+    /// </summary>
+    public static readonly DiagnosticDescriptor OptionalParameterAmbiguousFluentMethodChain = new(
+        id: "MFFG0022",
+        title: "Optional parameters cause ambiguous fluent method chain",
+        messageFormat:
+        "Optional parameter '{0}' in constructor '{1}' causes fluent method chain to become ambiguous with '{2}' across types {3}",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
     /// Diagnostic for ReturnType that equals the concrete target type (pointless usage).
     /// </summary>
     public static readonly DiagnosticDescriptor PointlessReturnType = new(

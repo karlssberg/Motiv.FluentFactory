@@ -23,6 +23,7 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
             .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
             .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts))
+            .Concat(ValidateOptionalParameterAmbiguousChains(fluentConstructorContexts))
             .Concat(ValidateReturnType(fluentConstructorContexts));
     }
 
@@ -471,6 +472,82 @@ internal static class FluentConstructorValidatorExtensions
             return attributeSyntax.GetLocation();
 
         return parameter.Locations.FirstOrDefault() ?? Location.None;
+    }
+
+    private static string GetRequiredFluentParameterChainKey(FluentConstructorContext context) =>
+        string.Join("|", context.Constructor.Parameters
+            .Where(p => !p.HasExplicitDefaultValue)
+            .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
+
+    private static IEnumerable<Diagnostic> ValidateOptionalParameterAmbiguousChains(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        // Skip constructors with [MultipleFluentMethods] parameters
+        var eligibleContexts = fluentConstructorContexts
+            .Where(ctx => !ctx.Constructor.Parameters.Any(
+                p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
+
+        var groups = eligibleContexts
+            .GroupBy(GetRequiredFluentParameterChainKey);
+
+        foreach (var group in groups)
+        {
+            var contexts = group.ToList();
+
+            // Must have constructors from at least 2 different types
+            var distinctTypes = contexts
+                .Select(ctx => ctx.Constructor.ContainingType)
+                .Distinct(SymbolEqualityComparer.Default)
+                .Count();
+
+            if (distinctTypes <= 1)
+                continue;
+
+            // Skip groups where no constructor has optional params (MFFG0016 covers these)
+            if (!contexts.Any(ctx => ctx.Constructor.Parameters.Any(p => p.HasExplicitDefaultValue)))
+                continue;
+
+            // Skip groups where all full-chain keys are identical (MFFG0016 covers these)
+            var fullChainKeys = contexts.Select(GetFluentParameterChainKey).Distinct().ToList();
+            if (fullChainKeys.Count == 1)
+                continue;
+
+            // Skip groups where Create methods are disambiguated
+            if (AreCreateMethodsDisambiguated(contexts))
+                continue;
+
+            var participatingTypes = contexts
+                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Distinct()
+                .OrderBy(t => t);
+
+            var typesString = string.Join(", ", participatingTypes);
+
+            foreach (var context in contexts)
+            {
+                var optionalParams = context.Constructor.Parameters
+                    .Where(p => p.HasExplicitDefaultValue);
+
+                // Find a colliding constructor from a different type
+                var collidingContext = contexts.First(ctx =>
+                    !SymbolEqualityComparer.Default.Equals(
+                        ctx.Constructor.ContainingType,
+                        context.Constructor.ContainingType));
+
+                foreach (var parameter in optionalParams)
+                {
+                    var location = parameter.Locations.FirstOrDefault() ?? Location.None;
+
+                    yield return Diagnostic.Create(
+                        FluentDiagnostics.OptionalParameterAmbiguousFluentMethodChain,
+                        location,
+                        parameter.Name,
+                        context.Constructor.ToDisplayString(),
+                        collidingContext.Constructor.ToDisplayString(),
+                        typesString);
+                }
+            }
+        }
     }
 
     private static IEnumerable<Diagnostic> ValidateReturnType(

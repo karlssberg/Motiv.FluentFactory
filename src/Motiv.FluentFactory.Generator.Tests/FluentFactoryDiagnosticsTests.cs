@@ -527,4 +527,358 @@ public class FluentFactoryDiagnosticsTests
             }
         }.RunAsync();
     }
+
+    [Fact]
+    internal async Task Should_report_when_optional_parameters_cause_ambiguous_fluent_method_chain_with_another_constructor()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory]
+                public static partial class Factory;
+
+                public partial class Foo
+                {
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Foo(string name, int age = 25)
+                    {
+                        Name = name;
+                        Age = age;
+                    }
+
+                    public string Name { get; }
+                    public int Age { get; }
+                }
+
+                public partial class Bar
+                {
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Bar(string name)
+                    {
+                        Name = name;
+                    }
+
+                    public string Name { get; }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(OptionalParameterAmbiguousFluentMethodChain.Id)
+                        .WithSpan(SourceFile, 11, 37, 11, 40)
+                        .WithArguments("age", "MyNamespace.Foo.Foo(string, int)", "MyNamespace.Bar.Bar(string)", "MyNamespace.Bar, MyNamespace.Foo"),
+                }
+            }
+        }.RunAsync();
+    }
+
+    [Fact]
+    internal async Task Should_report_when_both_constructors_have_optional_parameters_causing_ambiguous_chain()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory]
+                public static partial class Factory;
+
+                public partial class Foo
+                {
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Foo(string name, int age = 25)
+                    {
+                        Name = name;
+                        Age = age;
+                    }
+
+                    public string Name { get; }
+                    public int Age { get; }
+                }
+
+                public partial class Bar
+                {
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Bar(string name, bool active = true)
+                    {
+                        Name = name;
+                        Active = active;
+                    }
+
+                    public string Name { get; }
+                    public bool Active { get; }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(OptionalParameterAmbiguousFluentMethodChain.Id)
+                        .WithSpan(SourceFile, 11, 37, 11, 40)
+                        .WithArguments("age", "MyNamespace.Foo.Foo(string, int)", "MyNamespace.Bar.Bar(string, bool)", "MyNamespace.Bar, MyNamespace.Foo"),
+                    DiagnosticResult.CompilerError(OptionalParameterAmbiguousFluentMethodChain.Id)
+                        .WithSpan(SourceFile, 24, 38, 24, 44)
+                        .WithArguments("active", "MyNamespace.Bar.Bar(string, bool)", "MyNamespace.Foo.Foo(string, int)", "MyNamespace.Bar, MyNamespace.Foo"),
+                }
+            }
+        }.RunAsync();
+    }
+
+    [Fact]
+    internal async Task Should_not_report_optional_parameter_ambiguity_when_disambiguated_by_create_verb()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory]
+                public static partial class Factory;
+
+                public partial class Foo
+                {
+                    [FluentConstructor(typeof(Factory), CreateVerb = "MakeFoo")]
+                    public Foo(string name, int age = 25)
+                    {
+                        Name = name;
+                        Age = age;
+                    }
+
+                    public string Name { get; }
+                    public int Age { get; }
+                }
+
+                public partial class Bar
+                {
+                    [FluentConstructor(typeof(Factory), CreateVerb = "MakeBar")]
+                    public Bar(string name)
+                    {
+                        Name = name;
+                    }
+
+                    public string Name { get; }
+                }
+            }
+            """;
+
+        const string expected =
+            """
+            // <auto-generated/>
+            #nullable enable
+            namespace MyNamespace
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="MyNamespace.Bar"/>
+                    ///     <seealso cref="MyNamespace.Foo"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::MyNamespace.Step_0__MyNamespace_Factory WithName(in string name)
+                    {
+                        return new global::MyNamespace.Step_0__MyNamespace_Factory(name);
+                    }
+                }
+
+                /// <summary>
+                ///     <seealso cref="MyNamespace.Bar"/>
+                ///     <seealso cref="MyNamespace.Foo"/>
+                /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public struct Step_0__MyNamespace_Factory
+                {
+                    private readonly string _name__parameter;
+                    private int _age__parameter;
+                    internal Step_0__MyNamespace_Factory(in string name)
+                    {
+                        this._name__parameter = name;
+                        this._age__parameter = 25;
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor MyNamespace.Foo.Foo(string name, int age = 25).
+                    ///
+                    ///     <seealso cref="MyNamespace.Foo"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.Foo MakeFooFoo()
+                    {
+                        return new global::MyNamespace.Foo(this._name__parameter, this._age__parameter);
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor MyNamespace.Bar.Bar(string name).
+                    ///
+                    ///     <seealso cref="MyNamespace.Bar"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.Bar MakeBarBar()
+                    {
+                        return new global::MyNamespace.Bar(this._name__parameter);
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="MyNamespace.Bar"/>
+                    ///     <seealso cref="MyNamespace.Foo"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.Step_0__MyNamespace_Factory WithAge(in int age)
+                    {
+                        this._age__parameter = age;
+                        return this;
+                    }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
+
+    [Fact]
+    internal async Task Should_not_report_optional_parameter_ambiguity_when_same_type()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory]
+                public static partial class Factory;
+
+                public partial class MyClass
+                {
+                    [FluentConstructor(typeof(Factory))]
+                    public MyClass(string name, int age = 25)
+                    {
+                        Name = name;
+                        Age = age;
+                    }
+
+                    [FluentConstructor(typeof(Factory))]
+                    public MyClass(string name)
+                    {
+                        Name = name;
+                        Age = 0;
+                    }
+
+                    public string Name { get; }
+                    public int Age { get; }
+                }
+            }
+            """;
+
+        const string expected =
+            """
+            // <auto-generated/>
+            #nullable enable
+            namespace MyNamespace
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="MyNamespace.MyClass"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::MyNamespace.Step_0__MyNamespace_Factory WithName(in string name)
+                    {
+                        return new global::MyNamespace.Step_0__MyNamespace_Factory(name);
+                    }
+                }
+
+                /// <summary>
+                ///     <seealso cref="MyNamespace.MyClass"/>
+                /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public struct Step_0__MyNamespace_Factory
+                {
+                    private readonly string _name__parameter;
+                    private int _age__parameter;
+                    internal Step_0__MyNamespace_Factory(in string name)
+                    {
+                        this._name__parameter = name;
+                        this._age__parameter = 25;
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor MyNamespace.MyClass.MyClass(string name, int age = 25).
+                    ///
+                    ///     <seealso cref="MyNamespace.MyClass"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.MyClass CreateMyClass()
+                    {
+                        return new global::MyNamespace.MyClass(this._name__parameter, this._age__parameter);
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor MyNamespace.MyClass.MyClass(string name).
+                    ///
+                    ///     <seealso cref="MyNamespace.MyClass"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.MyClass CreateMyClass()
+                    {
+                        return new global::MyNamespace.MyClass(this._name__parameter);
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="MyNamespace.MyClass"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::MyNamespace.Step_0__MyNamespace_Factory WithAge(in int age)
+                    {
+                        this._age__parameter = age;
+                        return this;
+                    }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError("CS0111")
+                        .WithSpan("Motiv.FluentFactory.Generator\\Motiv.FluentFactory.Generator.FluentFactoryGenerator\\MyNamespace.Factory.g.cs", 49, 44, 49, 57)
+                        .WithArguments("CreateMyClass", "MyNamespace.Step_0__MyNamespace_Factory"),
+                },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
 }
