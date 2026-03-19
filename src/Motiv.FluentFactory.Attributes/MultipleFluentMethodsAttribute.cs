@@ -14,9 +14,4 @@ public class MultipleFluentMethodsAttribute(Type variantsType) : Attribute
     /// The type that defines the variants for the methods.
     /// </summary>
     public Type VariantsType { get; } = variantsType;
-
-    /// <summary>
-    /// The priority of the methods. Methods with lower priority will be generated first. Default is 0.
-    /// </summary>
-    public int Priority { get; set; }
 }

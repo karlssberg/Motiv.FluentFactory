@@ -14,9 +14,4 @@ public class FluentMethodAttribute(string methodName) : Attribute
     /// The name of the method to create an instance.
     /// </summary>
     public string MethodName { get; } = methodName;
-
-    /// <summary>
-    /// The priority of the method. Methods with lower priority will be generated first. Default is 0.
-    /// </summary>
-    public int Priority { get; set; }
 }

@@ -99,31 +99,6 @@ internal static class FluentAttributeExtensions
     }
 
     /// <summary>
-    /// Gets the fluent method priority from the FluentMethodAttribute or
-    /// MultipleFluentMethodsAttribute Priority named argument.
-    /// </summary>
-    /// <param name="parameterSymbol">The parameter symbol to get the priority for.</param>
-    /// <returns>The priority value, or 0 if not specified.</returns>
-    public static int GetFluentMethodPriority(this IParameterSymbol parameterSymbol)
-    {
-        const string priorityPropertyName = "Priority";
-
-        var attribute = parameterSymbol.GetAttribute(TypeName.MultipleFluentMethodsAttribute)
-            ?? parameterSymbol.GetAttribute(TypeName.FluentMethodAttribute);
-        if (attribute == null) return 0; // Default priority for parameters without the attribute
-
-        // Look for Priority named argument
-        var priorityArg = attribute.NamedArguments
-            .FirstOrDefault(na => na.Key == priorityPropertyName);
-
-        return priorityArg.Value switch
-        {
-            { Value: int value, IsNull: false } => value,
-            _ => 0
-        };
-    }
-
-    /// <summary>
     /// Gets the location of a specific argument in an attribute's argument list.
     /// </summary>
     /// <param name="attributeData">The attribute data to inspect.</param>

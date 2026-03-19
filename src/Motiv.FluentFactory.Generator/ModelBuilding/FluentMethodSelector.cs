@@ -82,12 +82,10 @@ internal class FluentMethodSelector(
             .Select(fluentMethodGroup =>
             {
                 var orderedMethods = fluentMethodGroup
-                    .Select(m => (FluentMethod: m, Priority: m.SourceParameter?.GetFluentMethodPriority() ?? 0))
-                    .OrderByDescending(m => m.Priority)
-                    .ThenByDescending(m => m.FluentMethod is RegularMethod ? 1 : 0)
-                    .ThenBy(m => m.FluentMethod.Name);
+                    .OrderByDescending(m => m is RegularMethod ? 1 : 0)
+                    .ThenBy(m => m.Name);
 
-                var selectedMethod = orderedMethods.First().FluentMethod;
+                var selectedMethod = orderedMethods.First();
 
                 return new SelectedFluentMethod(
                     selectedMethod,
