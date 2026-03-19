@@ -19,8 +19,8 @@ public class FluentFactoryGenerator : IIncrementalGenerator
     {
         var compilationProvider = context.CompilationProvider;
 
-        // Step 1: Match FluentConstructorAttribute usages
-        var typeOrConstructorDeclarations = context.SyntaxProvider
+        // Step 1: Match FluentConstructorAttribute usages (non-generic and generic)
+        var nonGenericDeclarations = context.SyntaxProvider
             .ForAttributeWithMetadataName(TypeName.FluentConstructorAttribute,
                 (node, _) => node switch
                 {
@@ -37,6 +37,27 @@ public class FluentFactoryGenerator : IIncrementalGenerator
                     return (syntax, filePath);
                 }
             );
+
+        var genericDeclarations = context.SyntaxProvider
+            .ForAttributeWithMetadataName(TypeName.GenericFluentConstructorAttribute,
+                (node, _) => node switch
+                {
+                    TypeDeclarationSyntax { AttributeLists.Count: > 0 } => true,
+                    ConstructorDeclarationSyntax { AttributeLists.Count: > 0 } => true,
+                    _ => false
+                },
+                (ctx, _) =>
+                {
+                    var syntax = ctx.TargetNode;
+                    var filePath = syntax.SyntaxTree.FilePath;
+                    return (syntax, filePath);
+                }
+            );
+
+        var typeOrConstructorDeclarations = nonGenericDeclarations
+            .Collect()
+            .Combine(genericDeclarations.Collect())
+            .SelectMany((pair, _) => pair.Left.AddRange(pair.Right));
 
         // Step 2: Gather all discovered candidate constructors and capture metadata
         var constructorModels = typeOrConstructorDeclarations

@@ -11,6 +11,7 @@ internal class TypeName
     }
 
     public static readonly TypeName FluentConstructorAttribute = new(GeneratorAttributesNamespace + "FluentConstructorAttribute");
+    public static readonly TypeName GenericFluentConstructorAttribute = new(GeneratorAttributesNamespace + "FluentConstructorAttribute`1");
     public static readonly TypeName FluentFactoryAttribute = new(GeneratorAttributesNamespace + "FluentFactoryAttribute");
     public static readonly TypeName FluentMethodAttribute = new(GeneratorAttributesNamespace + "FluentMethodAttribute");
     public static readonly TypeName MultipleFluentMethodsAttribute = new(GeneratorAttributesNamespace + "MultipleFluentMethodsAttribute");

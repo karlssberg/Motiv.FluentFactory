@@ -8,7 +8,7 @@ namespace Motiv.FluentFactory.Attributes;
 /// <param name="rootType">The type to create instances of.</param>
 [ExcludeFromCodeCoverage]
 [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true)]
-public sealed class FluentConstructorAttribute(Type rootType) : Attribute
+public class FluentConstructorAttribute(Type rootType) : Attribute
 {
     /// <summary>
     /// The type to create instances of.
@@ -40,4 +40,21 @@ public sealed class FluentConstructorAttribute(Type rootType) : Attribute
     /// The target type must be assignable to this type (e.g., implement the interface or extend the base class).
     /// </summary>
     public Type? ReturnType { get; set; }
+}
+
+/// <summary>
+/// Generic variant of <see cref="FluentConstructorAttribute"/> for C# 11+ projects.
+/// Marks a constructor, class or struct to be used as a fluent factory for the specified root type.
+/// </summary>
+/// <typeparam name="TFluentFactory">The factory type to generate fluent methods on.</typeparam>
+[ExcludeFromCodeCoverage]
+[AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true)]
+public sealed class FluentConstructorAttribute<TFluentFactory> : FluentConstructorAttribute
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FluentConstructorAttribute{TFluentFactory}"/> class.
+    /// </summary>
+    public FluentConstructorAttribute() : base(typeof(TFluentFactory))
+    {
+    }
 }

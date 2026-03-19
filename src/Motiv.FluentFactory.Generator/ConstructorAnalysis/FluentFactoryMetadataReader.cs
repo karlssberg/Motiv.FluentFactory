@@ -22,15 +22,11 @@ internal static class FluentFactoryMetadataReader
     public static IEnumerable<FluentFactoryMetadata> GetFluentFactoryMetadata(ISymbol symbol)
     {
         return symbol.GetAttributes()
-            .Where(a => a.AttributeClass?.ToDisplayString() == TypeName.FluentConstructorAttribute)
+            .Where(IsFluentConstructorAttribute)
             .Select(attribute =>
             {
-                // ensure an attribute is present and has an argument
-                if (attribute is null || attribute.ConstructorArguments.Length == 0)
-                    return FluentFactoryMetadata.Invalid;
-
-                var typeArg = attribute.ConstructorArguments.FirstOrDefault();
-                if (typeArg.IsNull || typeArg.Value is not INamedTypeSymbol typeSymbol)
+                var typeSymbol = ExtractRootTypeSymbol(attribute);
+                if (typeSymbol is null)
                     return FluentFactoryMetadata.Invalid;
 
                 var (createMethod, createVerb, methodPrefix, returnType) = ReadNamedArguments(attribute.NamedArguments);
@@ -45,6 +41,51 @@ internal static class FluentFactoryMetadataReader
                     AttributeData = attribute,
                 };
             });
+    }
+
+    /// <summary>
+    /// Determines whether an attribute is a FluentConstructor attribute (generic or non-generic).
+    /// </summary>
+    /// <param name="attribute">The attribute data to check.</param>
+    /// <returns><c>true</c> if the attribute is a FluentConstructor attribute; otherwise, <c>false</c>.</returns>
+    private static bool IsFluentConstructorAttribute(AttributeData attribute)
+    {
+        var attributeClass = attribute.AttributeClass;
+        if (attributeClass is null)
+            return false;
+
+        if (attributeClass.ToDisplayString() == TypeName.FluentConstructorAttribute)
+            return true;
+
+        // Check for generic variant: FluentConstructorAttribute<T>
+        return attributeClass is { IsGenericType: true }
+               && attributeClass.OriginalDefinition.MetadataName == "FluentConstructorAttribute`1"
+               && attributeClass.OriginalDefinition.ContainingNamespace?.ToDisplayString() == "Motiv.FluentFactory.Attributes";
+    }
+
+    /// <summary>
+    /// Extracts the root type symbol from a FluentConstructor attribute.
+    /// For the non-generic attribute, reads from constructor arguments.
+    /// For the generic attribute, reads from the type argument.
+    /// </summary>
+    /// <param name="attribute">The attribute data to extract from.</param>
+    /// <returns>The root type symbol, or null if extraction fails.</returns>
+    private static INamedTypeSymbol? ExtractRootTypeSymbol(AttributeData attribute)
+    {
+        var attributeClass = attribute.AttributeClass;
+        if (attributeClass is null)
+            return null;
+
+        // Generic variant: extract from type argument
+        if (attributeClass is { IsGenericType: true } && attributeClass.TypeArguments.Length > 0)
+            return attributeClass.TypeArguments[0] as INamedTypeSymbol;
+
+        // Non-generic variant: extract from constructor arguments
+        if (attribute.ConstructorArguments.Length == 0)
+            return null;
+
+        var typeArg = attribute.ConstructorArguments.FirstOrDefault();
+        return typeArg is { IsNull: false, Value: INamedTypeSymbol typeSymbol } ? typeSymbol : null;
     }
 
     /// <summary>
