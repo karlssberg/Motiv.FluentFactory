@@ -14,15 +14,30 @@ namespace Motiv.FluentFactory.Generator.SyntaxGeneration.Helpers;
 internal static class TypeParameterConstraintBuilder
 {
     /// <summary>
-    /// Creates type parameter constraint clauses for the given type parameters.
-    /// Constraints are ordered: reference type (class), value type (struct),
-    /// type constraints, constructor constraint (new()).
-    /// All type constraints use globally-qualified names via <see cref="SymbolDisplayExtensions.ToGlobalDisplayString"/>.
+    /// Creates type parameter constraint clauses using effective (aliased) names.
+    /// Use this overload for generated step structs where type parameters are declared with effective names.
     /// </summary>
     /// <param name="typeParameters">The type parameters to generate constraint clauses for.</param>
     /// <returns>An immutable array of constraint clause syntax nodes for type parameters that have constraints.</returns>
     public static ImmutableArray<TypeParameterConstraintClauseSyntax> Create(
         ImmutableArray<ITypeParameterSymbol> typeParameters)
+    {
+        return Create(typeParameters, useEffectiveNames: true);
+    }
+
+    /// <summary>
+    /// Creates type parameter constraint clauses, optionally using effective (aliased) names.
+    /// </summary>
+    /// <param name="typeParameters">The type parameters to generate constraint clauses for.</param>
+    /// <param name="useEffectiveNames">
+    /// When true, uses effective names (from [As] aliases) for constraint clause names
+    /// and type references (for generated step structs). When false, uses original names (for root types
+    /// and existing partial types where declarations must match the original type parameter names).
+    /// </param>
+    /// <returns>An immutable array of constraint clause syntax nodes for type parameters that have constraints.</returns>
+    public static ImmutableArray<TypeParameterConstraintClauseSyntax> Create(
+        ImmutableArray<ITypeParameterSymbol> typeParameters,
+        bool useEffectiveNames)
     {
         if (typeParameters.IsDefaultOrEmpty)
             return [];
@@ -32,13 +47,15 @@ internal static class TypeParameterConstraintBuilder
                          tp.HasReferenceTypeConstraint ||
                          tp.HasValueTypeConstraint ||
                          tp.ConstraintTypes.Length > 0)
-            .Select(BuildConstraintClause)
+            .Select(tp => BuildConstraintClause(tp, useEffectiveNames))
             .ToImmutableArray();
 
         return constraintClauses;
     }
 
-    private static TypeParameterConstraintClauseSyntax BuildConstraintClause(ITypeParameterSymbol typeParameter)
+    private static TypeParameterConstraintClauseSyntax BuildConstraintClause(
+        ITypeParameterSymbol typeParameter,
+        bool useEffectiveNames)
     {
         var constraints = new List<TypeParameterConstraintSyntax>();
 
@@ -53,14 +70,21 @@ internal static class TypeParameterConstraintBuilder
         // Add type constraints (always using global:: qualification)
         foreach (var constraintType in typeParameter.ConstraintTypes)
         {
-            constraints.Add(TypeConstraint(ParseTypeName(constraintType.ToGlobalDisplayString())));
+            var displayString = useEffectiveNames
+                ? constraintType.ToGlobalDisplayString()
+                : constraintType.ToGlobalOriginalDisplayString();
+            constraints.Add(TypeConstraint(ParseTypeName(displayString)));
         }
 
         // Add constructor constraint (new())
         if (typeParameter.HasConstructorConstraint)
             constraints.Add(ConstructorConstraint());
 
-        return TypeParameterConstraintClause(typeParameter.Name)
+        var name = useEffectiveNames
+            ? typeParameter.GetEffectiveName()
+            : typeParameter.Name;
+
+        return TypeParameterConstraintClause(name)
             .WithConstraints(SeparatedList(constraints));
     }
 }

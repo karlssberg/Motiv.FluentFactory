@@ -34,11 +34,11 @@ internal static class TypeParameterFilterExtensions
        this IEnumerable<ITypeParameterSymbol> collection,
        IEnumerable<ITypeParameterSymbol> exclusions)
     {
-        var exclusionSet = new HashSet<string>(exclusions.Select(parameter => parameter.ToDisplayString()));
+        var exclusionSet = new HashSet<string>(exclusions.Select(parameter => parameter.GetEffectiveName()));
 
         foreach (var item in collection)
         {
-           if (!exclusionSet.Contains(item.ToDisplayString()))
+           if (!exclusionSet.Contains(item.GetEffectiveName()))
              yield return item;
         }
     }

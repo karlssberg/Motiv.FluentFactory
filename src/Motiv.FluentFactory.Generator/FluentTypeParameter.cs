@@ -4,9 +4,14 @@ namespace Motiv.FluentFactory.Generator;
 
 internal class FluentTypeParameter(ITypeParameterSymbol typeParameterSymbol) : IEquatable<FluentTypeParameter>
 {
-    private readonly string _key = typeParameterSymbol.ToDisplayString();
+    private readonly string _key = typeParameterSymbol.GetEffectiveName();
 
     public ITypeParameterSymbol TypeParameterSymbol { get; } = typeParameterSymbol;
+
+    /// <summary>
+    /// The effective name of this type parameter, using the [As] alias if present.
+    /// </summary>
+    public string Name => _key;
 
     public bool Equals(FluentTypeParameter? other)
     {

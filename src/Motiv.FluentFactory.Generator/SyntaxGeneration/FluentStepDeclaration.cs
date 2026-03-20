@@ -95,36 +95,30 @@ internal static class FluentStepDeclaration
 
     private static IReadOnlyList<ITypeParameterSymbol> GetConstraintTypeParameters(RegularFluentStep step)
     {
-        // For non-generic root types, extract type parameters from candidate constructors
-        if (!step.RootType.IsGenericType)
+        var targetTypeParameters = new List<ITypeParameterSymbol>();
+
+        // Get type parameters from all candidate constructors
+        foreach (var constructor in step.CandidateConstructors)
         {
-            var targetTypeParameters = new List<ITypeParameterSymbol>();
-
-            // Get type parameters from all candidate constructors
-            foreach (var constructor in step.CandidateConstructors)
+            var targetType = constructor.ContainingType;
+            if (targetType.IsGenericType)
             {
-                var targetType = constructor.ContainingType;
-                if (targetType.IsGenericType)
-                {
-                    targetTypeParameters.AddRange(targetType.OriginalDefinition.TypeParameters);
-                }
+                targetTypeParameters.AddRange(targetType.OriginalDefinition.TypeParameters);
             }
-
-            // Get the generic type arguments that are actually used in this step
-            var usedGenericArguments = step.GenericConstructorParameters
-                .SelectMany(p => p.Type.GetGenericTypeArguments())
-                .DistinctBy(symbol => symbol.Name)
-                .ToArray();
-
-            // Only return type parameters that are actually used in this step
-            return targetTypeParameters
-                .Where(tp => usedGenericArguments.Any(arg => arg.Name == tp.Name))
-                .DistinctBy(tp => tp.Name)
-                .ToArray();
         }
 
-        // For generic root types, use the root type's type parameters
-        return step.RootType.TypeParameters;
+        // Get the generic type arguments that are actually used in this step
+        var usedGenericArguments = step.GenericConstructorParameters
+            .SelectMany(p => p.Type.GetGenericTypeArguments())
+            .DistinctBy(symbol => symbol.GetEffectiveName())
+            .ToArray();
+
+        // Only return type parameters that are actually used in this step,
+        // matching by effective name to correctly handle [As] aliases
+        return targetTypeParameters
+            .Where(tp => usedGenericArguments.Any(arg => arg.GetEffectiveName() == tp.GetEffectiveName()))
+            .DistinctBy(tp => tp.GetEffectiveName())
+            .ToArray();
     }
 
     private static SyntaxList<TypeParameterConstraintClauseSyntax> CreateTypeParameterConstraints(IReadOnlyList<ITypeParameterSymbol> typeParameters)

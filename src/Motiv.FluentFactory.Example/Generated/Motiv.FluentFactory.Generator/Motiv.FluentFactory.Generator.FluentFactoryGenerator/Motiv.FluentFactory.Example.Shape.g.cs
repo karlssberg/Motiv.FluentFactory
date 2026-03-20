@@ -9,7 +9,7 @@ namespace Motiv.FluentFactory.Example
         ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
-        ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
+        ///     <seealso cref="Motiv.FluentFactory.Example.Square{TUnit}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static global::Motiv.FluentFactory.Example.Step_0__Motiv_FluentFactory_Example_Shape<T> Width<T>(in T width)
@@ -33,7 +33,7 @@ namespace Motiv.FluentFactory.Example
     ///     <seealso cref="Motiv.FluentFactory.Example.Cuboid{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Diamond{T}"/>
     ///     <seealso cref="Motiv.FluentFactory.Example.Rectangle{T}"/>
-    ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
+    ///     <seealso cref="Motiv.FluentFactory.Example.Square{TUnit}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
     internal readonly struct Step_0__Motiv_FluentFactory_Example_Shape<T> where T : global::System.Numerics.INumber<T>
@@ -56,9 +56,9 @@ namespace Motiv.FluentFactory.Example
         }
 
         /// <summary>
-        /// Creates a new instance using constructor Motiv.FluentFactory.Example.Square&lt;T&gt;.Square(T Width).
+        /// Creates a new instance using constructor Motiv.FluentFactory.Example.Square&lt;TUnit&gt;.Square(TUnit Width).
         ///
-        ///     <seealso cref="Motiv.FluentFactory.Example.Square{T}"/>
+        ///     <seealso cref="Motiv.FluentFactory.Example.Square{TUnit}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Motiv.FluentFactory.Example.Square<T> CreateSquare()

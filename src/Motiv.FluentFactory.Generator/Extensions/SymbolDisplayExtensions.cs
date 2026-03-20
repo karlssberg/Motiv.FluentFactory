@@ -43,13 +43,85 @@ internal static class SymbolDisplayExtensions
         return typeSymbol switch
         {
             ITypeParameterSymbol { NullableAnnotation: NullableAnnotation.Annotated } tp =>
-                $"{tp.Name}?",
-            
+                $"{tp.GetEffectiveName()}?",
+
             ITypeParameterSymbol tp =>
-                tp.Name,
-            
+                tp.GetEffectiveName(),
+
+            INamedTypeSymbol namedType when HasAliasedTypeParameters(namedType) =>
+                RebuildGlobalGenericDisplayString(namedType, arg => arg.ToGlobalDisplayString()),
+
             _ => typeSymbol.ToDisplayString(GlobalQualifiedFormat)
         };
+    }
+
+    /// <summary>
+    /// Returns the global::-qualified display string for a type symbol,
+    /// remapping type parameter names using the provided mapping from effective names to local names.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol to format.</param>
+    /// <param name="effectiveToLocalNameMap">A mapping from effective type parameter names to local scope names.</param>
+    /// <returns>The global::-qualified display string with remapped type parameter names.</returns>
+    public static string ToGlobalDisplayString(
+        this ITypeSymbol typeSymbol,
+        IDictionary<string, string> effectiveToLocalNameMap)
+    {
+        if (effectiveToLocalNameMap.Count == 0)
+            return typeSymbol.ToGlobalDisplayString();
+
+        return typeSymbol switch
+        {
+            ITypeParameterSymbol { NullableAnnotation: NullableAnnotation.Annotated } tp =>
+                $"{ResolveTypeParameterName(tp, effectiveToLocalNameMap)}?",
+
+            ITypeParameterSymbol tp =>
+                ResolveTypeParameterName(tp, effectiveToLocalNameMap),
+
+            INamedTypeSymbol { IsGenericType: true } namedType =>
+                RebuildGlobalGenericDisplayString(namedType, arg => arg.ToGlobalDisplayString(effectiveToLocalNameMap)),
+
+            _ => typeSymbol.ToDisplayString(GlobalQualifiedFormat)
+        };
+    }
+
+    private static bool HasAliasedTypeParameters(INamedTypeSymbol namedType)
+    {
+        if (!namedType.IsGenericType) return false;
+        return namedType.TypeArguments.Any(arg => arg switch
+        {
+            ITypeParameterSymbol tp => tp.GetEffectiveName() != tp.Name,
+            INamedTypeSymbol nested => HasAliasedTypeParameters(nested),
+            _ => false
+        });
+    }
+
+    private static string ResolveTypeParameterName(
+        ITypeParameterSymbol tp,
+        IDictionary<string, string> effectiveToLocalNameMap)
+    {
+        var effectiveName = tp.GetEffectiveName();
+        return effectiveToLocalNameMap.TryGetValue(effectiveName, out var localName)
+            ? localName
+            : effectiveName;
+    }
+
+    /// <summary>
+    /// Strips the generic type arguments from a global::-qualified display string
+    /// and rebuilds them using the provided resolver for each type argument.
+    /// </summary>
+    private static string RebuildGlobalGenericDisplayString(
+        INamedTypeSymbol namedType,
+        Func<ITypeSymbol, string> resolveArgument)
+    {
+        var baseDisplay = namedType.OriginalDefinition.ToDisplayString(GlobalQualifiedFormat);
+
+        var angleBracketIndex = baseDisplay.IndexOf('<');
+        if (angleBracketIndex >= 0)
+            baseDisplay = baseDisplay.Substring(0, angleBracketIndex);
+
+        var resolvedArgs = namedType.TypeArguments.Select(resolveArgument);
+
+        return $"{baseDisplay}<{string.Join(", ", resolvedArgs)}>";
     }
 
     /// <summary>
@@ -62,6 +134,15 @@ internal static class SymbolDisplayExtensions
     {
         return symbol.ToDisplayString(FullFormat);
     }
+
+    /// <summary>
+    /// Returns the global::-qualified display string using original type parameter names,
+    /// without applying [As] aliases.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol to format.</param>
+    /// <returns>The global::-qualified display string with original type parameter names.</returns>
+    public static string ToGlobalOriginalDisplayString(this ITypeSymbol typeSymbol) =>
+        typeSymbol.ToDisplayString(GlobalQualifiedFormat);
 
     /// <summary>
     /// Returns the unqualified (name-only) display string for a type symbol.

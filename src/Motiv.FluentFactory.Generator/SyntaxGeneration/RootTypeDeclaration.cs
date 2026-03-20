@@ -78,7 +78,7 @@ internal static class RootTypeDeclaration
         if (!rootType.IsGenericType || rootType.TypeParameters.Length == 0)
             return List<TypeParameterConstraintClauseSyntax>();
 
-        var constraintClauses = TypeParameterConstraintBuilder.Create(rootType.TypeParameters);
+        var constraintClauses = TypeParameterConstraintBuilder.Create(rootType.TypeParameters, useEffectiveNames: false);
 
         return List(constraintClauses);
     }
@@ -98,6 +98,9 @@ internal static class RootTypeDeclaration
 
     private static IEnumerable<MethodDeclarationSyntax> GetRootMethodDeclarations(FluentFactoryCompilationUnit file)
     {
+        // Build effective→local name mapping for root types with [As] aliases
+        var effectiveToLocalMap = BuildEffectiveToLocalMapping(file.RootType);
+
         return file.FluentMethods
             .Select<IFluentMethod, MethodDeclarationSyntax>(method => method switch
             {
@@ -108,9 +111,15 @@ internal static class RootTypeDeclaration
             })
             .Select(method =>
             {
-                return method
+                var result = method
                     .WithModifiers(
                         TokenList(GetSyntaxTokens()));
+
+                // Remap effective type parameter names to local names for root types with [As] aliases
+                if (effectiveToLocalMap.Count > 0)
+                    result = (MethodDeclarationSyntax)new TypeParameterNameRewriter(effectiveToLocalMap).Visit(result);
+
+                return result;
 
                 IEnumerable<SyntaxToken> GetSyntaxTokens()
                 {
@@ -118,5 +127,36 @@ internal static class RootTypeDeclaration
                     yield return Token(SyntaxKind.StaticKeyword);
                 }
             });
+    }
+
+    private static Dictionary<string, string> BuildEffectiveToLocalMapping(INamedTypeSymbol rootType)
+    {
+        if (!rootType.IsGenericType)
+            return new Dictionary<string, string>();
+
+        var mapping = new Dictionary<string, string>();
+        foreach (var tp in rootType.TypeParameters)
+        {
+            var effectiveName = tp.GetEffectiveName();
+            if (effectiveName != tp.Name)
+                mapping[effectiveName] = tp.Name;
+        }
+
+        return mapping;
+    }
+
+    /// <summary>
+    /// Rewrites identifier names in syntax trees to replace effective type parameter names
+    /// with their local names, for use in scopes where the original type parameter names are in effect.
+    /// </summary>
+    private sealed class TypeParameterNameRewriter(Dictionary<string, string> effectiveToLocalMap) : CSharpSyntaxRewriter
+    {
+        public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
+        {
+            if (effectiveToLocalMap.TryGetValue(node.Identifier.ValueText, out var localName))
+                return node.WithIdentifier(Identifier(localName));
+
+            return base.VisitIdentifierName(node);
+        }
     }
 }

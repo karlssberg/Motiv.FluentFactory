@@ -12,7 +12,7 @@ internal class FluentTypeSymbolEqualityComparer : IEqualityComparer<ITypeSymbol>
             (null, null) => true,
             (null, _) => false,
             (_, null) => false,
-            _ when x.IsOpenGenericType() && y.IsOpenGenericType() =>  x.Name == y.Name,
+            _ when x.IsOpenGenericType() && y.IsOpenGenericType() => x.GetEffectiveDisplayString() == y.GetEffectiveDisplayString(),
             _ => SymbolEqualityComparer.Default.Equals(x, y)
         };
     }
@@ -20,7 +20,7 @@ internal class FluentTypeSymbolEqualityComparer : IEqualityComparer<ITypeSymbol>
     public int GetHashCode(ITypeSymbol obj)
     {
         return obj.IsOpenGenericType()
-            ? obj.Name.GetHashCode()
+            ? obj.GetEffectiveDisplayString().GetHashCode()
             : SymbolEqualityComparer.Default.GetHashCode(obj);
     }
 }

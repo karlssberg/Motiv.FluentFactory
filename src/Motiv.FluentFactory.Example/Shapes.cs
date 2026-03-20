@@ -14,7 +14,7 @@ internal partial class Shape;
 [FluentConstructor(typeof(Square<>))]
 [FluentConstructor(typeof(Shape))]
 [FluentConstructor(typeof(Shape<>))]
-internal partial record Square<T>(T Width) where T : INumber<T>;
+internal partial record Square<[As("T")] TUnit>(TUnit Width) where TUnit : INumber<TUnit>;
 
 [FluentFactory(CreateMethod = CreateMethod.Fixed)]
 [FluentConstructor(typeof(Rectangle<>))]

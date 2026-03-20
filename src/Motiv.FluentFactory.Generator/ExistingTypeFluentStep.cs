@@ -28,7 +28,7 @@ internal class ExistingTypeFluentStep(
 
     public ImmutableArray<IParameterSymbol> GenericConstructorParameters =>
     [
-        ..KnownConstructorParameters
+        ..constructorMetadata.Constructor.Parameters
             .Where(parameter => parameter.Type.IsOpenGenericType())
     ];
 

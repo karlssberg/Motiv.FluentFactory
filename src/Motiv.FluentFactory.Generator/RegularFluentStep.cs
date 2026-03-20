@@ -62,7 +62,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
             : $"global::{Namespace.ToDisplayString()}.";
         var distinctGenericParameters = GenericConstructorParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
-            .DistinctBy(symbol => symbol.Name)
+            .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();
 
         return distinctGenericParameters.Length > 0
@@ -70,7 +70,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
                 .WithTypeArgumentList(
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         distinctGenericParameters
-                            .Select(arg => IdentifierName(arg.Name)))))
+                            .Select(arg => IdentifierName(arg.GetEffectiveName())))))
                 .NormalizeWhitespace()}"
             : $"{globalPrefix}{Name}";
     }
@@ -100,7 +100,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     {
         var distinctGenericParameters = GenericConstructorParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
-            .DistinctBy(symbol => symbol.Name)
+            .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();
 
         return distinctGenericParameters.Length > 0
@@ -108,7 +108,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
                 .WithTypeArgumentList(
                     TypeArgumentList(SeparatedList<TypeSyntax>(
                         distinctGenericParameters
-                            .Select(arg => IdentifierName(arg.Name)))))
+                            .Select(arg => IdentifierName(arg.GetEffectiveName())))))
                 .NormalizeWhitespace()
                 .ToString()
             : Name;

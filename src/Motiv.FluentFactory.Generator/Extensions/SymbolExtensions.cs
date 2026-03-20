@@ -143,6 +143,53 @@ internal static class SymbolExtensions
     }
 
     /// <summary>
+    /// Gets the effective name for a type parameter, using the [As] alias if present.
+    /// </summary>
+    /// <param name="typeParameter">The type parameter symbol to check.</param>
+    /// <returns>The alias name if [As] is present, otherwise the original name.</returns>
+    public static string GetEffectiveName(this ITypeParameterSymbol typeParameter)
+    {
+        var asAttribute = typeParameter.GetAttributes()
+            .FirstOrDefault(a =>
+                a.AttributeClass?.ToDisplayString() == TypeName.AsAttribute);
+
+        if (asAttribute is { ConstructorArguments: { Length: 1 } args } &&
+            args[0].Value is string alias)
+            return alias;
+
+        return typeParameter.Name;
+    }
+
+    /// <summary>
+    /// Gets the effective display string for a type symbol, substituting [As] aliases for type parameters.
+    /// </summary>
+    /// <param name="type">The type symbol.</param>
+    /// <returns>The display string with aliased type parameter names substituted.</returns>
+    public static string GetEffectiveDisplayString(this ITypeSymbol type)
+    {
+        return type switch
+        {
+            ITypeParameterSymbol tp => tp.GetEffectiveName(),
+            INamedTypeSymbol { IsGenericType: true } namedType => BuildAliasedDisplayString(namedType),
+            _ => type.ToDisplayString()
+        };
+    }
+
+    private static string BuildAliasedDisplayString(INamedTypeSymbol namedType)
+    {
+        var originalDisplay = namedType.OriginalDefinition.ToDisplayString();
+        var aliasedArgs = namedType.TypeArguments
+            .Select(arg => arg.GetEffectiveDisplayString());
+
+        // Replace the generic suffix with aliased type arguments
+        var angleBracketIndex = originalDisplay.IndexOf('<');
+        var baseName = angleBracketIndex >= 0
+            ? originalDisplay.Substring(0, angleBracketIndex)
+            : originalDisplay;
+        return $"{baseName}<{string.Join(", ", aliasedArgs)}>";
+    }
+
+    /// <summary>
     /// Replaces type parameters in a generic named type symbol using the provided replacements map.
     /// Recursively processes nested generic type arguments.
     /// </summary>

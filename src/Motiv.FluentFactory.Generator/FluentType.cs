@@ -4,7 +4,7 @@ namespace Motiv.FluentFactory.Generator;
 
 internal class FluentType(ITypeSymbol typeSymbol) : IEquatable<FluentType>
 {
-    private readonly string _key = typeSymbol.ToDisplayString();
+    private readonly string _key = typeSymbol.GetEffectiveDisplayString();
 
     public bool Equals(FluentType? other)
     {

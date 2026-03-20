@@ -3,10 +3,10 @@
 namespace Motiv.FluentFactory.Example
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal static partial class Line
+    internal partial class Line
     {
         /// <summary>
-        ///     <seealso cref="Motiv.FluentFactory.Example.Line1D{T}"/>
+        ///     <seealso cref="Motiv.FluentFactory.Example.Line1D{TNum}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
@@ -19,16 +19,16 @@ namespace Motiv.FluentFactory.Example
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
-    internal partial record Line1D<T>
+    internal partial record Line1D<TNum>
     {
         /// <summary>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line2D{T}"/>
         ///     <seealso cref="Motiv.FluentFactory.Example.Line3D{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Motiv.FluentFactory.Example.Line2D<T> Y(in T y)
+        public global::Motiv.FluentFactory.Example.Line2D<TNum> Y(in TNum y)
         {
-            return new global::Motiv.FluentFactory.Example.Line2D<T>(this.X, y);
+            return new global::Motiv.FluentFactory.Example.Line2D<TNum>(this.X, y);
         }
     }
 

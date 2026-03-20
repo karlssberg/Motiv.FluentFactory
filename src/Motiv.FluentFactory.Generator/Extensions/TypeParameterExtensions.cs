@@ -40,7 +40,7 @@ internal static class TypeParameterExtensions
     {
         return type
             .SelectMany(symbol => symbol.GetGenericTypeParameters())
-            .DistinctBy(symbol => symbol.ToDisplayString());
+            .DistinctBy(symbol => symbol.GetEffectiveName());
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ internal static class TypeParameterExtensions
     /// <returns>A <see cref="TypeParameterSyntax"/> node.</returns>
     public static TypeParameterSyntax ToTypeParameterSyntax(this ITypeParameterSymbol typeParameter)
     {
-        var typeParameterSyntax = SyntaxFactory.TypeParameter(SyntaxFactory.Identifier(typeParameter.Name));
+        var typeParameterSyntax = SyntaxFactory.TypeParameter(SyntaxFactory.Identifier(typeParameter.GetEffectiveName()));
 
         // Add constraints if they exist
         var constraints = new List<TypeParameterConstraintSyntax>();
