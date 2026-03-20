@@ -37,6 +37,7 @@ internal static class ExistingPartialTypeMethodDeclaration
                 ExistingTypeFluentStep existingReturn =>
                     existingReturn.ConstructorContext.Constructor.ContainingType
                         .ToGlobalDisplayString(typeParamMap),
+                RegularFluentStep regularReturn => regularReturn.IdentifierDisplayString(typeParamMap),
                 _ => method.Return.IdentifierDisplayString()
             };
 

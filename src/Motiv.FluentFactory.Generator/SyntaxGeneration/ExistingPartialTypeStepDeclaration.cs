@@ -16,12 +16,30 @@ internal static class ExistingPartialTypeStepDeclaration
         var parameterFieldDeclaration = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
 
         var identifier = IdentifierName(step.Name).Identifier;
-        return CreateTypeDeclarationSyntax(step, identifier)
-            .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
+        var typeDeclaration = CreateTypeDeclarationSyntax(step, identifier)
             .WithMembers(List<MemberDeclarationSyntax>([
                 ..parameterFieldDeclaration,
                 ..methodDeclarationSyntaxes,
             ]));
+
+        // Only add [GeneratedCode] if the type doesn't already have its own factory file
+        // (which would emit [GeneratedCode] on the root type declaration).
+        if (!HasOwnFactoryDeclaration(step))
+            typeDeclaration = typeDeclaration.WithAttributeLists(
+                SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()));
+
+        return typeDeclaration;
+    }
+
+    /// <summary>
+    /// Checks whether the existing type has a [FluentFactory] attribute, indicating it has
+    /// its own generated file that already emits [GeneratedCode] on its partial declaration.
+    /// </summary>
+    private static bool HasOwnFactoryDeclaration(ExistingTypeFluentStep step)
+    {
+        return step.ConstructorContext.Constructor.ContainingType
+            .GetAttributes(TypeName.FluentFactoryAttribute)
+            .Any();
     }
 
     private static TypeDeclarationSyntax CreateTypeDeclarationSyntax(IFluentStep step, SyntaxToken identifier)

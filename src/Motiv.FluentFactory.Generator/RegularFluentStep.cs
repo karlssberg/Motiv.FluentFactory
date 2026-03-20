@@ -57,40 +57,37 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public string IdentifierDisplayString()
     {
-        var globalPrefix = Namespace.IsGlobalNamespace
-            ? "global::"
-            : $"global::{Namespace.ToDisplayString()}.";
-        var distinctGenericParameters = GenericConstructorParameters
-            .SelectMany(t => t.Type.GetGenericTypeArguments())
-            .DistinctBy(symbol => symbol.GetEffectiveName())
-            .ToArray();
+        return BuildGlobalIdentifier(
+            GetDistinctEffectiveTypeArguments(),
+            arg => IdentifierName(arg.GetEffectiveName()));
+    }
 
-        return distinctGenericParameters.Length > 0
-            ? $"{globalPrefix}{GenericName(Identifier(Name))
-                .WithTypeArgumentList(
-                    TypeArgumentList(SeparatedList<TypeSyntax>(
-                        distinctGenericParameters
-                            .Select(arg => IdentifierName(arg.GetEffectiveName())))))
-                .NormalizeWhitespace()}"
-            : $"{globalPrefix}{Name}";
+    /// <summary>
+    /// Returns the display string with type parameter names remapped using effective-to-local name mapping.
+    /// Used when generating methods on existing partial types where effective names must be
+    /// translated to the partial type's own type parameter names.
+    /// </summary>
+    public string IdentifierDisplayString(IDictionary<string, string> effectiveToLocalNameMap)
+    {
+        return BuildGlobalIdentifier(
+            GetDistinctEffectiveTypeArguments(),
+            arg =>
+            {
+                var effectiveName = arg.GetEffectiveName();
+                return effectiveToLocalNameMap.TryGetValue(effectiveName, out var localName)
+                    ? IdentifierName(localName)
+                    : IdentifierName(effectiveName);
+            });
     }
 
     public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
     {
-        var globalPrefix = Namespace.IsGlobalNamespace
-            ? "global::"
-            : $"global::{Namespace.ToDisplayString()}.";
         var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap)
             .ToArray();
 
-        return distinctGenericParameters.Length > 0
-            ? $"{globalPrefix}{GenericName(Identifier(Name))
-                .WithTypeArgumentList(
-                    TypeArgumentList(SeparatedList<TypeSyntax>(
-                        distinctGenericParameters
-                            .Select(arg => ParseTypeName(arg.ToGlobalDisplayString())))))
-                .NormalizeWhitespace()}"
-            : $"{globalPrefix}{Name}";
+        return BuildGlobalIdentifier(
+            distinctGenericParameters,
+            arg => ParseTypeName(arg.ToGlobalDisplayString()));
     }
 
     /// <summary>
@@ -115,6 +112,29 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     }
 
     public INamespaceSymbol Namespace => RootType.ContainingNamespace;
+
+    private ITypeParameterSymbol[] GetDistinctEffectiveTypeArguments() =>
+        GenericConstructorParameters
+            .SelectMany(t => t.Type.GetGenericTypeArguments())
+            .DistinctBy(symbol => symbol.GetEffectiveName())
+            .ToArray();
+
+    private string BuildGlobalIdentifier<T>(
+        T[] typeArguments,
+        Func<T, TypeSyntax> argumentSelector)
+    {
+        var globalPrefix = Namespace.IsGlobalNamespace
+            ? "global::"
+            : $"global::{Namespace.ToDisplayString()}.";
+
+        return typeArguments.Length > 0
+            ? $"{globalPrefix}{GenericName(Identifier(Name))
+                .WithTypeArgumentList(
+                    TypeArgumentList(SeparatedList(
+                        typeArguments.Select(argumentSelector))))
+                .NormalizeWhitespace()}"
+            : $"{globalPrefix}{Name}";
+    }
 
     public int Index { get; set; }
 
