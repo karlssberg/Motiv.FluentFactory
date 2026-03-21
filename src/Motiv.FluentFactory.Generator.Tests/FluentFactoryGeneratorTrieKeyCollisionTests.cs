@@ -1,3 +1,5 @@
+using Microsoft.CodeAnalysis.Testing;
+using static Motiv.FluentFactory.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
     Motiv.FluentFactory.Generator.Tests.CSharpSourceGeneratorVerifier<Motiv.FluentFactory.Generator.FluentFactoryGenerator>;
 
@@ -122,6 +124,243 @@ public class FluentFactoryGeneratorTrieKeyCollisionTests
                     public global::Test.TargetB WithCount(in int count)
                     {
                         return new global::Test.TargetB(this._label__parameter, count);
+                    }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
+
+    /// <summary>
+    /// Tests that two constructors targeting the same factory with the same generic parameter name
+    /// and same parameter name but different where-clause constraints (struct vs class) emit
+    /// MFFG0023 diagnostic because C# cannot overload on generic constraints alone.
+    /// </summary>
+    [Fact]
+    internal async Task Given_two_constructors_with_same_generic_param_but_different_constraints_Should_emit_conflicting_constraints_diagnostic()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public class StructContainer<T> where T : struct
+            {
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                public StructContainer(T value)
+                {
+                    Value = value;
+                }
+
+                public T Value { get; }
+            }
+
+            public class ClassContainer<T> where T : class
+            {
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                public ClassContainer(T value)
+                {
+                    Value = value;
+                }
+
+                public T Value { get; }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(AmbiguousFluentMethodChain.Id)
+                        .WithSpan(SourceFile, 11, 30, 11, 35)
+                        .WithArguments("value", "Test.StructContainer<T>.StructContainer(T)", "WithValue",
+                            "Test.ClassContainer<T>, Test.StructContainer<T>"),
+                    DiagnosticResult.CompilerError(ConflictingTypeConstraints.Id)
+                        .WithSpan(SourceFile, 11, 30, 11, 35)
+                        .WithArguments("value", "Test.StructContainer<T>.StructContainer(T)", "WithValue",
+                            "Test.ClassContainer<T>, Test.StructContainer<T>"),
+                    DiagnosticResult.CompilerError(AmbiguousFluentMethodChain.Id)
+                        .WithSpan(SourceFile, 22, 29, 22, 34)
+                        .WithArguments("value", "Test.ClassContainer<T>.ClassContainer(T)", "WithValue",
+                            "Test.ClassContainer<T>, Test.StructContainer<T>"),
+                    DiagnosticResult.CompilerError(ConflictingTypeConstraints.Id)
+                        .WithSpan(SourceFile, 22, 29, 22, 34)
+                        .WithArguments("value", "Test.ClassContainer<T>.ClassContainer(T)", "WithValue",
+                            "Test.ClassContainer<T>, Test.StructContainer<T>"),
+                }
+            }
+        }.RunAsync();
+    }
+
+    /// <summary>
+    /// Tests that two constructors targeting the same factory with the same effective type parameter
+    /// name but different interface constraints emit MFFG0023 diagnostic.
+    /// </summary>
+    [Fact]
+    internal async Task Given_two_constructors_with_different_interface_constraints_Should_emit_conflicting_constraints_diagnostic()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public interface IEngineA;
+            public interface IEngineB;
+
+            public class CarA<T> where T : IEngineA
+            {
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                public CarA(T engine, int age)
+                {
+                    Engine = engine;
+                    Age = age;
+                }
+
+                public T Engine { get; }
+                public int Age { get; }
+            }
+
+            public class CarB<T> where T : IEngineB
+            {
+                [FluentConstructor(typeof(Factory))]
+                public CarB(T engine)
+                {
+                    Engine = engine;
+                }
+
+                public T Engine { get; }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(ConflictingTypeConstraints.Id)
+                        .WithSpan(SourceFile, 14, 19, 14, 25)
+                        .WithArguments("engine", "Test.CarA<T>.CarA(T, int)", "WithEngine",
+                            "Test.CarA<T>, Test.CarB<T>"),
+                    DiagnosticResult.CompilerError(ConflictingTypeConstraints.Id)
+                        .WithSpan(SourceFile, 27, 19, 27, 25)
+                        .WithArguments("engine", "Test.CarB<T>.CarB(T)", "WithEngine",
+                            "Test.CarA<T>, Test.CarB<T>"),
+                }
+            }
+        }.RunAsync();
+    }
+
+    /// <summary>
+    /// Tests that two constructors with the same type parameter constraint (but originally
+    /// different type parameter names resolved via [As] alias) are correctly merged by the Trie.
+    /// This validates that the constraint suffix uses alias-resolved names for constraint type
+    /// arguments, so IConstraint&lt;TNum&gt; (where TNum has [As("T")]) matches IConstraint&lt;T&gt;.
+    /// </summary>
+    [Fact]
+    internal async Task Given_two_constructors_with_aliased_type_params_and_same_constraints_Should_merge_correctly()
+    {
+        const string code =
+            """
+            using Motiv.FluentFactory.Generator;
+
+            namespace Test;
+
+            public interface IConstraint<T>;
+
+            [FluentFactory(CreateMethod = CreateMethod.None)]
+            public static partial class Factory;
+
+            public class TargetA<[As("T")]TNum> where TNum : IConstraint<TNum>
+            {
+                [FluentConstructor(typeof(Factory))]
+                public TargetA(TNum value, int extra) { Value = value; Extra = extra; }
+                public TNum Value { get; }
+                public int Extra { get; }
+            }
+
+            public class TargetB<T> where T : IConstraint<T>
+            {
+                [FluentConstructor(typeof(Factory))]
+                public TargetB(T value, bool flag) { Value = value; Flag = flag; }
+                public T Value { get; }
+                public bool Flag { get; }
+            }
+            """;
+
+        const string expected =
+            """
+            // <auto-generated/>
+            #nullable enable
+            namespace Test
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA{TNum}"/>
+                    ///     <seealso cref="Test.TargetB{T}"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Step_0__Test_Factory<T> WithValue<T>(in T value)
+                        where T : global::Test.IConstraint<T>
+                    {
+                        return new global::Test.Step_0__Test_Factory<T>(value);
+                    }
+                }
+
+                /// <summary>
+                ///     <seealso cref="Test.TargetA{TNum}"/>
+                ///     <seealso cref="Test.TargetB{T}"/>
+                /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Motiv.FluentFactory", "1.0.0.0")]
+                public readonly struct Step_0__Test_Factory<T> where T : global::Test.IConstraint<T>
+                {
+                    private readonly T _value__parameter;
+                    internal Step_0__Test_Factory(in T value)
+                    {
+                        this._value__parameter = value;
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetA{TNum}"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetA<T> WithExtra(in int extra)
+                    {
+                        return new global::Test.TargetA<T>(this._value__parameter, extra);
+                    }
+
+                    /// <summary>
+                    ///     <seealso cref="Test.TargetB{T}"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.TargetB<T> WithFlag(in bool flag)
+                    {
+                        return new global::Test.TargetB<T>(this._value__parameter, flag);
                     }
                 }
             }

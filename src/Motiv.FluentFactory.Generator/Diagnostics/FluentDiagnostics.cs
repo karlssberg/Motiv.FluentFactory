@@ -258,4 +258,16 @@ public static class FluentDiagnostics
         messageFormat: "ReturnType '{0}' is the same as the concrete target type and has no effect",
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for conflicting generic type constraints producing duplicate method signatures.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ConflictingTypeConstraints = new(
+        id: "MFFG0023",
+        title: "Conflicting type constraints produce duplicate method signatures",
+        messageFormat:
+        "Parameter '{0}' in constructor '{1}' produces fluent method '{2}' that conflicts with another constructor due to differing generic constraints across types {3}",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

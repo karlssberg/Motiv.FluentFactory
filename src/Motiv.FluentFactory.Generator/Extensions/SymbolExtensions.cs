@@ -169,19 +169,60 @@ internal static class SymbolExtensions
     {
         return type switch
         {
-            ITypeParameterSymbol tp => tp.GetEffectiveName(),
-            INamedTypeSymbol { IsGenericType: true } namedType => BuildAliasedDisplayString(namedType),
+            ITypeParameterSymbol tp => $"{tp.GetEffectiveName()}{BuildConstraintSuffix(tp)}",
+            INamedTypeSymbol { IsGenericType: true } namedType =>
+                BuildGenericDisplayString(namedType, arg => arg.GetEffectiveDisplayString()),
             _ => type.ToDisplayString()
         };
     }
 
-    private static string BuildAliasedDisplayString(INamedTypeSymbol namedType)
+    /// <summary>
+    /// Gets the effective display string for a type symbol without including constraint information.
+    /// Used for generating C# method signature keys where constraints are not part of overload resolution.
+    /// </summary>
+    /// <param name="type">The type symbol.</param>
+    /// <returns>The alias-resolved display string without constraint suffixes.</returns>
+    public static string GetEffectiveSignatureString(this ITypeSymbol type)
+    {
+        return type switch
+        {
+            ITypeParameterSymbol tp => tp.GetEffectiveName(),
+            INamedTypeSymbol { IsGenericType: true } namedType =>
+                BuildGenericDisplayString(namedType, GetEffectiveSignatureString),
+            _ => type.ToDisplayString()
+        };
+    }
+
+    private static string BuildConstraintSuffix(ITypeParameterSymbol tp)
+    {
+        if (!tp.HasReferenceTypeConstraint && !tp.HasValueTypeConstraint &&
+            !tp.HasConstructorConstraint && tp.ConstraintTypes.IsEmpty)
+            return "";
+
+        var parts = new List<string>();
+
+        if (tp.HasReferenceTypeConstraint)
+            parts.Add("class");
+
+        if (tp.HasValueTypeConstraint)
+            parts.Add("struct");
+
+        parts.AddRange(tp.ConstraintTypes
+            .Select(c => c.GetEffectiveSignatureString())
+            .OrderBy(s => s));
+
+        if (tp.HasConstructorConstraint)
+            parts.Add("new()");
+
+        return $"{{{string.Join(",", parts)}}}";
+    }
+
+    private static string BuildGenericDisplayString(
+        INamedTypeSymbol namedType, Func<ITypeSymbol, string> resolveArg)
     {
         var originalDisplay = namedType.OriginalDefinition.ToDisplayString();
-        var aliasedArgs = namedType.TypeArguments
-            .Select(arg => arg.GetEffectiveDisplayString());
+        var aliasedArgs = namedType.TypeArguments.Select(resolveArg);
 
-        // Replace the generic suffix with aliased type arguments
         var angleBracketIndex = originalDisplay.IndexOf('<');
         var baseName = angleBracketIndex >= 0
             ? originalDisplay.Substring(0, angleBracketIndex)

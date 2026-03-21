@@ -24,6 +24,7 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
             .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts))
             .Concat(ValidateOptionalParameterAmbiguousChains(fluentConstructorContexts))
+            .Concat(ValidateConflictingTypeConstraints(fluentConstructorContexts))
             .Concat(ValidateReturnType(fluentConstructorContexts));
     }
 
@@ -463,6 +464,76 @@ internal static class FluentConstructorValidatorExtensions
     private static string GetFluentParameterChainKey(FluentConstructorContext context) =>
         string.Join("|", context.Constructor.Parameters
             .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
+
+    private static string GetFirstParameterKey(
+        FluentConstructorContext context, Func<ITypeSymbol, string> typeStringResolver)
+    {
+        if (context.Constructor.Parameters.Length == 0)
+            return "";
+
+        var p = context.Constructor.Parameters[0];
+        return $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{typeStringResolver(p.Type)}";
+    }
+
+    private static IEnumerable<Diagnostic> ValidateConflictingTypeConstraints(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var eligibleContexts = fluentConstructorContexts
+            .Where(ctx => ctx.Constructor.Parameters.Length > 0)
+            .Where(ctx => !ctx.Constructor.Parameters.Any(
+                p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
+
+        // Group by first parameter's C# method signature (ignoring generic constraints)
+        var groups = eligibleContexts
+            .GroupBy(ctx => GetFirstParameterKey(ctx, t => t.GetEffectiveSignatureString()));
+
+        foreach (var group in groups)
+        {
+            var contexts = group.ToList();
+            if (contexts.Count <= 1)
+                continue;
+
+            // Must have constructors from at least 2 different types
+            var distinctTypes = contexts
+                .Select(ctx => ctx.Constructor.ContainingType)
+                .Distinct(SymbolEqualityComparer.Default)
+                .Count();
+
+            if (distinctTypes <= 1)
+                continue;
+
+            // Check if any constructors differ only by constraints on the first parameter
+            var distinctConstraintKeys = contexts
+                .Select(ctx => GetFirstParameterKey(ctx, t => t.GetEffectiveDisplayString()))
+                .Distinct()
+                .Count();
+
+            if (distinctConstraintKeys <= 1)
+                continue;
+
+            var participatingTypes = contexts
+                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Distinct()
+                .OrderBy(t => t);
+
+            var typesString = string.Join(", ", participatingTypes);
+
+            foreach (var context in contexts)
+            {
+                var parameter = context.Constructor.Parameters[0];
+                var methodName = parameter.GetFluentMethodName(context.MethodPrefix ?? "With");
+                var location = FindFluentMethodOrParameterLocation(parameter);
+
+                yield return Diagnostic.Create(
+                    FluentDiagnostics.ConflictingTypeConstraints,
+                    location,
+                    parameter.Name,
+                    context.Constructor.ToDisplayString(),
+                    methodName,
+                    typesString);
+            }
+        }
+    }
 
     private static Location FindFluentMethodOrParameterLocation(IParameterSymbol parameter)
     {

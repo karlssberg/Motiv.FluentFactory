@@ -18,7 +18,8 @@ internal static class CompilationUnit
 
     private static IEnumerable<MemberDeclarationSyntax> GetMembers(FluentFactoryCompilationUnit file)
     {
-        var rootType = RootTypeDeclaration.Create(file);
+        var rootTypeDeclaration = RootTypeDeclaration.Create(file);
+        var rootType = WrapInContainingTypes(rootTypeDeclaration, file.RootType);
         var namespacesGroups = file.FluentSteps
             .GroupBy(
                 step => step.Namespace,
@@ -71,6 +72,52 @@ internal static class CompilationUnit
                     NamespaceDeclaration(ParseName(namespaces.ToDisplayString()))
                         .WithMembers(List([..declarations.OfType<MemberDeclarationSyntax>()]))
                 ];
+        }
+
+        TypeDeclarationSyntax WrapInContainingTypes(TypeDeclarationSyntax declaration, INamedTypeSymbol typeSymbol)
+        {
+            var containingType = typeSymbol.ContainingType;
+            while (containingType is not null)
+            {
+                var modifiers = TokenList(
+                    containingType.DeclaredAccessibility
+                        .AccessibilityToSyntaxKind()
+                        .Select(Token)
+                        .Append(Token(SyntaxKind.PartialKeyword)));
+
+                declaration = (containingType.TypeKind, containingType.IsRecord) switch
+                {
+                    (TypeKind.Struct, true) =>
+                        RecordDeclaration(SyntaxKind.RecordStructDeclaration, Token(SyntaxKind.StructKeyword),
+                                Identifier(containingType.Name))
+                            .WithOpenBraceToken(Token(SyntaxKind.OpenBraceToken))
+                            .WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken))
+                            .WithModifiers(TokenList(modifiers.Prepend(Token(SyntaxKind.RecordKeyword))))
+                            .WithMembers(SingletonList<MemberDeclarationSyntax>(declaration)),
+                    
+                    (TypeKind.Struct, false) =>
+                        StructDeclaration(containingType.Name)
+                            .WithModifiers(modifiers)
+                            .WithMembers(SingletonList<MemberDeclarationSyntax>(declaration)),
+                    
+                    (_, true) =>
+                        RecordDeclaration(SyntaxKind.RecordDeclaration, Token(SyntaxKind.RecordKeyword),
+                                Identifier(containingType.Name))
+                            .WithOpenBraceToken(Token(SyntaxKind.OpenBraceToken))
+                            .WithCloseBraceToken(Token(SyntaxKind.CloseBraceToken))
+                            .WithModifiers(modifiers)
+                            .WithMembers(SingletonList<MemberDeclarationSyntax>(declaration)),
+                    
+                    _ =>
+                        ClassDeclaration(containingType.Name)
+                            .WithModifiers(modifiers)
+                            .WithMembers(SingletonList<MemberDeclarationSyntax>(declaration))
+                };
+
+                containingType = containingType.ContainingType;
+            }
+
+            return declaration;
         }
 
         bool DoFluentStepsShareTheRootNamespace()
