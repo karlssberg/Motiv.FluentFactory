@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <PackageId>Converg</PackageId>
+        <Title>Converg Fluent Builder Generator</Title>
+        <Description>Source generator and attributes for creating fluent API builders automatically. This package provides both the attributes that can be applied to classes, constructors, and parameters, and the source generator that creates fluent builder patterns.</Description>
+        <PackageTags>Code Generation, Fluent API, Builder Pattern, Source Generator, Attributes</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Converg.Attributes\Converg.Attributes.csproj" PrivateAssets="all" />
+      <ProjectReference Include="..\Converg.Generator\Converg.Generator.csproj" PrivateAssets="all" />
+    </ItemGroup>
+
+    <!-- Ensure dependencies are built before packing, since IncludeBuildOutput=false
+         causes MSBuild to skip building this project (and its dependencies) before pack -->
+    <Target Name="BuildDependenciesBeforePack" BeforeTargets="GenerateNuspec">
+      <MSBuild Projects="@(ProjectReference)" Targets="Build" Properties="Configuration=$(Configuration)" />
+    </Target>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+        <None Include="..\Converg.Generator\$(OutputPath)\Converg.Generator.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs"
+              Visible="false" />
+
+        <!-- Pack the attributes to both analyzers (for generator) and lib (for runtime) -->
+        <None Include="..\Converg.Attributes\$(OutputPath)\Converg.Attributes.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs"
+              Visible="false" />
+        <None Include="..\Converg.Attributes\$(OutputPath)\Converg.Attributes.dll"
+              Pack="true"
+              PackagePath="lib/netstandard2.0"
+              Visible="false" />
+    </ItemGroup>
+</Project>

@@ -1,4 +1,4 @@
-# Motiv.FluentFactory
+# Converg
 
 A Roslyn source generator that turns constructors into compile-time fluent builders 
 — no boilerplate, no runtime cost.
@@ -22,7 +22,6 @@ public record Rectangle<T>(T Width, T Height);
 [FluentConstructor<Shape>] 
 public record Cube<T>(T Width, T Height, T Depth);
 
-
 // You get this:
 Square<int>       square = Shape.WithWidth(10).CreateSquare();
 Rectangle<int> rectangle = Shape.WithWidth(10).WithHeight(20).CreateRectangle();
@@ -37,13 +36,13 @@ Supports generics, records, primary constructors, custom method names, multiple 
 Install the NuGet package in your project:
 
 ```xml
-<PackageReference Include="Motiv.FluentFactory" Version="1.0.0" />
+<PackageReference Include="Converg" Version="1.0.0" />
 ```
 
 Or via Package Manager Console:
 
 ```powershell
-Install-Package Motiv.FluentFactory
+Install-Package Converg
 ```
 
 ## Tutorial
@@ -752,7 +751,7 @@ The generator produces diagnostics to help you fix configuration issues:
 
 ## Contributing
 
-This project is generated using the Motiv.FluentFactory. Contributions are welcome!
+This project is generated using the Converg. Contributions are welcome!
 
 ## License
 

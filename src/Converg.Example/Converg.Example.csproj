@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <AssemblyName>Converg.Example</AssemblyName>
+        <RootNamespace>Converg.Example</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(IntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Remove="**/*.g.cs" />
+        <None Include="**/*.g.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Converg.Attributes\Converg.Attributes.csproj" />
+      <ProjectReference Include="..\Converg.Generator\Converg.Generator.csproj" OutputItemType="Analyzer" />
+    </ItemGroup>
+</Project>
