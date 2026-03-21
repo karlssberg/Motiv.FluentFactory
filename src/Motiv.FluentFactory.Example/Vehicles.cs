@@ -2,24 +2,24 @@ using Motiv.FluentFactory.Attributes;
 
 namespace Motiv.FluentFactory.Example;
 
-internal partial class Playground
+internal partial class Vehicles
 {
     public void Test()
     {
-        Entity.WithCarEngine(new CarEngine()).WithAge(5);
+        Vehicle.WithCarEngine(new CarEngine()).WithAge(5);
     }
     
     [FluentFactory]
-    internal partial class Entity;
+    internal partial class Vehicle;
 
     internal interface ICarEngine;
     internal class CarEngine : ICarEngine;
     internal interface ITrainEngine;
     internal class TrainEngine : ITrainEngine;
 
-    [FluentConstructor<Entity>(CreateMethod = CreateMethod.None)]
+    [FluentConstructor<Vehicle>(CreateMethod = CreateMethod.None)]
     internal partial record Car<[As("TEngine")]TCarEngine>([FluentMethod("WithCarEngine")] TCarEngine Engine, int Age) where TCarEngine : ICarEngine;
 
-    [FluentConstructor<Entity>]
+    [FluentConstructor<Vehicle>]
     internal partial record Train<TEngine>([FluentMethod("WithTrainEngine")] TEngine Engine) where TEngine : ITrainEngine;
 }
