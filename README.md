@@ -11,57 +11,26 @@ and the whole chain compiles down to zero-allocation, JIT optimizer-friendly cod
 ```csharp
 // You write this:
 [FluentFactory]
-public static partial class Shape;
+public partial class Shape;
 
-[FluentConstructor(typeof(Shape))] 
-public record Circle<T>(T Radius);
+[FluentConstructor<Shape>]
+public record Square<T>(T Width);
 
-public class Rectangle<T>
-{
-    [FluentConstructor(typeof(Shape))]
-    public Rectangle(T width, T height) { Width = width; Height = height; }
-    
-    public T Width { get; }
-    public T Height { get; }
-}
+[FluentConstructor<Shape>] 
+public record Rectangle<T>(T Width, T Height);
+
+[FluentConstructor<Shape>] 
+public record Cube<T>(T Width, T Height, T Depth);
+
 
 // You get this:
-Circle<double>    circle = Shape.WithRadius(5.0).CreateCircle();
+Square<int>       square = Shape.WithWidth(10).CreateSquare();
 Rectangle<int> rectangle = Shape.WithWidth(10).WithHeight(20).CreateRectangle();
+Cube<int>           cube = Shape.WithWidth(10).WithHeight(20).WithDepth(30).CreateCube();
 ```
 
-Supports generics, records, primary constructors, custom method names, multiple overloads, return-type covariance, and more.
+Supports generics, records, primary constructors, custom method names, multiple overloads, return-type covariance, generic type parameter aliasing, and more.
 
-
-## Quick Start
-
-```csharp
-using Motiv.FluentFactory.Attributes;
-
-// The entry point for the fluent method chain
-[FluentFactory]
-public static partial class PersonFactory;
-
-public class Person
-{
-    // Turns the parameters into fluent methods chain that call this constructor
-    [FluentConstructor(typeof(PersonFactory))]
-    public Person(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-
-    public string Name { get; set; }
-    public int Age { get; set; }
-}
-
-// Generated usage:
-var person = PersonFactory
-    .WithName("John")
-    .WithAge(30)
-    .CreatePerson();
-```
 
 ## Installation
 
@@ -453,6 +422,39 @@ var user = UserFactory
     .CreateUser();
 ```
 
+### Generic Attribute Syntax (C# 11+)
+
+Instead of passing `typeof(...)`, you can use the generic `FluentConstructor<T>` syntax:
+
+```csharp
+[FluentFactory]
+public static partial class UserFactory;
+
+public class User
+{
+    // Generic syntax - cleaner and type-safe
+    [FluentConstructor<UserFactory>]
+    public User(string name, string email)
+    {
+        Name = name;
+        Email = email;
+    }
+
+    public string Name { get; }
+    public string Email { get; }
+}
+
+// Usage is identical:
+var user = UserFactory.WithName("Alice").WithEmail("alice@example.com").CreateUser();
+```
+
+The generic form also works at the type level:
+
+```csharp
+[FluentConstructor<UserFactory>]
+public record User(string Name, string Email);
+```
+
 ### FluentConstructor on Types
 
 `[FluentConstructor]` can be applied directly to classes, structs, and records (not just constructors). This is especially useful with records that use positional parameters:
@@ -528,6 +530,46 @@ This pattern is powerful because:
 - The fluent chain naturally extends from simpler to more complex types
 - No final `Create()` method is needed - each step returns the constructed object
 - The types must be declared as `partial` to allow the generator to add fluent methods
+
+### Advanced: Type Parameter Aliasing with `[As]`
+
+When multiple constructors use different generic type parameter names for the same conceptual type, the generator can't merge them into a shared fluent chain. The `[As]` attribute solves this by aliasing type parameters to a common name:
+
+```csharp
+[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+public static partial class Line;
+
+[FluentConstructor<Line>]
+public partial record Line1D<T>(T X) where T : INumber<T>;
+
+// TNum is aliased to "T" so the generator merges this with Line1D
+[FluentConstructor<Line>]
+public partial record Line2D<[As("T")] TNum>(TNum X, TNum Y) where TNum : INumber<TNum>;
+
+[FluentConstructor<Line>]
+public partial record Line3D<T>(T X, T Y, T Z) where T : INumber<T>;
+```
+
+Without `[As("T")]`, the generator would treat `TNum` and `T` as different type parameters and fail to merge the chains. With it:
+
+```csharp
+Line1D<decimal> line1D = Line.X(10m);
+Line2D<int>     line2D = Line.X(5).Y(10);
+Line3D<double>  line3D = Line.X(1.0).Y(2.0).Z(3.0);
+```
+
+### Advanced: Self-Referential Factory
+
+A type can be both the factory and a constructor target. This is useful when you want the fluent API to start from the type itself:
+
+```csharp
+[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentConstructor(typeof(Square<>))]
+public partial record Square<T>(T Width) where T : INumber<T>;
+
+// Usage - the type IS the factory:
+Square<decimal> square = Square<decimal>.WithWidth(10m).Create();
+```
 
 ### Advanced: Multiple Method Variants
 
@@ -617,8 +659,8 @@ Marks a static partial class as a fluent factory. The class must be `static` and
 | `MethodPrefix` | `string?` | `"With"` | Default prefix for fluent method names |
 | `ReturnType` | `Type?` | _none_ | Default return type for creation methods |
 
-#### `[FluentConstructor(Type rootType)]`
-Marks a constructor, class, or struct to generate fluent methods for. Can be applied multiple times (`AllowMultiple = true`).
+#### `[FluentConstructor(Type rootType)]` / `[FluentConstructor<TFluentFactory>]`
+Marks a constructor, class, or struct to generate fluent methods for. Can be applied multiple times (`AllowMultiple = true`). The generic form `FluentConstructor<T>` is available for C# 11+ projects as a type-safe alternative to `typeof(...)`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -627,6 +669,13 @@ Marks a constructor, class, or struct to generate fluent methods for. Can be app
 | `CreateVerb` | `string?` | _inherits_ | Overrides factory-level setting |
 | `MethodPrefix` | `string?` | _inherits_ | Overrides factory-level setting |
 | `ReturnType` | `Type?` | _inherits_ | Overrides factory-level setting |
+
+#### `[As(string name)]`
+Aliases a generic type parameter name for matching across multiple constructors. Applied to generic type parameters.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Name` | `string` | _(required)_ | The canonical name to match this type parameter against |
 
 #### `[FluentMethod(string methodName)]`
 Customizes the fluent method name for a constructor parameter.
@@ -657,13 +706,15 @@ Marks static methods in a variants type as templates for generating fluent metho
 
 - **Type Safety** - Compile-time enforcement of required parameters
 - **IntelliSense Support** - Full IDE support with method suggestions
-- **Generic Support** - Works with generic classes, type inference, and constraints
+- **Generic Support** - Works with generic classes, type inference, constraints, and type parameter aliasing via `[As]`
+- **Generic Attribute Syntax** - Use `[FluentConstructor<T>]` for type-safe factory references (C# 11+)
 - **Records and Primary Constructors** - Supports record types and C# 12+ primary constructors
 - **Optional Parameters** - Parameters with defaults become optional setter methods
 - **Customizable Naming** - Custom method names, prefixes, create verbs, and priorities
 - **Return Type Control** - Create methods can return interfaces or base types
 - **Multiple Method Variants** - Generate multiple methods for a single parameter via templates
 - **Custom Partial Steps** - Use your own types as fluent steps with `CreateMethod.None`
+- **Self-Referential Factories** - A type can serve as both factory and construction target
 - **Factory-Level Defaults** - Set defaults on the factory, override per-constructor
 - **Trie-Based Merging** - Shared parameter prefixes across constructors are intelligently merged
 - **Performance** - Uses readonly structs, `in` parameters, and `[MethodImpl(AggressiveInlining)]` for zero overhead
@@ -697,6 +748,7 @@ The generator produces diagnostics to help you fix configuration issues:
 | MFFG0020 | Warning | ReturnType same as concrete target type (unnecessary) |
 | MFFG0021 | Error | ReturnType used with CreateMethod.None |
 | MFFG0022 | Error | Optional parameters cause ambiguous chain |
+| MFFG0023 | Error | Conflicting type constraints produce duplicate method signatures |
 
 ## Contributing
 

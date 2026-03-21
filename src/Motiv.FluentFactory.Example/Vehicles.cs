@@ -6,7 +6,7 @@ internal partial class Vehicles
 {
     public void Test()
     {
-        Vehicle.WithCarEngine(new CarEngine()).WithAge(5);
+        Car<CarEngine> car = Vehicle.WithCarEngine(new CarEngine()).WithAge(5);
     }
     
     [FluentFactory]
