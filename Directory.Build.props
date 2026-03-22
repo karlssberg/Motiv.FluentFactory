@@ -12,7 +12,7 @@
   <!-- Package Metadata -->
   <PropertyGroup>
     <Authors>Daniel Karlsson</Authors>
-    <Copyright>Copyright (c) 2025 Daniel Karlsson</Copyright>
+    <Copyright>Copyright (c) 2026 Daniel Karlsson</Copyright>
     <PackageProjectUrl>https://github.com/karlssberg/Converj</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karlssberg/Converj</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
