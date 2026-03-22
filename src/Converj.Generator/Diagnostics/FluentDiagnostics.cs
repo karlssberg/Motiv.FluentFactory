@@ -270,4 +270,17 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for custom intermediate step types that have no accessible property or field
+    /// for a constructor parameter, preventing value threading to subsequent steps.
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnresolvableCustomStepStorage = new(
+        id: "MFFG0024",
+        title: "Custom step has no storage for constructor parameter",
+        messageFormat:
+        "Custom step type '{0}' has no accessible property or field for constructor parameter '{1}'. The parameter value cannot be threaded to subsequent steps.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

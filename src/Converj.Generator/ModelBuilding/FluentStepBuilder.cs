@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Diagnostics;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.ModelBuilding;
@@ -9,7 +10,8 @@ namespace Converj.Generator.ModelBuilding;
 /// intermediate builder types in the generated fluent API.
 /// </summary>
 internal class FluentStepBuilder(
-    OrderedDictionary<ParameterSequence, RegularFluentStep> regularFluentSteps)
+    OrderedDictionary<ParameterSequence, RegularFluentStep> regularFluentSteps,
+    DiagnosticList diagnostics)
 {
     /// <summary>
     /// Converts a trie node into a fluent step by resolving value storages, obtaining fluent methods
@@ -45,6 +47,7 @@ internal class FluentStepBuilder(
         if (fluentMethods.Length == 0) return null;
 
         var step = CreateStep(valueStorages);
+        ReportUnresolvableStorage(step, valueStorages);
         postCreateStep?.Invoke(rootType, node, step, valueStorages);
         return step;
 
@@ -104,6 +107,34 @@ internal class FluentStepBuilder(
                 (true, not null and var metadata) => metadata.ValueStorage,
                 _ => CreateRegularStepValueStorage(rootType, knownConstructorParameters)
             };
+        }
+    }
+
+    /// <summary>
+    /// Reports a diagnostic for each constructor parameter on a custom intermediate step
+    /// that has no accessible property or field for value storage.
+    /// </summary>
+    /// <param name="step">The fluent step to check.</param>
+    /// <param name="valueStorages">The value storage mappings for the step.</param>
+    private void ReportUnresolvableStorage(
+        IFluentStep step,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        if (step is not ExistingTypeFluentStep) return;
+
+        var containingTypeDisplay = step.CandidateConstructors.First().ContainingType.ToDisplayString();
+
+        foreach (var storage in valueStorages)
+        {
+            if (storage.Value is not NullStorage) continue;
+
+            var parameter = storage.Key;
+            var location = parameter.Locations.FirstOrDefault() ?? Location.None;
+            diagnostics.Add(Diagnostic.Create(
+                FluentDiagnostics.UnresolvableCustomStepStorage,
+                location,
+                containingTypeDisplay,
+                parameter.Name));
         }
     }
 

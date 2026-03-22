@@ -881,4 +881,61 @@ public class DiagnosticsTests
             }
         }.RunAsync();
     }
+
+    [Fact]
+    internal async Task Should_error_when_custom_step_has_no_storage_for_constructor_parameter()
+    {
+        const string code =
+            """
+            using Converj.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public partial class MyStep
+            {
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                public MyStep(
+                    [FluentMethod("WithName")]string name,
+                    [FluentMethod("WithAge")]int age)
+                {
+                    Name = name;
+                    // age is NOT assigned to any field or property
+                }
+
+                public string Name { get; set; }
+            }
+
+            public class Target
+            {
+                [FluentConstructor(typeof(Factory))]
+                public Target(string name, int age, bool active)
+                {
+                    Name = name;
+                    Age = age;
+                    Active = active;
+                }
+
+                public string Name { get; set; }
+                public int Age { get; set; }
+                public bool Active { get; set; }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(UnresolvableCustomStepStorage.Id)
+                        .WithSpan(SourceFile, 13, 38, 13, 41)
+                        .WithArguments("Test.MyStep", "age")
+                }
+            }
+        }.RunAsync();
+    }
 }

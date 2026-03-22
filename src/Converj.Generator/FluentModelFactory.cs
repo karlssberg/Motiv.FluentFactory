@@ -43,7 +43,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
-        _stepBuilder = new FluentStepBuilder(_regularFluentSteps);
+        _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
 
         var usings = GetUsingStatements(fluentConstructorContexts);
 
