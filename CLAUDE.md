@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Converg is a C# Roslyn incremental source generator that creates fluent factory/builder patterns from constructors. Users annotate classes with `[FluentFactory]` and constructors with `[FluentConstructor]`, and the generator produces chainable, strongly-typed builder methods at compile time.
+Converj is a C# Roslyn incremental source generator that creates fluent factory/builder patterns from constructors. Users annotate classes with `[FluentFactory]` and constructors with `[FluentConstructor]`, and the generator produces chainable, strongly-typed builder methods at compile time.
 
 ## Build & Test Commands
 
@@ -19,11 +19,11 @@ dotnet test --filter "DisplayName~Should_generate_when_applied_to_a_class_constr
 
 Five projects under `src/`:
 
-- **Converg.Attributes** (netstandard2.0) — User-facing attributes (`[FluentFactory]`, `[FluentConstructor]`, `[FluentMethod]`, etc.)
-- **Converg.Generator** (netstandard2.0) — The Roslyn `IIncrementalGenerator` and all code generation logic
-- **Converg** (netstandard2.0) — NuGet packaging wrapper that bundles generator + attributes as an analyzer
-- **Converg.Generator.Tests** (net9.0) — xUnit tests using Roslyn's `CSharpSourceGeneratorTest` verifier
-- **Converg.Example** (net9.0) — Demo project
+- **Converj.Attributes** (netstandard2.0) — User-facing attributes (`[FluentFactory]`, `[FluentConstructor]`, `[FluentMethod]`, etc.)
+- **Converj.Generator** (netstandard2.0) — The Roslyn `IIncrementalGenerator` and all code generation logic
+- **Converj** (netstandard2.0) — NuGet packaging wrapper that bundles generator + attributes as an analyzer
+- **Converj.Generator.Tests** (net9.0) — xUnit tests using Roslyn's `CSharpSourceGeneratorTest` verifier
+- **Converj.Example** (net9.0) — Demo project
 
 Global settings in `Directory.Build.props`: C# latest, nullable enabled, warnings as errors. Package versions managed centrally in `Directory.Packages.props`.
 
@@ -53,7 +53,7 @@ Tests use `CSharpSourceGeneratorVerifier<FluentFactoryGenerator>` (defined in th
 3. Adds both to a `VerifyCS.Test` instance and calls `RunAsync()`
 
 ```csharp
-using VerifyCS = Converg.Generator.Tests.CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
+using VerifyCS = Converj.Generator.Tests.CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
 
 [Fact]
 internal async Task Should_generate_when_...()

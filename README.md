@@ -1,4 +1,4 @@
-# Converg
+# Converj
 
 A Roslyn source generator that turns constructors into compile-time fluent builders 
 — no boilerplate, no runtime cost.
@@ -36,13 +36,13 @@ Supports generics, records, primary constructors, custom method names, multiple 
 Install the NuGet package in your project:
 
 ```xml
-<PackageReference Include="Converg" Version="1.0.0" />
+<PackageReference Include="Converj" Version="1.0.0" />
 ```
 
 Or via Package Manager Console:
 
 ```powershell
-Install-Package Converg
+Install-Package Converj
 ```
 
 ## Tutorial
@@ -75,28 +75,27 @@ var book = BookFactory.WithTitle("The C# Guide").CreateBook();
 
 **Generated Code:**
 ```csharp
-public static partial class BookFactory
-{
-    public static Step_0__BookFactory WithTitle(in string title)
+    public static partial class BookFactory
     {
-        return new Step_0__BookFactory(title);
-    }
-}
-
-public readonly struct Step_0__BookFactory
-{
-    private readonly string _title__parameter;
-
-    internal Step_0__BookFactory(in string title)
-    {
-        this._title__parameter = title;
+        public static Step_0__BookFactory WithTitle(in string title)
+        {
+            return new Step_0__BookFactory(title);
+        }
     }
 
-    public Book CreateBook()
+    public readonly struct Step_0__BookFactory
     {
-        return new Book(this._title__parameter);
+        private readonly string _title__parameter;
+        internal Step_0__BookFactory(in string title)
+        {
+            this._title__parameter = title;
+        }
+
+        public Book CreateBook()
+        {
+            return new Book(this._title__parameter);
+        }
     }
-}
 ```
 
 ### Multiple Parameters - Chained Steps
@@ -477,44 +476,47 @@ public partial record Line3D([FluentMethod("X")] int X, [FluentMethod("Y")] int 
 When using `CreateMethod.None`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
 
 ```csharp
-[FluentFactory]
-public static partial class Line;
+[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+public partial class Line;
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
-public partial record Line1D([FluentMethod("X")]int X);
+[FluentConstructor<Line>]
+public partial record Line1D<T>(T X) where T : INumber<T>;
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
-public partial record Line2D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y);
+[FluentConstructor<Line>]
+public partial record Line2D<T>(T X, T Y) where T : INumber<T>;
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
-public partial record Line3D([FluentMethod("X")]int X, [FluentMethod("Y")]int Y, [FluentMethod("Z")]int Z);
+[FluentConstructor<Line>]
+public partial record Line3D<T>(T X, T Y, T Z) where T : INumber<T>;
 ```
 
 **Generated Code:**
 ```csharp
-public static partial class Line
+
+public partial class Line
 {
-    public static Line1D X(int x)
+    public static Line1D<T> X<T>(in T x)
+        where T : INumber<T>
     {
-        return new Line1D(x);
+        return new Line1D<T>(x);
     }
 }
 
-public partial record Line1D
+public partial record Line1D<T>
 {
-    public Line2D Y(int y)
+    public Line2D<T> Y(in T y)
     {
-        return new Line2D(this.X, y);
+        return new Line2D<T>(this.X, y);
     }
 }
 
-public partial record Line2D
+public partial record Line2D<T>
 {
-    public Line3D Z(int z)
+    public Line3D<T> Z(in T z)
     {
-        return new Line3D(this.X, this.Y, z);
+        return new Line3D<T>(this.X, this.Y, z);
     }
 }
+
 ```
 
 **Usage:**
@@ -649,7 +651,7 @@ public class Square : IShape
 ### Attributes
 
 #### `[FluentFactory]`
-Marks a static partial class as a fluent factory. The class must be `static` and `partial`.
+Marks a static partial type as a fluent factory. The type must be `partial`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -751,7 +753,7 @@ The generator produces diagnostics to help you fix configuration issues:
 
 ## Contributing
 
-This project is generated using the Converg. Contributions are welcome!
+This project is generated using the Converj. Contributions are welcome!
 
 ## License
 
