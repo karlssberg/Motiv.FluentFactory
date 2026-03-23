@@ -36,4 +36,11 @@ public class FluentFactoryAttribute : Attribute
     /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.ReturnType"/>.
     /// </summary>
     public Type? ReturnType { get; set; }
+
+    /// <summary>
+    /// When true, allows <see cref="FluentParameterAttribute"/> members to match only a subset
+    /// of target constructors. By default, a fluent parameter must match all target constructors
+    /// or a diagnostic error is reported.
+    /// </summary>
+    public bool AllowPartialParameterOverlap { get; set; }
 }

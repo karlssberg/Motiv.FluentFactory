@@ -19,4 +19,10 @@ internal record FieldStorage(string IdentifierName, ITypeSymbol Type, INamespace
     /// Optional parameter fields are mutable (not readonly) to allow setter methods.
     /// </summary>
     public bool IsReadOnly { get; set; } = true;
+
+    /// <summary>
+    /// Creates a FieldStorage for a constructor parameter using the standard naming convention.
+    /// </summary>
+    public static FieldStorage FromParameter(IParameterSymbol parameter, INamespaceSymbol containingNamespace) =>
+        new(parameter.Name.ToParameterFieldName(), parameter.Type, containingNamespace);
 }

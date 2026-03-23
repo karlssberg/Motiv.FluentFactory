@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,12 +9,6 @@ namespace Converj.Generator.SyntaxGeneration;
 
 internal static class RootTypeDeclaration
 {
-    private static readonly SymbolDisplayFormat NameOnlyFormat = new SymbolDisplayFormat(
-        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
-        genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
-        miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes)
-
-    .WithMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
     public static TypeDeclarationSyntax Create(FluentFactoryCompilationUnit file)
     {
         var rootMethodDeclarations = GetRootMethodDeclarations(file);
@@ -57,8 +52,35 @@ internal static class RootTypeDeclaration
         typeDeclaration = typeDeclaration
             .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()));
 
+        var generatedFields = GetGeneratedFluentParameterFields(file);
+
         return typeDeclaration.WithMembers(
-            List(rootMethodDeclarations.OfType<MemberDeclarationSyntax>()));
+            List(generatedFields
+                .Concat(rootMethodDeclarations.OfType<MemberDeclarationSyntax>())));
+    }
+
+    /// <summary>
+    /// Generates backing field declarations for [FluentParameter] on primary constructor
+    /// parameters that have no explicit storage.
+    /// </summary>
+    private static IEnumerable<MemberDeclarationSyntax> GetGeneratedFluentParameterFields(
+        FluentFactoryCompilationUnit file)
+    {
+        return file.ThreadedParameters
+            .Where(b => b.FactoryMember.RequiresGeneratedField)
+            .Select(b =>
+                FieldDeclaration(
+                    VariableDeclaration(
+                        ParseTypeName(b.FactoryMember.Type.ToGlobalDisplayString()))
+                    .WithVariables(
+                        SingletonSeparatedList(
+                            VariableDeclarator(Identifier(b.FactoryMember.MemberIdentifierName))
+                            .WithInitializer(
+                                EqualsValueClause(
+                                    IdentifierName(b.FactoryMember.PrimaryConstructorParameterName!))))))
+                .WithModifiers(TokenList(
+                    Token(SyntaxKind.PrivateKeyword),
+                    Token(SyntaxKind.ReadOnlyKeyword))));
     }
 
     private static TypeParameterListSyntax? CreateTypeParameterList(INamedTypeSymbol rootType)
@@ -98,35 +120,133 @@ internal static class RootTypeDeclaration
 
     private static IEnumerable<MethodDeclarationSyntax> GetRootMethodDeclarations(FluentFactoryCompilationUnit file)
     {
-        // Build effective→local name mapping for root types with [As] aliases
         var effectiveToLocalMap = BuildEffectiveToLocalMapping(file.RootType);
 
         return file.FluentMethods
-            .Select<IFluentMethod, MethodDeclarationSyntax>(method => method switch
+            .Select<IFluentMethod, (MethodDeclarationSyntax Syntax, bool IsInstance)>(method =>
             {
-                { Return: TargetTypeReturn } => FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
-                OptionalGatewayMethod gateway => OptionalGatewayMethodDeclaration.Create(gateway),
-                MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
-                _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
+                var isInstance = IsInstanceMethod(method, file);
+                var syntax = (method, isInstance) switch
+                {
+                    ({ Return: TargetTypeReturn }, _) => FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
+                    (OptionalGatewayMethod gateway, _) => OptionalGatewayMethodDeclaration.Create(gateway),
+                    (MultiMethod multiMethod, _) => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
+                    _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
+                };
+
+                if (isInstance)
+                {
+                    syntax = method.Return switch
+                    {
+                        IFluentStep { ThreadedParameters.IsEmpty: false } nextStep =>
+                            RewriteRootMethodForThreadedParameters(syntax, nextStep),
+                        TargetTypeReturn =>
+                            RewriteRootMethodForDirectCreation(syntax, file.ThreadedParameters),
+                        _ => syntax
+                    };
+                }
+
+                return (syntax, isInstance);
             })
-            .Select(method =>
+            .Select(pair =>
             {
-                var result = method
+                var result = pair.Syntax
                     .WithModifiers(
-                        TokenList(GetSyntaxTokens()));
+                        TokenList(GetSyntaxTokens(pair.IsInstance)));
 
                 // Remap effective type parameter names to local names for root types with [As] aliases
                 if (effectiveToLocalMap.Count > 0)
                     result = (MethodDeclarationSyntax)new TypeParameterNameRewriter(effectiveToLocalMap).Visit(result);
 
                 return result;
-
-                IEnumerable<SyntaxToken> GetSyntaxTokens()
-                {
-                    yield return Token(SyntaxKind.PublicKeyword);
-                    yield return Token(SyntaxKind.StaticKeyword);
-                }
             });
+    }
+
+    /// <summary>
+    /// Determines whether a root method should be an instance method (uses threaded parameters)
+    /// or a static method.
+    /// </summary>
+    private static bool IsInstanceMethod(IFluentMethod method, FluentFactoryCompilationUnit file)
+    {
+        if (file.ThreadedParameters.IsEmpty) return false;
+
+        if (method.Return is IFluentStep { ThreadedParameters.IsEmpty: false })
+            return true;
+
+        return method.AvailableParameterFields
+            .Any(f => file.ThreadedParameters.Any(b => b.TargetParameter.Name == f.ParameterSymbol.Name));
+    }
+
+    /// <summary>
+    /// Rewrites the return statement's ObjectCreationExpression arguments using the provided transform.
+    /// Returns the method unchanged if the body does not contain the expected syntax shape.
+    /// </summary>
+    private static MethodDeclarationSyntax RewriteReturnCreationArguments(
+        MethodDeclarationSyntax method,
+        Func<ObjectCreationExpressionSyntax, IEnumerable<ArgumentSyntax>> transformArguments)
+    {
+        var returnStatement = method.Body?.Statements.OfType<ReturnStatementSyntax>().FirstOrDefault();
+        if (returnStatement?.Expression is not ObjectCreationExpressionSyntax creation)
+            return method;
+
+        var newCreation = creation.WithArgumentList(ArgumentList(SeparatedList(transformArguments(creation))));
+        var newReturn = returnStatement.WithExpression(newCreation);
+        var newBody = method.Body!.WithStatements(SingletonList<StatementSyntax>(newReturn));
+
+        return method.WithBody(newBody);
+    }
+
+    /// <summary>
+    /// Prepends factory field reads for threaded parameters to the step constructor arguments.
+    /// </summary>
+    private static MethodDeclarationSyntax RewriteRootMethodForThreadedParameters(
+        MethodDeclarationSyntax method,
+        IFluentStep nextStep)
+    {
+        return RewriteReturnCreationArguments(method, creation =>
+        {
+            var threadedArgs = nextStep.ThreadedParameters
+                .Select(b =>
+                    Argument(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(b.FactoryMember.MemberIdentifierName))));
+
+            var existingArgs = creation.ArgumentList?.Arguments ?? SeparatedList<ArgumentSyntax>();
+            return threadedArgs.Concat(existingArgs);
+        });
+    }
+
+    /// <summary>
+    /// Replaces bare identifier arguments matching threaded parameters with factory field reads.
+    /// </summary>
+    private static MethodDeclarationSyntax RewriteRootMethodForDirectCreation(
+        MethodDeclarationSyntax method,
+        ImmutableArray<FluentParameterBinding> threadedParameters)
+    {
+        var threadedParamMap = threadedParameters.ToDictionary(
+            b => b.TargetParameter.Name,
+            b => b.FactoryMember.MemberIdentifierName);
+
+        return RewriteReturnCreationArguments(method, creation =>
+            (creation.ArgumentList?.Arguments ?? SeparatedList<ArgumentSyntax>())
+                .Select(arg =>
+                    arg.Expression is IdentifierNameSyntax id
+                        && threadedParamMap.TryGetValue(id.Identifier.ValueText, out var factoryMemberName)
+                        ? arg.WithExpression(
+                            MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                ThisExpression(),
+                                IdentifierName(factoryMemberName)))
+                        : arg));
+    }
+
+    private static IEnumerable<SyntaxToken> GetSyntaxTokens(bool isInstance)
+    {
+        yield return Token(SyntaxKind.PublicKeyword);
+        if (!isInstance)
+            yield return Token(SyntaxKind.StaticKeyword);
     }
 
     private static Dictionary<string, string> BuildEffectiveToLocalMapping(INamedTypeSymbol rootType)
@@ -153,10 +273,9 @@ internal static class RootTypeDeclaration
     {
         public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
         {
-            if (effectiveToLocalMap.TryGetValue(node.Identifier.ValueText, out var localName))
-                return node.WithIdentifier(Identifier(localName));
-
-            return base.VisitIdentifierName(node);
+            return effectiveToLocalMap.TryGetValue(node.Identifier.ValueText, out var localName) 
+                ? node.WithIdentifier(Identifier(localName)) 
+                : base.VisitIdentifierName(node);
         }
     }
 }

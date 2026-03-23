@@ -12,4 +12,4 @@ internal record Dog(int Legs = 4) : Animal;
 internal record Cat(int Legs = 4) : Animal;
 
 [FluentConstructor(typeof(Animal))]
-internal record Fish(int FinCount = 1, int EyeCount = 2) : Animal;
+internal record Monster(int ArmCount = 1, int EyeCount = 2) : Animal;

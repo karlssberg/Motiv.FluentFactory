@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Converj.Generator.ConstructorAnalysis;
@@ -57,7 +58,7 @@ public class FluentFactoryGenerator : IIncrementalGenerator
         var typeOrConstructorDeclarations = nonGenericDeclarations
             .Collect()
             .Combine(genericDeclarations.Collect())
-            .SelectMany((pair, _) => pair.Left.AddRange(pair.Right));
+            .SelectMany((pair, _) => DeduplicateBySyntaxNode(pair.Left, pair.Right));
 
         // Step 2: Gather all discovered candidate constructors and capture metadata
         var constructorModels = typeOrConstructorDeclarations
@@ -91,6 +92,34 @@ public class FluentFactoryGenerator : IIncrementalGenerator
 
         // Step 4: Write the generated files.
         context.RegisterSourceOutput(consolidated, Execute);
+    }
+
+    /// <summary>
+    /// Combines non-generic and generic pipeline results, removing duplicates where the same
+    /// syntax node was discovered by both pipelines (e.g., a type with both generic and non-generic
+    /// FluentConstructor attributes).
+    /// </summary>
+    private static ImmutableArray<(SyntaxNode syntax, string filePath)> DeduplicateBySyntaxNode(
+        ImmutableArray<(SyntaxNode syntax, string filePath)> left,
+        ImmutableArray<(SyntaxNode syntax, string filePath)> right)
+    {
+        if (right.IsEmpty)
+            return left;
+
+        if (left.IsEmpty)
+            return right;
+
+        var seen = new HashSet<SyntaxNode>(left.Select(entry => entry.syntax));
+        var builder = ImmutableArray.CreateBuilder<(SyntaxNode syntax, string filePath)>(left.Length + right.Length);
+        builder.AddRange(left);
+
+        foreach (var entry in right)
+        {
+            if (seen.Add(entry.syntax))
+                builder.Add(entry);
+        }
+
+        return builder.ToImmutable();
     }
 
     /// <summary>

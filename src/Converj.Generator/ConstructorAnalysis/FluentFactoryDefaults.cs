@@ -10,10 +10,12 @@ internal sealed class FluentFactoryDefaults(
     CreateMethodMode? createMethod,
     string? createVerb,
     string? methodPrefix,
-    INamedTypeSymbol? returnType)
+    INamedTypeSymbol? returnType,
+    bool allowPartialParameterOverlap = false)
 {
     public CreateMethodMode? CreateMethod { get; } = createMethod;
     public string? CreateVerb { get; } = createVerb;
     public string? MethodPrefix { get; } = methodPrefix;
     public INamedTypeSymbol? ReturnType { get; } = returnType;
+    public bool AllowPartialParameterOverlap { get; } = allowPartialParameterOverlap;
 }

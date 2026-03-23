@@ -26,6 +26,9 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     public IList<IFluentMethod> FluentMethods { get; set; } = [];
 
     public ImmutableArray<IParameterSymbol> GenericConstructorParameters => [
+        ..ThreadedParameters
+            .Select(b => b.TargetParameter)
+            .Where(parameter => parameter.Type.IsOpenGenericType()),
         ..KnownConstructorParameters
             .Where(parameter => parameter.Type.IsOpenGenericType())
     ];
@@ -50,6 +53,8 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     public bool IsRecord { get; set; }  = false;
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; set; } = [];
+
+    public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
 
     public INamedTypeSymbol RootType { get; } = rootType;
 

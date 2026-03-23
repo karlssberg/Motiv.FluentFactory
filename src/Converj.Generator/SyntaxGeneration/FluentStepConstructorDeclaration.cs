@@ -12,6 +12,14 @@ internal static class FluentStepConstructorDeclaration
     {
         var constructorParameters = CreateFluentStepConstructorParameters(step);
 
+        var threadedParamAssignments = step.ThreadedParameters
+            .Select(b =>
+                ExpressionStatement(
+                    AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(b.TargetParameter.Name.ToParameterFieldName())),
+                        IdentifierName(b.TargetParameter.Name.ToCamelCase()))));
+
         var requiredParamAssignments = step.KnownConstructorParameters
             .Select(p =>
                 ExpressionStatement(
@@ -22,13 +30,17 @@ internal static class FluentStepConstructorDeclaration
 
         var optionalParamInitializations = GetOptionalParameterInitializations(step);
 
+        var allAssignments = threadedParamAssignments
+            .Concat(requiredParamAssignments)
+            .Concat(optionalParamInitializations)
+            .ToArray();
+
         var constructor = ConstructorDeclaration(Identifier(step.Name))
             .WithModifiers(TokenList(
                 Token(SyntaxKind.InternalKeyword)))
             .WithParameterList(
                 ParameterList(SeparatedList<ParameterSyntax>(constructorParameters)))
-            .WithBody(Block(
-                requiredParamAssignments.Concat(optionalParamInitializations).ToArray()));
+            .WithBody(Block(allAssignments));
         return constructor;
     }
 
@@ -36,7 +48,13 @@ internal static class FluentStepConstructorDeclaration
     {
         var isAllOptionalStep = step is RegularFluentStep { IsAllOptionalStep: true };
 
-        return step.KnownConstructorParameters
+        var threadedParams = step.ThreadedParameters
+            .Select(b =>
+                Parameter(Identifier(b.TargetParameter.Name.ToCamelCase()))
+                    .WithType(ParseTypeName(b.TargetParameter.Type.ToGlobalDisplayString()))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))));
+
+        var regularParams = step.KnownConstructorParameters
             .Select(parameter =>
             {
                 var param = Parameter(Identifier(parameter.Name.ToCamelCase()))
@@ -50,7 +68,9 @@ internal static class FluentStepConstructorDeclaration
                 }
 
                 return param;
-            })
+            });
+
+        return threadedParams.Concat(regularParams)
             .InterleaveWith(Token(SyntaxKind.CommaToken));
     }
 

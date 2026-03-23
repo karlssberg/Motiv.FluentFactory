@@ -23,6 +23,8 @@ internal record FluentFactoryCompilationUnit(INamedTypeSymbol RootType)
 
     public bool IsRecord { get; set; }
 
+    public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
+
     public IEnumerable<Diagnostic> Diagnostics { get; set; } = [];
 
     public bool IsEmpty => FluentMethods.IsEmpty && FluentSteps.IsEmpty;

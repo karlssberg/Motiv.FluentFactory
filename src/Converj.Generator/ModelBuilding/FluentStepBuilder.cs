@@ -151,9 +151,8 @@ internal class FluentStepBuilder(
     {
         var parameterStoragePairs =
             from parameter in knownConstructorParameters
-            let fieldStorage = new FieldStorage(parameter.Name.ToParameterFieldName(), parameter.Type,
-                rootType.ContainingNamespace)
-            select new KeyValuePair<IParameterSymbol, IFluentValueStorage>(parameter, fieldStorage);
+            select new KeyValuePair<IParameterSymbol, IFluentValueStorage>(
+                parameter, FieldStorage.FromParameter(parameter, rootType.ContainingNamespace));
 
         return new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(parameterStoragePairs);
     }

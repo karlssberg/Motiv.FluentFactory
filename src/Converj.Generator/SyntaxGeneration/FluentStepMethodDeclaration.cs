@@ -117,13 +117,28 @@ internal static class FluentStepMethodDeclaration
         IFluentMethod method,
         ParameterSequence knownConstructorParameters)
     {
-        return knownConstructorParameters
-            .Select(parameter =>
-                Argument(
-                    MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        ThisExpression(),
-                        IdentifierName(parameter.Name.ToParameterFieldName()))))
+        // Root methods handle threading via RewriteRootMethodForThreadedParameters in RootTypeDeclaration.
+        var threadedArgs = Enumerable.Empty<ArgumentSyntax>();
+        if (knownConstructorParameters.Any()
+            && method.Return is IFluentStep { ThreadedParameters.IsEmpty: false } nextStep)
+        {
+            threadedArgs = nextStep.ThreadedParameters
+                .Select(b =>
+                    Argument(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(b.TargetParameter.Name.ToParameterFieldName()))));
+        }
+
+        return threadedArgs
+            .Concat(knownConstructorParameters
+                .Select(parameter =>
+                    Argument(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(parameter.Name.ToParameterFieldName())))))
             .Concat(
                 method.MethodParameters.Select(p => p.ParameterSymbol.Name.ToCamelCase())
                     .Select(IdentifierName)

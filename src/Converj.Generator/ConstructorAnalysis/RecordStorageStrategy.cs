@@ -21,11 +21,7 @@ internal class RecordStorageStrategy : IStorageDetectionStrategy
 
         foreach (var parameter in constructor.Parameters)
         {
-            var property = containingType
-                .GetMembers()
-                .OfType<IPropertySymbol>()
-                .FirstOrDefault(p => p.Name.Equals(parameter.Name, StringComparison.OrdinalIgnoreCase));
-
+            var property = containingType.FindRecordProperty(parameter);
             if (property is null) continue;
 
             results[parameter] =

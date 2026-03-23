@@ -14,6 +14,8 @@ internal class FluentModelFactory(Compilation compilation)
 
     private FluentMethodSelector _methodSelector = null!;
     private FluentStepBuilder _stepBuilder = null!;
+    private ImmutableArray<FluentParameterBinding> _threadedParameters = [];
+    private INamedTypeSymbol _rootType = null!;
 
     public FluentFactoryCompilationUnit CreateFluentFactoryCompilationUnit(
         INamedTypeSymbol rootType,
@@ -44,6 +46,10 @@ internal class FluentModelFactory(Compilation compilation)
         _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
+        _rootType = rootType;
+
+        var fluentParameterMembers = FluentParameterAnalyzer.Analyze(rootType, _diagnostics);
+        _threadedParameters = CreateThreadedParameterBindings(rootType, fluentParameterMembers, fluentConstructorContexts);
 
         var usings = GetUsingStatements(fluentConstructorContexts);
 
@@ -76,6 +82,11 @@ internal class FluentModelFactory(Compilation compilation)
             })
             .ToImmutableArray();
 
+        if (!_threadedParameters.IsEmpty)
+        {
+            PropagateThreadedParametersToSteps(fluentBuilderSteps);
+        }
+
         // Handle multi-param all-optional constructors via post-processing
         var (gatewayMethods, gatewaySteps) = CreateAllOptionalStepsAndGatewayMethods(
             rootType, stepTrie.Root, fluentBuilderSteps.Length);
@@ -91,10 +102,11 @@ internal class FluentModelFactory(Compilation compilation)
             FluentMethods = fluentRootMethods,
             FluentSteps = fluentBuilderSteps,
             Usings = usings,
-            IsStatic = sampleConstructorContext.IsStatic,
+            IsStatic = sampleConstructorContext.IsStatic && _threadedParameters.IsEmpty,
             TypeKind = sampleConstructorContext.TypeKind,
             Accessibility = sampleConstructorContext.Accessibility,
             IsRecord = sampleConstructorContext.IsRecord,
+            ThreadedParameters = _threadedParameters,
             Diagnostics = _diagnostics
         };
     }
@@ -141,13 +153,8 @@ internal class FluentModelFactory(Compilation compilation)
         {
             if (!valueStorages.ContainsKey(parameter))
             {
-                var fieldStorage = new FieldStorage(
-                    parameter.Name.ToParameterFieldName(),
-                    parameter.Type,
-                    rootType.ContainingNamespace)
-                {
-                    IsReadOnly = false
-                };
+                var fieldStorage = FieldStorage.FromParameter(parameter, rootType.ContainingNamespace)
+                    with { IsReadOnly = false };
                 valueStorages.Add(parameter, fieldStorage);
             }
         }
@@ -183,8 +190,11 @@ internal class FluentModelFactory(Compilation compilation)
 
         var creationMethods =
             from value in node.EndValues
-            where node.Key.Length >= value.RequiredParameterCount
-            where node.Key.Length <= value.Constructor.Parameters.Length
+            let preSatisfiedNames = IsSelfReferencing(value.Constructor, _rootType)
+                ? new HashSet<string>()
+                : GetPreSatisfiedParameterNames(value.Constructor)
+            where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count
+            where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count
             where value.CreateMethod != CreateMethodMode.None
             let verb = value.Context.CreateVerb ?? "Create"
             let methodName = value.CreateMethod == CreateMethodMode.Fixed
@@ -196,14 +206,16 @@ internal class FluentModelFactory(Compilation compilation)
                 .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
                 .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))
             let hasStep = node.Key.Length > 0
+            let threadedParamFields = GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
             let allParameterFields = hasStep
-                ? node.Key.AddRange(optionalParamFields)
-                : node.Key
+                ? threadedParamFields.AddRange(node.Key).AddRange(optionalParamFields)
+                : threadedParamFields.AddRange(node.Key)
+            let mergedValueSources = MergeThreadedValueSources(value.Constructor, valueSources, preSatisfiedNames)
             select new CreationMethod(
                 rootType.ContainingNamespace,
                 value,
                 allParameterFields,
-                valueSources,
+                mergedValueSources,
                 methodName);
 
         foreach (var createMethod in creationMethods)
@@ -212,6 +224,188 @@ internal class FluentModelFactory(Compilation compilation)
             yield return createMethod;
         }
     }
+
+    /// <summary>
+    /// Gets FluentMethodParameter entries for threaded parameters of a constructor,
+    /// ordered by their position in the target constructor.
+    /// </summary>
+    private ImmutableArray<FluentMethodParameter> GetThreadedParameterFields(
+        IMethodSymbol constructor,
+        HashSet<string> preSatisfiedNames)
+    {
+        if (preSatisfiedNames.Count == 0)
+            return [];
+
+        return
+        [
+            ..constructor.Parameters
+                .Where(p => preSatisfiedNames.Contains(p.Name))
+                .Select(p => new FluentMethodParameter(p, p.Name))
+        ];
+    }
+
+    /// <summary>
+    /// Merges threaded parameter storage into value sources, ordered by the target constructor's parameter positions.
+    /// This ensures the final constructor call has all arguments in the correct order.
+    /// </summary>
+    private OrderedDictionary<IParameterSymbol, IFluentValueStorage> MergeThreadedValueSources(
+        IMethodSymbol constructor,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> stepValueSources,
+        HashSet<string> preSatisfiedNames)
+    {
+        if (preSatisfiedNames.Count == 0)
+            return stepValueSources;
+
+        // Build a new OrderedDictionary in the target constructor's parameter order
+        var merged = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>();
+
+        foreach (var ctorParam in constructor.Parameters)
+        {
+            if (preSatisfiedNames.Contains(ctorParam.Name))
+            {
+                merged.Add(ctorParam, FieldStorage.FromParameter(ctorParam, _rootType.ContainingNamespace));
+            }
+            else
+            {
+                // Step-acquired param — find it in the existing value sources
+                var existingEntry = stepValueSources
+                    .FirstOrDefault(kvp => kvp.Key.Name == ctorParam.Name);
+                if (existingEntry.Value is not null)
+                {
+                    merged.Add(existingEntry.Key, existingEntry.Value);
+                }
+            }
+        }
+
+        return merged;
+    }
+
+    private static bool IsSelfReferencing(IMethodSymbol constructor, INamedTypeSymbol rootType) =>
+        SymbolEqualityComparer.Default.Equals(constructor.ContainingType, rootType);
+
+    /// <summary>
+    /// Checks type compatibility between a factory member type and a target constructor parameter type.
+    /// Handles type parameters from different generic types by comparing ordinal positions,
+    /// since they will be unified at instantiation time via the open generic type reference.
+    /// </summary>
+    private static bool AreTypesCompatible(Compilation compilation, ITypeSymbol sourceType, ITypeSymbol targetType)
+    {
+        if (compilation.HasImplicitConversion(sourceType, targetType))
+            return true;
+
+        // Type parameters from different generic types (e.g., T from Container<T> vs T from Widget<T>)
+        // are different symbols but will be the same type at instantiation since they share
+        // the same ordinal position via the open generic type reference.
+        if (sourceType is ITypeParameterSymbol sourceTypeParam &&
+            targetType is ITypeParameterSymbol targetTypeParam)
+        {
+            return sourceTypeParam.Ordinal == targetTypeParam.Ordinal;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Sets ThreadedParameters on all steps and adds threaded param field storage to each step's ValueStorage.
+    /// </summary>
+    private void PropagateThreadedParametersToSteps(ImmutableArray<IFluentStep> steps)
+    {
+        foreach (var step in steps)
+        {
+            step.ThreadedParameters = _threadedParameters;
+
+            foreach (var binding in _threadedParameters)
+            {
+                if (!step.ValueStorage.ContainsKey(binding.TargetParameter))
+                {
+                    step.ValueStorage.Add(binding.TargetParameter,
+                        FieldStorage.FromParameter(binding.TargetParameter, _rootType.ContainingNamespace));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Creates bindings between [FluentParameter] members and target constructor parameters.
+    /// </summary>
+    private ImmutableArray<FluentParameterBinding> CreateThreadedParameterBindings(
+        INamedTypeSymbol rootType,
+        ImmutableArray<FluentParameterMember> fluentParameterMembers,
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        if (fluentParameterMembers.IsEmpty)
+            return [];
+
+        var bindings = ImmutableArray.CreateBuilder<FluentParameterBinding>();
+
+        var allTargetParams = fluentConstructorContexts
+            .Where(ctx => !IsSelfReferencing(ctx.Constructor, rootType))
+            .SelectMany(ctx => ctx.Constructor.Parameters)
+            .ToList();
+
+        foreach (var member in fluentParameterMembers)
+        {
+            var matchingParams = allTargetParams
+                .Where(p => string.Equals(p.Name, member.TargetParameterName, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (matchingParams.Count == 0)
+            {
+                _diagnostics.Add(Diagnostic.Create(
+                    FluentDiagnostics.FluentParameterNoMatch,
+                    member.Location,
+                    member.MemberIdentifierName,
+                    member.TargetParameterName));
+                continue;
+            }
+
+            // Check type assignability for all matches
+            var allAssignable = true;
+            foreach (var targetParam in matchingParams)
+            {
+                if (!AreTypesCompatible(compilation, member.Type, targetParam.Type))
+                {
+                    _diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.FluentParameterTypeMismatch,
+                        member.Location,
+                        member.MemberIdentifierName,
+                        member.Type.ToDisplayString(),
+                        targetParam.Name,
+                        targetParam.Type.ToDisplayString()));
+                    allAssignable = false;
+                }
+            }
+
+            if (!allAssignable) continue;
+
+            // Create bindings for each matching parameter (deduped by constructor)
+            var addedConstructors = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
+            foreach (var targetParam in matchingParams)
+            {
+                var constructor = (IMethodSymbol)targetParam.ContainingSymbol;
+                if (addedConstructors.Add(constructor))
+                {
+                    bindings.Add(new FluentParameterBinding(member, targetParam));
+                }
+            }
+        }
+
+        return bindings.ToImmutable();
+    }
+
+    /// <summary>
+    /// Gets the set of pre-satisfied parameter names for a given constructor based on threaded bindings.
+    /// Matches by parameter name against all bindings (constructor identity is validated during binding creation).
+    /// </summary>
+    private HashSet<string> GetPreSatisfiedParameterNames(IMethodSymbol constructor)
+    {
+        var constructorParamNames = new HashSet<string>(constructor.Parameters.Select(p => p.Name));
+        return new HashSet<string>(
+            _threadedParameters
+                .Where(b => constructorParamNames.Contains(b.TargetParameter.Name))
+                .Select(b => b.TargetParameter.Name));
+    }
+
 
     private Trie<FluentMethodParameter, ConstructorMetadata> CreateFluentStepTrie(
         ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -231,8 +425,13 @@ internal class FluentModelFactory(Compilation compilation)
                 return new FluentMethodParameter(parameter, methodNames);
             }
 
+            var preSatisfiedNames = IsSelfReferencing(constructorContext.Constructor, _rootType)
+                ? new HashSet<string>()
+                : GetPreSatisfiedParameterNames(constructorContext.Constructor);
+
             var requiredParameters = constructorContext.Constructor.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
+                .Where(p => !preSatisfiedNames.Contains(p.Name))
                 .Select(ToFluentMethodParameter);
 
             var metadata = new ConstructorMetadata(constructorContext);
@@ -292,7 +491,7 @@ internal class FluentModelFactory(Compilation compilation)
                 allOptionalParams.Select(p =>
                     new KeyValuePair<IParameterSymbol, IFluentValueStorage>(
                         p,
-                        new FieldStorage(p.Name.ToParameterFieldName(), p.Type, rootType.ContainingNamespace))));
+                        FieldStorage.FromParameter(p, rootType.ContainingNamespace))));
 
             var knownConstructorParameters = new ParameterSequence(allOptionalParams);
 

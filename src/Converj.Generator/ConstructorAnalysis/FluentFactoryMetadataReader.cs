@@ -13,6 +13,7 @@ internal static class FluentFactoryMetadataReader
     private const string CreateVerbKey = "CreateVerb";
     private const string MethodPrefixKey = "MethodPrefix";
     private const string ReturnTypeKey = "ReturnType";
+    private const string AllowPartialParameterOverlapKey = "AllowPartialParameterOverlap";
 
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentConstructor attributes.
@@ -29,7 +30,7 @@ internal static class FluentFactoryMetadataReader
                 if (typeSymbol is null)
                     return FluentFactoryMetadata.Invalid;
 
-                var (createMethod, createVerb, methodPrefix, returnType) = ReadNamedArguments(attribute.NamedArguments);
+                var (createMethod, createVerb, methodPrefix, returnType, _) = ReadNamedArguments(attribute.NamedArguments);
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
@@ -100,9 +101,9 @@ internal static class FluentFactoryMetadataReader
         if (attribute is null)
             return new FluentFactoryDefaults(null, null, null, null);
 
-        var (createMethod, createVerb, methodPrefix, returnType) = ReadNamedArguments(attribute.NamedArguments);
+        var (createMethod, createVerb, methodPrefix, returnType, allowPartialOverlap) = ReadNamedArguments(attribute.NamedArguments);
 
-        return new FluentFactoryDefaults(createMethod, createVerb, methodPrefix, returnType);
+        return new FluentFactoryDefaults(createMethod, createVerb, methodPrefix, returnType, allowPartialOverlap);
     }
 
     /// <summary>
@@ -111,13 +112,14 @@ internal static class FluentFactoryMetadataReader
     /// </summary>
     /// <param name="namedArguments">The named arguments from an attribute.</param>
     /// <returns>A tuple of nullable CreateMethod, CreateVerb, and MethodPrefix values.</returns>
-    private static (CreateMethodMode? CreateMethod, string? CreateVerb, string? MethodPrefix, INamedTypeSymbol? ReturnType) ReadNamedArguments(
+    private static (CreateMethodMode? CreateMethod, string? CreateVerb, string? MethodPrefix, INamedTypeSymbol? ReturnType, bool AllowPartialParameterOverlap) ReadNamedArguments(
         ImmutableArray<KeyValuePair<string, TypedConstant>> namedArguments)
     {
         CreateMethodMode? createMethod = null;
         string? createVerb = null;
         string? methodPrefix = null;
         INamedTypeSymbol? returnType = null;
+        var allowPartialParameterOverlap = false;
 
         foreach (var arg in namedArguments)
         {
@@ -135,10 +137,13 @@ internal static class FluentFactoryMetadataReader
                 case ReturnTypeKey:
                     returnType = arg.Value.Value as INamedTypeSymbol;
                     break;
+                case AllowPartialParameterOverlapKey:
+                    allowPartialParameterOverlap = arg.Value.Value is true;
+                    break;
             }
         }
 
-        return (createMethod, createVerb, methodPrefix, returnType);
+        return (createMethod, createVerb, methodPrefix, returnType, allowPartialParameterOverlap);
     }
 
     /// <summary>

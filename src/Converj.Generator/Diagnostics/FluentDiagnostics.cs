@@ -283,4 +283,114 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] applied to a member of a type without [FluentFactory].
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterWithoutFluentFactory = new(
+        id: "MFFG0025",
+        title: "FluentParameter on type without FluentFactory",
+        messageFormat:
+        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' does not have the [FluentFactory] attribute",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] applied to a member of a static factory type.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterOnStaticFactory = new(
+        id: "MFFG0026",
+        title: "FluentParameter on static factory type",
+        messageFormat:
+        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' is static. Fluent parameter threading requires a non-static factory type.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] applied to a property without a getter.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterPropertyWithoutGetter = new(
+        id: "MFFG0027",
+        title: "FluentParameter property has no getter",
+        messageFormat:
+        "Property '{0}' is marked with [FluentParameter] but has no getter. The generator must be able to read the value to thread it to target constructors.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for duplicate [FluentParameter] mappings to the same target parameter name.
+    /// </summary>
+    public static readonly DiagnosticDescriptor DuplicateFluentParameterMapping = new(
+        id: "MFFG0028",
+        title: "Duplicate FluentParameter mapping",
+        messageFormat:
+        "Multiple members map to target parameter '{0}': '{1}' and '{2}'",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] where the name matches a target constructor parameter
+    /// but the type is not assignable.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterTypeMismatch = new(
+        id: "MFFG0029",
+        title: "FluentParameter type mismatch",
+        messageFormat:
+        "Member '{0}' of type '{1}' matches target parameter name '{2}' but the type is not assignable to the target parameter type '{3}'",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] that does not match any target constructor parameter.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterNoMatch = new(
+        id: "MFFG0030",
+        title: "FluentParameter has no matching target parameter",
+        messageFormat:
+        "Member '{0}' with [FluentParameter(\"{1}\")] does not match any target constructor parameter",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentParameter] that matches some but not all target constructors.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterPartialOverlap = new(
+        id: "MFFG0031",
+        title: "FluentParameter partial overlap",
+        messageFormat:
+        "Member '{0}' with [FluentParameter(\"{1}\")] matches only some target constructors. Set AllowPartialParameterOverlap = true on [FluentFactory] to allow this.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for target constructor parameter that has [FluentMethod] or [MultipleFluentMethods]
+    /// but is pre-satisfied by a [FluentParameter] binding.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentParameterOverridesFluentMethod = new(
+        id: "MFFG0032",
+        title: "FluentParameter overrides FluentMethod",
+        messageFormat:
+        "Target parameter '{0}' has [FluentMethod] or [MultipleFluentMethods] but is pre-satisfied by [FluentParameter] on member '{1}'. The method attribute has no effect.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Info,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for static and instance entry methods with the same name and signature.
+    /// </summary>
+    public static readonly DiagnosticDescriptor StaticInstanceMethodNameCollision = new(
+        id: "MFFG0033",
+        title: "Static/instance method name collision",
+        messageFormat:
+        "Method '{0}' on '{1}' conflicts between static (self-referencing) and instance (external target) chains. Rename the parameter using [FluentMethod] on one of the target constructors.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

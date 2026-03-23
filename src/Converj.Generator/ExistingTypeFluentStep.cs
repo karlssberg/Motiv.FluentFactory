@@ -39,7 +39,9 @@ internal class ExistingTypeFluentStep(
     public bool IsRecord { get; } = constructorMetadata.Constructor.ContainingType.IsRecord;
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; set; } = [];
-    
+
+    public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
+
     public ImmutableArray<IMethodSymbol> CandidateConstructors { get; set; }
     
     public FluentConstructorContext ConstructorContext => constructorMetadata.Context;

@@ -10,11 +10,8 @@ namespace Converj.Generator.ConstructorAnalysis;
 internal class PrimaryConstructorStorageStrategy : IStorageDetectionStrategy
 {
     /// <inheritdoc />
-    public bool CanHandle(IMethodSymbol constructor, SemanticModel semanticModel)
-    {
-        var syntaxNode = constructor.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax();
-        return syntaxNode is TypeDeclarationSyntax { ParameterList: not null };
-    }
+    public bool CanHandle(IMethodSymbol constructor, SemanticModel semanticModel) =>
+        constructor.ContainingType.FindPrimaryConstructor() is not null;
 
     /// <inheritdoc />
     public void PopulateStorage(
@@ -56,7 +53,7 @@ internal class PrimaryConstructorStorageStrategy : IStorageDetectionStrategy
             {
                 case IFieldSymbol fieldSymbol:
                 {
-                    var initializer = GetInitializerSyntax(fieldSymbol);
+                    var initializer = fieldSymbol.GetInitializerSyntax();
                     if (initializer is null) break;
 
                     foreach (var parameter in GetParameterSymbols(initializer))
@@ -69,7 +66,7 @@ internal class PrimaryConstructorStorageStrategy : IStorageDetectionStrategy
                 }
                 case IPropertySymbol propertySymbol:
                 {
-                    var initializer = GetInitializerSyntax(propertySymbol);
+                    var initializer = propertySymbol.GetInitializerSyntax();
                     if (initializer is null) break;
 
                     foreach (var parameter in GetParameterSymbols(initializer))
@@ -106,17 +103,4 @@ internal class PrimaryConstructorStorageStrategy : IStorageDetectionStrategy
         return SymbolEqualityComparer.Default.Equals(symbolInfo.Symbol, parameter);
     }
 
-    private static ExpressionSyntax? GetInitializerSyntax(ISymbol symbol)
-    {
-        var declaringSyntax = symbol.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax();
-
-        return symbol switch
-        {
-            IFieldSymbol when declaringSyntax is VariableDeclaratorSyntax fieldDeclarator =>
-                fieldDeclarator.Initializer?.Value,
-            IPropertySymbol when declaringSyntax is PropertyDeclarationSyntax propertyDeclaration =>
-                propertyDeclaration.Initializer?.Value,
-            _ => null
-        };
-    }
 }
