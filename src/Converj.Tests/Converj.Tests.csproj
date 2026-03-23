@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Converj.Tests</RootNamespace>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <NoWarn>CS1591;NU1603</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Converj.Generator\Converj.Generator.csproj" GeneratePathProperty="true" PrivateAssets="all" OutputItemType="Analyzer" />
+        <ProjectReference Include="..\Converj.Attributes\Converj.Attributes.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="Shouldly" />
+        <PackageReference Include="AutoFixture" />
+        <PackageReference Include="AutoFixture.AutoNSubstitute" />
+        <PackageReference Include="AutoFixture.Xunit2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Update="coverlet.collector">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+</Project>

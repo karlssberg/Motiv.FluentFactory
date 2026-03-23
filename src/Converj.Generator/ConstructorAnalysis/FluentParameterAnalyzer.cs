@@ -98,9 +98,10 @@ internal static class FluentParameterAnalyzer
         foreach (var parameter in primaryConstructor.Parameters)
         {
             var attribute = parameter.GetAttributes(TypeName.FluentParameterAttribute).FirstOrDefault();
-            if (attribute is null) continue;
+            if (attribute is null && !rootType.IsRecord) continue;
 
-            var parameterName = ExtractParameterName(attribute) ?? NormalizeMemberName(parameter.Name);
+            var parameterName = (attribute is not null ? ExtractParameterName(attribute) : null)
+                ?? NormalizeMemberName(parameter.Name);
 
             // Already handled via field/property-level attribute
             if (seenParameterNames.ContainsKey(parameterName)) continue;
@@ -109,9 +110,10 @@ internal static class FluentParameterAnalyzer
             var (memberName, isProperty, requiresGeneration) =
                 ResolveParameterStorage(rootType, parameter, memberStorageMap);
 
+            var isImplicit = attribute is null;
             var member = new FluentParameterMember(
                 parameterName, parameter.Type, memberName, isProperty, location,
-                requiresGeneration, requiresGeneration ? parameter.Name : null);
+                requiresGeneration, requiresGeneration ? parameter.Name : null, isImplicit);
 
             AddMember(member, seenParameterNames, members, diagnostics);
         }

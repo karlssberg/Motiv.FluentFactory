@@ -56,37 +56,9 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.Point{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_2__Converj_Example_Point<T> Z(in T z)
+        public global::Converj.Example.Point<T> Z(in T z)
         {
-            return new global::Converj.Example.Step_2__Converj_Example_Point<T>(this._x__parameter, this._y__parameter, z);
-        }
-    }
-
-    /// <summary>
-    ///     <seealso cref="Converj.Example.Point{T}"/>
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-    internal readonly struct Step_2__Converj_Example_Point<T> where T : global::System.Numerics.INumber<T>
-    {
-        private readonly T _x__parameter;
-        private readonly T _y__parameter;
-        private readonly T _z__parameter;
-        internal Step_2__Converj_Example_Point(in T x, in T y, in T z)
-        {
-            this._x__parameter = x;
-            this._y__parameter = y;
-            this._z__parameter = z;
-        }
-
-        /// <summary>
-        /// Creates a new instance using constructor Converj.Example.Point&lt;T&gt;.Point(T X, T Y, T Z).
-        ///
-        ///     <seealso cref="Converj.Example.Point{T}"/>
-        /// </summary>
-        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Point<T> CreatePoint()
-        {
-            return new global::Converj.Example.Point<T>(this._x__parameter, this._y__parameter, this._z__parameter);
+            return new global::Converj.Example.Point<T>(this._x__parameter, this._y__parameter, z);
         }
     }
 }

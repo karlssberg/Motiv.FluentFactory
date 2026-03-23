@@ -13,7 +13,8 @@ internal class FluentParameterMember(
     bool isProperty,
     Location location,
     bool requiresGeneratedField = false,
-    string? primaryConstructorParameterName = null)
+    string? primaryConstructorParameterName = null,
+    bool isImplicit = false)
 {
     /// <summary>
     /// The target constructor parameter name to bind to (from the attribute).
@@ -51,4 +52,11 @@ internal class FluentParameterMember(
     /// Only set when <see cref="RequiresGeneratedField"/> is true.
     /// </summary>
     public string? PrimaryConstructorParameterName { get; } = primaryConstructorParameterName;
+
+    /// <summary>
+    /// True when this member was auto-detected from a record primary constructor parameter
+    /// rather than explicitly attributed with [FluentParameter]. Implicit members are
+    /// silently skipped when no matching target parameters exist.
+    /// </summary>
+    public bool IsImplicit { get; } = isImplicit;
 }

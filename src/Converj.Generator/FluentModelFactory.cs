@@ -281,7 +281,9 @@ internal class FluentModelFactory(Compilation compilation)
     }
 
     private static bool IsSelfReferencing(IMethodSymbol constructor, INamedTypeSymbol rootType) =>
-        SymbolEqualityComparer.Default.Equals(constructor.ContainingType, rootType);
+        SymbolEqualityComparer.Default.Equals(
+            constructor.ContainingType.OriginalDefinition,
+            rootType.OriginalDefinition);
 
     /// <summary>
     /// Checks type compatibility between a factory member type and a target constructor parameter type.
@@ -351,11 +353,15 @@ internal class FluentModelFactory(Compilation compilation)
 
             if (matchingParams.Count == 0)
             {
-                _diagnostics.Add(Diagnostic.Create(
-                    FluentDiagnostics.FluentParameterNoMatch,
-                    member.Location,
-                    member.MemberIdentifierName,
-                    member.TargetParameterName));
+                if (!member.IsImplicit)
+                {
+                    _diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.FluentParameterNoMatch,
+                        member.Location,
+                        member.MemberIdentifierName,
+                        member.TargetParameterName));
+                }
+
                 continue;
             }
 
