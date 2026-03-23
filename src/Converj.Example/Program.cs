@@ -27,4 +27,4 @@ Line3D<double> line3D = Line.X(10d).Y(20d).Z(30d);
 
 Animal dog = Animal.CreateDog();
 Animal cat = Animal.CreateCat();
-Animal monster = Animal.WithEyeCount(2).CreateMonster();
+Animal monster = Animal.WithEyeCount(3).CreateMonster();
