@@ -49,7 +49,7 @@ internal static class FluentParameterAnalyzer
             var attribute = member.GetAttributes(TypeName.FluentParameterAttribute).FirstOrDefault();
             if (attribute is null) continue;
 
-            var parameterName = ExtractParameterName(attribute) ?? NormalizeMemberName(member.Name);
+            var parameterName = attribute.GetFirstStringArgument() ?? member.Name.StripLeadingUnderscores();
 
             var location = member.Locations.FirstOrDefault() ?? Location.None;
 
@@ -100,8 +100,8 @@ internal static class FluentParameterAnalyzer
             var attribute = parameter.GetAttributes(TypeName.FluentParameterAttribute).FirstOrDefault();
             if (attribute is null && !rootType.IsRecord) continue;
 
-            var parameterName = (attribute is not null ? ExtractParameterName(attribute) : null)
-                ?? NormalizeMemberName(parameter.Name);
+            var parameterName = attribute?.GetFirstStringArgument()
+                ?? parameter.Name.StripLeadingUnderscores();
 
             // Already handled via field/property-level attribute
             if (seenParameterNames.ContainsKey(parameterName)) continue;
@@ -198,20 +198,4 @@ internal static class FluentParameterAnalyzer
         members.Add(member);
     }
 
-    /// <summary>
-    /// Extracts the parameter name from the [FluentParameter] attribute's constructor argument.
-    /// Returns null when the parameterless constructor was used (name should be inferred from context).
-    /// </summary>
-    private static string? ExtractParameterName(AttributeData attribute)
-    {
-        if (attribute.ConstructorArguments.Length == 0) return null;
-        return attribute.ConstructorArguments[0].Value as string;
-    }
-
-    /// <summary>
-    /// Normalizes a member name to a canonical parameter name by stripping leading underscores.
-    /// For example, "_wheels" becomes "wheels" and "Scale" stays "Scale".
-    /// </summary>
-    private static string NormalizeMemberName(string name) =>
-        name.TrimStart('_');
 }

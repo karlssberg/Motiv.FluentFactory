@@ -48,17 +48,41 @@ internal static class CompilationUnit
         IEnumerable<TypeDeclarationSyntax> CreateTypeDeclarations(
             IEnumerable<IFluentStep> fluentSteps)
         {
+            var existingTypeGroups = new Dictionary<INamedTypeSymbol, List<ExistingTypeFluentStep>>(SymbolEqualityComparer.Default);
+            var outputOrder = new List<object>(); // INamedTypeSymbol (first-seen placeholder) or RegularFluentStep
+
             foreach (var step in fluentSteps)
             {
-                yield return
-                    step switch {
-                        ExistingTypeFluentStep existingPartialTypeStep =>
-                            ExistingPartialTypeStepDeclaration.Create(existingPartialTypeStep),
-                        RegularFluentStep regularFluentStep =>
-                            FluentStepDeclaration.Create(regularFluentStep),
-                        _ =>
-                            throw new NotSupportedException($"Step type {step.GetType()} is not supported.")
-                    };
+                switch (step)
+                {
+                    case ExistingTypeFluentStep existingStep:
+                        var containingType = existingStep.ConstructorContext.Constructor.ContainingType;
+                        if (!existingTypeGroups.TryGetValue(containingType, out var group))
+                        {
+                            group = [];
+                            existingTypeGroups[containingType] = group;
+                            outputOrder.Add(containingType);
+                        }
+                        group.Add(existingStep);
+                        break;
+
+                    case RegularFluentStep regularStep:
+                        outputOrder.Add(regularStep);
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"Step type {step.GetType()} is not supported.");
+                }
+            }
+
+            foreach (var entry in outputOrder)
+            {
+                yield return entry switch
+                {
+                    INamedTypeSymbol typeKey => ExistingPartialTypeStepDeclaration.CreateMerged(existingTypeGroups[typeKey]),
+                    RegularFluentStep regularStep => FluentStepDeclaration.Create(regularStep),
+                    _ => throw new NotSupportedException()
+                };
             }
         }
 

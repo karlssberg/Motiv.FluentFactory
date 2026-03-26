@@ -44,4 +44,15 @@ internal static class SymbolAttributeExtensions
     public static IEnumerable<AttributeData> GetAttributes<TAttribute>(this ISymbol type) where TAttribute : Attribute =>
         type.GetAttributes()
             .Where(attr => attr.AttributeClass?.ToDisplayString() == typeof(TAttribute).FullName);
+
+    /// <summary>
+    /// Extracts the first string constructor argument from an attribute, or null if the
+    /// attribute was constructed with no arguments (e.g., a parameterless constructor).
+    /// </summary>
+    /// <param name="attribute">The attribute data to inspect.</param>
+    /// <returns>The first constructor argument as a string, or null.</returns>
+    public static string? GetFirstStringArgument(this AttributeData attribute) =>
+        attribute.ConstructorArguments.Length > 0
+            ? attribute.ConstructorArguments[0].Value as string
+            : null;
 }

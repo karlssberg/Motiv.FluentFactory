@@ -7,28 +7,67 @@ namespace Converj.Generator.SyntaxGeneration;
 
 internal static class ExistingPartialTypeStepDeclaration
 {
+    /// <summary>
+    /// Creates a single partial type declaration from one step.
+    /// </summary>
     public static TypeDeclarationSyntax Create(
         ExistingTypeFluentStep step)
     {
-        var methodDeclarationSyntaxes = step.FluentMethods
-            .Select<IFluentMethod, MethodDeclarationSyntax>(method => ExistingPartialTypeMethodDeclaration.Create(method, step));
+        return CreateMerged([step]);
+    }
 
-        var parameterFieldDeclaration = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
+    /// <summary>
+    /// Creates a single partial type declaration by merging methods from multiple steps
+    /// for the same containing type. Each method retains its original step context for rendering.
+    /// </summary>
+    public static TypeDeclarationSyntax CreateMerged(
+        IReadOnlyList<ExistingTypeFluentStep> steps)
+    {
+        var representative = steps[0];
 
-        var identifier = IdentifierName(step.Name).Identifier;
-        var typeDeclaration = CreateTypeDeclarationSyntax(step, identifier)
+        var methodDeclarationSyntaxes = steps
+            .SelectMany(step => step.FluentMethods
+                .Select<IFluentMethod, MethodDeclarationSyntax>(method =>
+                    ExistingPartialTypeMethodDeclaration.Create(method, step)));
+
+        var mergedStorage = MergeValueStorage(steps);
+        var parameterFieldDeclaration = FieldAndPropertySyntax.CreateDeclarations(mergedStorage);
+
+        var identifier = IdentifierName(representative.Name).Identifier;
+        var typeDeclaration = CreateTypeDeclarationSyntax(representative, identifier)
             .WithMembers(List<MemberDeclarationSyntax>([
                 ..parameterFieldDeclaration,
                 ..methodDeclarationSyntaxes,
             ]));
 
-        // Only add [GeneratedCode] if the type doesn't already have its own factory file
-        // (which would emit [GeneratedCode] on the root type declaration).
-        if (!HasOwnFactoryDeclaration(step))
+        if (!HasOwnFactoryDeclaration(representative))
             typeDeclaration = typeDeclaration.WithAttributeLists(
                 SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()));
 
         return typeDeclaration;
+    }
+
+    /// <summary>
+    /// Merges value storage from multiple steps into a single dictionary.
+    /// For existing types, storage entries typically have DefinitionExists=true,
+    /// so no field declarations are emitted — the union is safe.
+    /// </summary>
+    private static OrderedDictionary<IParameterSymbol, IFluentValueStorage> MergeValueStorage(
+        IReadOnlyList<ExistingTypeFluentStep> steps)
+    {
+        if (steps.Count == 1) return steps[0].ValueStorage;
+
+        var merged = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>();
+        foreach (var step in steps)
+        {
+            foreach (var kvp in step.ValueStorage)
+            {
+                if (!merged.ContainsKey(kvp.Key))
+                    merged[kvp.Key] = kvp.Value;
+            }
+        }
+
+        return merged;
     }
 
     /// <summary>

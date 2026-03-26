@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Converj.Attributes;
+using static Converj.Example.Point;
 
 namespace Converj.Example;
 
@@ -23,14 +24,10 @@ internal class Test
 {
     public void TestMethod()
     {
-        var point1 = Point.X(1.0).Y(2.0).Z(3.0);
-        var point2 = Point.X(2.0).Y(4.0).Z(3.0);
-        var point3 = Point.X(3.0).Y(8.0).Z(3.0);
-        
         new Polygon<double>(1.0)
-            .WithPoint1(point1)
-            .WithPoint2(point2)
-            .WithPoint3(point3)
+            .WithPoint1(X(1.0).Y(2.0).Z(3.0))
+            .WithPoint2(X(2.0).Y(4.0).Z(3.0))
+            .WithPoint3(X(3.0).Y(8.0).Z(3.0))
             .CreateTriangle();
     }
 }

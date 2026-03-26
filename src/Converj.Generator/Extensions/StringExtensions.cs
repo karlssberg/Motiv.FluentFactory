@@ -78,6 +78,15 @@ internal static class StringExtensions
     }
 
     /// <summary>
+    /// Normalizes a member name to a canonical parameter name by stripping leading underscores.
+    /// For example, "_wheels" becomes "wheels" and "Scale" stays "Scale".
+    /// </summary>
+    /// <param name="name">The member name to normalize.</param>
+    /// <returns>The name with leading underscores removed.</returns>
+    public static string StripLeadingUnderscores(this string name) =>
+        name.TrimStart('_');
+
+    /// <summary>
     /// Derives a Create method suffix from a named type symbol by walking the containing type
     /// chain for nested types and joining with underscores (e.g., <c>Outer_Inner_Target</c>).
     /// </summary>

@@ -18,6 +18,7 @@ internal class TypeName
     public static readonly TypeName FluentMethodTemplateAttribute = new(GeneratorAttributesNamespace + "FluentMethodTemplateAttribute");
     public static readonly TypeName AsAttribute = new(GeneratorAttributesNamespace + "AsAttribute");
     public static readonly TypeName FluentParameterAttribute = new(GeneratorAttributesNamespace + "FluentParameterAttribute");
+    public static readonly TypeName FluentStorageAttribute = new(GeneratorAttributesNamespace + "FluentStorageAttribute");
 
     public static implicit operator string(TypeName typeName) => typeName._fullName;
 }

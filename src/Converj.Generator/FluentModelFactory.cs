@@ -45,7 +45,9 @@ internal class FluentModelFactory(Compilation compilation)
 
         _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
-        _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
+
+        var multiConstructorStepTypes = FindMultiConstructorStepTypes(fluentConstructorContexts);
+        _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics, multiConstructorStepTypes);
         _rootType = rootType;
 
         var fluentParameterMembers = FluentParameterAnalyzer.Analyze(rootType, _diagnostics);
@@ -660,6 +662,26 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         return (validContexts.ToImmutable(), diagnostics);
+    }
+
+    /// <summary>
+    /// Identifies target types that have multiple constructors with CreateMethod.None,
+    /// which require explicit [FluentStorage] for parameters beyond the shared prefix.
+    /// </summary>
+    private static HashSet<INamedTypeSymbol>? FindMultiConstructorStepTypes(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var groups = fluentConstructorContexts
+            .Where(ctx => ctx.CreateMethod == CreateMethodMode.None)
+            .Where(ctx => ctx.Constructor.ContainingType.CanBeCustomStep())
+            .GroupBy(ctx => ctx.Constructor.ContainingType, SymbolEqualityComparer.Default)
+            .Where(g => g.Count() > 1)
+            .Select(g => (INamedTypeSymbol)g.Key!)
+            .ToList();
+
+        if (groups.Count == 0) return null;
+
+        return new HashSet<INamedTypeSymbol>(groups, SymbolEqualityComparer.Default);
     }
 
     private static ImmutableArray<FluentConstructorContext> FilterErrorTypeConstructors(
