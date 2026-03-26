@@ -4,7 +4,7 @@ namespace Converj.Example
 {
     internal partial class Vehicles
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
         internal partial class Vehicle
         {
             /// <summary>
@@ -32,7 +32,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Vehicles.Car{TCarEngine}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Vehicles_Vehicle<TEngine> where TEngine : global::Converj.Example.Vehicles.ICarEngine
     {
         private readonly TEngine _engine__parameter;
@@ -54,7 +54,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Vehicles.Train{TEngine}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Vehicles_Vehicle<TEngine> where TEngine : global::Converj.Example.Vehicles.ITrainEngine
     {
         private readonly TEngine _engine__parameter;

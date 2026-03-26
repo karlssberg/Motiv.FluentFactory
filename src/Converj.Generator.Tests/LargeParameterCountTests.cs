@@ -54,7 +54,7 @@ public class LargeParameterCountTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -70,7 +70,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -92,7 +92,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -116,7 +116,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -142,7 +142,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -240,7 +240,7 @@ public class LargeParameterCountTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -256,7 +256,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -278,7 +278,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -302,7 +302,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -328,7 +328,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -356,7 +356,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_4__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -386,7 +386,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_5__Test_Factory
                 {
                     private readonly int _id__parameter;
@@ -418,7 +418,7 @@ public class LargeParameterCountTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_6__Test_Factory
                 {
                     private readonly int _id__parameter;

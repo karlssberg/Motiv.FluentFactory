@@ -35,7 +35,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -94,7 +94,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Factory
                 {
                     /// <summary>
@@ -153,7 +153,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial struct Factory
                 {
                     /// <summary>
@@ -212,7 +212,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -276,7 +276,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -341,7 +341,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -357,7 +357,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -379,7 +379,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -454,7 +454,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -470,7 +470,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
@@ -492,7 +492,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
@@ -580,7 +580,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -598,7 +598,7 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -618,7 +618,7 @@ public class RootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetB
                 {
                     /// <summary>
@@ -634,7 +634,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -699,7 +699,7 @@ public class RootTypeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -717,7 +717,7 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
@@ -737,7 +737,7 @@ public class RootTypeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetB
                 {
                     /// <summary>
@@ -753,7 +753,7 @@ public class RootTypeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;

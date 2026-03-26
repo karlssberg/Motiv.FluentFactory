@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record Animal
     {
         /// <summary>
@@ -71,7 +71,7 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Cat"/>
     ///     <seealso cref="Converj.Example.Dog"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Animal
     {
         private readonly int _legs__parameter;
@@ -106,7 +106,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Monster"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Animal
     {
         private readonly int _armCount__parameter;

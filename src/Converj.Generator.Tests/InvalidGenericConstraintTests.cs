@@ -51,7 +51,7 @@ public class InvalidGenericConstraintTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -68,7 +68,7 @@ public class InvalidGenericConstraintTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.Container{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct
                 {
                     private readonly T _value__parameter;
@@ -151,7 +151,7 @@ public class InvalidGenericConstraintTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -168,7 +168,7 @@ public class InvalidGenericConstraintTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.BrokenConstraint{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T> where T : class, struct
                 {
                     private readonly T _value__parameter;

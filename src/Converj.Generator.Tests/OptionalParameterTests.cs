@@ -38,7 +38,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -54,7 +54,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -137,7 +137,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -153,7 +153,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyHandler"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _host__parameter;
@@ -175,7 +175,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyHandler"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_1__Test_Factory
                 {
                     private readonly string _host__parameter;
@@ -263,7 +263,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -279,7 +279,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyWidget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -384,7 +384,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -400,7 +400,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -476,7 +476,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Animal
                 {
                     /// <summary>
@@ -545,7 +545,7 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.Cat"/>
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Animal
                 {
                     private readonly int _legs__parameter;
@@ -580,7 +580,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Fish"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Animal
                 {
                     private readonly int _finCount__parameter;
@@ -671,7 +671,7 @@ public class OptionalParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -687,7 +687,7 @@ public class OptionalParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;

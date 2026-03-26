@@ -25,7 +25,8 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts))
             .Concat(ValidateOptionalParameterAmbiguousChains(fluentConstructorContexts))
             .Concat(ValidateConflictingTypeConstraints(fluentConstructorContexts))
-            .Concat(ValidateReturnType(fluentConstructorContexts));
+            .Concat(ValidateReturnType(fluentConstructorContexts))
+            .Concat(ValidateMultipleConstructorsWithCreateMethodNone(fluentConstructorContexts));
     }
 
     private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -739,5 +740,43 @@ internal static class FluentConstructorValidatorExtensions
         }
 
         return false;
+    }
+
+    private static IEnumerable<Diagnostic> ValidateMultipleConstructorsWithCreateMethodNone(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var groups = fluentConstructorContexts
+            .Where(ctx => ctx.CreateMethod == CreateMethodMode.None)
+            .GroupBy(ctx => (ctx.Constructor.ContainingType, ctx.RootType),
+                ContainingAndRootTypeComparer.Default);
+
+        foreach (var group in groups)
+        {
+            foreach (var context in group.Skip(1))
+            {
+                yield return Diagnostic.Create(
+                    FluentDiagnostics.MultipleConstructorsWithCreateMethodNone,
+                    GetAttributeLocation(context.AttributeData),
+                    context.Constructor.ContainingType.ToDisplayString(),
+                    context.RootType.ToDisplayString());
+            }
+        }
+    }
+
+    private sealed class ContainingAndRootTypeComparer
+        : IEqualityComparer<(INamedTypeSymbol ContainingType, INamedTypeSymbol RootType)>
+    {
+        public static readonly ContainingAndRootTypeComparer Default = new();
+
+        public bool Equals(
+            (INamedTypeSymbol ContainingType, INamedTypeSymbol RootType) x,
+            (INamedTypeSymbol ContainingType, INamedTypeSymbol RootType) y) =>
+            SymbolEqualityComparer.Default.Equals(x.ContainingType, y.ContainingType)
+            && SymbolEqualityComparer.Default.Equals(x.RootType, y.RootType);
+
+        public int GetHashCode((INamedTypeSymbol ContainingType, INamedTypeSymbol RootType) obj) =>
+            unchecked(
+                SymbolEqualityComparer.Default.GetHashCode(obj.ContainingType) * 397
+                ^ SymbolEqualityComparer.Default.GetHashCode(obj.RootType));
     }
 }

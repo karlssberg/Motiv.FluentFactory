@@ -138,7 +138,6 @@ public class FluentFactoryGenerator : IIncrementalGenerator
 
         if (builder.IsEmpty || builder.Diagnostics.Any(d =>
                 d.Id == Diagnostics.FluentDiagnostics.UnresolvableCustomStepStorage.Id ||
-                d.Id == Diagnostics.FluentDiagnostics.MultiConstructorUnresolvableStorage.Id ||
                 d.Id == Diagnostics.FluentDiagnostics.FluentStoragePropertyWithoutGetter.Id ||
                 d.Id == Diagnostics.FluentDiagnostics.DuplicateFluentStorageMapping.Id))
             return;

@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial class Polygon<T>
         where T : global::System.Numerics.INumber<T>
     {
@@ -19,7 +19,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Triangle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly global::Converj.Example.Point<T> _point1__parameter;
@@ -43,7 +43,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Triangle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly global::Converj.Example.Point<T> _point1__parameter;
@@ -69,7 +69,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Triangle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_2__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly global::Converj.Example.Point<T> _point1__parameter;

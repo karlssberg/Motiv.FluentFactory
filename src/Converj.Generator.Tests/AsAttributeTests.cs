@@ -35,7 +35,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -51,7 +51,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{TNum}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly T _value__parameter;
@@ -115,7 +115,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Line
                 {
                     /// <summary>
@@ -130,7 +130,7 @@ public class AsAttributeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Line1D<TNum>
                 {
                     /// <summary>
@@ -144,7 +144,7 @@ public class AsAttributeTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Line2D<T>
                 {
                     /// <summary>
@@ -196,7 +196,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Square<TUnit>
                 {
                     /// <summary>
@@ -212,7 +212,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Square{TUnit}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Square____<T>
                 {
                     private readonly T _width__parameter;
@@ -241,7 +241,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Rectangle<T>
                 {
                     /// <summary>
@@ -257,7 +257,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Rectangle{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Rectangle____<T>
                 {
                     private readonly T _width__parameter;
@@ -279,7 +279,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Rectangle{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Rectangle____<T>
                 {
                     private readonly T _width__parameter;
@@ -363,7 +363,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -381,7 +381,7 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.Target1{T}"/>
                 ///     <seealso cref="Test.Target2{TNum}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly T _value1__parameter;
@@ -412,7 +412,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Target1{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T>
                 {
                     private readonly T _value1__parameter;
@@ -438,7 +438,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Target2{TNum}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T>
                 {
                     private readonly T _value1__parameter;
@@ -503,7 +503,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -532,7 +532,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Rectangle{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T>
                 {
                     private readonly T _width__parameter;
@@ -563,7 +563,7 @@ public class AsAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Square<TUnit>
                 {
                     /// <summary>
@@ -579,7 +579,7 @@ public class AsAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.Square{TUnit}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Square____<T>
                 {
                     private readonly T _width__parameter;

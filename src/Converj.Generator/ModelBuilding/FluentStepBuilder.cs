@@ -12,8 +12,7 @@ namespace Converj.Generator.ModelBuilding;
 /// </summary>
 internal class FluentStepBuilder(
     OrderedDictionary<ParameterSequence, RegularFluentStep> regularFluentSteps,
-    DiagnosticList diagnostics,
-    HashSet<INamedTypeSymbol>? multiConstructorStepTypes = null)
+    DiagnosticList diagnostics)
 {
     private readonly Dictionary<INamedTypeSymbol, Dictionary<string, IFluentValueStorage>> _fluentStorageCache = new(SymbolEqualityComparer.Default);
     /// <summary>
@@ -143,10 +142,8 @@ internal class FluentStepBuilder(
     }
 
     /// <summary>
-    /// Reports a diagnostic for each constructor parameter on a custom intermediate step
+    /// Reports a diagnostic (MFFG0024) for each constructor parameter on a custom intermediate step
     /// that has no accessible property or field for value storage.
-    /// For single-constructor types, reports an error (MFFG0024).
-    /// For multi-constructor types, reports a warning (MFFG0034) only for non-nullable parameters.
     /// </summary>
     /// <param name="step">The fluent step to check.</param>
     /// <param name="valueStorages">The value storage mappings for the step.</param>
@@ -156,9 +153,7 @@ internal class FluentStepBuilder(
     {
         if (step is not ExistingTypeFluentStep) return;
 
-        var containingType = step.CandidateConstructors.First().ContainingType;
-        var containingTypeDisplay = containingType.ToDisplayString();
-        var isMultiConstructor = multiConstructorStepTypes?.Contains(containingType) == true;
+        var containingTypeDisplay = step.CandidateConstructors.First().ContainingType.ToDisplayString();
 
         foreach (var storage in valueStorages)
         {
@@ -167,25 +162,11 @@ internal class FluentStepBuilder(
             var parameter = storage.Key;
             var location = parameter.Locations.FirstOrDefault() ?? Location.None;
 
-            if (isMultiConstructor)
-            {
-                // For multi-constructor types, only warn for non-nullable parameters
-                if (parameter.Type.NullableAnnotation == NullableAnnotation.Annotated) continue;
-
-                diagnostics.Add(Diagnostic.Create(
-                    FluentDiagnostics.MultiConstructorUnresolvableStorage,
-                    location,
-                    containingTypeDisplay,
-                    parameter.Name));
-            }
-            else
-            {
-                diagnostics.Add(Diagnostic.Create(
-                    FluentDiagnostics.UnresolvableCustomStepStorage,
-                    location,
-                    containingTypeDisplay,
-                    parameter.Name));
-            }
+            diagnostics.Add(Diagnostic.Create(
+                FluentDiagnostics.UnresolvableCustomStepStorage,
+                location,
+                containingTypeDisplay,
+                parameter.Name));
         }
     }
 

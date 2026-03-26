@@ -395,20 +395,6 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for multi-constructor step types where a non-nullable parameter
-    /// has no accessible storage and no [FluentStorage] declaration.
-    /// </summary>
-    public static readonly DiagnosticDescriptor MultiConstructorUnresolvableStorage = new(
-        id: "MFFG0034",
-        title: "Multi-constructor step type missing storage for non-nullable parameter",
-        messageFormat:
-        "Custom step type '{0}' has multiple constructors but no storage for non-nullable parameter '{1}'. " +
-        "Declare a member with [FluentStorage] to provide explicit storage.",
-        category: Category,
-        defaultSeverity: DiagnosticSeverity.Warning,
-        isEnabledByDefault: true);
-
-    /// <summary>
     /// Diagnostic for [FluentStorage] applied to a property without a getter.
     /// </summary>
     public static readonly DiagnosticDescriptor FluentStoragePropertyWithoutGetter = new(
@@ -428,6 +414,20 @@ public static class FluentDiagnostics
         title: "Duplicate FluentStorage mapping",
         messageFormat:
         "Multiple members map to storage parameter '{0}': '{1}' and '{2}'",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for multiple [FluentConstructor] attributes on the same type with CreateMethod.None.
+    /// When CreateMethod.None is in effect, the target type itself becomes the fluent step and all
+    /// generated methods live on the same type, preventing step ordering enforcement.
+    /// </summary>
+    public static readonly DiagnosticDescriptor MultipleConstructorsWithCreateMethodNone = new(
+        id: "MFFG0037",
+        title: "Multiple FluentConstructors with CreateMethod.None",
+        messageFormat:
+        "Type '{0}' has multiple [FluentConstructor] attributes for factory '{1}' with CreateMethod.None — only one constructor per type is allowed when CreateMethod.None is in effect",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);

@@ -40,7 +40,7 @@ public class PartiallyOpenGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -103,7 +103,7 @@ public class PartiallyOpenGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -172,7 +172,7 @@ public class PartiallyOpenGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -188,7 +188,7 @@ public class PartiallyOpenGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
@@ -210,7 +210,7 @@ public class PartiallyOpenGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;

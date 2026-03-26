@@ -36,7 +36,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -52,7 +52,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _value__parameter;
@@ -123,7 +123,7 @@ public class GenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -139,7 +139,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -161,7 +161,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -238,7 +238,7 @@ public class GenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -254,7 +254,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -276,7 +276,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -300,7 +300,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -383,7 +383,7 @@ public class GenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -399,7 +399,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -421,7 +421,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -445,7 +445,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -471,7 +471,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory<T1, T2, T3, T4>
                 {
                     private readonly T1 _value1__parameter;
@@ -544,7 +544,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory<T>
                 {
                     /// <summary>
@@ -560,7 +560,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value__parameter;
@@ -629,7 +629,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory<T>
                 {
                     /// <summary>
@@ -645,7 +645,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory____<T>
                 {
                     private readonly T _value1__parameter;
@@ -667,7 +667,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory____<T, TAlt>
                 {
                     private readonly T _value1__parameter;
@@ -739,7 +739,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory<T>
                     where T : struct, global::System.IComparable<T>
                 {
@@ -756,7 +756,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory____<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
@@ -824,7 +824,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -841,7 +841,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
@@ -922,7 +922,7 @@ public class GenericTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -939,7 +939,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value1__parameter;
@@ -962,7 +962,7 @@ public class GenericTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
                 {
                     private readonly T _value1__parameter;

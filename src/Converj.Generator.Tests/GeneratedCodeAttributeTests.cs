@@ -35,7 +35,7 @@ public class GeneratedCodeAttributeTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -51,7 +51,7 @@ public class GeneratedCodeAttributeTests
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;

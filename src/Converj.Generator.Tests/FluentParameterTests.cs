@@ -48,7 +48,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -64,7 +64,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -139,7 +139,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -155,7 +155,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -226,7 +226,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -242,7 +242,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -309,7 +309,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -325,7 +325,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -397,7 +397,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -462,7 +462,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial {{typeKeyword}} Factory
                 {
                     /// <summary>
@@ -478,7 +478,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -549,7 +549,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Factory
                 {
                     /// <summary>
@@ -565,7 +565,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -636,7 +636,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record struct Factory
                 {
                     /// <summary>
@@ -652,7 +652,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -726,7 +726,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -742,7 +742,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -813,7 +813,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     private readonly int _wheels__fluentParameter = wheels;
@@ -830,7 +830,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -895,7 +895,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Container<T>
                 {
                     /// <summary>
@@ -911,7 +911,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Widget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Container____<T>
                 {
                     private readonly string _label__parameter;
@@ -982,7 +982,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -998,7 +998,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -1069,7 +1069,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -1085,7 +1085,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -1151,7 +1151,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Container<T>
                 {
                     /// <summary>
@@ -1167,7 +1167,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Widget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Container____<T>
                 {
                     private readonly string _label__parameter;
@@ -1232,7 +1232,7 @@ public class FluentParameterTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Factory
                 {
                     /// <summary>
@@ -1248,7 +1248,7 @@ public class FluentParameterTests
                 /// <summary>
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;

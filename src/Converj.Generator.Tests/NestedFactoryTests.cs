@@ -52,7 +52,7 @@ public class NestedFactoryTests
             {
                 public partial class Outer
                 {
-                    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                     public static partial class Factory
                     {
                         /// <summary>
@@ -125,7 +125,7 @@ public class NestedFactoryTests
                 {
                     public partial class Level2
                     {
-                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                         public static partial class Factory
                         {
                             /// <summary>

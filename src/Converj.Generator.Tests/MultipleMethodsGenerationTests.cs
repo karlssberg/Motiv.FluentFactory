@@ -57,7 +57,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -82,7 +82,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -184,7 +184,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -212,7 +212,7 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -326,7 +326,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -344,7 +344,7 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -378,7 +378,7 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -494,7 +494,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -512,7 +512,7 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -543,7 +543,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -567,7 +567,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -700,7 +700,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -734,7 +734,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory
                 {
                     private readonly int _number__parameter;
@@ -774,7 +774,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T>
                 {
                     private readonly int _number__parameter;
@@ -861,7 +861,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -886,7 +886,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T>
                 {
                     private readonly global::System.Threading.Tasks.Task<T> _data__parameter;
@@ -1001,7 +1001,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1035,7 +1035,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
@@ -1075,7 +1075,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly T1 _first__parameter;
@@ -1192,7 +1192,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1226,7 +1226,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T1>
                 {
                     private readonly T1 _first__parameter;
@@ -1326,7 +1326,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1351,7 +1351,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> _first__parameter;
@@ -1431,7 +1431,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1456,7 +1456,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _first__parameter;
@@ -1555,7 +1555,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1569,7 +1569,7 @@ public class MultipleMethodsGenerationTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTarget
                 {
                     /// <summary>
@@ -1594,7 +1594,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
                 {
                     private readonly string _first__parameter;
@@ -1705,7 +1705,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Spec
                 {
                     /// <summary>
@@ -1721,7 +1721,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -1743,7 +1743,7 @@ public class MultipleMethodsGenerationTests
                 /// <summary>
                 ///     <seealso cref="MyNamespace.MyTypeA{TModel, TPredicateResult}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__MyNamespace_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -1817,7 +1817,7 @@ public class MultipleMethodsGenerationTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Spec
                 {
                     /// <summary>

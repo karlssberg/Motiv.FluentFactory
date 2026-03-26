@@ -142,7 +142,7 @@ public class ScopeAndAccessibilityTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -158,7 +158,7 @@ public class ScopeAndAccessibilityTests
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly global::Test.InternalParam _param__parameter;
@@ -233,7 +233,7 @@ public class ScopeAndAccessibilityTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -249,7 +249,7 @@ public class ScopeAndAccessibilityTests
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -323,7 +323,7 @@ public class ScopeAndAccessibilityTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 internal static partial class Factory
                 {
                     /// <summary>
@@ -339,7 +339,7 @@ public class ScopeAndAccessibilityTests
                 /// <summary>
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 internal readonly struct Step_0__Test_Factory
                 {
                     private readonly int _value__parameter;
@@ -414,7 +414,7 @@ public class ScopeAndAccessibilityTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class OuterFactory
                 {
                     /// <summary>
@@ -430,7 +430,7 @@ public class ScopeAndAccessibilityTests
                 /// <summary>
                 ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_OuterFactory
                 {
                     private readonly int _value__parameter;

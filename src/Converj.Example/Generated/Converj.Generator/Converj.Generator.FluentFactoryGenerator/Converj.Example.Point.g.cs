@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal static partial class Point
     {
         /// <summary>
@@ -19,7 +19,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Point{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Point<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _x__parameter;
@@ -41,7 +41,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Point{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Point<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _x__parameter;

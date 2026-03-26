@@ -79,7 +79,7 @@ public class NamespaceDisambiguationTests
             #nullable enable
             namespace MyFactory
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -178,7 +178,7 @@ public class NamespaceDisambiguationTests
             #nullable enable
             namespace MyFactory
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -194,7 +194,7 @@ public class NamespaceDisambiguationTests
                 /// <summary>
                 ///     <seealso cref="Target.Product"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__MyFactory_Factory
                 {
                     private readonly global::NamespaceA.Settings _settingsA__parameter;

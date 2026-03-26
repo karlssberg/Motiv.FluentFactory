@@ -76,7 +76,7 @@ public class NamespaceTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -104,7 +104,7 @@ public class NamespaceTests
                 ///     <seealso cref="Test.NamespaceA.MyBuildTargetA{T}"/>
                 ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T>
                 {
                     private readonly T _data__parameter;
@@ -216,7 +216,7 @@ public class NamespaceTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -243,7 +243,7 @@ public class NamespaceTests
 
             namespace Test.NamespaceB
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetB<T>
                 {
                     /// <summary>

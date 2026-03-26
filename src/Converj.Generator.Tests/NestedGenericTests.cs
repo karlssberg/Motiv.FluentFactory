@@ -36,7 +36,7 @@ public class NestedGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -101,7 +101,7 @@ public class NestedGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -117,7 +117,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
@@ -189,7 +189,7 @@ public class NestedGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -205,7 +205,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> _value1__parameter;
@@ -281,7 +281,7 @@ public class NestedGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -297,7 +297,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
@@ -319,7 +319,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
@@ -395,7 +395,7 @@ public class NestedGenericTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -411,7 +411,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1, T2>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;
@@ -433,7 +433,7 @@ public class NestedGenericTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2, T3, T4>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;

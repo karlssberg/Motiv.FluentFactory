@@ -40,7 +40,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -112,7 +112,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -128,7 +128,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly int _x__parameter;
@@ -213,7 +213,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -285,7 +285,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -301,7 +301,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -374,7 +374,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -390,7 +390,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -412,7 +412,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -491,7 +491,7 @@ public class MethodCustomizationTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -507,7 +507,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -529,7 +529,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -553,7 +553,7 @@ public class MethodCustomizationTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
@@ -634,7 +634,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -713,7 +713,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -811,7 +811,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -836,7 +836,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory
             {
                 private readonly string _value1__parameter;
@@ -940,7 +940,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -965,7 +965,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T>
             {
                 private readonly T _value1__parameter;
@@ -1092,7 +1092,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1117,7 +1117,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1>
             {
                 private readonly T1 _value1__parameter;
@@ -1148,7 +1148,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_1__Factory<T1, T2>
             {
                 private readonly T1 _value1__parameter;
@@ -1235,7 +1235,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1350,7 +1350,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1375,7 +1375,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1A, T1B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
@@ -1406,7 +1406,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_1__Factory<T1A, T1B, T2A, T2B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
@@ -1529,7 +1529,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1554,7 +1554,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1585,7 +1585,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_1__Factory<T1, T2, T3>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1720,7 +1720,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1748,7 +1748,7 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -1875,7 +1875,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -1903,7 +1903,7 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -2061,7 +2061,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -2089,7 +2089,7 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -2237,7 +2237,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -2265,7 +2265,7 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassA{T1, T2}"/>
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
@@ -2393,7 +2393,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>
@@ -2418,7 +2418,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClassA{T}"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_0__Factory<T>
             {
                 private readonly global::System.Func<T> _value1__parameter;
@@ -2440,7 +2440,7 @@ public class MethodCustomizationTests
             /// <summary>
             ///     <seealso cref="MyClassB"/>
             /// </summary>
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public readonly struct Step_1__Factory
             {
                 private readonly string _value1__parameter;
@@ -2528,7 +2528,7 @@ public class MethodCustomizationTests
             """
             // <auto-generated/>
             #nullable enable
-            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+            [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
             public static partial class Factory
             {
                 /// <summary>

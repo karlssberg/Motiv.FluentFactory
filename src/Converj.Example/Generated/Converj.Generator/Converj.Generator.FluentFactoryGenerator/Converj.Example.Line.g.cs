@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial class Line
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace Converj.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record Line1D<TNum>
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace Converj.Example
         }
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record Line2D<T>
     {
         /// <summary>

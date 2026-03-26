@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record Square<TUnit>
         where TUnit : global::System.Numerics.INumber<TUnit>
     {
@@ -19,7 +19,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Square{TUnit}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Square____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;

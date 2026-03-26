@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record Circle<T>
         where T : global::System.Numerics.INumber<T>
     {
@@ -19,7 +19,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Circle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Circle____<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _radius__parameter;

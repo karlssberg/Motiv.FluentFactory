@@ -5,23 +5,17 @@ namespace Converj.Tests;
 
 #region Test types
 
-// Scenario 1: [FluentStorage] bridges the gap for a non-primary-constructor parameter.
-// StorageStepA has ctors (x, y) and (x, y, z). Z is stored via [FluentStorage].
-// Target takes (x, y, z) — matching the long constructor — so the generated Create
-// on a struct step reads X, Y from the record and Z from [FluentStorage].
+// Scenario 1: [FluentStorage] on a single-constructor step type.
+// StorageStepA has ctor (x, y, z) with Z stored via [FluentStorage].
+// Target takes (x, y, z) — the generated Create reads all values from the step.
 [FluentFactory]
 internal partial class StorageFactory;
 
 [FluentConstructor<StorageFactory>(CreateMethod = CreateMethod.None)]
-internal partial record StorageStepA(int X, int Y);
-
-internal partial record StorageStepA
+internal partial record StorageStepA(int X, int Y, string Z)
 {
     [FluentStorage]
-    public string Z { get; init; } = "";
-
-    [FluentConstructor<StorageFactory>(CreateMethod = CreateMethod.None)]
-    public StorageStepA(int X, int Y, string Z) : this(X, Y) { this.Z = Z; }
+    public string Z { get; init; } = Z;
 }
 
 [FluentConstructor<StorageFactory>]
@@ -44,15 +38,10 @@ internal class StorageTargetA
 internal partial class ExplicitStorageFactory;
 
 [FluentConstructor<ExplicitStorageFactory>(CreateMethod = CreateMethod.None)]
-internal partial record ExplicitStepA(int Id);
-
-internal partial record ExplicitStepA
+internal partial record ExplicitStepA(int Id, string Label)
 {
     [FluentStorage("label")]
-    public string MappedLabel { get; init; } = "";
-
-    [FluentConstructor<ExplicitStorageFactory>(CreateMethod = CreateMethod.None)]
-    public ExplicitStepA(int Id, string Label) : this(Id) { MappedLabel = Label; }
+    public string MappedLabel { get; init; } = Label;
 }
 
 [FluentConstructor<ExplicitStorageFactory>]
@@ -68,21 +57,12 @@ internal class ExplicitTargetA
     }
 }
 
-// Scenario 3: Multi-constructor step with a nullable parameter (no explicit storage).
-// The nullable parameter should default to null when skipped, and thread through when set.
+// Scenario 3: Step with a nullable parameter threaded to target.
 [FluentFactory]
 internal partial class NullableStorageFactory;
 
 [FluentConstructor<NullableStorageFactory>(CreateMethod = CreateMethod.None)]
-internal partial record NullableStepA(int A, int B);
-
-internal partial record NullableStepA
-{
-    [FluentConstructor<NullableStorageFactory>(CreateMethod = CreateMethod.None)]
-    public NullableStepA(int A, int B, string? Tag) : this(A, B) { this.Tag = Tag; }
-
-    public string? Tag { get; init; }
-}
+internal partial record NullableStepA(int A, int B, string? Tag);
 
 [FluentConstructor<NullableStorageFactory>]
 internal class NullableTargetA
@@ -97,6 +77,25 @@ internal class NullableTargetA
         B = b;
         Tag = tag;
     }
+}
+
+// Scenario 4: Single constructor step with CreateMethod.None.
+[FluentFactory(CreateMethod = CreateMethod.None)]
+internal partial class TwoCtorStepFactory;
+
+internal partial class TwoCtorStep
+{
+    [FluentConstructor<TwoCtorStepFactory>]
+    public TwoCtorStep(int a, int b, double c)
+    {
+        A = a;
+        B = b;
+        C = c;
+    }
+
+    public int A { get; }
+    public int B { get; }
+    public double C { get; }
 }
 
 #endregion
@@ -144,15 +143,29 @@ public class FluentStorageRuntimeTests
     }
 
     [Fact]
-    public void Nullable_parameter_without_value_should_default_to_null()
+    public void Nullable_parameter_with_null_should_thread_null_to_target()
     {
         var result = NullableStorageFactory
             .WithA(1)
             .WithB(2)
+            .WithTag(null)
             .CreateNullableTargetA();
 
         result.A.ShouldBe(1);
         result.B.ShouldBe(2);
         result.Tag.ShouldBeNull();
+    }
+
+    [Fact]
+    public void Single_ctor_step_should_thread_all_params()
+    {
+        var result = TwoCtorStepFactory
+            .WithA(1)
+            .WithB(5)
+            .WithC(3.14);
+
+        result.A.ShouldBe(1);
+        result.B.ShouldBe(5);
+        result.C.ShouldBe(3.14);
     }
 }

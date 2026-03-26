@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial class Shape
     {
         /// <summary>
@@ -35,7 +35,7 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Rectangle{T}"/>
     ///     <seealso cref="Converj.Example.Square{TUnit}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -72,7 +72,7 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Diamond{T}"/>
     ///     <seealso cref="Converj.Example.Rectangle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -118,7 +118,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Cuboid{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_2__Converj_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _width__parameter;
@@ -146,7 +146,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.Circle{T}"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_3__Converj_Example_Shape<T> where T : global::System.Numerics.INumber<T>
     {
         private readonly T _radius__parameter;

@@ -2,7 +2,7 @@
 #nullable enable
 namespace Converj.Example
 {
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal partial record ServiceFactory
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace Converj.Example
     /// <summary>
     ///     <seealso cref="Converj.Example.CustomizableService"/>
     /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_ServiceFactory
     {
         private readonly string _name__parameter;

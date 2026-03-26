@@ -183,7 +183,7 @@ var address = AddressFactory
     .WithCity("New York");
 ```
 
-**Note:** You cannot use `CreateVerb` or `ReturnType` together with `CreateMethod.None` as there would be no create method to name or type.
+**Note:** You cannot use `CreateVerb` or `ReturnType` together with `CreateMethod.None` as there would be no create method to name or type. Additionally, only one `[FluentConstructor]` per type per factory is allowed when `CreateMethod.None` is in effect — multiple constructors on the same type would break step ordering enforcement since all generated methods live on the same type.
 
 ### Custom Method Names
 
@@ -559,6 +559,27 @@ Line2D<int>     line2D = Line.X(5).Y(10);
 Line3D<double>  line3D = Line.X(1.0).Y(2.0).Z(3.0);
 ```
 
+### Advanced: Factory-Scoped Parameters (Dependency Injection)
+
+Use `[FluentParameter]` or record primary constructor parameters on the factory to thread values to all targets without exposing them in the fluent chain:
+
+```csharp
+public interface IDependency;
+
+[FluentFactory(CreateVerb = "Build", CreateMethod = CreateMethod.Fixed)]
+public partial record ServiceFactory(IDependency Dependency);
+
+[FluentConstructor<ServiceFactory>]
+public record CustomizableService(IDependency Dependency, string Name);
+
+// Usage - Dependency is provided by the factory, not the caller:
+var factory = new ServiceFactory(myDependency);
+var service = factory.WithName("MyService").Build();
+// service.Dependency == myDependency (threaded from factory)
+```
+
+Record primary constructor parameters are auto-threaded when they match target constructor parameter names. For non-record factories, use `[FluentParameter]` explicitly on fields or properties.
+
 ### Advanced: Self-Referential Factory
 
 A type can be both the factory and a constructor target. This is useful when you want the fluent API to start from the type itself:
@@ -695,13 +716,29 @@ Generates multiple fluent methods for a single parameter based on template metho
 #### `[FluentMethodTemplate]`
 Marks static methods in a variants type as templates for generating fluent methods. Must be applied to static methods whose return type is assignable to the target parameter type.
 
+#### `[FluentParameter]` / `[FluentParameter(string targetParameterName)]`
+Marks a factory field, property, or record primary constructor parameter as a value to thread through to target constructors. The factory instance holds the value, and the generator automatically passes it to matching target constructor parameters.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TargetParameterName` | `string?` | _member name_ | Name of the target constructor parameter to bind to |
+
+Record primary constructor parameters on factories are auto-threaded without needing an explicit `[FluentParameter]` attribute.
+
+#### `[FluentStorage]` / `[FluentStorage(string parameterName)]`
+Marks a property on a custom step type as storage for a constructor parameter value. Used with `CreateMethod.None` to bridge values between steps.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ParameterName` | `string?` | _property name_ | Name of the constructor parameter this property stores |
+
 ### CreateMethod Enum
 
 | Value | Description |
 |-------|-------------|
 | `Dynamic` | _(default)_ Appends target type name to verb (e.g., `CreateUser()`) |
 | `Fixed` | Uses verb as-is (e.g., `Create()` or `Build()`) |
-| `None` | No create method; constructor called at final step. Target type must be `partial` |
+| `None` | No create method; constructor called at final step. Target type must be `partial`. Only one `[FluentConstructor]` per type per factory is allowed |
 
 ## Key Features
 
@@ -750,6 +787,19 @@ The generator produces diagnostics to help you fix configuration issues:
 | MFFG0021 | Error | ReturnType used with CreateMethod.None |
 | MFFG0022 | Error | Optional parameters cause ambiguous chain |
 | MFFG0023 | Error | Conflicting type constraints produce duplicate method signatures |
+| MFFG0024 | Error | Constructor parameter has no storage in custom step |
+| MFFG0025 | Error | Custom step type missing `partial` modifier |
+| MFFG0026 | Warning | FluentMethod on custom step parameter (no effect) |
+| MFFG0027 | Warning | Parameter modifier on custom step parameter (unsupported) |
+| MFFG0028 | Error | Duplicate custom step parameter name |
+| MFFG0029 | Error | Custom step parameter type mismatch |
+| MFFG0030 | Error | FluentParameter has no matching target constructor parameter |
+| MFFG0031 | Error | FluentParameter type not compatible with target parameter |
+| MFFG0032 | Error | Duplicate FluentParameter for same target name |
+| MFFG0033 | Error | Static/instance method name collision |
+| MFFG0035 | Error | FluentStorage property must have a getter |
+| MFFG0036 | Error | Duplicate FluentStorage mapping to same parameter name |
+| MFFG0037 | Error | Multiple FluentConstructors with CreateMethod.None on same type — only one allowed |
 
 ## Contributing
 

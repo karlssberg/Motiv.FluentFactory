@@ -36,7 +36,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -70,7 +70,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -94,7 +94,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
@@ -118,7 +118,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Namespace_MyTarget
                 {
                     private readonly double _amount__parameter;
@@ -183,7 +183,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -217,7 +217,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -241,7 +241,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly string _name__parameter;
@@ -331,7 +331,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -347,7 +347,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -509,7 +509,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -534,7 +534,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordA"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly string _value__parameter;
@@ -558,7 +558,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyRecordB"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -685,7 +685,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -742,7 +742,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace Test.Namespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyTarget
                 {
                     /// <summary>
@@ -758,7 +758,7 @@ public class BugDiscoveryTests
                 /// <summary>
                 ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_MyTarget
                 {
                     private readonly int _value__parameter;
@@ -835,7 +835,7 @@ public class BugDiscoveryTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -849,7 +849,7 @@ public class BugDiscoveryTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Person
                 {
                     /// <summary>

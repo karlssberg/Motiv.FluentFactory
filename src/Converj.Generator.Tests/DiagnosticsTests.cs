@@ -118,7 +118,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -260,7 +260,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Spec
                 {
                     /// <summary>
@@ -363,7 +363,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Spec
                 {
                     /// <summary>
@@ -383,7 +383,7 @@ public class DiagnosticsTests
                 ///     <seealso cref="Test.ExplanationWithNameExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Spec<TModel, TPredicateResult>
                 {
                     private readonly global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> _expression__parameter;
@@ -476,7 +476,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Shape
                 {
                     /// <summary>
@@ -492,7 +492,7 @@ public class DiagnosticsTests
                 /// <summary>
                 ///     <seealso cref="Test.Square"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Shape
                 {
                     private readonly int _width__parameter;
@@ -683,7 +683,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -701,7 +701,7 @@ public class DiagnosticsTests
                 ///     <seealso cref="MyNamespace.Bar"/>
                 ///     <seealso cref="MyNamespace.Foo"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__MyNamespace_Factory
                 {
                     private readonly string _name__parameter;
@@ -801,7 +801,7 @@ public class DiagnosticsTests
             #nullable enable
             namespace MyNamespace
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -817,7 +817,7 @@ public class DiagnosticsTests
                 /// <summary>
                 ///     <seealso cref="MyNamespace.MyClass"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public struct Step_0__MyNamespace_Factory
                 {
                     private readonly string _name__parameter;
@@ -985,9 +985,9 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerWarning(MultiConstructorUnresolvableStorage.Id)
-                        .WithSpan(SourceFile, 14, 39, 14, 40)
-                        .WithArguments("Test.TypeA", "Z")
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 13, 6, 13, 74)
+                        .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
         }.RunAsync();
@@ -1032,114 +1032,17 @@ public class DiagnosticsTests
             }
             """;
 
-        // MFFG0034 suppresses generation. If output IS produced, the warning was not emitted.
-        // CompilerDiagnostics.None because NullStorage for nullable Z generates default(void).
         await new VerifyCS.Test
         {
             CompilerDiagnostics = Microsoft.CodeAnalysis.Testing.CompilerDiagnostics.None,
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources =
+                ExpectedDiagnostics =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs",
-                    """
-                    // <auto-generated/>
-                    #nullable enable
-                    namespace Test
-                    {
-                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                        public static partial class Factory
-                        {
-                            /// <summary>
-                            ///     <seealso cref="Test.Target"/>
-                            ///     <seealso cref="Test.TypeA"/>
-                            /// </summary>
-                            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                            public static global::Test.Step_0__Test_Factory WithX(in int x)
-                            {
-                                return new global::Test.Step_0__Test_Factory(x);
-                            }
-                        }
-
-                        /// <summary>
-                        ///     <seealso cref="Test.Target"/>
-                        ///     <seealso cref="Test.TypeA"/>
-                        /// </summary>
-                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                        public readonly struct Step_0__Test_Factory
-                        {
-                            private readonly int _x__parameter;
-                            internal Step_0__Test_Factory(in int x)
-                            {
-                                this._x__parameter = x;
-                            }
-
-                            /// <summary>
-                            ///     <seealso cref="Test.Target"/>
-                            ///     <seealso cref="Test.TypeA"/>
-                            /// </summary>
-                            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                            public global::Test.TypeA WithY(in int y)
-                            {
-                                return new global::Test.TypeA(this._x__parameter, y);
-                            }
-                        }
-
-                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                        public partial record TypeA
-                        {
-                            /// <summary>
-                            ///     <seealso cref="Test.Target"/>
-                            ///     <seealso cref="Test.TypeA"/>
-                            /// </summary>
-                            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                            public global::Test.TypeA WithZ(in string? z)
-                            {
-                                return new global::Test.TypeA(this.X, this.Y, z);
-                            }
-
-                            /// <summary>
-                            ///     <seealso cref="Test.Target"/>
-                            /// </summary>
-                            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                            public global::Test.Step_3__Test_Factory WithW(in int w)
-                            {
-                                return new global::Test.Step_3__Test_Factory(this.X, this.Y, default(void), w);
-                            }
-                        }
-
-                        /// <summary>
-                        ///     <seealso cref="Test.Target"/>
-                        /// </summary>
-                        [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                        public readonly struct Step_3__Test_Factory
-                        {
-                            private readonly int _x__parameter;
-                            private readonly int _y__parameter;
-                            private readonly string? _z__parameter;
-                            private readonly int _w__parameter;
-                            internal Step_3__Test_Factory(in int x, in int y, in string? z, in int w)
-                            {
-                                this._x__parameter = x;
-                                this._y__parameter = y;
-                                this._z__parameter = z;
-                                this._w__parameter = w;
-                            }
-
-                            /// <summary>
-                            /// Creates a new instance using constructor Test.Target.Target(int X, int Y, string? Z, int W).
-                            ///
-                            ///     <seealso cref="Test.Target"/>
-                            /// </summary>
-                            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                            public global::Test.Target CreateTarget()
-                            {
-                                return new global::Test.Target(this._x__parameter, this._y__parameter, this._z__parameter, this._w__parameter);
-                            }
-                        }
-                    }
-                    """)
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 13, 6, 13, 74)
+                        .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
         }.RunAsync();
@@ -1187,117 +1090,16 @@ public class DiagnosticsTests
             }
             """;
 
-        const string expected =
-            """
-            // <auto-generated/>
-            #nullable enable
-            namespace Test
-            {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                public static partial class Factory
-                {
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    ///     <seealso cref="Test.TypeA"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithX(in int x)
-                    {
-                        return new global::Test.Step_0__Test_Factory(x);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Target"/>
-                ///     <seealso cref="Test.TypeA"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                public readonly struct Step_0__Test_Factory
-                {
-                    private readonly int _x__parameter;
-                    internal Step_0__Test_Factory(in int x)
-                    {
-                        this._x__parameter = x;
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    ///     <seealso cref="Test.TypeA"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.TypeA WithY(in int y)
-                    {
-                        return new global::Test.TypeA(this._x__parameter, y);
-                    }
-                }
-
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                public partial record TypeA
-                {
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    ///     <seealso cref="Test.TypeA"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.TypeA WithZ(in string z)
-                    {
-                        return new global::Test.TypeA(this.X, this.Y, z);
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory WithW(in int w)
-                    {
-                        return new global::Test.Step_3__Test_Factory(this.X, this.Y, this.Z, w);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Target"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
-                public readonly struct Step_3__Test_Factory
-                {
-                    private readonly int _x__parameter;
-                    private readonly int _y__parameter;
-                    private readonly string _z__parameter;
-                    private readonly int _w__parameter;
-                    internal Step_3__Test_Factory(in int x, in int y, in string z, in int w)
-                    {
-                        this._x__parameter = x;
-                        this._y__parameter = y;
-                        this._z__parameter = z;
-                        this._w__parameter = w;
-                    }
-
-                    /// <summary>
-                    /// Creates a new instance using constructor Test.Target.Target(int X, int Y, string Z, int W).
-                    ///
-                    ///     <seealso cref="Test.Target"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Target CreateTarget()
-                    {
-                        return new global::Test.Target(this._x__parameter, this._y__parameter, this._z__parameter, this._w__parameter);
-                    }
-                }
-            }
-            """;
-
-        // MFFG0034 suppresses generation. Generated output proves no warning was emitted.
-        // Key assertion: WithW reads `this.Z` from [FluentStorage], not `default(void)`.
-        // CompilerDiagnostics.None: NullStorage for nullable Z generates default(void).
         await new VerifyCS.Test
         {
-            CompilerDiagnostics = Microsoft.CodeAnalysis.Testing.CompilerDiagnostics.None,
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources =
+                ExpectedDiagnostics =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 16, 6, 16, 74)
+                        .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
         }.RunAsync();
@@ -1317,9 +1119,6 @@ public class DiagnosticsTests
 
             public partial class TypeA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
-                public TypeA(int x, int y) { X = x; Y = y; }
-
                 public int X { get; set; }
                 public int Y { get; set; }
 
@@ -1327,21 +1126,7 @@ public class DiagnosticsTests
                 public string Z { set { } }
 
                 [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
-                public TypeA(int x, int y, string z) : this(x, y) { }
-            }
-
-            public class Target
-            {
-                [FluentConstructor(typeof(Factory))]
-                public Target(int x, int y, string z, int w)
-                {
-                    X = x; Y = y; Z = z; W = w;
-                }
-
-                public int X { get; set; }
-                public int Y { get; set; }
-                public string Z { get; set; }
-                public int W { get; set; }
+                public TypeA(int x, int y, string z) { }
             }
             """;
 
@@ -1353,11 +1138,8 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(FluentStoragePropertyWithoutGetter.Id)
-                        .WithSpan(SourceFile, 17, 19, 17, 20)
-                        .WithArguments("Z"),
-                    DiagnosticResult.CompilerWarning(MultiConstructorUnresolvableStorage.Id)
-                        .WithSpan(SourceFile, 20, 39, 20, 40)
-                        .WithArguments("Test.TypeA", "z")
+                        .WithSpan(SourceFile, 14, 19, 14, 20)
+                        .WithArguments("Z")
                 }
             }
         }.RunAsync();
@@ -1415,11 +1197,94 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(DuplicateFluentStorageMapping.Id)
-                        .WithSpan(SourceFile, 20, 19, 20, 27)
-                        .WithArguments("Z", "Z", "AnotherZ")
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 22, 6, 22, 74)
+                        .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
         }.RunAsync();
     }
+
+    [Fact]
+    internal async Task Should_report_error_when_type_has_multiple_FluentConstructors_with_factory_level_CreateMethodNone()
+    {
+        const string code =
+            """
+            using Converj.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory(CreateMethod = CreateMethod.None)]
+                public static partial class Factory;
+
+                public partial class Target
+                {
+                    [FluentConstructor(typeof(Factory))]
+                    public Target(int a, int b) { A = a; B = b; }
+
+                    [FluentConstructor(typeof(Factory))]
+                    public Target(int b) { B = b; }
+
+                    public int A { get; }
+                    public int B { get; }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 13, 10, 13, 44)
+                        .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
+                }
+            }
+        }.RunAsync();
+    }
+
+    [Fact]
+    internal async Task Should_report_error_when_type_has_multiple_FluentConstructors_with_per_constructor_CreateMethodNone()
+    {
+        const string code =
+            """
+            using Converj.Generator;
+
+            namespace MyNamespace
+            {
+                [FluentFactory]
+                public static partial class Factory;
+
+                public partial class Target
+                {
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Target(int a, int b) { A = a; B = b; }
+
+                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    public Target(int b) { B = b; }
+
+                    public int A { get; }
+                    public int B { get; }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
+                        .WithSpan(SourceFile, 13, 10, 13, 78)
+                        .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
+                }
+            }
+        }.RunAsync();
+    }
+
 }

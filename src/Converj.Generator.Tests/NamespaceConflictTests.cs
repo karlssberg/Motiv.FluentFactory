@@ -39,7 +39,7 @@ public class NamespaceConflictTests
             #nullable enable
             namespace ConflictTest
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -55,7 +55,7 @@ public class NamespaceConflictTests
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
@@ -77,7 +77,7 @@ public class NamespaceConflictTests
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__ConflictTest_Factory
                 {
                     private readonly string _name__parameter;
@@ -148,7 +148,7 @@ public class NamespaceConflictTests
             #nullable enable
             namespace ConflictTest
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -164,7 +164,7 @@ public class NamespaceConflictTests
                 /// <summary>
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__ConflictTest_Factory
                 {
                     private readonly global::System.Collections.Generic.List<string> _items__parameter;

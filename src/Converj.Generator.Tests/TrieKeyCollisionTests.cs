@@ -61,7 +61,7 @@ public class TrieKeyCollisionTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -86,7 +86,7 @@ public class TrieKeyCollisionTests
                 /// <summary>
                 ///     <seealso cref="Test.TargetA"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;
@@ -108,7 +108,7 @@ public class TrieKeyCollisionTests
                 /// <summary>
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
                 {
                     private readonly string _label__parameter;
@@ -317,7 +317,7 @@ public class TrieKeyCollisionTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -336,7 +336,7 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetA{TNum}"/>
                 ///     <seealso cref="Test.TargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T> where T : global::Test.IConstraint<T>
                 {
                     private readonly T _value__parameter;
@@ -431,7 +431,7 @@ public class TrieKeyCollisionTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -449,7 +449,7 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetA"/>
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _name__parameter;

@@ -54,7 +54,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -79,7 +79,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _value1__parameter;
@@ -169,7 +169,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -194,7 +194,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -216,7 +216,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -242,7 +242,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -264,7 +264,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -288,7 +288,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_4__Test_Factory
                 {
                     private readonly string _string1__parameter;
@@ -377,7 +377,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -393,7 +393,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -424,7 +424,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -448,7 +448,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -476,7 +476,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -560,7 +560,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -585,7 +585,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory<T1>
                 {
                     private readonly T1 _value1__parameter;
@@ -607,7 +607,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
@@ -633,7 +633,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Factory<T2>
                 {
                     private readonly T2 _value2__parameter;
@@ -655,7 +655,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_3__Test_Factory<T2, T1>
                 {
                     private readonly T2 _value2__parameter;
@@ -734,7 +734,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Shape
                 {
                     /// <summary>
@@ -749,7 +749,7 @@ public class MergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Square
                 {
                     /// <summary>
@@ -763,7 +763,7 @@ public class MergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Rectangle
                 {
                     /// <summary>
@@ -892,7 +892,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace TestFactory
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -911,7 +911,7 @@ public class MergeDissimilarStepsTests
 
             namespace TestA
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetA<T>
                 {
                     /// <summary>
@@ -929,7 +929,7 @@ public class MergeDissimilarStepsTests
 
             namespace TestC
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetC<T>
                 {
                     /// <summary>
@@ -1070,7 +1070,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace TestA
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class MyBuildTargetA<T>
                 {
                     /// <summary>
@@ -1104,7 +1104,7 @@ public class MergeDissimilarStepsTests
 
             namespace TestFactory
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
                 {
                     /// <summary>
@@ -1122,7 +1122,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__TestFactory_Factory<T>
                 {
                     private readonly T _valueB1__parameter;
@@ -1219,7 +1219,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Shape
                 {
                     /// <summary>
@@ -1234,7 +1234,7 @@ public class MergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial record Square
                 {
                     /// <summary>
@@ -1248,7 +1248,7 @@ public class MergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public partial class Rectangle
                 {
                     /// <summary>
@@ -1344,7 +1344,7 @@ public class MergeDissimilarStepsTests
             #nullable enable
             namespace Test
             {
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Spec
                 {
                     /// <summary>
@@ -1368,7 +1368,7 @@ public class MergeDissimilarStepsTests
                     }
                 }
 
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly partial struct PolicyResultPredicatePropositionFactory<TModel, TMetadata>
                 {
                     /// <summary>
@@ -1384,7 +1384,7 @@ public class MergeDissimilarStepsTests
                 /// <summary>
                 ///     <seealso cref="Test.MultiAssertionExplanationFromPolicyPropositionFactory{TModel, TMetadata}"/>
                 /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "1.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Spec<TModel, TMetadata>
                 {
                     private readonly global::System.Func<TModel, global::Test.PolicyResultBase<TMetadata>> _predicate__parameter;
