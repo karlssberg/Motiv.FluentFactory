@@ -120,7 +120,7 @@ internal static class FluentConstructorValidatorExtensions
 
     private static IEnumerable<Diagnostic> ValidateCreateVerb(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
     {
-        // Get contexts that have duplicates - we'll skip MFFG0007 for these since MFFG0008 will be reported
+        // Get contexts that have duplicates - we'll skip CVJG0007 for these since CVJG0008 will be reported
         var duplicateContexts = new HashSet<FluentConstructorContext>(GetDuplicateConstructorContexts(fluentConstructorContexts)
             .SelectMany(group => group));
 
@@ -233,7 +233,7 @@ internal static class FluentConstructorValidatorExtensions
                 GetAttributeLocation(context.AttributeData));
         }
 
-        // Empty CreateVerb + None → warning MFFG0017
+        // Empty CreateVerb + None → warning CVJG0017
         var emptyVerbWithNone = fluentConstructorContexts.AsEnumerable().Where(context =>
             context.CreateMethod == CreateMethodMode.None
             && context.CreateVerb is ""
@@ -577,11 +577,11 @@ internal static class FluentConstructorValidatorExtensions
             if (distinctTypes <= 1)
                 continue;
 
-            // Skip groups where no constructor has optional params (MFFG0016 covers these)
+            // Skip groups where no constructor has optional params (CVJG0016 covers these)
             if (!contexts.Any(ctx => ctx.Constructor.Parameters.Any(p => p.HasExplicitDefaultValue)))
                 continue;
 
-            // Skip groups where all full-chain keys are identical (MFFG0016 covers these)
+            // Skip groups where all full-chain keys are identical (CVJG0016 covers these)
             var fullChainKeys = contexts.Select(GetFluentParameterChainKey).Distinct().ToList();
             if (fullChainKeys.Count == 1)
                 continue;

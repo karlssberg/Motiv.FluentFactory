@@ -105,17 +105,17 @@ public class InvalidGenericConstraintTests
     }
 
     /// <summary>
-    /// Verifies the generator does not crash or emit MFFG diagnostics when processing a build target
+    /// Verifies the generator does not crash or emit CVJG diagnostics when processing a build target
     /// whose source code contains a C# compiler error (CS0449: mutually exclusive constraints
     /// <c>where T : class, struct</c>). The test expects the C# compiler error in
-    /// <c>ExpectedDiagnostics</c> and asserts no MFFG diagnostic is emitted and no
+    /// <c>ExpectedDiagnostics</c> and asserts no CVJG diagnostic is emitted and no
     /// unhandled exception occurs. This directly tests DIAG-02 graceful error handling.
     /// </summary>
     [Fact]
     internal async Task Should_not_crash_or_emit_mffg_diagnostics_when_user_source_has_invalid_constraint_combination()
     {
         // `where T : class, struct` is invalid C# — the compiler will emit CS0449.
-        // The generator must not add any MFFG diagnostic on top of this.
+        // The generator must not add any CVJG diagnostic on top of this.
         const string source =
             """
             using Converj.Generator;
@@ -143,7 +143,7 @@ public class InvalidGenericConstraintTests
         // invalid `where T : class, struct` constraint — this is the current behavior.
         //
         // Using CompilerDiagnostics.None to suppress all diagnostic checks (both C# compiler errors
-        // and any potential MFFG errors) so the test purely validates that the generator does not
+        // and any potential CVJG errors) so the test purely validates that the generator does not
         // throw an unhandled exception.
         const string expected =
             """

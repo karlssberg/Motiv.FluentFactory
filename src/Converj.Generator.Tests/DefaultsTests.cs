@@ -686,7 +686,7 @@ public class DefaultsTests
     }
 
     [Fact]
-    internal async Task Should_report_MFFG0007_for_invalid_CreateVerb_on_factory()
+    internal async Task Should_report_CVJG0007_for_invalid_CreateVerb_on_factory()
     {
         const string code =
             """
@@ -725,7 +725,7 @@ public class DefaultsTests
     }
 
     [Fact]
-    internal async Task Should_report_MFFG0010_for_factory_level_CreateVerb_with_CreateMethod_None()
+    internal async Task Should_report_CVJG0010_for_factory_level_CreateVerb_with_CreateMethod_None()
     {
         const string code =
             """
@@ -764,7 +764,7 @@ public class DefaultsTests
     }
 
     [Fact]
-    internal async Task Should_report_MFFG0007_on_constructor_override_with_invalid_verb()
+    internal async Task Should_report_CVJG0007_on_constructor_override_with_invalid_verb()
     {
         const string code =
             """

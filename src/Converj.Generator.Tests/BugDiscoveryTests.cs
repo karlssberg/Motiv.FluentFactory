@@ -300,7 +300,7 @@ public class BugDiscoveryTests
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0010")
+                DiagnosticResult.CompilerError("CVJG0010")
                     .WithSpan("Source.cs", 8, 6, 8, 95)
                     .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }
@@ -425,7 +425,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError("MFFG0007")
+                    DiagnosticResult.CompilerError("CVJG0007")
                         .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
                         .WithMessage("CreateVerb must be a valid identifier")
                 }
@@ -472,7 +472,7 @@ public class BugDiscoveryTests
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0008")
+                DiagnosticResult.CompilerError("CVJG0008")
                     .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
                     .WithSpan("Source.cs", 9, 42, 9, 42 + createMethodNameArgument.Length)
                     .WithMessage("Create method name must be unique")
@@ -619,7 +619,7 @@ public class BugDiscoveryTests
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0009")
+                DiagnosticResult.CompilerError("CVJG0009")
                     .WithSpan("Source.cs", 8, 24, 8, 24 + fluentFactoryRootType.Length)
                     .WithMessage("FluentConstructor references type 'Test.Namespace.MyTarget' which does not have the FluentFactory attribute"),
             }
@@ -652,7 +652,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError("MFFG0007")
+                    DiagnosticResult.CompilerError("CVJG0007")
                         .WithSpan("Source.cs", 8, 42, 8, 42 + createVerbArgument.Length)
                         .WithMessage("CreateVerb must be a valid identifier")
                 }
@@ -711,7 +711,7 @@ public class BugDiscoveryTests
                 },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerWarning("MFFG0017")
+                    DiagnosticResult.CompilerWarning("CVJG0017")
                         .WithSpan("Source.cs", 8, 42, 8, 42 + createVerbArgument.Length)
                         .WithMessage("CreateVerb has no effect with CreateMethod.None")
                 }

@@ -13,7 +13,7 @@ public class MalformedAttributeTests
     private const string SourceFile = "Source.cs";
 
     /// <summary>
-    /// Exercises MFFG0010 on a primary constructor record — combining the NoCreateMethod/CreateVerb conflict
+    /// Exercises CVJG0010 on a primary constructor record — combining the NoCreateMethod/CreateVerb conflict
     /// with record primary-constructor syntax. This is a distinct scenario from the explicit-constructor case
     /// already covered in FluentFactoryGeneratorBugDiscoveryTests.
     /// </summary>
@@ -36,13 +36,13 @@ public class MalformedAttributeTests
 
         // Line 8: [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
         // Attribute starts at col 6 (1-based), ends after closing bracket.
-        // The entire attribute span is expected for MFFG0010.
+        // The entire attribute span is expected for CVJG0010.
         await new VerifyCS.Test
         {
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0010")
+                DiagnosticResult.CompilerError("CVJG0010")
                     .WithSpan("Source.cs", 8, 6, 8, 96)
                     .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }
@@ -51,8 +51,8 @@ public class MalformedAttributeTests
 
     /// <summary>
     /// Exercises multiple simultaneous validation errors on a single FluentConstructor attribute:
-    /// (1) the target type lacks [FluentFactory] (MFFG0009), and
-    /// (2) the CreateVerb is an invalid identifier (MFFG0007).
+    /// (1) the target type lacks [FluentFactory] (CVJG0009), and
+    /// (2) the CreateVerb is an invalid identifier (CVJG0007).
     /// Tests assert DESIRED behavior where both diagnostics fire independently.
     /// If only one fires, the test documents the validation short-circuit.
     /// </summary>
@@ -73,19 +73,19 @@ public class MalformedAttributeTests
             }
             """;
 
-        // MFFG0009 fires on the typeof(NonFactoryType) argument expression
-        // MFFG0007 fires on the CreateVerb = "123invalid" named argument
-        // DESIRED: both MFFG0009 and MFFG0007 fire. If only MFFG0009 fires, this test will fail,
+        // CVJG0009 fires on the typeof(NonFactoryType) argument expression
+        // CVJG0007 fires on the CreateVerb = "123invalid" named argument
+        // DESIRED: both CVJG0009 and CVJG0007 fire. If only CVJG0009 fires, this test will fail,
         // documenting that validation short-circuits after the missing-FluentFactory error.
         await new VerifyCS.Test
         {
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0009")
+                DiagnosticResult.CompilerError("CVJG0009")
                     .WithSpan("Source.cs", 8, 24, 8, 46)
                     .WithMessage("FluentConstructor references type 'Test.Namespace.NonFactoryType' which does not have the FluentFactory attribute"),
-                DiagnosticResult.CompilerError("MFFG0007")
+                DiagnosticResult.CompilerError("CVJG0007")
                     .WithSpan("Source.cs", 8, 48, 8, 73)
                     .WithMessage("CreateVerb must be a valid identifier"),
             }
@@ -94,8 +94,8 @@ public class MalformedAttributeTests
 
     /// <summary>
     /// Exercises cascading validation errors across two constructors on the same type:
-    /// both use CreateVerb = "Build" (triggering MFFG0008 — duplicate),
-    /// and one also has NoCreateMethod (triggering MFFG0010 — conflict).
+    /// both use CreateVerb = "Build" (triggering CVJG0008 — duplicate),
+    /// and one also has NoCreateMethod (triggering CVJG0010 — conflict).
     /// Tests assert DESIRED behavior where both independent errors are reported.
     /// </summary>
     [Fact]
@@ -121,18 +121,18 @@ public class MalformedAttributeTests
             }
             """;
 
-        // MFFG0008 fires on the CreateVerb argument of both constructors (duplicate)
-        // MFFG0010 fires on the entire attribute of the second constructor (NoCreateMethod conflict)
+        // CVJG0008 fires on the CreateVerb argument of both constructors (duplicate)
+        // CVJG0010 fires on the entire attribute of the second constructor (NoCreateMethod conflict)
         await new VerifyCS.Test
         {
             TestState = { Sources = { (SourceFile, source) } },
             ExpectedDiagnostics =
             {
-                DiagnosticResult.CompilerError("MFFG0008")
+                DiagnosticResult.CompilerError("CVJG0008")
                     .WithSpan("Source.cs", 10, 45, 10, 65)
                     .WithSpan("Source.cs", 13, 45, 13, 65)
                     .WithMessage("Create method name must be unique"),
-                DiagnosticResult.CompilerError("MFFG0010")
+                DiagnosticResult.CompilerError("CVJG0010")
                     .WithSpan("Source.cs", 13, 10, 13, 100)
                     .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
             }

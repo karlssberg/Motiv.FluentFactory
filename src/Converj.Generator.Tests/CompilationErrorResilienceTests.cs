@@ -21,7 +21,7 @@ public class CompilationErrorResilienceTests
     ///
     /// The generator must not throw an unhandled exception when it encounters an IErrorTypeSymbol
     /// for the parameter type. The DESIRED behavior is that the generator silently skips this
-    /// constructor and emits no MFFG diagnostics -- the C# compiler error is sufficient signal.
+    /// constructor and emits no CVJG diagnostics -- the C# compiler error is sufficient signal.
     /// </summary>
     [Fact]
     internal async Task Given_a_constructor_with_a_parameter_of_nonexistent_type_Should_not_throw()
@@ -59,7 +59,7 @@ public class CompilationErrorResilienceTests
     /// attribute at all, or may partially parse the file.
     ///
     /// The generator must not throw when the syntax tree contains errors. The DESIRED behavior
-    /// is that no generated output is produced and no MFFG diagnostics are emitted.
+    /// is that no generated output is produced and no CVJG diagnostics are emitted.
     /// </summary>
     [Fact]
     internal async Task Given_a_factory_type_declaration_with_a_syntax_error_Should_not_throw()
@@ -97,7 +97,7 @@ public class CompilationErrorResilienceTests
     ///
     /// The generator encounters an IErrorTypeSymbol midway through parameter analysis.
     /// The DESIRED behavior is that it skips this constructor entirely (since one parameter is
-    /// unresolvable), emits no MFFG diagnostics, produces no generated source, and does not throw.
+    /// unresolvable), emits no CVJG diagnostics, produces no generated source, and does not throw.
     /// </summary>
     [Fact]
     internal async Task Given_a_constructor_with_mixed_valid_and_invalid_parameter_types_Should_not_throw()

@@ -32,7 +32,7 @@ public class RequiredPropertyDiagnosticsTests
         """;
 
     [Fact]
-    internal async Task Should_emit_MFFG0038_when_FluentMethod_on_property_without_setter()
+    internal async Task Should_emit_CVJG0038_when_FluentMethod_on_property_without_setter()
     {
         const string code =
             """
@@ -70,7 +70,7 @@ public class RequiredPropertyDiagnosticsTests
     }
 
     [Fact]
-    internal async Task Should_emit_MFFG0039_when_required_property_with_CreateMethod_None()
+    internal async Task Should_emit_CVJG0039_when_required_property_with_CreateMethod_None()
     {
         const string code =
             """
@@ -135,7 +135,7 @@ public class RequiredPropertyDiagnosticsTests
     }
 
     [Fact]
-    internal async Task Should_emit_MFFG0042_when_FluentMethod_without_name_on_constructor_param()
+    internal async Task Should_emit_CVJG0042_when_FluentMethod_without_name_on_constructor_param()
     {
         const string code =
             """

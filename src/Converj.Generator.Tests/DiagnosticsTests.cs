@@ -142,7 +142,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError("MFFG0001")
+                        .CompilerError("CVJG0001")
                         .WithSpan("Source.cs", 23, 16, 23, 23)
                         .WithArguments("Company.Company(int? id)"),
                 },

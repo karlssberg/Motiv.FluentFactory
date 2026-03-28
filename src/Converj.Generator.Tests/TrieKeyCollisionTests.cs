@@ -145,7 +145,7 @@ public class TrieKeyCollisionTests
     /// <summary>
     /// Tests that two constructors targeting the same factory with the same generic parameter name
     /// and same parameter name but different where-clause constraints (struct vs class) emit
-    /// MFFG0023 diagnostic because C# cannot overload on generic constraints alone.
+    /// CVJG0023 diagnostic because C# cannot overload on generic constraints alone.
     /// </summary>
     [Fact]
     internal async Task Given_two_constructors_with_same_generic_param_but_different_constraints_Should_emit_conflicting_constraints_diagnostic()
@@ -212,7 +212,7 @@ public class TrieKeyCollisionTests
 
     /// <summary>
     /// Tests that two constructors targeting the same factory with the same effective type parameter
-    /// name but different interface constraints emit MFFG0023 diagnostic.
+    /// name but different interface constraints emit CVJG0023 diagnostic.
     /// </summary>
     [Fact]
     internal async Task Given_two_constructors_with_different_interface_constraints_Should_emit_conflicting_constraints_diagnostic()

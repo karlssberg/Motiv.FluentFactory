@@ -142,7 +142,7 @@ internal class FluentStepBuilder(
     }
 
     /// <summary>
-    /// Reports a diagnostic (MFFG0024) for each constructor parameter on a custom intermediate step
+    /// Reports a diagnostic (CVJG0024) for each constructor parameter on a custom intermediate step
     /// that has no accessible property or field for value storage.
     /// </summary>
     /// <param name="step">The fluent step to check.</param>

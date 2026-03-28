@@ -28,7 +28,7 @@ Rectangle<int> rectangle = Shape.WithWidth(10).WithHeight(20).CreateRectangle();
 Cube<int>           cube = Shape.WithWidth(10).WithHeight(20).WithDepth(30).CreateCube();
 ```
 
-Supports generics, records, primary constructors, custom method names, multiple overloads, return-type covariance, generic type parameter aliasing, and more.
+Supports generics, records, primary constructors, required properties, type-first builder chains, custom method names, multiple overloads, return-type covariance, generic type parameter aliasing, and more.
 
 
 ## Installation
@@ -400,19 +400,9 @@ The generator supports records with positional parameters and C# 12+ primary con
 [FluentFactory]
 public static partial class UserFactory;
 
-// Record with positional parameters
-public record User
-{
-    [FluentConstructor(typeof(UserFactory))]
-    public User(string name, string email)
-    {
-        Name = name;
-        Email = email;
-    }
-
-    public string Name { get; }
-    public string Email { get; }
-}
+// Record with primary constructor
+[FluentConstructor(typeof(UserFactory))]
+public record User(string Name, string Email);
 
 var user = UserFactory
     .WithName("Alice")
@@ -426,7 +416,7 @@ Instead of passing `typeof(...)`, you can use the generic `FluentConstructor<T>`
 
 ```csharp
 [FluentFactory]
-public static partial class UserFactory;
+public partial class UserFactory;
 
 public class User
 {
@@ -445,13 +435,7 @@ public class User
 // Usage is identical:
 var user = UserFactory.WithName("Alice").WithEmail("alice@example.com").CreateUser();
 ```
-
-The generic form also works at the type level:
-
-```csharp
-[FluentConstructor<UserFactory>]
-public record User(string Name, string Email);
-```
+Language constraints mean that generic attributes will only work with non-static and/or closed-generic types.
 
 ### FluentConstructor on Types
 
@@ -538,7 +522,7 @@ When multiple constructors use different generic type parameter names for the sa
 
 ```csharp
 [FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
-public static partial class Line;
+public partial class Line;
 
 [FluentConstructor<Line>]
 public partial record Line1D<T>(T X) where T : INumber<T>;
@@ -636,6 +620,153 @@ var multiplyCalc = CalculatorFactory.Multiply().CreateCalculator();
 var customCalc = CalculatorFactory.Custom((a, b) => a - b).CreateCalculator();
 ```
 
+### Required Properties
+
+Properties marked with the `required` keyword or `[System.ComponentModel.DataAnnotations.Required]` are automatically discovered and added to the fluent chain as required steps after the constructor parameters:
+
+```csharp
+[FluentFactory]
+public static partial class Factory;
+
+public class Person
+{
+    [FluentConstructor(typeof(Factory))]
+    public Person(string name)
+    {
+        Name = name;
+    }
+
+    public string Name { get; set; }
+
+    public required string Email { get; set; }
+}
+
+// Email is required — the compiler enforces it:
+var person = Factory
+    .WithName("Alice")
+    .WithEmail("alice@example.com")
+    .CreatePerson();
+```
+
+The generated code uses object initializers to set the required properties:
+
+```csharp
+return new Person(this._name__parameter)
+{
+    Email = this._email__parameter
+};
+```
+
+Properties that are already initialized by a constructor parameter (e.g., record positional parameters) are automatically skipped. You can rename the generated method using `[FluentMethod("CustomName")]`:
+
+```csharp
+[FluentMethod("SetEmail")]
+public required string Email { get; set; }
+```
+
+**Note:** Required properties are not supported with `CreateMethod.None` since property initialization requires a creation method with object initializer syntax.
+
+### Optional Properties with `[FluentMethod]`
+
+Non-required properties can be opted into the fluent chain using `[FluentMethod]`. These become optional setter methods on the final step that can be called in any order:
+
+```csharp
+public class Person
+{
+    [FluentConstructor(typeof(Factory))]
+    public Person(string name)
+    {
+        Name = name;
+    }
+
+    public string Name { get; set; }
+
+    [FluentMethod]
+    public string? Nickname { get; set; }
+
+    [FluentMethod("SetAge")]
+    public int Age { get; set; }
+}
+
+// Optional properties can be set or skipped:
+var person = Factory
+    .WithName("Alice")
+    .WithNickname("Ali")  // optional
+    .SetAge(30)           // optional, custom name
+    .CreatePerson();
+```
+
+### Advanced: Type-First Builder Mode
+
+By default, Converj uses parameter-first chains where consumers discover available types as they progress through shared parameter steps. Type-first mode inverts this — consumers select the target type up front, then fill in only that type's parameters:
+
+```csharp
+[FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+public static partial class Factory;
+
+public class Dog
+{
+    [FluentConstructor(typeof(Factory))]
+    public Dog(string name) { Name = name; }
+    public string Name { get; set; }
+}
+
+public class Cat
+{
+    [FluentConstructor(typeof(Factory))]
+    public Cat(string name, int lives) { Name = name; Lives = lives; }
+    public string Name { get; set; }
+    public int Lives { get; set; }
+}
+
+// Type-first: choose the type, then fill its parameters
+Dog dog = Factory.BuildDog().WithName("Rex").Create();
+Cat cat = Factory.BuildCat().WithName("Whiskers").WithLives(9).Create();
+```
+
+The entry method verb defaults to `"Build"` but can be customized with `TypeFirstVerb`:
+
+```csharp
+[FluentFactory(BuilderMode = BuilderMode.TypeFirst, TypeFirstVerb = "Make")]
+public static partial class Factory;
+
+// Usage:
+Dog dog = Factory.MakeDog().WithName("Rex").Create();
+```
+
+Both `BuilderMode` and `TypeFirstVerb` can be overridden per-constructor:
+
+```csharp
+[FluentFactory]
+public static partial class Factory;
+
+public class Dog
+{
+    // Only this constructor uses type-first mode
+    [FluentConstructor(typeof(Factory), BuilderMode = BuilderMode.TypeFirst)]
+    public Dog(string name) { Name = name; }
+    public string Name { get; set; }
+}
+```
+
+**Note:** Type-first constructors are excluded from parameter-first trie merging. Each type-first constructor gets its own isolated chain.
+
+### Advanced: Partial Parameter Overlap
+
+When using factory-scoped parameters (`[FluentParameter]`), a parameter must match all target constructors by default. Set `AllowPartialParameterOverlap` to allow a factory parameter to match only a subset of constructors:
+
+```csharp
+[FluentFactory(AllowPartialParameterOverlap = true)]
+public partial record ServiceFactory(IDependency Dependency);
+
+[FluentConstructor<ServiceFactory>]
+public record ServiceA(IDependency Dependency, string Name);
+
+// ServiceB doesn't use IDependency — that's OK with AllowPartialParameterOverlap
+[FluentConstructor<ServiceFactory>]
+public record ServiceB(string Name);
+```
+
 ### Factory-Level Defaults
 
 Set defaults on `[FluentFactory]` that apply to all constructors. Individual `[FluentConstructor]` attributes can override any factory-level default:
@@ -680,6 +811,9 @@ Marks a static partial type as a fluent factory. The type must be `partial`.
 | `CreateVerb` | `string?` | `"Create"` | Default verb for Create method names |
 | `MethodPrefix` | `string?` | `"With"` | Default prefix for fluent method names |
 | `ReturnType` | `Type?` | _none_ | Default return type for creation methods |
+| `AllowPartialParameterOverlap` | `bool` | `false` | Allow `[FluentParameter]` to match only a subset of target constructors |
+| `BuilderMode` | `BuilderMode` | `ParameterFirst` | Controls builder chain structure for all constructors |
+| `TypeFirstVerb` | `string?` | `"Build"` | Verb for type-first entry method names (e.g., `BuildDog()`) |
 
 #### `[FluentConstructor(Type rootType)]` / `[FluentConstructor<TFluentFactory>]`
 Marks a constructor, class, or struct to generate fluent methods for. Can be applied multiple times (`AllowMultiple = true`). The generic form `FluentConstructor<T>` is available for C# 11+ projects as a type-safe alternative to `typeof(...)`.
@@ -691,6 +825,8 @@ Marks a constructor, class, or struct to generate fluent methods for. Can be app
 | `CreateVerb` | `string?` | _inherits_ | Overrides factory-level setting |
 | `MethodPrefix` | `string?` | _inherits_ | Overrides factory-level setting |
 | `ReturnType` | `Type?` | _inherits_ | Overrides factory-level setting |
+| `BuilderMode` | `BuilderMode` | _inherits_ | Overrides factory-level setting |
+| `TypeFirstVerb` | `string?` | _inherits_ | Overrides factory-level setting |
 
 #### `[As(string name)]`
 Aliases a generic type parameter name for matching across multiple constructors. Applied to generic type parameters.
@@ -699,12 +835,12 @@ Aliases a generic type parameter name for matching across multiple constructors.
 |----------|------|---------|-------------|
 | `Name` | `string` | _(required)_ | The canonical name to match this type parameter against |
 
-#### `[FluentMethod(string methodName)]`
-Customizes the fluent method name for a constructor parameter.
+#### `[FluentMethod]` / `[FluentMethod(string methodName)]`
+When applied to a constructor parameter, customizes the fluent method name. When applied to a property, opts the property into the fluent chain (required for non-required properties) and optionally overrides the method name.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `MethodName` | `string` | _(required)_ | The method name to generate |
+| `MethodName` | `string?` | _none_ | The method name to generate. Optional on properties (uses prefix + property name by default) |
 
 #### `[MultipleFluentMethods(Type variantsType)]`
 Generates multiple fluent methods for a single parameter based on template methods in the specified type.
@@ -740,6 +876,13 @@ Marks a property on a custom step type as storage for a constructor parameter va
 | `Fixed` | Uses verb as-is (e.g., `Create()` or `Build()`) |
 | `None` | No create method; constructor called at final step. Target type must be `partial`. Only one `[FluentConstructor]` per type per factory is allowed |
 
+### BuilderMode Enum
+
+| Value | Description |
+|-------|-------------|
+| `ParameterFirst` | _(default)_ Consumers build parameters in sequence and discover available types as they progress (e.g., `Factory.WithName("Rex").CreateDog()`) |
+| `TypeFirst` | Consumers select the target type up front, then fill in that type's parameters (e.g., `Factory.BuildDog().WithName("Rex").Create()`) |
+
 ## Key Features
 
 - **Type Safety** - Compile-time enforcement of required parameters
@@ -747,6 +890,9 @@ Marks a property on a custom step type as storage for a constructor parameter va
 - **Generic Support** - Works with generic classes, type inference, constraints, and type parameter aliasing via `[As]`
 - **Generic Attribute Syntax** - Use `[FluentConstructor<T>]` for type-safe factory references (C# 11+)
 - **Records and Primary Constructors** - Supports record types and C# 12+ primary constructors
+- **Required Properties** - `required` properties and `[Required]` properties are auto-discovered and enforced in the fluent chain
+- **Optional Properties** - Opt non-required properties into the chain with `[FluentMethod]`
+- **Type-First Builder Mode** - Choose the target type up front with `BuilderMode.TypeFirst` (e.g., `Factory.BuildDog().WithName("Rex").Create()`)
 - **Optional Parameters** - Parameters with defaults become optional setter methods
 - **Customizable Naming** - Custom method names, prefixes, create verbs, and priorities
 - **Return Type Control** - Create methods can return interfaces or base types
@@ -764,42 +910,48 @@ The generator produces diagnostics to help you fix configuration issues:
 
 | Code | Severity | Description |
 |------|----------|-------------|
-| MFFG0001 | Error | Unreachable fluent constructor due to parameter conflicts |
-| MFFG0002 | Warning | Template method superseded by higher priority method |
-| MFFG0003 | Warning | Template return type not assignable to parameter type |
-| MFFG0004 | Error | All template methods incompatible with parameter type |
-| MFFG0005 | Error | Template method must be static |
-| MFFG0006 | Info | Template superseded by higher priority parameter |
-| MFFG0007 | Error | Invalid CreateVerb (not a valid C# identifier) |
-| MFFG0008 | Error | Duplicate create method name across constructors |
-| MFFG0009 | Error | FluentConstructor target type missing FluentFactory attribute |
-| MFFG0010 | Error | CreateVerb used with CreateMethod.None |
-| MFFG0011 | Warning | Unsupported parameter modifier (ref/out) |
-| MFFG0012 | Warning | Inaccessible constructor (private/protected) |
-| MFFG0013 | Error | Factory type missing `partial` modifier |
-| MFFG0014 | Warning | Parameter type less accessible than factory |
-| MFFG0015 | Warning | Factory more accessible than target type |
-| MFFG0016 | Error | Ambiguous fluent method chain |
-| MFFG0017 | Warning | Empty CreateVerb with CreateMethod.None (no effect) |
-| MFFG0018 | Error | Invalid MethodPrefix (not a valid C# identifier) |
-| MFFG0019 | Error | Target type not assignable to ReturnType |
-| MFFG0020 | Warning | ReturnType same as concrete target type (unnecessary) |
-| MFFG0021 | Error | ReturnType used with CreateMethod.None |
-| MFFG0022 | Error | Optional parameters cause ambiguous chain |
-| MFFG0023 | Error | Conflicting type constraints produce duplicate method signatures |
-| MFFG0024 | Error | Constructor parameter has no storage in custom step |
-| MFFG0025 | Error | Custom step type missing `partial` modifier |
-| MFFG0026 | Warning | FluentMethod on custom step parameter (no effect) |
-| MFFG0027 | Warning | Parameter modifier on custom step parameter (unsupported) |
-| MFFG0028 | Error | Duplicate custom step parameter name |
-| MFFG0029 | Error | Custom step parameter type mismatch |
-| MFFG0030 | Error | FluentParameter has no matching target constructor parameter |
-| MFFG0031 | Error | FluentParameter type not compatible with target parameter |
-| MFFG0032 | Error | Duplicate FluentParameter for same target name |
-| MFFG0033 | Error | Static/instance method name collision |
-| MFFG0035 | Error | FluentStorage property must have a getter |
-| MFFG0036 | Error | Duplicate FluentStorage mapping to same parameter name |
-| MFFG0037 | Error | Multiple FluentConstructors with CreateMethod.None on same type — only one allowed |
+| CVJG0001 | Error | Unreachable fluent constructor due to parameter conflicts |
+| CVJG0002 | Warning | Template method superseded by higher priority method |
+| CVJG0003 | Warning | Template return type not assignable to parameter type |
+| CVJG0004 | Error | All template methods incompatible with parameter type |
+| CVJG0005 | Error | Template method must be static |
+| CVJG0006 | Info | Template superseded by higher priority parameter |
+| CVJG0007 | Error | Invalid CreateVerb (not a valid C# identifier) |
+| CVJG0008 | Error | Duplicate create method name across constructors |
+| CVJG0009 | Error | FluentConstructor target type missing FluentFactory attribute |
+| CVJG0010 | Error | CreateVerb used with CreateMethod.None |
+| CVJG0011 | Warning | Unsupported parameter modifier (ref/out) |
+| CVJG0012 | Warning | Inaccessible constructor (private/protected) |
+| CVJG0013 | Error | Factory type missing `partial` modifier |
+| CVJG0014 | Warning | Parameter type less accessible than factory |
+| CVJG0015 | Warning | Factory more accessible than target type |
+| CVJG0016 | Error | Ambiguous fluent method chain |
+| CVJG0017 | Warning | Empty CreateVerb with CreateMethod.None (no effect) |
+| CVJG0018 | Error | Invalid MethodPrefix (not a valid C# identifier) |
+| CVJG0019 | Error | Target type not assignable to ReturnType |
+| CVJG0020 | Warning | ReturnType same as concrete target type (unnecessary) |
+| CVJG0021 | Error | ReturnType used with CreateMethod.None |
+| CVJG0022 | Error | Optional parameters cause ambiguous chain |
+| CVJG0023 | Error | Conflicting type constraints produce duplicate method signatures |
+| CVJG0024 | Error | Constructor parameter has no storage in custom step |
+| CVJG0025 | Error | Custom step type missing `partial` modifier |
+| CVJG0026 | Warning | FluentMethod on custom step parameter (no effect) |
+| CVJG0027 | Warning | Parameter modifier on custom step parameter (unsupported) |
+| CVJG0028 | Error | Duplicate custom step parameter name |
+| CVJG0029 | Error | Custom step parameter type mismatch |
+| CVJG0030 | Error | FluentParameter has no matching target constructor parameter |
+| CVJG0031 | Error | FluentParameter type not compatible with target parameter |
+| CVJG0032 | Error | Duplicate FluentParameter for same target name |
+| CVJG0033 | Error | Static/instance method name collision |
+| CVJG0035 | Error | FluentStorage property must have a getter |
+| CVJG0036 | Error | Duplicate FluentStorage mapping to same parameter name |
+| CVJG0037 | Error | Multiple FluentConstructors with CreateMethod.None on same type — only one allowed |
+| CVJG0038 | Error | FluentMethod on property without set or init accessor |
+| CVJG0039 | Warning | Required property cannot be used with CreateMethod.None |
+| CVJG0040 | Error | Property produces fluent method name that clashes with constructor parameter |
+| CVJG0041 | Error | Duplicate fluent property method name conflicts with another property or parameter |
+| CVJG0042 | Info | FluentMethod without explicit name has no effect on constructor parameter |
+| CVJG0043 | Error | Ambiguous type-first entry method between multiple types |
 
 ## Contributing
 

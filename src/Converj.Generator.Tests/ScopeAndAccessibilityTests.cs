@@ -16,7 +16,7 @@ public class ScopeAndAccessibilityTests
 
     /// <summary>
     /// A private constructor with [FluentConstructor] cannot be used in a fluent factory
-    /// because the generated code cannot call it. The generator should emit MFFG0012
+    /// because the generated code cannot call it. The generator should emit CVJG0012
     /// warning and skip generation for that constructor.
     /// </summary>
     [Fact]
@@ -60,7 +60,7 @@ public class ScopeAndAccessibilityTests
 
     /// <summary>
     /// A protected constructor with [FluentConstructor] cannot be used in a fluent factory
-    /// because the generated code cannot call it. The generator should emit MFFG0012
+    /// because the generated code cannot call it. The generator should emit CVJG0012
     /// warning and skip generation for that constructor.
     /// </summary>
     [Fact]
@@ -105,7 +105,7 @@ public class ScopeAndAccessibilityTests
     /// <summary>
     /// A public factory with a constructor whose parameter type is internal is an accessibility mismatch.
     /// The generated fluent method would expose the internal type, which is inaccessible to consumers.
-    /// The generator should emit MFFG0014 warning.
+    /// The generator should emit CVJG0014 warning.
     /// </summary>
     [Fact]
     internal async Task Should_emit_diagnostic_when_parameter_type_less_accessible_than_factory()
@@ -201,7 +201,7 @@ public class ScopeAndAccessibilityTests
     /// <summary>
     /// A public factory wrapping an internal target type is an accessibility mismatch.
     /// The generated factory would expose creation of an inaccessible type to public consumers.
-    /// The generator should emit MFFG0015 warning.
+    /// The generator should emit CVJG0015 warning.
     /// </summary>
     [Fact]
     internal async Task Should_emit_diagnostic_when_public_factory_wraps_internal_target_type()
@@ -375,7 +375,7 @@ public class ScopeAndAccessibilityTests
     /// <summary>
     /// A nested private class with [FluentConstructor] pointing to an outer public factory.
     /// The private nested class is less accessible than the public factory (Private &lt; Public),
-    /// so MFFG0015 (accessibility mismatch) should fire.
+    /// so CVJG0015 (accessibility mismatch) should fire.
     /// This test documents the generator's behavior for nested private classes as factory targets.
     /// </summary>
     [Fact]
@@ -405,7 +405,7 @@ public class ScopeAndAccessibilityTests
             }
             """;
 
-        // The generator still produces output for the nested private class (MFFG0015 is a Warning,
+        // The generator still produces output for the nested private class (CVJG0015 is a Warning,
         // not an Error). The generated code calls new OuterContainer.NestedTarget(...) which
         // will fail at compile time due to private access — this is a known limitation documented here.
         const string expected =
@@ -453,7 +453,7 @@ public class ScopeAndAccessibilityTests
             }
             """;
 
-        // MFFG0015 fires because the nested private class (Private) is less accessible
+        // CVJG0015 fires because the nested private class (Private) is less accessible
         // than the public factory (Public). This documents the generator's behavior:
         // the diagnostic fires as a warning but generation still proceeds (shortcoming).
         await new VerifyCS.Test
@@ -475,7 +475,7 @@ public class ScopeAndAccessibilityTests
 
     /// <summary>
     /// A factory root type without the <c>partial</c> modifier cannot receive generated fluent methods.
-    /// The generator should emit MFFG0013 error and produce no generated source output.
+    /// The generator should emit CVJG0013 error and produce no generated source output.
     /// </summary>
     [Fact]
     internal async Task Should_emit_diagnostic_when_factory_root_type_missing_partial_modifier()

@@ -464,7 +464,7 @@ public class MethodPrefixTests
     }
 
     [Fact]
-    internal async Task Should_report_MFFG0018_for_invalid_MethodPrefix_on_factory()
+    internal async Task Should_report_CVJG0018_for_invalid_MethodPrefix_on_factory()
     {
         const string code =
             """
@@ -503,7 +503,7 @@ public class MethodPrefixTests
     }
 
     [Fact]
-    internal async Task Should_report_MFFG0018_for_invalid_MethodPrefix_on_constructor()
+    internal async Task Should_report_CVJG0018_for_invalid_MethodPrefix_on_constructor()
     {
         const string code =
             """
