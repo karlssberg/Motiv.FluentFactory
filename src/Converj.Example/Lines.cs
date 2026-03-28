@@ -14,4 +14,3 @@ internal partial record Line2D<T>(T X, T Y) where T : INumber<T>;
 
 [FluentConstructor<Line>]
 internal partial record Line3D<T>(T X, T Y, T Z) where T : INumber<T>;
-/
