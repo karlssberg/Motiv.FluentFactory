@@ -12,9 +12,10 @@ internal static class FluentStepMethodDeclaration
     public static MethodDeclarationSyntax Create(
         MultiMethod multiMethod,
         ParameterSequence knownConstructorParameters,
-        ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null)
+        ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null,
+        bool isStepContext = false)
     {
-        var stepActivationArgs = CreateStepConstructorArguments(multiMethod, knownConstructorParameters);
+        var stepActivationArgs = CreateStepConstructorArguments(multiMethod, knownConstructorParameters, isStepContext);
 
         var returnObjectExpression = FluentStepCreationExpression.Create(multiMethod, stepActivationArgs);
 
@@ -24,9 +25,10 @@ internal static class FluentStepMethodDeclaration
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,
         ParameterSequence knownConstructorParameters,
-        ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null)
+        ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null,
+        bool isStepContext = false)
     {
-        var stepActivationArgs = CreateStepConstructorArguments(method, knownConstructorParameters);
+        var stepActivationArgs = CreateStepConstructorArguments(method, knownConstructorParameters, isStepContext);
 
         var returnObjectExpression = FluentStepCreationExpression.Create(method, stepActivationArgs);
 
@@ -115,11 +117,14 @@ internal static class FluentStepMethodDeclaration
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters)
+        ParameterSequence knownConstructorParameters,
+        bool isStepContext)
     {
         // Root methods handle threading via RewriteRootMethodForThreadedParameters in RootTypeDeclaration.
+        // Step methods must always forward threaded parameters, even when knownConstructorParameters is empty
+        // (e.g., property steps from root-level creation methods where all constructor params are pre-satisfied).
         var threadedArgs = Enumerable.Empty<ArgumentSyntax>();
-        if (knownConstructorParameters.Any()
+        if ((knownConstructorParameters.Any() || isStepContext)
             && method.Return is IFluentStep { ThreadedParameters.IsEmpty: false } nextStep)
         {
             threadedArgs = nextStep.ThreadedParameters

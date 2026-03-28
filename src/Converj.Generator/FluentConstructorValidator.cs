@@ -26,7 +26,9 @@ internal static class FluentConstructorValidatorExtensions
             .Concat(ValidateOptionalParameterAmbiguousChains(fluentConstructorContexts))
             .Concat(ValidateConflictingTypeConstraints(fluentConstructorContexts))
             .Concat(ValidateReturnType(fluentConstructorContexts))
-            .Concat(ValidateMultipleConstructorsWithCreateMethodNone(fluentConstructorContexts));
+            .Concat(ValidateMultipleConstructorsWithCreateMethodNone(fluentConstructorContexts))
+            .Concat(ValidateFluentMethodNoEffectOnParameters(fluentConstructorContexts))
+            .Concat(ValidatePropertyWithCreateMethodNone(fluentConstructorContexts));
     }
 
     private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
@@ -778,5 +780,63 @@ internal static class FluentConstructorValidatorExtensions
             unchecked(
                 SymbolEqualityComparer.Default.GetHashCode(obj.ContainingType) * 397
                 ^ SymbolEqualityComparer.Default.GetHashCode(obj.RootType));
+    }
+
+    /// <summary>
+    /// Reports an info diagnostic when [FluentMethod] is used without a method name on a constructor parameter,
+    /// which has no effect since the parameter already generates a fluent method with the default name.
+    /// </summary>
+    private static IEnumerable<Diagnostic> ValidateFluentMethodNoEffectOnParameters(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        var seen = new HashSet<IParameterSymbol>(SymbolEqualityComparer.Default);
+
+        foreach (var context in fluentConstructorContexts)
+        {
+            foreach (var parameter in context.Constructor.Parameters)
+            {
+                if (!seen.Add(parameter)) continue;
+
+                var attribute = parameter.GetAttribute(TypeName.FluentMethodAttribute);
+                if (attribute is null) continue;
+
+                // Parameterless constructor: ConstructorArguments is empty
+                if (attribute.ConstructorArguments.Length == 0)
+                {
+                    var location = attribute.ApplicationSyntaxReference?.GetSyntax().GetLocation()
+                                   ?? parameter.Locations.FirstOrDefault()
+                                   ?? Location.None;
+
+                    yield return Diagnostic.Create(
+                        FluentDiagnostics.FluentMethodNoEffectOnParameter,
+                        location,
+                        parameter.Name);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Reports a warning diagnostic when a target type has required properties but the constructor
+    /// uses CreateMethod.None, which doesn't generate a creation method for object initializer syntax.
+    /// </summary>
+    private static IEnumerable<Diagnostic> ValidatePropertyWithCreateMethodNone(
+        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    {
+        foreach (var context in fluentConstructorContexts)
+        {
+            if (context.CreateMethod != CreateMethodMode.None) continue;
+
+            foreach (var prop in context.TargetTypeProperties)
+            {
+                if (!prop.IsRequired) continue;
+
+                yield return Diagnostic.Create(
+                    FluentDiagnostics.FluentMethodPropertyWithCreateMethodNone,
+                    prop.Location,
+                    prop.Property.Name,
+                    context.Constructor.ContainingType.ToDisplayString());
+            }
+        }
     }
 }

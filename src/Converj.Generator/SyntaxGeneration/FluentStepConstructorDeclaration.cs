@@ -39,11 +39,13 @@ internal static class FluentStepConstructorDeclaration
             : Enumerable.Empty<StatementSyntax>();
 
         var optionalParamInitializations = GetOptionalParameterInitializations(step);
+        var optionalPropertyInitializations = GetOptionalPropertyInitializations(step);
 
         var allAssignments = threadedParamAssignments
             .Concat(requiredParamAssignments)
             .Concat(propertyParamAssignments)
             .Concat(optionalParamInitializations)
+            .Concat(optionalPropertyInitializations)
             .ToArray();
 
         var constructor = ConstructorDeclaration(Identifier(step.Name))
@@ -91,6 +93,26 @@ internal static class FluentStepConstructorDeclaration
 
         return threadedParams.Concat(regularParams).Concat(propertyParams)
             .InterleaveWith(Token(SyntaxKind.CommaToken));
+    }
+
+    private static IEnumerable<StatementSyntax> GetOptionalPropertyInitializations(IFluentStep step)
+    {
+        if (step is not RegularFluentStep { OptionalPropertyFieldStorage.IsEmpty: false } propStep)
+            yield break;
+
+        foreach (var fieldStorage in propStep.OptionalPropertyFieldStorage)
+        {
+            var defaultExpression = fieldStorage.Type.IsReferenceType
+                    || fieldStorage.Type.NullableAnnotation == NullableAnnotation.Annotated
+                ? (ExpressionSyntax)LiteralExpression(SyntaxKind.NullLiteralExpression)
+                : DefaultExpression(ParseTypeName(fieldStorage.Type.ToGlobalDisplayString()));
+
+            yield return ExpressionStatement(
+                AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
+                    MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(fieldStorage.IdentifierName)),
+                    defaultExpression));
+        }
     }
 
     private static IEnumerable<StatementSyntax> GetOptionalParameterInitializations(IFluentStep step)

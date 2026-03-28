@@ -22,8 +22,8 @@ namespace Converj.Example
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_0__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
     {
-        private readonly global::Converj.Example.Point<T> _point1__parameter;
         private readonly T _scale__parameter;
+        private readonly global::Converj.Example.Point<T> _point1__parameter;
         internal Step_0__Converj_Example_Polygon____(in T scale, in global::Converj.Example.Point<T> point1)
         {
             this._scale__parameter = scale;
@@ -44,55 +44,44 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Triangle{T}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_1__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
+    internal struct Step_1__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
     {
+        private readonly T _scale__parameter;
         private readonly global::Converj.Example.Point<T> _point1__parameter;
         private readonly global::Converj.Example.Point<T> _point2__parameter;
-        private readonly T _scale__parameter;
+        private global::Converj.Example.Point<T>? _point3__parameter;
         internal Step_1__Converj_Example_Polygon____(in T scale, in global::Converj.Example.Point<T> point1, in global::Converj.Example.Point<T> point2)
         {
             this._scale__parameter = scale;
             this._point1__parameter = point1;
             this._point2__parameter = point2;
+            this._point3__parameter = null;
         }
 
         /// <summary>
-        ///     <seealso cref="Converj.Example.Triangle{T}"/>
-        /// </summary>
-        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_2__Converj_Example_Polygon____<T> WithPoint3(in global::Converj.Example.Point<T> point3)
-        {
-            return new global::Converj.Example.Step_2__Converj_Example_Polygon____<T>(this._scale__parameter, this._point1__parameter, this._point2__parameter, point3);
-        }
-    }
-
-    /// <summary>
-    ///     <seealso cref="Converj.Example.Triangle{T}"/>
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_2__Converj_Example_Polygon____<T> where T : global::System.Numerics.INumber<T>
-    {
-        private readonly global::Converj.Example.Point<T> _point1__parameter;
-        private readonly global::Converj.Example.Point<T> _point2__parameter;
-        private readonly global::Converj.Example.Point<T> _point3__parameter;
-        private readonly T _scale__parameter;
-        internal Step_2__Converj_Example_Polygon____(in T scale, in global::Converj.Example.Point<T> point1, in global::Converj.Example.Point<T> point2, in global::Converj.Example.Point<T> point3)
-        {
-            this._scale__parameter = scale;
-            this._point1__parameter = point1;
-            this._point2__parameter = point2;
-            this._point3__parameter = point3;
-        }
-
-        /// <summary>
-        /// Creates a new instance using constructor Converj.Example.Triangle&lt;T&gt;.Triangle(T Scale, Converj.Example.Point&lt;T&gt; Point1, Converj.Example.Point&lt;T&gt; Point2, Converj.Example.Point&lt;T&gt; Point3).
+        /// Creates a new instance using constructor Converj.Example.Triangle&lt;T&gt;.Triangle(T Scale).
         ///
         ///     <seealso cref="Converj.Example.Triangle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Converj.Example.Triangle<T> CreateTriangle()
         {
-            return new global::Converj.Example.Triangle<T>(this._scale__parameter, this._point1__parameter, this._point2__parameter, this._point3__parameter);
+            return new global::Converj.Example.Triangle<T>(this._scale__parameter)
+            {
+                Point1 = this._point1__parameter,
+                Point2 = this._point2__parameter,
+                Point3 = this._point3__parameter
+            };
+        }
+
+        /// <summary>
+        ///     <seealso cref="Converj.Example.Triangle{T}"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_1__Converj_Example_Polygon____<T> WithPoint3(in global::Converj.Example.Point<T>? point3)
+        {
+            this._point3__parameter = point3;
+            return this;
         }
     }
 }

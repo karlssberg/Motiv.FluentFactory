@@ -60,6 +60,12 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     /// </summary>
     public ImmutableArray<FieldStorage> PropertyFieldStorage { get; set; } = [];
 
+    /// <summary>
+    /// Field storage for optional [FluentMethod] properties. These fields are mutable,
+    /// initialized to default in the constructor, and set via optional fluent methods.
+    /// </summary>
+    public ImmutableArray<FieldStorage> OptionalPropertyFieldStorage { get; set; } = [];
+
     public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
 
     public INamedTypeSymbol RootType { get; } = rootType;

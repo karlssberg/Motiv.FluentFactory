@@ -12,14 +12,22 @@ internal static class FluentStepDeclaration
     public static StructDeclarationSyntax Create(
         RegularFluentStep step)
     {
+        // Compute ambient type parameters from the step struct's generic type parameters
+        // so that step methods don't re-declare type parameters already on the struct
+        var ambientTypeParameters = step.GenericConstructorParameters
+            .SelectMany(p => p.Type.GetGenericTypeArguments())
+            .DistinctBy(symbol => symbol.GetEffectiveName())
+            .ToImmutableArray();
+
         var methodDeclarationSyntaxes = step.FluentMethods
             .Select<IFluentMethod, MethodDeclarationSyntax>(method =>
                 method switch
                 {
                     CreationMethod createMethod => FluentFactoryMethodDeclaration.Create(createMethod, step),
-                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters),
+                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters, ambientTypeParameters, isStepContext: true),
                     OptionalFluentMethod optionalMethod => OptionalFluentMethodDeclaration.Create(optionalMethod, step),
-                    _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters)
+                    OptionalPropertyFluentMethod optionalPropertyMethod => OptionalPropertyFluentMethodDeclaration.Create(optionalPropertyMethod, step),
+                    _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters, ambientTypeParameters, isStepContext: true)
                 });
 
         var fieldDeclarations = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
@@ -31,6 +39,15 @@ internal static class FluentStepDeclaration
                 .Select(pf => FieldAndPropertySyntax.CreateFieldDeclaration(pf))
                 .ToImmutableArray();
             fieldDeclarations = [..fieldDeclarations, ..propertyFields];
+        }
+
+        // Add optional property field declarations (non-readonly)
+        if (!step.OptionalPropertyFieldStorage.IsEmpty)
+        {
+            var optionalPropertyFields = step.OptionalPropertyFieldStorage
+                .Select(pf => FieldAndPropertySyntax.CreateFieldDeclaration(pf))
+                .ToImmutableArray();
+            fieldDeclarations = [..fieldDeclarations, ..optionalPropertyFields];
         }
 
         var constructor = FluentStepConstructorDeclaration.Create(step);
@@ -57,7 +74,8 @@ internal static class FluentStepDeclaration
             }
         }
 
-        var hasMutableOptionalMethods = step.FluentMethods.OfType<OptionalFluentMethod>().Any()
+        var hasMutableOptionalMethods = (step.FluentMethods.OfType<OptionalFluentMethod>().Any()
+                                       || step.FluentMethods.OfType<OptionalPropertyFluentMethod>().Any())
                                        && !step.IsAllOptionalStep;
 
         SyntaxTokenList accessibilityToken = (step.Accessibility, hasMutableOptionalMethods) switch
