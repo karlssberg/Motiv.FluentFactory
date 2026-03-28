@@ -27,6 +27,7 @@ internal record Point<T>(T X, T Y, T Z) where T : INumber<T>;
 internal record Triangle<T>(T Scale) where T : INumber<T>
 {
     [Required]
+    [FluentMethod]
     public Point<T> Point1 { get; init; } = null!;
     public required Point<T> Point2 { get; init; }
     
