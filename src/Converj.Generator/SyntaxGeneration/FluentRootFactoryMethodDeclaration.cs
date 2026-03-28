@@ -62,10 +62,10 @@ internal static class FluentRootFactoryMethodDeclaration
                         method.MethodParameters
                             .Select(parameter =>
                                 Parameter(
-                                        Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
+                                        Identifier(parameter.SourceName.ToCamelCase()))
                                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                     .WithType(
-                                        ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
+                                        ParseTypeName(parameter.SourceType.ToGlobalDisplayString()))))));
         }
 
         return methodDeclaration;
@@ -74,14 +74,14 @@ internal static class FluentRootFactoryMethodDeclaration
     private static IEnumerable<ArgumentSyntax> GetMethodSourcedArguments(IFluentMethod method)
     {
         return method.MethodParameters
-            .Select(parameter => IdentifierName(parameter.ParameterSymbol.Name.ToCamelCase()))
+            .Select(parameter => IdentifierName(parameter.SourceName.ToCamelCase()))
             .Select(Argument);
     }
 
     private static IEnumerable<ArgumentSyntax> GetFieldSourcedArguments(IFluentMethod method)
     {
         return method.AvailableParameterFields
-            .Select(parameter => IdentifierName(parameter.ParameterSymbol.Name.ToCamelCase()))
+            .Select(parameter => IdentifierName(parameter.SourceName.ToCamelCase()))
             .Select(Argument);
     }
 }

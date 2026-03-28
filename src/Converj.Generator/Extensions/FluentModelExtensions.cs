@@ -44,7 +44,7 @@ internal static class FluentModelExtensions
             : string.Empty;
 
         var parameterDisplayStrings = method.MethodParameters
-            .Select(p => p.ParameterSymbol.ToDisplayString(FullFormat));
+            .Select(p => p.ParameterSymbol?.ToDisplayString(FullFormat) ?? $"{p.SourceType} {p.SourceName}");
 
         return $"{method.Name}{typeParameterList}({string.Join(", ", parameterDisplayStrings)})";
     }

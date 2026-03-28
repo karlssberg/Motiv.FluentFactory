@@ -24,7 +24,7 @@ internal static class FieldAndPropertySyntax
         };
     }
 
-    private static FieldDeclarationSyntax CreateFieldDeclaration(FieldStorage fieldStorage)
+    public static FieldDeclarationSyntax CreateFieldDeclaration(FieldStorage fieldStorage)
     {
         var modifiers = fieldStorage.IsReadOnly
             ? TokenList(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword))

@@ -37,26 +37,41 @@ internal class FluentMethodFactory(
             null => new TargetTypeReturn(
                 constructorMetadata.Constructor,
                 [..constructorMetadata.CandidateConstructors],
-                new ParameterSequence(node.Key.Select(p => p.ParameterSymbol))),
+                new ParameterSequence(node.Key)),
             _ => nextStep
         };
 
         foreach (var parameter in fluentParameterInstances)
         {
+            // Property-backed parameters don't support multi-method templates or attribute overrides
+            if (parameter.IsPropertyBacked)
+            {
+                var propParam = fluentParameterInstances.First();
+                foreach (var name in propParam.Names)
+                    yield return new RegularMethod(
+                        name,
+                        propParam.SourceProperty!,
+                        methodReturn,
+                        rootType.ContainingNamespace,
+                        node.Key,
+                        valueStorages);
+                continue;
+            }
+
             var multipleFluentMethodInfo = compilation
-                .GetMultipleFluentMethodSymbols(parameter.ParameterSymbol)
+                .GetMultipleFluentMethodSymbols(parameter.ParameterSymbol!)
                 .ToList();
 
             ValidateMultipleFluentMethodCompatibility(parameter, multipleFluentMethodInfo);
 
             var normalizedFluentMethodSymbols = multipleFluentMethodInfo
                 .Where(methodInfo => methodInfo.Diagnostics.Count == 0)
-                .Select(methodInfo => NormalizedConverterMethod(methodInfo.Method, parameter.ParameterSymbol.Type))
+                .Select(methodInfo => NormalizedConverterMethod(methodInfo.Method, parameter.SourceType))
                 .ToImmutableArray();
 
             foreach (var normalizedFluentMethodSymbol in normalizedFluentMethodSymbols)
                 yield return new MultiMethod(
-                    parameter.ParameterSymbol,
+                    parameter.ParameterSymbol!,
                     methodReturn,
                     rootType.ContainingNamespace,
                     normalizedFluentMethodSymbol,
@@ -64,10 +79,10 @@ internal class FluentMethodFactory(
                     valueStorages,
                     normalizedFluentMethodSymbols);
 
-            var hasMultipleFluentMethodsAttribute = parameter.ParameterSymbol
+            var hasMultipleFluentMethodsAttribute = parameter.ParameterSymbol!
                 .GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null;
 
-            var hasFluentMethodAttribute = parameter.ParameterSymbol
+            var hasFluentMethodAttribute = parameter.ParameterSymbol!
                 .GetAttribute(TypeName.FluentMethodAttribute) is not null;
 
             if (!hasFluentMethodAttribute && hasMultipleFluentMethodsAttribute) continue;
@@ -76,7 +91,7 @@ internal class FluentMethodFactory(
             foreach (var name in fluentParameter.Names)
                 yield return new RegularMethod(
                     name,
-                    fluentParameter.ParameterSymbol,
+                    fluentParameter.ParameterSymbol!,
                     methodReturn,
                     rootType.ContainingNamespace,
                     node.Key,
@@ -93,10 +108,10 @@ internal class FluentMethodFactory(
             [
                 Diagnostic.Create(
                     FluentDiagnostics.AllFluentMethodTemplatesIncompatible,
-                    parameter.ParameterSymbol
+                    parameter.ParameterSymbol!
                         .GetAttribute(TypeName.MultipleFluentMethodsAttribute)?
                         .GetLocationAtIndex(0),
-                    parameter.ParameterSymbol.ToFullDisplayString()),
+                    parameter.ParameterSymbol!.ToFullDisplayString()),
             ]);
         else
             diagnostics.AddRange(multipleFluentMethodInfo

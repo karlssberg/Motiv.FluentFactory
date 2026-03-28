@@ -24,7 +24,7 @@ internal class CreationMethod : IFluentMethod
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
             [..constructorMetadata.CandidateConstructors],
-            new ParameterSequence(availableParameterFields.Select(p => p.ParameterSymbol)),
+            new ParameterSequence(availableParameterFields),
             constructorMetadata.ReturnType);
     }
 
@@ -64,6 +64,12 @@ internal class CreationMethod : IFluentMethod
     public IParameterSymbol? SourceParameter => null;
 
     public ImmutableArray<FluentMethodParameter> AvailableParameterFields { get; }
+
+    /// <summary>
+    /// Property initializer assignments for the object initializer in the creation expression.
+    /// Each entry maps a target property name to the field name on the step struct.
+    /// </summary>
+    public ImmutableArray<(string PropertyName, string FieldName)> PropertyInitializers { get; set; } = [];
 
     public IFluentReturn Return { get; }
 

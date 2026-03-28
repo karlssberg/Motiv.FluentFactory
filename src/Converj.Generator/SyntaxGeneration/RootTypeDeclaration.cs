@@ -174,7 +174,7 @@ internal static class RootTypeDeclaration
             return true;
 
         return method.AvailableParameterFields
-            .Any(f => file.ThreadedParameters.Any(b => b.TargetParameter.Name == f.ParameterSymbol.Name));
+            .Any(f => file.ThreadedParameters.Any(b => b.TargetParameter.Name == f.SourceName));
     }
 
     /// <summary>

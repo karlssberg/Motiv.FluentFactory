@@ -20,5 +20,7 @@ internal class TypeName
     public static readonly TypeName FluentParameterAttribute = new(GeneratorAttributesNamespace + "FluentParameterAttribute");
     public static readonly TypeName FluentStorageAttribute = new(GeneratorAttributesNamespace + "FluentStorageAttribute");
 
+    public static readonly TypeName RequiredAttribute = new("System.ComponentModel.DataAnnotations.RequiredAttribute");
+
     public static implicit operator string(TypeName typeName) => typeName._fullName;
 }

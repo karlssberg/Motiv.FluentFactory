@@ -70,10 +70,10 @@ internal static class ExistingPartialTypeMethodDeclaration
                         method.MethodParameters
                             .Select(parameter =>
                                 Parameter(
-                                        Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
+                                        Identifier(parameter.SourceName.ToCamelCase()))
                                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                     .WithType(
-                                        ParseTypeName(parameter.ParameterSymbol.Type
+                                        ParseTypeName(parameter.SourceType
                                             .ToGlobalDisplayString(typeParamMap)))))));
         }
 

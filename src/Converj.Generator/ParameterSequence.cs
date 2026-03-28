@@ -23,15 +23,22 @@ internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IP
         ImmutableArray<IParameterSymbol> parameterSymbolsArray = [..parameterSymbols];
         ParameterSymbols = parameterSymbolsArray;
         ParameterSymbolsPrecomputed = parameterSymbolsArray.Select(p => (Type: p.Type.ToDisplayString(), Name: p.GetFluentMethodName())).ToArray();
-        _hashCode = parameterSymbolsArray
-            .Select(p => (p.Type, Name: p.GetFluentMethodName()))
-            .Aggregate(
-                101, (left, right) =>
-                    left * 397 ^ right.Type.ToDisplayString().GetHashCode() * 397 ^ right.Name.GetHashCode());
+        _hashCode = ComputeHashCode(ParameterSymbolsPrecomputed);
     }
 
-    public ParameterSequence(IEnumerable<FluentMethodParameter> fluentParameters) : this(fluentParameters.Select(fp => fp.ParameterSymbol))
+    /// <summary>
+    /// Creates a parameter sequence from fluent method parameters, supporting both
+    /// parameter-backed and property-backed entries.
+    /// </summary>
+    public ParameterSequence(IEnumerable<FluentMethodParameter> fluentParameters)
     {
+        var paramArray = fluentParameters.ToArray();
+        // Only include actual IParameterSymbols for backward compatibility
+        ParameterSymbols = [..paramArray.Where(fp => fp.ParameterSymbol is not null).Select(fp => fp.ParameterSymbol!)];
+        ParameterSymbolsPrecomputed = paramArray
+            .Select(fp => (Type: fp.SourceType.ToDisplayString(), Name: fp.Names.First()))
+            .ToArray();
+        _hashCode = ComputeHashCode(ParameterSymbolsPrecomputed);
     }
 
     public IEnumerator<IParameterSymbol> GetEnumerator()
@@ -78,4 +85,9 @@ internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IP
     {
         return !(left == right);
     }
+
+    private static int ComputeHashCode((string Type, string Name)[] precomputed) =>
+        precomputed.Aggregate(
+            101, (left, right) =>
+                left * 397 ^ right.Type.GetHashCode() * 397 ^ right.Name.GetHashCode());
 }

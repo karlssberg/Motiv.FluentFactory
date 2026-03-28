@@ -31,7 +31,7 @@ internal static class ReturnTypeConstructorArgumentsSyntax
                 return Argument(node);
             })
             .Concat(method.MethodParameters
-                .Select(p => p.ParameterSymbol.Name.ToCamelCase())
+                .Select(p => p.SourceName.ToCamelCase())
                 .Select(IdentifierName)
                 .Select(Argument));
     }

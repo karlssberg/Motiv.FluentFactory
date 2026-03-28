@@ -18,9 +18,31 @@ internal static class TargetTypeObjectCreationExpression
             return CreateMethodOverloadExpression(multiMethod, fieldArguments, methodArguments, name);
         }
 
-        return ObjectCreationExpression(name)
+        var objectCreation = ObjectCreationExpression(name)
             .WithNewKeyword(Token(SyntaxKind.NewKeyword))
             .WithArgumentList(ArgumentList(SeparatedList([..fieldArguments, ..methodArguments])));
+
+        // Add object initializer for property-backed parameters
+        if (method is CreationMethod { PropertyInitializers.IsEmpty: false } creationMethod)
+        {
+            var initializerExpressions = creationMethod.PropertyInitializers
+                .Select(pi =>
+                    (ExpressionSyntax)AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        IdentifierName(pi.PropertyName),
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(pi.FieldName))));
+
+            objectCreation = objectCreation
+                .WithInitializer(
+                    InitializerExpression(
+                        SyntaxKind.ObjectInitializerExpression,
+                        SeparatedList(initializerExpressions)));
+        }
+
+        return objectCreation;
     }
 
     private static ObjectCreationExpressionSyntax CreateMethodOverloadExpression(

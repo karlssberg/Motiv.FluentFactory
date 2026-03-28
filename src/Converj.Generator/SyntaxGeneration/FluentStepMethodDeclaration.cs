@@ -85,7 +85,7 @@ internal static class FluentStepMethodDeclaration
                 FluentMethodSummaryDocXml.CreateWithParameters(
                     GetDocumentationLinesWithParameters(method),
                     method.ParameterDocumentation,
-                    method.MethodParameters.Select(p => p.ParameterSymbol.Name.ToCamelCase())),
+                    method.MethodParameters.Select(p => p.SourceName.ToCamelCase())),
             _ =>
                 FluentMethodSummaryDocXml.Create(GetDocumentationLinesWithParameters(method))
         };
@@ -107,10 +107,10 @@ internal static class FluentStepMethodDeclaration
                     method.MethodParameters
                         .Select(parameter =>
                             Parameter(
-                                    Identifier(parameter.ParameterSymbol.Name.ToCamelCase()))
+                                    Identifier(parameter.SourceName.ToCamelCase()))
                                 .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                                 .WithType(
-                                    ParseTypeName(parameter.ParameterSymbol.Type.ToGlobalDisplayString()))))));
+                                    ParseTypeName(parameter.SourceType.ToGlobalDisplayString()))))));
     }
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
@@ -131,6 +131,23 @@ internal static class FluentStepMethodDeclaration
                             IdentifierName(b.TargetParameter.Name.ToParameterFieldName()))));
         }
 
+        // Forward property field values from the current step to the next step
+        var propertyFieldArgs = Enumerable.Empty<ArgumentSyntax>();
+        if (method.Return is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } nextPropStep)
+        {
+            // Get current step's property fields (the ones we already have)
+            // These are fields the current step holds that need to be forwarded
+            var currentPropFieldNames = nextPropStep.PropertyFieldStorage
+                .Take(nextPropStep.PropertyFieldStorage.Length - (method.MethodParameters.Length > 0 ? 1 : 0))
+                .Select(pf =>
+                    Argument(
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(pf.IdentifierName))));
+            propertyFieldArgs = currentPropFieldNames;
+        }
+
         return threadedArgs
             .Concat(knownConstructorParameters
                 .Select(parameter =>
@@ -139,8 +156,9 @@ internal static class FluentStepMethodDeclaration
                             SyntaxKind.SimpleMemberAccessExpression,
                             ThisExpression(),
                             IdentifierName(parameter.Name.ToParameterFieldName())))))
+            .Concat(propertyFieldArgs)
             .Concat(
-                method.MethodParameters.Select(p => p.ParameterSymbol.Name.ToCamelCase())
+                method.MethodParameters.Select(p => p.SourceName.ToCamelCase())
                     .Select(IdentifierName)
                     .Select(Argument));
     }

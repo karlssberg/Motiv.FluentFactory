@@ -28,10 +28,21 @@ internal static class FluentStepConstructorDeclaration
                         MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(p.Name.ToParameterFieldName())),
                         IdentifierName(p.Name.ToCamelCase()))));
 
+        var propertyParamAssignments = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } propStep
+            ? propStep.PropertyFieldStorage
+                .Select(pf =>
+                    ExpressionStatement(
+                        AssignmentExpression(
+                            SyntaxKind.SimpleAssignmentExpression,
+                            MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(pf.IdentifierName)),
+                            IdentifierName(pf.IdentifierName.Replace("__parameter", "").TrimStart('_').ToCamelCase()))))
+            : Enumerable.Empty<StatementSyntax>();
+
         var optionalParamInitializations = GetOptionalParameterInitializations(step);
 
         var allAssignments = threadedParamAssignments
             .Concat(requiredParamAssignments)
+            .Concat(propertyParamAssignments)
             .Concat(optionalParamInitializations)
             .ToArray();
 
@@ -70,7 +81,15 @@ internal static class FluentStepConstructorDeclaration
                 return param;
             });
 
-        return threadedParams.Concat(regularParams)
+        var propertyParams = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } ps
+            ? ps.PropertyFieldStorage
+                .Select(pf =>
+                    Parameter(Identifier(pf.IdentifierName.Replace("__parameter", "").TrimStart('_').ToCamelCase()))
+                        .WithType(ParseTypeName(pf.Type.ToGlobalDisplayString()))
+                        .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))))
+            : Enumerable.Empty<ParameterSyntax>();
+
+        return threadedParams.Concat(regularParams).Concat(propertyParams)
             .InterleaveWith(Token(SyntaxKind.CommaToken));
     }
 

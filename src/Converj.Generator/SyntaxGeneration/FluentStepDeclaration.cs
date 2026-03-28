@@ -24,6 +24,15 @@ internal static class FluentStepDeclaration
 
         var fieldDeclarations = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
 
+        // Add property-backed field declarations
+        if (!step.PropertyFieldStorage.IsEmpty)
+        {
+            var propertyFields = step.PropertyFieldStorage
+                .Select(pf => FieldAndPropertySyntax.CreateFieldDeclaration(pf))
+                .ToImmutableArray();
+            fieldDeclarations = [..fieldDeclarations, ..propertyFields];
+        }
+
         var constructor = FluentStepConstructorDeclaration.Create(step);
 
         NameSyntax name = IdentifierName(step.DeclarationDisplayString());

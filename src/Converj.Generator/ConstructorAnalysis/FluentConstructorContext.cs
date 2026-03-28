@@ -1,7 +1,9 @@
+using System.Collections.Immutable;
 using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Converj.Generator.Diagnostics;
 
 namespace Converj.Generator.ConstructorAnalysis;
 
@@ -47,6 +49,13 @@ internal record FluentConstructorContext
         {
             OriginalTypeModifiers = declaration.Modifiers;
         }
+
+        // Analyze target type properties for the fluent chain
+        var methodPrefixValue = MethodPrefix ?? "With";
+        var propertyDiagnostics = new DiagnosticList();
+        TargetTypeProperties = FluentPropertyAnalyzer.Analyze(
+            constructor, constructor.ContainingType, methodPrefixValue, propertyDiagnostics);
+        PropertyDiagnostics = propertyDiagnostics;
     }
 
     public INamedTypeSymbol RootType { get; }
@@ -76,6 +85,16 @@ internal record FluentConstructorContext
     public bool IsAttributedUsedOnContainingType { get; }
 
     public SyntaxTokenList OriginalTypeModifiers { get; }
+
+    /// <summary>
+    /// Properties on the target type that participate in the fluent chain.
+    /// </summary>
+    public ImmutableArray<FluentPropertyMember> TargetTypeProperties { get; }
+
+    /// <summary>
+    /// Diagnostics from property analysis.
+    /// </summary>
+    public DiagnosticList PropertyDiagnostics { get; }
 
     public string ToDisplayString() => $"{Constructor.ToDisplayString()}";
 }

@@ -92,7 +92,7 @@ internal static class FluentFactoryMethodDeclaration
                 MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
                     ThisExpression(),
-                    IdentifierName(p.ParameterSymbol.Name.ToParameterFieldName())))
+                    IdentifierName(p.SourceName.ToParameterFieldName())))
             .Select(Argument);
     }
 
@@ -103,7 +103,7 @@ internal static class FluentFactoryMethodDeclaration
                 MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
                     ThisExpression(),
-                    IdentifierName(p.ParameterSymbol.Name.ToParameterFieldName())))
+                    IdentifierName(p.SourceName.ToParameterFieldName())))
             .Select(Argument);
     }
 }

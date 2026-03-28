@@ -54,6 +54,12 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; set; } = [];
 
+    /// <summary>
+    /// Additional field storage for property-backed parameters that can't be keyed by IParameterSymbol.
+    /// These fields are included in the step struct declaration and constructor.
+    /// </summary>
+    public ImmutableArray<FieldStorage> PropertyFieldStorage { get; set; } = [];
+
     public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
 
     public INamedTypeSymbol RootType { get; } = rootType;

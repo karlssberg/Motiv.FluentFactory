@@ -56,6 +56,10 @@ internal class FluentModelFactory(Compilation compilation)
 
         _diagnostics.AddRange(fluentConstructorContexts.GetDiagnostics());
 
+        // Collect property analysis diagnostics
+        foreach (var context in fluentConstructorContexts)
+            _diagnostics.AddRange(context.PropertyDiagnostics);
+
         if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
         {
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
@@ -94,6 +98,13 @@ internal class FluentModelFactory(Compilation compilation)
 
         fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
         fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
+
+        // Post-process: insert required property steps between end steps and creation methods
+        var propertySteps = InsertRequiredPropertySteps(rootType, fluentRootMethods, fluentBuilderSteps);
+        if (propertySteps.Length > 0)
+        {
+            fluentBuilderSteps = [..fluentBuilderSteps, ..propertySteps];
+        }
 
         _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
         var sampleConstructorContext = fluentConstructorContexts.First();
@@ -147,36 +158,222 @@ internal class FluentModelFactory(Compilation compilation)
             .Where(p => !knownParamFieldNames.Contains(p.Name.ToParameterFieldName()))
             .ToList();
 
-        if (optionalParameters.Count == 0) return;
-
-        // Add optional parameter fields to the step's value storage
-        foreach (var parameter in optionalParameters)
-        {
-            if (!valueStorages.ContainsKey(parameter))
-            {
-                var fieldStorage = FieldStorage.FromParameter(parameter, rootType.ContainingNamespace)
-                    with { IsReadOnly = false };
-                valueStorages.Add(parameter, fieldStorage);
-            }
-        }
-
         var methodPrefix = node.EndValues
             .Select(v => v.Context.MethodPrefix)
             .FirstOrDefault() ?? "With";
 
-        // Add optional methods to the step
-        foreach (var parameter in optionalParameters)
+        if (optionalParameters.Count > 0)
         {
-            var methodName = parameter.GetFluentMethodName(methodPrefix);
-            var optionalMethod = new OptionalFluentMethod(
-                methodName,
-                parameter,
-                step,
-                rootType.ContainingNamespace,
-                [..node.Key],
-                valueStorages);
-            step.FluentMethods.Add(optionalMethod);
+            // Add optional parameter fields to the step's value storage
+            foreach (var parameter in optionalParameters)
+            {
+                if (!valueStorages.ContainsKey(parameter))
+                {
+                    var fieldStorage = FieldStorage.FromParameter(parameter, rootType.ContainingNamespace)
+                        with { IsReadOnly = false };
+                    valueStorages.Add(parameter, fieldStorage);
+                }
+            }
+
+            // Add optional methods to the step
+            foreach (var parameter in optionalParameters)
+            {
+                var methodName = parameter.GetFluentMethodName(methodPrefix);
+                var optionalMethod = new OptionalFluentMethod(
+                    methodName,
+                    parameter,
+                    step,
+                    rootType.ContainingNamespace,
+                    [..node.Key],
+                    valueStorages);
+                step.FluentMethods.Add(optionalMethod);
+            }
         }
+
+    }
+
+    /// <summary>
+    /// Post-processes the step chain to insert required property steps between end steps
+    /// and their creation methods. For each creation method whose target type has required
+    /// properties, removes the creation method from its current step, creates a chain of
+    /// property steps, and places the creation method on the last property step.
+    /// </summary>
+    private ImmutableArray<IFluentStep> InsertRequiredPropertySteps(
+        INamedTypeSymbol rootType,
+        ImmutableArray<IFluentMethod> rootMethods,
+        ImmutableArray<IFluentStep> existingSteps)
+    {
+        var newSteps = new List<IFluentStep>();
+        var nextStepIndex = existingSteps.Length;
+
+        // Process all steps that have creation methods with required properties
+        var allSteps = existingSteps.Cast<IFluentStep>().ToList();
+
+        // Also check root methods (for 0-param constructors, creation methods are on root)
+        // For now, handle steps only — root-level creation methods would need factory-level property steps
+
+        foreach (var step in allSteps)
+        {
+            var creationMethods = step.FluentMethods.OfType<CreationMethod>()
+                .Where(cm => cm.Return is TargetTypeReturn)
+                .ToList();
+
+            foreach (var creationMethod in creationMethods)
+            {
+                // Find the constructor metadata's required properties
+                var constructor = creationMethod.Return.CandidateConstructors.FirstOrDefault();
+                if (constructor is null) continue;
+
+                var targetType = constructor.ContainingType;
+                var methodPrefix = "With"; // TODO: get from constructor context
+
+                var requiredProperties = targetType.GetMembers()
+                    .OfType<IPropertySymbol>()
+                    .Where(p => !p.IsStatic && !p.IsIndexer)
+                    .Where(p => p.IsRequired || p.HasAttribute(TypeName.RequiredAttribute))
+                    .Where(p => p.SetMethod is not null)
+                    .Where(p => !IsPropertyInitializedByConstructor(constructor, targetType, p))
+                    .ToList();
+
+                if (requiredProperties.Count == 0) continue;
+
+                // Remove this creation method from the current step
+                step.FluentMethods.Remove(creationMethod);
+
+                // Build a chain of property steps
+                var currentStep = step;
+                var currentValueStorage = step.ValueStorage;
+
+                for (var i = 0; i < requiredProperties.Count; i++)
+                {
+                    var prop = requiredProperties[i];
+                    var isLast = i == requiredProperties.Count - 1;
+                    var propFieldName = prop.Name.ToParameterFieldName();
+                    var propMethodName = $"{methodPrefix}{prop.Name.Capitalize()}";
+
+                    // Check for [FluentMethod] rename
+                    var fluentMethodAttr = prop.GetAttributes(TypeName.FluentMethodAttribute).FirstOrDefault();
+                    if (fluentMethodAttr is not null)
+                    {
+                        var explicitName = fluentMethodAttr.GetFirstStringArgument();
+                        if (explicitName is not null)
+                            propMethodName = explicitName;
+                    }
+
+                    // Build accumulated property fields: previous property fields + this one
+                    var prevPropertyFields = currentStep is RegularFluentStep rfs2
+                        ? rfs2.PropertyFieldStorage
+                        : ImmutableArray<FieldStorage>.Empty;
+                    var thisPropField = new FieldStorage(
+                        propFieldName, prop.Type, rootType.ContainingNamespace);
+                    var allPropertyFields = prevPropertyFields.Add(thisPropField);
+
+                    // Create the property step with accumulated fields + this property
+                    var propertyStep = new RegularFluentStep(
+                        rootType,
+                        step.CandidateConstructors)
+                    {
+                        Index = nextStepIndex++,
+                        IsEndStep = isLast,
+                        Accessibility = step.Accessibility,
+                        TypeKind = step is RegularFluentStep rfs ? rfs.TypeKind : TypeKind.Class,
+                    };
+
+                    // Copy existing value storage (constructor param fields)
+                    var newStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>();
+                    foreach (var kvp in currentValueStorage)
+                        newStorage.Add(kvp.Key, kvp.Value);
+
+                    // Use KnownConstructorParameters from the trie step for the property step
+                    propertyStep.KnownConstructorParameters = currentStep.KnownConstructorParameters;
+                    propertyStep.ValueStorage = newStorage;
+                    propertyStep.PropertyFieldStorage = allPropertyFields;
+
+                    // Create the method on the current step leading to the property step
+                    var method = new RegularMethod(
+                        propMethodName,
+                        prop,
+                        propertyStep,
+                        rootType.ContainingNamespace,
+                        [],
+                        currentValueStorage);
+
+                    currentStep.FluentMethods.Add(method);
+
+                    if (isLast)
+                    {
+                        // Put the creation method on the last property step with property initializers
+                        creationMethod.PropertyInitializers =
+                        [
+                            ..requiredProperties.Select(rp =>
+                                (PropertyName: rp.Name, FieldName: rp.Name.ToParameterFieldName()))
+                        ];
+                        propertyStep.FluentMethods = [creationMethod];
+                    }
+
+                    newSteps.Add(propertyStep);
+                    currentStep = propertyStep;
+                }
+            }
+        }
+
+        return [..newSteps];
+    }
+
+    /// <summary>
+    /// Checks whether a property is initialized by the given constructor.
+    /// </summary>
+    private static bool IsPropertyInitializedByConstructor(
+        IMethodSymbol constructor,
+        INamedTypeSymbol targetType,
+        IPropertySymbol property)
+    {
+        // Record types: constructor params create properties
+        if (targetType.IsRecord)
+        {
+            foreach (var param in constructor.Parameters)
+            {
+                if (string.Equals(param.Name, property.Name, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+        }
+
+        // Check explicit assignments in constructor body
+        var syntaxRef = constructor.DeclaringSyntaxReferences.FirstOrDefault();
+        if (syntaxRef?.GetSyntax() is Microsoft.CodeAnalysis.CSharp.Syntax.ConstructorDeclarationSyntax ctorSyntax
+            && ctorSyntax.Body is not null)
+        {
+            var paramNames = new HashSet<string>(constructor.Parameters.Select(p => p.Name));
+            foreach (var statement in ctorSyntax.Body.Statements)
+            {
+                if (statement is not Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionStatementSyntax
+                    {
+                        Expression: Microsoft.CodeAnalysis.CSharp.Syntax.AssignmentExpressionSyntax assignment
+                    }) continue;
+
+                var assignedName = assignment.Left switch
+                {
+                    Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax
+                        { Expression: Microsoft.CodeAnalysis.CSharp.Syntax.ThisExpressionSyntax, Name: var name } =>
+                        name.Identifier.ValueText,
+                    Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax id => id.Identifier.ValueText,
+                    _ => null
+                };
+
+                if (string.Equals(assignedName, property.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    var rightName = assignment.Right switch
+                    {
+                        Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax id => id.Identifier.ValueText,
+                        _ => null
+                    };
+                    if (rightName is not null && paramNames.Contains(rightName))
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private IEnumerable<IFluentMethod> ConvertNodeToCreationMethods(INamedTypeSymbol rootType,
@@ -202,7 +399,7 @@ internal class FluentModelFactory(Compilation compilation)
                 ? verb
                 : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
             let keyParamFieldNames = new HashSet<string>(
-                node.Key.Select(k => k.ParameterSymbol.Name.ToParameterFieldName()))
+                node.Key.Select(k => k.SourceName.ToParameterFieldName()))
             let optionalParamFields = value.OptionalParameters
                 .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
                 .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))

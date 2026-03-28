@@ -20,13 +20,38 @@ internal class RegularMethod : IFluentMethod
 
         Name = name;
         SourceParameter = sourceParameterSymbol;
-        MethodParameters = GetMethodParameters(name, sourceParameterSymbol);
+        MethodParameters = [new FluentMethodParameter(sourceParameterSymbol, name)];
         RootNamespace = rootNamespace;
         ValueSources = valueStorages;
         AvailableParameterFields = availableParameterFields;
         Return = fluentReturn;
         DocumentationSummary = GetDocumentationSummary(sourceParameterSymbol);
-        ParameterDocumentation = null; // Regular methods don't use template methods
+        ParameterDocumentation = null;
+    }
+
+    /// <summary>
+    /// Creates a RegularMethod for a property-backed fluent method parameter.
+    /// </summary>
+    public RegularMethod(
+        string name,
+        IPropertySymbol sourceProperty,
+        IFluentReturn fluentReturn,
+        INamespaceSymbol rootNamespace,
+        ImmutableArray<FluentMethodParameter> availableParameterFields,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        _lazyTypeParameters = new Lazy<ImmutableArray<FluentTypeParameter>>(GetTypeParameters);
+
+        Name = name;
+        SourceParameter = null;
+        SourceProperty = sourceProperty;
+        MethodParameters = [new FluentMethodParameter(sourceProperty, name)];
+        RootNamespace = rootNamespace;
+        ValueSources = valueStorages;
+        AvailableParameterFields = availableParameterFields;
+        Return = fluentReturn;
+        DocumentationSummary = null;
+        ParameterDocumentation = null;
     }
 
     public string Name { get; }
@@ -39,7 +64,12 @@ internal class RegularMethod : IFluentMethod
 
     public Dictionary<string, string>? ParameterDocumentation { get; }
 
-    public IParameterSymbol SourceParameter { get; }
+    public IParameterSymbol? SourceParameter { get; }
+
+    /// <summary>
+    /// The source property symbol when this method is property-backed.
+    /// </summary>
+    public IPropertySymbol? SourceProperty { get; }
 
     public ImmutableArray<FluentMethodParameter> AvailableParameterFields { get; }
 
@@ -49,32 +79,27 @@ internal class RegularMethod : IFluentMethod
 
     public INamespaceSymbol RootNamespace { get; }
 
-    public override string ToString() => $"RegularMethod: {Name}({string.Join(", ", MethodParameters.Select(p => p.ParameterSymbol.ToFullDisplayString()))})";
+    public override string ToString() => $"RegularMethod: {Name}({string.Join(", ", MethodParameters.Select(p => p.ParameterSymbol?.ToFullDisplayString() ?? $"{p.SourceType} {p.SourceName}"))})";
 
     private static string? GetDocumentationSummary(IParameterSymbol sourceParameterSymbol)
     {
-        // For regular methods, extract parameter-specific documentation if available
-        // First, try to get documentation from the parameter itself
         var parameterDoc = ExtractParameterDocumentation(sourceParameterSymbol);
         if (!string.IsNullOrWhiteSpace(parameterDoc))
         {
             return parameterDoc;
         }
 
-        // Fallback to constructor documentation summary
         return ExtractSummaryFromDocumentation(sourceParameterSymbol.ContainingSymbol.GetDocumentationCommentXml());
     }
 
     private static string? ExtractParameterDocumentation(IParameterSymbol parameterSymbol)
     {
-        // Get the XML documentation from the containing method/constructor
         var containingSymbolDoc = parameterSymbol.ContainingSymbol.GetDocumentationCommentXml();
         if (string.IsNullOrWhiteSpace(containingSymbolDoc))
             return null;
 
         try
         {
-            // Parse XML to extract parameter-specific documentation
             var xmlDoc = XDocument.Parse(containingSymbolDoc);
             var paramElement = xmlDoc.Descendants("param")
                 .FirstOrDefault(p => p.Attribute("name")?.Value == parameterSymbol.Name);
@@ -83,7 +108,6 @@ internal class RegularMethod : IFluentMethod
         }
         catch
         {
-            // If XML parsing fails, return null to fall back to constructor documentation
             return null;
         }
     }
@@ -95,31 +119,25 @@ internal class RegularMethod : IFluentMethod
 
         try
         {
-            // Parse XML to extract summary documentation
             var doc = XDocument.Parse(xmlDoc);
             var summaryElement = doc.Descendants("summary").FirstOrDefault();
             return summaryElement?.Value.Trim();
         }
         catch
         {
-            // If XML parsing fails, return the raw documentation
             return xmlDoc;
         }
     }
 
-    private static ImmutableArray<FluentMethodParameter> GetMethodParameters(string methodName,
-        IParameterSymbol sourceParameterSymbol)
-    {
-        return [new FluentMethodParameter(sourceParameterSymbol, methodName)];
-    }
-
     private ImmutableArray<FluentTypeParameter> GetTypeParameters()
     {
+        var sourceType = SourceParameter?.Type ?? SourceProperty?.Type;
         return
         [
-            ..SourceParameter.Type
-                .GetGenericTypeParameters()
-                .Select(genericTypeParameter => new FluentTypeParameter(genericTypeParameter))
+            ..sourceType?
+                  .GetGenericTypeParameters()
+                  .Select(genericTypeParameter => new FluentTypeParameter(genericTypeParameter))
+              ?? []
         ];
     }
 }

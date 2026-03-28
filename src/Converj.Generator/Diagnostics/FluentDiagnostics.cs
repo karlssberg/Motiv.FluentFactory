@@ -431,4 +431,64 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentMethod] applied to a property without a set or init accessor.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentMethodOnPropertyWithoutSetter = new(
+        id: "MFFG0038",
+        title: "FluentMethod on property without setter",
+        messageFormat:
+        "Property '{0}' is marked with [FluentMethod] but has no set or init accessor. The generator cannot assign a value to this property.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for property support being used with CreateMethod.None.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentMethodPropertyWithCreateMethodNone = new(
+        id: "MFFG0039",
+        title: "Property support excluded from CreateMethod.None",
+        messageFormat:
+        "Required property '{0}' on type '{1}' cannot be used with CreateMethod.None. Property initialization via object initializer requires a creation method.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for an unresolvable name clash between a property and a constructor parameter.
+    /// </summary>
+    public static readonly DiagnosticDescriptor PropertyNameClash = new(
+        id: "MFFG0040",
+        title: "Property name clashes with constructor parameter",
+        messageFormat:
+        "Property '{0}' on type '{1}' produces fluent method '{2}' that clashes with constructor parameter '{3}'. Use [FluentMethod(\"AlternateName\")] to rename.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for duplicate fluent method names produced by properties.
+    /// </summary>
+    public static readonly DiagnosticDescriptor DuplicateFluentPropertyMethodName = new(
+        id: "MFFG0041",
+        title: "Duplicate fluent property method name",
+        messageFormat:
+        "Property '{0}' produces fluent method name '{1}' that conflicts with another property or parameter",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentMethod] without a method name on a constructor parameter, which has no effect.
+    /// </summary>
+    public static readonly DiagnosticDescriptor FluentMethodNoEffectOnParameter = new(
+        id: "MFFG0042",
+        title: "FluentMethod without name has no effect on parameter",
+        messageFormat:
+        "[FluentMethod] without an explicit method name has no effect on constructor parameter '{0}'. Provide a method name or remove the attribute.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Info,
+        isEnabledByDefault: true);
 }
