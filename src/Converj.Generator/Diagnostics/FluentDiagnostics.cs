@@ -491,4 +491,16 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Info,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for ambiguous type-first entry method names across different target types.
+    /// </summary>
+    public static readonly DiagnosticDescriptor AmbiguousTypeFirstEntryMethod = new(
+        id: "MFFG0043",
+        title: "Ambiguous type-first entry method",
+        messageFormat:
+        "Type-first entry method '{0}' is ambiguous between types {1}. Disambiguate by setting TypeFirstVerb on [FluentConstructor] to change the entry method, or use CreateVerb with CreateMethod.Fixed to change the terminal method.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

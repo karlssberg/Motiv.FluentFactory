@@ -43,6 +43,8 @@ internal static class FluentConstructorContextFactory
                     metadata.CreateVerb ??= defaults.CreateVerb;
                     metadata.MethodPrefix ??= defaults.MethodPrefix;
                     metadata.ReturnType ??= defaults.ReturnType;
+                    metadata.BuilderMode ??= defaults.BuilderMode;
+                    metadata.TypeFirstVerb ??= defaults.TypeFirstVerb;
 
                     return symbol switch
                     {

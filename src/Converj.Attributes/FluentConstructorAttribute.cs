@@ -40,6 +40,18 @@ public class FluentConstructorAttribute(Type rootType) : Attribute
     /// The target type must be assignable to this type (e.g., implement the interface or extend the base class).
     /// </summary>
     public Type? ReturnType { get; set; }
+
+    /// <summary>
+    /// Controls the builder chain structure for this constructor.
+    /// When set, overrides the factory-level <see cref="FluentFactoryAttribute.BuilderMode"/> setting.
+    /// </summary>
+    public BuilderMode BuilderMode { get; set; }
+
+    /// <summary>
+    /// The verb for this constructor's type-first entry method.
+    /// Overrides the factory-level <see cref="FluentFactoryAttribute.TypeFirstVerb"/> if set.
+    /// </summary>
+    public string? TypeFirstVerb { get; set; }
 }
 
 /// <summary>

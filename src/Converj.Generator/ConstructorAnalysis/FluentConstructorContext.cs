@@ -24,6 +24,8 @@ internal record FluentConstructorContext
         CreateVerb = metadata.CreateVerb;
         MethodPrefix = metadata.MethodPrefix;
         ReturnType = metadata.ReturnType;
+        BuilderMode = metadata.BuilderMode ?? BuilderMode.ParameterFirst;
+        TypeFirstVerb = metadata.TypeFirstVerb ?? "Build";
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;
         IsRecord = rootSymbol.IsRecord;
@@ -83,6 +85,16 @@ internal record FluentConstructorContext
     public INamedTypeSymbol? ReturnType { get; }
 
     public bool IsAttributedUsedOnContainingType { get; }
+
+    /// <summary>
+    /// The builder mode for this constructor (ParameterFirst or TypeFirst).
+    /// </summary>
+    public BuilderMode BuilderMode { get; }
+
+    /// <summary>
+    /// The verb used for the type-first entry method name (e.g., "Build" → "BuildDog").
+    /// </summary>
+    public string TypeFirstVerb { get; }
 
     public SyntaxTokenList OriginalTypeModifiers { get; }
 

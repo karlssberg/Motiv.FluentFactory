@@ -14,6 +14,8 @@ internal static class FluentFactoryMetadataReader
     private const string MethodPrefixKey = "MethodPrefix";
     private const string ReturnTypeKey = "ReturnType";
     private const string AllowPartialParameterOverlapKey = "AllowPartialParameterOverlap";
+    private const string BuilderModeKey = "BuilderMode";
+    private const string TypeFirstVerbKey = "TypeFirstVerb";
 
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentConstructor attributes.
@@ -30,16 +32,18 @@ internal static class FluentFactoryMetadataReader
                 if (typeSymbol is null)
                     return FluentFactoryMetadata.Invalid;
 
-                var (createMethod, createVerb, methodPrefix, returnType, _) = ReadNamedArguments(attribute.NamedArguments);
+                var args = ReadNamedArguments(attribute.NamedArguments);
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
-                    CreateMethod = createMethod,
+                    CreateMethod = args.CreateMethod,
                     RootTypeFullName = typeSymbol.ToDisplayString(),
-                    CreateVerb = createVerb,
-                    MethodPrefix = methodPrefix,
-                    ReturnType = returnType,
+                    CreateVerb = args.CreateVerb,
+                    MethodPrefix = args.MethodPrefix,
+                    ReturnType = args.ReturnType,
                     AttributeData = attribute,
+                    BuilderMode = args.BuilderMode,
+                    TypeFirstVerb = args.TypeFirstVerb,
                 };
             });
     }
@@ -101,9 +105,11 @@ internal static class FluentFactoryMetadataReader
         if (attribute is null)
             return new FluentFactoryDefaults(null, null, null, null);
 
-        var (createMethod, createVerb, methodPrefix, returnType, allowPartialOverlap) = ReadNamedArguments(attribute.NamedArguments);
+        var args = ReadNamedArguments(attribute.NamedArguments);
 
-        return new FluentFactoryDefaults(createMethod, createVerb, methodPrefix, returnType, allowPartialOverlap);
+        return new FluentFactoryDefaults(
+            args.CreateMethod, args.CreateVerb, args.MethodPrefix, args.ReturnType, args.AllowPartialParameterOverlap,
+            args.BuilderMode ?? BuilderMode.ParameterFirst, args.TypeFirstVerb);
     }
 
     /// <summary>
@@ -112,38 +118,64 @@ internal static class FluentFactoryMetadataReader
     /// </summary>
     /// <param name="namedArguments">The named arguments from an attribute.</param>
     /// <returns>A tuple of nullable CreateMethod, CreateVerb, and MethodPrefix values.</returns>
-    private static (CreateMethodMode? CreateMethod, string? CreateVerb, string? MethodPrefix, INamedTypeSymbol? ReturnType, bool AllowPartialParameterOverlap) ReadNamedArguments(
+    private static ParsedNamedArguments ReadNamedArguments(
         ImmutableArray<KeyValuePair<string, TypedConstant>> namedArguments)
     {
-        CreateMethodMode? createMethod = null;
-        string? createVerb = null;
-        string? methodPrefix = null;
-        INamedTypeSymbol? returnType = null;
-        var allowPartialParameterOverlap = false;
+        var result = new ParsedNamedArguments();
 
         foreach (var arg in namedArguments)
         {
             switch (arg.Key)
             {
                 case CreateMethodKey:
-                    createMethod = ConvertToCreateMethodMode(arg.Value);
+                    result.CreateMethod = ConvertToCreateMethodMode(arg.Value);
                     break;
                 case CreateVerbKey:
-                    createVerb = arg.Value.Value as string;
+                    result.CreateVerb = arg.Value.Value as string;
                     break;
                 case MethodPrefixKey:
-                    methodPrefix = arg.Value.Value as string;
+                    result.MethodPrefix = arg.Value.Value as string;
                     break;
                 case ReturnTypeKey:
-                    returnType = arg.Value.Value as INamedTypeSymbol;
+                    result.ReturnType = arg.Value.Value as INamedTypeSymbol;
                     break;
                 case AllowPartialParameterOverlapKey:
-                    allowPartialParameterOverlap = arg.Value.Value is true;
+                    result.AllowPartialParameterOverlap = arg.Value.Value is true;
+                    break;
+                case BuilderModeKey:
+                    result.BuilderMode = ConvertToBuilderMode(arg.Value);
+                    break;
+                case TypeFirstVerbKey:
+                    result.TypeFirstVerb = arg.Value.Value as string;
                     break;
             }
         }
 
-        return (createMethod, createVerb, methodPrefix, returnType, allowPartialParameterOverlap);
+        return result;
+    }
+
+    /// <summary>
+    /// Converts a typed constant from an attribute argument to the internal BuilderMode enum.
+    /// </summary>
+    private static BuilderMode? ConvertToBuilderMode(TypedConstant value)
+    {
+        if (value.Kind != TypedConstantKind.Enum)
+            return null;
+
+        return value.Value is int intValue
+            ? Enum.TryParse<BuilderMode>(intValue.ToString(), out var mode) ? mode : null
+            : null;
+    }
+
+    private sealed class ParsedNamedArguments
+    {
+        public CreateMethodMode? CreateMethod { get; set; }
+        public string? CreateVerb { get; set; }
+        public string? MethodPrefix { get; set; }
+        public INamedTypeSymbol? ReturnType { get; set; }
+        public bool AllowPartialParameterOverlap { get; set; }
+        public BuilderMode? BuilderMode { get; set; }
+        public string? TypeFirstVerb { get; set; }
     }
 
     /// <summary>

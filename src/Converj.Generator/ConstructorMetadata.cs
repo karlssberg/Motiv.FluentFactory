@@ -17,6 +17,10 @@ internal class ConstructorMetadata(FluentConstructorContext constructorContext)
 
     public INamedTypeSymbol? ReturnType { get; } = constructorContext.ReturnType;
 
+    public BuilderMode BuilderMode { get; } = constructorContext.BuilderMode;
+
+    public string TypeFirstVerb { get; } = constructorContext.TypeFirstVerb;
+
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         constructorContext.ValueStorage;
 

@@ -155,11 +155,17 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public int Index { get; set; }
 
+    /// <summary>
+    /// When set, this step is part of a type-first builder chain and the name
+    /// includes the target type (e.g., <c>Step_Dog_0__Factory</c>).
+    /// </summary>
+    public string? TypeFirstTargetName { get; set; }
+
     private string GetStepName(INamedTypeSymbol rootType)
     {
         var identifier = rootType.ToIdentifier();
-        var name = $"Step_{Index}__{identifier}";
-
-        return name;
+        return TypeFirstTargetName is not null
+            ? $"Step_{TypeFirstTargetName}_{Index}__{identifier}"
+            : $"Step_{Index}__{identifier}";
     }
 }

@@ -65,7 +65,12 @@ internal class FluentModelFactory(Compilation compilation)
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
         }
 
-        var stepTrie = CreateFluentStepTrie(fluentConstructorContexts);
+        // Split constructors: type-first ones are excluded from the parameter-first trie
+        var parameterFirstContexts = fluentConstructorContexts
+            .Where(c => c.BuilderMode != BuilderMode.TypeFirst)
+            .ToImmutableArray();
+
+        var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
 
         var fluentRootMethods = ConvertNodeToFluentFluentMethods(rootType, stepTrie.Root, []);
 
@@ -98,6 +103,18 @@ internal class FluentModelFactory(Compilation compilation)
 
         fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
         fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
+
+        // Type-first chain generation: group by target type, build per-type trie
+        var typeFirstContexts = fluentConstructorContexts
+            .Where(c => c.BuilderMode == BuilderMode.TypeFirst)
+            .ToImmutableArray();
+        if (!typeFirstContexts.IsEmpty)
+        {
+            var (typeFirstEntryMethods, typeFirstSteps) = CreateTypeFirstChains(
+                rootType, typeFirstContexts, fluentBuilderSteps.Length);
+            fluentRootMethods = [..fluentRootMethods, ..typeFirstEntryMethods];
+            fluentBuilderSteps = [..fluentBuilderSteps, ..typeFirstSteps];
+        }
 
         // Post-process: insert required property steps between end steps and creation methods
         var (propertySteps, updatedRootMethods) = InsertRequiredPropertySteps(rootType, fluentRootMethods, fluentBuilderSteps);
@@ -889,6 +906,171 @@ internal class FluentModelFactory(Compilation compilation)
                 .Select(b => b.TargetParameter.Name));
     }
 
+
+    /// <summary>
+    /// Creates type-first builder chains by grouping constructors by target type,
+    /// building a parameter trie per group, and generating entry methods + step chains.
+    /// </summary>
+    private (ImmutableArray<IFluentMethod> EntryMethods, ImmutableArray<IFluentStep> Steps)
+        CreateTypeFirstChains(
+            INamedTypeSymbol rootType,
+            ImmutableArray<FluentConstructorContext> typeFirstContexts,
+            int startingStepIndex)
+    {
+        var allEntryMethods = new List<IFluentMethod>();
+        var allSteps = new List<IFluentStep>();
+        var stepIndex = startingStepIndex;
+
+        // Group by namespace + type name, merging generics within the same namespace
+        // (Circle and Circle<T> in the same namespace share a group; A.Circle and B.Circle do not)
+        var groups = typeFirstContexts
+            .GroupBy(c =>
+            {
+                var type = c.Constructor.ContainingType;
+                var ns = type.ContainingNamespace?.ToDisplayString() ?? "";
+                return $"{ns}.{type.Name}";
+            })
+            .ToList();
+
+        // Detect ambiguous entry method names across groups
+        var entryMethodNames = groups
+            .GroupBy(g =>
+            {
+                var context = g.First();
+                return $"{context.TypeFirstVerb}{context.Constructor.ContainingType.Name}";
+            })
+            .Where(nameGroup => nameGroup.Count() > 1)
+            .ToList();
+
+        if (entryMethodNames.Count > 0)
+        {
+            foreach (var collision in entryMethodNames)
+            {
+                var collidingTypes = collision
+                    .SelectMany(g => g.Select(c => c.Constructor.ContainingType.ToDisplayString()))
+                    .Distinct()
+                    .ToArray();
+
+                var location = collision
+                    .SelectMany(g => g.Select(c => c.AttributeData))
+                    .Select(a => a.ApplicationSyntaxReference?.GetSyntax().GetLocation())
+                    .FirstOrDefault(l => l is not null) ?? Location.None;
+
+                _diagnostics.Add(Diagnostic.Create(
+                    Diagnostics.FluentDiagnostics.AmbiguousTypeFirstEntryMethod,
+                    location,
+                    collision.Key,
+                    string.Join(", ", collidingTypes.Select(t => $"'{t}'"))));
+            }
+
+            // Remove colliding groups
+            var collidingNames = new HashSet<string>(entryMethodNames.Select(n => n.Key));
+            groups.RemoveAll(g =>
+            {
+                var context = g.First();
+                return collidingNames.Contains($"{context.TypeFirstVerb}{context.Constructor.ContainingType.Name}");
+            });
+        }
+
+        foreach (var group in groups)
+        {
+            var contexts = group.ToImmutableArray();
+            var targetTypeName = contexts.First().Constructor.ContainingType.Name;
+
+            // Build a parameter trie for this target type group
+            var trie = CreateFluentStepTrie(contexts);
+
+            // Force Fixed creation method on all trie end values so terminals are "Create()"
+            ForceFixedCreateMethod(trie.Root);
+
+            // Use a separate step builder to avoid collisions with parameter-first steps
+            var typeFirstStepDict = new OrderedDictionary<ParameterSequence, RegularFluentStep>();
+            var typeFirstStepBuilder = new FluentStepBuilder(typeFirstStepDict, _diagnostics);
+
+            // Convert the trie using the separate step builder
+            var originalStepBuilder = _stepBuilder;
+            _stepBuilder = typeFirstStepBuilder;
+            var trieRootMethods = ConvertNodeToFluentFluentMethods(rootType, trie.Root, []);
+            _stepBuilder = originalStepBuilder;
+
+            if (trieRootMethods.IsEmpty) continue;
+
+            // Collect all steps from the trie conversion
+            var childSteps = trieRootMethods
+                .Select(m => m.Return)
+                .OfType<IFluentStep>();
+            var descendantSteps = FluentStepBuilder.GetDescendentFluentSteps(childSteps)
+                .DistinctBy(step => step.KnownConstructorParameters)
+                .ToList();
+
+            // Create the type-first root step that wraps the trie's root methods
+            var rootStep = new RegularFluentStep(
+                rootType,
+                contexts.SelectMany(c => new[] { c.Constructor }))
+            {
+                KnownConstructorParameters = [],
+                FluentMethods = new List<IFluentMethod>(trieRootMethods),
+                IsEndStep = trie.Root.IsEnd,
+                ValueStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(),
+                TypeFirstTargetName = targetTypeName,
+            };
+            rootStep.Index = stepIndex++;
+
+            // Handle all-optional constructors on the root step
+            if (trie.Root.IsEnd)
+            {
+                AddOptionalMethodsToStep(rootType, trie.Root, rootStep, rootStep.ValueStorage);
+            }
+
+            // Add creation methods for zero-required-param constructors directly to root step
+            var rootCreationMethods = ConvertNodeToCreationMethods(rootType, trie.Root, rootStep.ValueStorage);
+            foreach (var creationMethod in rootCreationMethods)
+                rootStep.FluentMethods.Add(creationMethod);
+
+            // Number and tag all descendant steps with the target type name
+            foreach (var step in descendantSteps)
+            {
+                if (step is RegularFluentStep regularStep)
+                {
+                    regularStep.TypeFirstTargetName = targetTypeName;
+                    regularStep.Index = stepIndex++;
+                }
+            }
+
+            // Determine entry method name
+            var verb = contexts.First().TypeFirstVerb;
+            var entryMethodName = $"{verb}{targetTypeName}";
+
+            var candidateConstructors = contexts
+                .Select(c => c.Constructor)
+                .ToImmutableArray();
+
+            var entryMethod = new TypeFirstEntryMethod(
+                entryMethodName,
+                rootStep,
+                rootType.ContainingNamespace,
+                candidateConstructors);
+
+            allEntryMethods.Add(entryMethod);
+            allSteps.Add(rootStep);
+            allSteps.AddRange(descendantSteps);
+        }
+
+        return ([..allEntryMethods], [..allSteps]);
+    }
+
+    /// <summary>
+    /// Recursively sets CreateMethod to Fixed on all end values in the trie,
+    /// ensuring type-first terminal methods are named "Create()" instead of "CreateTypeName()".
+    /// </summary>
+    private static void ForceFixedCreateMethod(Trie<FluentMethodParameter, ConstructorMetadata>.Node node)
+    {
+        foreach (var endValue in node.EndValues)
+            endValue.CreateMethod = CreateMethodMode.Fixed;
+
+        foreach (var child in node.Children.Values)
+            ForceFixedCreateMethod(child);
+    }
 
     private Trie<FluentMethodParameter, ConstructorMetadata> CreateFluentStepTrie(
         ImmutableArray<FluentConstructorContext> fluentConstructorContexts)

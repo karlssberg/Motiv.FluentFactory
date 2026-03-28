@@ -48,9 +48,14 @@ internal static class FluentStepConstructorDeclaration
             .Concat(optionalPropertyInitializations)
             .ToArray();
 
+        // Parameterless struct constructors must be public per C# spec
+        var hasParameters = constructorParameters.Any();
+        var accessModifier = hasParameters
+            ? Token(SyntaxKind.InternalKeyword)
+            : Token(SyntaxKind.PublicKeyword);
+
         var constructor = ConstructorDeclaration(Identifier(step.Name))
-            .WithModifiers(TokenList(
-                Token(SyntaxKind.InternalKeyword)))
+            .WithModifiers(TokenList(accessModifier))
             .WithParameterList(
                 ParameterList(SeparatedList<ParameterSyntax>(constructorParameters)))
             .WithBody(Block(allAssignments));

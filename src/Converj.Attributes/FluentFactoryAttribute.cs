@@ -43,4 +43,19 @@ public class FluentFactoryAttribute : Attribute
     /// or a diagnostic error is reported.
     /// </summary>
     public bool AllowPartialParameterOverlap { get; set; }
+
+    /// <summary>
+    /// Controls the builder chain structure for all constructors in this factory.
+    /// Default is <see cref="BuilderMode.ParameterFirst"/>.
+    /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.BuilderMode"/>.
+    /// </summary>
+    public BuilderMode BuilderMode { get; set; }
+
+    /// <summary>
+    /// The verb used for type-first entry method names. Default is "Build".
+    /// For example, "Build" + "Dog" = <c>BuildDog()</c>.
+    /// Only applicable when <see cref="BuilderMode"/> is <see cref="BuilderMode.TypeFirst"/>.
+    /// Can be overridden per-constructor via <see cref="FluentConstructorAttribute.TypeFirstVerb"/>.
+    /// </summary>
+    public string? TypeFirstVerb { get; set; }
 }
