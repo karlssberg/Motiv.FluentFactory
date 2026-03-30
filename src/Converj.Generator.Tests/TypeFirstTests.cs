@@ -515,7 +515,7 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Car"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Car_0__Test_Factory BuildCar()
+                    public global::Test.Step_Car_0__Test_Factory BuildCar()
                     {
                         return new global::Test.Step_Car_0__Test_Factory(this._wheels);
                     }
@@ -527,10 +527,10 @@ public class TypeFirstTests
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_Car_0__Test_Factory
                 {
-                    private readonly int _wheels_parameter;
-                    public Step_Car_0__Test_Factory(in int wheels)
+                    private readonly int _wheels__parameter;
+                    internal Step_Car_0__Test_Factory(in int wheels)
                     {
-                        this._wheels__parameter = wheels
+                        this._wheels__parameter = wheels;
                     }
 
                     /// <summary>
@@ -549,11 +549,11 @@ public class TypeFirstTests
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_Car_1__Test_Factory
                 {
-                    private readonly int _wheels_parameter;
                     private readonly string _color__parameter;
+                    private readonly int _wheels__parameter;
                     internal Step_Car_1__Test_Factory(in int wheels, in string color)
                     {
-                        this._wheels__parameter = wheels
+                        this._wheels__parameter = wheels;
                         this._color__parameter = color;
                     }
 

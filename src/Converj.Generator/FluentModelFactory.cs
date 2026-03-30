@@ -117,6 +117,12 @@ internal class FluentModelFactory(Compilation compilation)
         {
             var (typeFirstEntryMethods, typeFirstSteps) = CreateTypeFirstChains(
                 rootType, typeFirstContexts, fluentBuilderSteps.Length);
+
+            if (!_threadedParameters.IsEmpty && !typeFirstSteps.IsEmpty)
+            {
+                PropagateThreadedParametersToSteps(typeFirstSteps);
+            }
+
             fluentRootMethods = [..fluentRootMethods, ..typeFirstEntryMethods];
             fluentBuilderSteps = [..fluentBuilderSteps, ..typeFirstSteps];
         }
@@ -1008,13 +1014,17 @@ internal class FluentModelFactory(Compilation compilation)
                 .DistinctBy(step => step.KnownConstructorParameters)
                 .ToList();
 
+            // Separate creation methods from step methods so creation methods appear last
+            var stepMethods = trieRootMethods.Where(m => m is not CreationMethod).ToList();
+            var creationMethods = trieRootMethods.Where(m => m is CreationMethod).ToList();
+
             // Create the type-first root step that wraps the trie's root methods
             var rootStep = new RegularFluentStep(
                 rootType,
                 contexts.SelectMany(c => new[] { c.Constructor }))
             {
                 KnownConstructorParameters = [],
-                FluentMethods = new List<IFluentMethod>(trieRootMethods),
+                FluentMethods = new List<IFluentMethod>(stepMethods),
                 IsEndStep = trie.Root.IsEnd,
                 ValueStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(),
                 TypeFirstTargetName = targetTypeName,
@@ -1027,10 +1037,8 @@ internal class FluentModelFactory(Compilation compilation)
                 AddOptionalMethodsToStep(rootType, trie.Root, rootStep, rootStep.ValueStorage);
             }
 
-            // Add creation methods for zero-required-param constructors directly to root step
-            var rootCreationMethods = ConvertNodeToCreationMethods(rootType, trie.Root, rootStep.ValueStorage);
-            foreach (var creationMethod in rootCreationMethods)
-                rootStep.FluentMethods.Add(creationMethod);
+            // Add creation methods after optional methods
+            rootStep.FluentMethods.AddRange(creationMethods);
 
             // Number and tag all descendant steps with the target type name
             foreach (var step in descendantSteps)
