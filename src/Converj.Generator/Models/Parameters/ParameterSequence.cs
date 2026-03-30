@@ -11,19 +11,27 @@ internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IP
 
     private readonly int _hashCode;
 
-    public ParameterSequence()
+    private ParameterSequence(
+        ImmutableArray<IParameterSymbol> parameterSymbols,
+        (string Type, string Name)[] precomputed)
     {
-        ParameterSymbols = [];
-        ParameterSymbolsPrecomputed = [];
-        _hashCode = 101;
+        ParameterSymbols = parameterSymbols;
+        ParameterSymbolsPrecomputed = precomputed;
+        _hashCode = ComputeHashCode(precomputed);
+    }
+
+    public ParameterSequence()
+        : this([], [])
+    {
     }
 
     public ParameterSequence(IEnumerable<IParameterSymbol> parameterSymbols)
+        : this(
+            [..parameterSymbols],
+            parameterSymbols
+                .Select(p => (Type: p.Type.ToDisplayString(), Name: p.GetFluentMethodName()))
+                .ToArray())
     {
-        ImmutableArray<IParameterSymbol> parameterSymbolsArray = [..parameterSymbols];
-        ParameterSymbols = parameterSymbolsArray;
-        ParameterSymbolsPrecomputed = parameterSymbolsArray.Select(p => (Type: p.Type.ToDisplayString(), Name: p.GetFluentMethodName())).ToArray();
-        _hashCode = ComputeHashCode(ParameterSymbolsPrecomputed);
     }
 
     /// <summary>
@@ -31,14 +39,14 @@ internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IP
     /// parameter-backed and property-backed entries.
     /// </summary>
     public ParameterSequence(IEnumerable<FluentMethodParameter> fluentParameters)
+        : this(
+            [..fluentParameters
+                .Where(fp => fp.ParameterSymbol is not null)
+                .Select(fp => fp.ParameterSymbol!)],
+            fluentParameters
+                .Select(fp => (Type: fp.SourceType.ToDisplayString(), Name: fp.Names.First()))
+                .ToArray())
     {
-        var paramArray = fluentParameters.ToArray();
-        // Only include actual IParameterSymbols for backward compatibility
-        ParameterSymbols = [..paramArray.Where(fp => fp.ParameterSymbol is not null).Select(fp => fp.ParameterSymbol!)];
-        ParameterSymbolsPrecomputed = paramArray
-            .Select(fp => (Type: fp.SourceType.ToDisplayString(), Name: fp.Names.First()))
-            .ToArray();
-        _hashCode = ComputeHashCode(ParameterSymbolsPrecomputed);
     }
 
     public IEnumerator<IParameterSymbol> GetEnumerator()
