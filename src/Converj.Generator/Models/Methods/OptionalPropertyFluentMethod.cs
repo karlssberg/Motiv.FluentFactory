@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 /// <summary>
 /// A fluent method for an optional [FluentMethod] property that returns the same step type,

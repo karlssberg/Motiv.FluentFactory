@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 internal class RegularMethod : IFluentMethod
 {
@@ -20,7 +20,7 @@ internal class RegularMethod : IFluentMethod
 
         Name = name;
         SourceParameter = sourceParameterSymbol;
-        MethodParameters = [new FluentMethodParameter(sourceParameterSymbol, name)];
+        MethodParameters = [FluentMethodParameter.FromParameter(sourceParameterSymbol, name)];
         RootNamespace = rootNamespace;
         ValueSources = valueStorages;
         AvailableParameterFields = availableParameterFields;
@@ -45,7 +45,7 @@ internal class RegularMethod : IFluentMethod
         Name = name;
         SourceParameter = null;
         SourceProperty = sourceProperty;
-        MethodParameters = [new FluentMethodParameter(sourceProperty, name)];
+        MethodParameters = [FluentMethodParameter.FromProperty(sourceProperty, name)];
         RootNamespace = rootNamespace;
         ValueSources = valueStorages;
         AvailableParameterFields = availableParameterFields;

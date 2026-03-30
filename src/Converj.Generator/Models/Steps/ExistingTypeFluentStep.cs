@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis;
 using Converj.Generator.ConstructorAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Steps;
 
 [DebuggerDisplay("{ToString()}")]
 internal class ExistingTypeFluentStep(

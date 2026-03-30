@@ -709,7 +709,7 @@ internal class FluentModelFactory(Compilation compilation)
                 node.Key.Select(k => k.SourceName.ToParameterFieldName()))
             let optionalParamFields = value.OptionalParameters
                 .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
-                .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))
+                .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)))
             let hasStep = node.Key.Length > 0
             let threadedParamFields = GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
             let allParameterFields = hasStep
@@ -745,7 +745,7 @@ internal class FluentModelFactory(Compilation compilation)
         [
             ..constructor.Parameters
                 .Where(p => preSatisfiedNames.Contains(p.Name))
-                .Select(p => new FluentMethodParameter(p, p.Name))
+                .Select(p => FluentMethodParameter.FromParameter(p, p.Name))
         ];
     }
 
@@ -1100,7 +1100,7 @@ internal class FluentModelFactory(Compilation compilation)
                     .Select(methodInfo => methodInfo.Method.Name)
                     .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix));
 
-                return new FluentMethodParameter(parameter, methodNames);
+                return FluentMethodParameter.FromParameter(parameter, methodNames);
             }
 
             var preSatisfiedNames = IsSelfReferencing(constructorContext.Constructor, _rootType)
@@ -1227,7 +1227,7 @@ internal class FluentModelFactory(Compilation compilation)
                     : GetPreSatisfiedParameterNames(metadata.Constructor);
                 var threadedParamFields = GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
                 var optionalParamFields = allOptionalParams
-                    .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)));
+                    .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
                 var allParamFields = threadedParamFields.AddRange(optionalParamFields);
                 var mergedValueSources = MergeThreadedValueSources(
                     metadata.Constructor, valueStorages, preSatisfiedNames);

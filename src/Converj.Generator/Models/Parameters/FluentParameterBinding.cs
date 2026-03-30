@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Converj.Generator.ConstructorAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Parameters;
 
 /// <summary>
 /// Represents a binding between a factory member marked with [FluentParameter]

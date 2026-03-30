@@ -1,4 +1,4 @@
-namespace Converj.Generator;
+namespace Converj.Generator.Domain;
 
 [Flags]
 internal enum Modifiers

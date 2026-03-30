@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Parameters;
 
 internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IParameterSymbol>
 {

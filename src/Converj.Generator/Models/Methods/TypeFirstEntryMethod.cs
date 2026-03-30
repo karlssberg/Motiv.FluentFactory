@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 /// <summary>
 /// Represents a parameterless type-first entry method on the factory root type

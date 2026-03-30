@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Domain;
 
 internal class FluentType(ITypeSymbol typeSymbol) : IEquatable<FluentType>
 {

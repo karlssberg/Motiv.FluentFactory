@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Parameters;
 
 internal sealed class FluentParameterComparer : IEqualityComparer<IParameterSymbol>
 {

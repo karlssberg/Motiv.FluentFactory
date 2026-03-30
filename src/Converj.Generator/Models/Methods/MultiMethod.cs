@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Converj.Generator.ModelBuilding;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 internal class MultiMethod : IFluentMethod
 {
@@ -66,7 +66,7 @@ internal class MultiMethod : IFluentMethod
         return
         [
             ..ParameterConverter.Parameters
-                .Select(p => new FluentMethodParameter(p, Name))
+                .Select(p => FluentMethodParameter.FromParameter(p, Name))
         ];
     }
 

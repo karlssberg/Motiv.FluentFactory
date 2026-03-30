@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Storage;
 
 /// <summary>
 /// Value storage for a property that will be set via object initializer syntax

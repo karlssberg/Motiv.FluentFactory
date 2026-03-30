@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Steps;
 
 [DebuggerDisplay("{ToString()}")]
 internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodSymbol> candidateConstructors) : IFluentStep

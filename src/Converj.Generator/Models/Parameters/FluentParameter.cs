@@ -1,57 +1,56 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Parameters;
 
 
 internal class FluentMethodParameter : IEquatable<FluentMethodParameter>
 {
-    /// <summary>
-    /// Creates a parameter-backed fluent method parameter.
-    /// </summary>
-    public FluentMethodParameter(
-        IParameterSymbol parameterSymbol,
+    private FluentMethodParameter(
+        IParameterSymbol? parameterSymbol,
+        IPropertySymbol? sourceProperty,
+        string sourceName,
+        ITypeSymbol sourceType,
         IEnumerable<string> names)
     {
         ParameterSymbol = parameterSymbol;
-        SourceName = parameterSymbol.Name;
-        SourceType = parameterSymbol.Type;
-        FluentType = new FluentType(parameterSymbol.Type);
+        SourceProperty = sourceProperty;
+        SourceName = sourceName;
+        SourceType = sourceType;
+        FluentType = new FluentType(sourceType);
         Names = new HashSet<string>(names);
     }
+
+    /// <summary>
+    /// Creates a parameter-backed fluent method parameter.
+    /// </summary>
+    public static FluentMethodParameter FromParameter(
+        IParameterSymbol parameterSymbol,
+        IEnumerable<string> names) =>
+        new(parameterSymbol, null, parameterSymbol.Name, parameterSymbol.Type, names);
 
     /// <summary>
     /// Creates a parameter-backed fluent method parameter with a single name.
     /// </summary>
-    public FluentMethodParameter(
+    public static FluentMethodParameter FromParameter(
         IParameterSymbol parameterSymbol,
-        string name)
-        : this(parameterSymbol, [name])
-    {
-    }
+        string name) =>
+        FromParameter(parameterSymbol, [name]);
 
     /// <summary>
     /// Creates a property-backed fluent method parameter.
     /// </summary>
-    public FluentMethodParameter(
+    public static FluentMethodParameter FromProperty(
         IPropertySymbol propertySymbol,
-        IEnumerable<string> names)
-    {
-        SourceProperty = propertySymbol;
-        SourceName = propertySymbol.Name;
-        SourceType = propertySymbol.Type;
-        FluentType = new FluentType(propertySymbol.Type);
-        Names = new HashSet<string>(names);
-    }
+        IEnumerable<string> names) =>
+        new(null, propertySymbol, propertySymbol.Name, propertySymbol.Type, names);
 
     /// <summary>
     /// Creates a property-backed fluent method parameter with a single name.
     /// </summary>
-    public FluentMethodParameter(
+    public static FluentMethodParameter FromProperty(
         IPropertySymbol propertySymbol,
-        string name)
-        : this(propertySymbol, [name])
-    {
-    }
+        string name) =>
+        FromProperty(propertySymbol, [name]);
 
     /// <summary>
     /// The underlying constructor parameter symbol, or null if this is property-backed.

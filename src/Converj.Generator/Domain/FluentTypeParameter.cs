@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Domain;
 
 internal class FluentTypeParameter(ITypeParameterSymbol typeParameterSymbol) : IEquatable<FluentTypeParameter>
 {

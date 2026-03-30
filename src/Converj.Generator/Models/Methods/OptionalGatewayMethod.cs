@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 /// <summary>
 /// A fluent method that creates an all-optional step using named arguments,
@@ -18,7 +18,7 @@ internal class OptionalGatewayMethod : IFluentMethod
     {
         Name = name;
         SourceParameter = sourceParameter;
-        MethodParameters = [new FluentMethodParameter(sourceParameter, name)];
+        MethodParameters = [FluentMethodParameter.FromParameter(sourceParameter, name)];
         RootNamespace = rootNamespace;
         ValueSources = valueStorages;
         AvailableParameterFields = [];

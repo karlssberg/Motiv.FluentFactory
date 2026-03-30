@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Storage;
 
 internal record NullStorage(ITypeSymbol Type) : IFluentValueStorage
 {

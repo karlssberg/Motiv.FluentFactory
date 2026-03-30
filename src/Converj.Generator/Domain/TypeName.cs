@@ -1,4 +1,4 @@
-namespace Converj.Generator;
+namespace Converj.Generator.Domain;
 
 internal class TypeName
 {

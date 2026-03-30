@@ -1,7 +1,7 @@
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Models.Methods;
 
 /// <summary>
 /// Extracts XML documentation summaries and parameter documentation from
