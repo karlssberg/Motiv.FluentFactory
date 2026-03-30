@@ -37,6 +37,9 @@ internal class IgnoredMultiMethodWarningFactory(
 
         foreach (var ignoredMethod in ignoredMultiMethods)
         {
+            if (selectedMethod is RegularMethod && HasActiveSiblingTemplates(ignoredMethod))
+                continue;
+
             var ctorDisplayString = ignoredMethod.ToDisplayString();
 
             yield return Diagnostic.Create(
@@ -64,6 +67,9 @@ internal class IgnoredMultiMethodWarningFactory(
         }
 
         yield break;
+
+        bool HasActiveSiblingTemplates(MultiMethod ignoredMethod) =>
+            !ignoredMethod.SiblingMultiMethods.IsSubsetOf(_allIgnoredMultiMethods);
 
         bool DoIgnoredMethodsCollectivelyCauseUnreachableConstructors() =>
             ignoredMultiMethods

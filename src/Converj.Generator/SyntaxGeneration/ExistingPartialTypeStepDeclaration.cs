@@ -27,8 +27,13 @@ internal static class ExistingPartialTypeStepDeclaration
 
         var methodDeclarationSyntaxes = steps
             .SelectMany(step => step.FluentMethods
-                .Select<IFluentMethod, MethodDeclarationSyntax>(method =>
-                    ExistingPartialTypeMethodDeclaration.Create(method, step)));
+                .Select<IFluentMethod, MethodDeclarationSyntax>(method => method switch
+                {
+                    OptionalFluentMethod optionalMethod =>
+                        ExistingTypeOptionalMethodDeclaration.Create(optionalMethod, step),
+                    _ =>
+                        ExistingPartialTypeMethodDeclaration.Create(method, step)
+                }));
 
         var mergedStorage = MergeValueStorage(steps);
         var parameterFieldDeclaration = FieldAndPropertySyntax.CreateDeclarations(mergedStorage);

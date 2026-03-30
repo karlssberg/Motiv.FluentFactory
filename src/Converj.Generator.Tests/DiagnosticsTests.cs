@@ -426,23 +426,7 @@ public class DiagnosticsTests
                         .WithSpan(SourceFile, 14, 32, 14, 75)
                         .WithArguments(
                             "ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>.ExplanationExpressionTreePropositionFactory(Expression<Func<TModel, TPredicateResult>> expression, Func<TModel, BooleanResultBase<string>, string> trueBecause)"),
-                    DiagnosticResult
-                        .CompilerWarning(ContainsSupersededFluentMethodTemplate.Id)
-                        .WithSpan(SourceFile, 16, 28, 16, 53)
-                        .WithSpan(SourceFile, 21, 38, 21, 49)
-                        .WithArguments(
-                            "Test.WhenTrueOverloads.WhenTrue<TModel, Test.BooleanResultBase<string>, string>(string whenTrue)",
-                            "System.Func<TModel, Test.BooleanResultBase<string>, string> trueBecause",
-                            "Test.ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>.ExplanationExpressionTreePropositionFactory(System.Linq.Expressions.Expression<System.Func<TModel, TPredicateResult>> expression, System.Func<TModel, Test.BooleanResultBase<string>, string> trueBecause)",
-                            "the parameter 'string trueBecause' in the constructor 'Test.ExplanationWithNameExpressionTreePropositionFactory<TModel, TPredicateResult>.ExplanationWithNameExpressionTreePropositionFactory(System.Linq.Expressions.Expression<System.Func<TModel, TPredicateResult>> expression, string trueBecause)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
-                    new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
-                        .WithSpan("Source.cs", 43, 64, 43, 72)
-                        .WithArguments(
-                            "System.Func<TModel, Test.BooleanResultBase<string>, string> Test.WhenTrueOverloads.WhenTrue<TModel, Test.BooleanResultBase<string>, string>(string whenTrue)",
-                            "System.Func<TModel, Test.BooleanResultBase<string>, string> trueBecause",
-                            "Test.ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>.ExplanationExpressionTreePropositionFactory(System.Linq.Expressions.Expression<System.Func<TModel, TPredicateResult>> expression, System.Func<TModel, Test.BooleanResultBase<string>, string> trueBecause)",
-                            "string trueBecause",
-                            "Test.ExplanationWithNameExpressionTreePropositionFactory<TModel, TPredicateResult>.ExplanationWithNameExpressionTreePropositionFactory(System.Linq.Expressions.Expression<System.Func<TModel, TPredicateResult>> expression, string trueBecause)"),
+                    // CVJG0002/CVJG0006 suppressed: scalar WhenTrue template has active sibling WhenTrue(Func) template
 
                 },
                 GeneratedSources =
@@ -1287,4 +1271,157 @@ public class DiagnosticsTests
         }.RunAsync();
     }
 
+    /// <summary>
+    /// Issue #17: Diagnostic cascading — all validations run unconditionally via .Concat().
+    /// When multiple problems exist simultaneously, all relevant diagnostics should be emitted.
+    /// </summary>
+    [Fact]
+    internal async Task Should_emit_multiple_diagnostics_when_multiple_issues_exist()
+    {
+        const string code =
+            """
+            using Converj.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public class Target
+            {
+                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
+                public Target(string name)
+                {
+                    Name = name;
+                }
+
+                public string Name { get; set; }
+            }
+            """;
+
+        // CreateMethod.None + non-empty CreateVerb should produce a diagnostic about the conflict
+        var test = new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { (SourceFile, code) },
+                ExpectedDiagnostics =
+                {
+                    DiagnosticResult.CompilerError(CreateVerbWithNone.Id)
+                        .WithSpan(SourceFile, 10, 6, 10, 96),
+                }
+            }
+        };
+        await test.RunAsync();
+    }
+
+    /// <summary>
+    /// Issue #20: Validation doesn't gate model building — a warning-level diagnostic on one
+    /// constructor should not prevent generation for other valid constructors.
+    /// </summary>
+    [Fact]
+    internal async Task Should_still_generate_valid_constructor_alongside_warning_diagnostic()
+    {
+        const string code =
+            """
+            using Converj.Generator;
+
+            namespace Test;
+
+            [FluentFactory]
+            public static partial class Factory;
+
+            public class ValidTarget
+            {
+                [FluentConstructor(typeof(Factory))]
+                public ValidTarget(string name)
+                {
+                    Name = name;
+                }
+
+                public string Name { get; set; }
+            }
+
+            public class AnotherTarget
+            {
+                [FluentConstructor(typeof(Factory))]
+                public AnotherTarget(string name)
+                {
+                    Name = name;
+                }
+
+                public string Name { get; set; }
+            }
+            """;
+
+        const string expected =
+            """
+            // <auto-generated/>
+            #nullable enable
+            namespace Test
+            {
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
+                public static partial class Factory
+                {
+                    /// <summary>
+                    ///     <seealso cref="Test.AnotherTarget"/>
+                    ///     <seealso cref="Test.ValidTarget"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    {
+                        return new global::Test.Step_0__Test_Factory(name);
+                    }
+                }
+
+                /// <summary>
+                ///     <seealso cref="Test.AnotherTarget"/>
+                ///     <seealso cref="Test.ValidTarget"/>
+                /// </summary>
+                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
+                public readonly struct Step_0__Test_Factory
+                {
+                    private readonly string _name__parameter;
+                    internal Step_0__Test_Factory(in string name)
+                    {
+                        this._name__parameter = name;
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor Test.ValidTarget.ValidTarget(string name).
+                    ///
+                    ///     <seealso cref="Test.ValidTarget"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.ValidTarget CreateValidTarget()
+                    {
+                        return new global::Test.ValidTarget(this._name__parameter);
+                    }
+
+                    /// <summary>
+                    /// Creates a new instance using constructor Test.AnotherTarget.AnotherTarget(string name).
+                    ///
+                    ///     <seealso cref="Test.AnotherTarget"/>
+                    /// </summary>
+                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                    public global::Test.AnotherTarget CreateAnotherTarget()
+                    {
+                        return new global::Test.AnotherTarget(this._name__parameter);
+                    }
+                }
+            }
+            """;
+
+        await new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { code },
+                GeneratedSources =
+                {
+                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                }
+            }
+        }.RunAsync();
+    }
 }

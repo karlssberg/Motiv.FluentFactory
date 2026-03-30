@@ -1943,14 +1943,7 @@ public class MethodCustomizationTests
                 },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult
-                        .CompilerWarning(ContainsSupersededFluentMethodTemplate.Id)
-                        .WithSpan(SourceFile, 26, 32, 26, 49)
-                        .WithSpan(SourceFile, 11, 45, 11, 53)
-                        .WithArguments(
-                            "Overloads.Value<T1, T2>(System.Func<T1, T2> value)",
-                            "System.Func<T1, T2> factory1", "MyClassB<T1, T2>.MyClassB(System.Func<T1, T2> factory1, System.Func<T1, T2, int> factory2)",
-                            "the parameter 'System.Func<T1, T2> factory1' in the constructor 'MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                    // CVJG0002 suppressed: Value(Func) template has active sibling templates
                     DiagnosticResult
                         .CompilerWarning(IncompatibleFluentMethodTemplate.Id)
                         .WithSpan(SourceFile, 26, 32, 26, 49)
@@ -1972,14 +1965,7 @@ public class MethodCustomizationTests
                         .WithArguments(
                             "System.Func<T1, T2> Overloads.Value<T1, T2>(T2 value)",
                             "System.Func<T1, T2, int> factory2"),
-                    new DiagnosticResult(FluentMethodTemplateSuperseded.Id, DiagnosticSeverity.Info)
-                        .WithSpan(SourceFile, 40, 32, 40, 37)
-                        .WithArguments(
-                            "System.Func<T1, T2> Overloads.Value<T1, T2>(System.Func<T1, T2> value)",
-                            "System.Func<T1, T2> factory1",
-                            "MyClassB<T1, T2>.MyClassB(System.Func<T1, T2> factory1, System.Func<T1, T2, int> factory2)",
-                            "System.Func<T1, T2> factory1",
-                            "MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)")
+                    // CVJG0006 suppressed: Value(Func) template has active sibling templates
                 }
             }
         }.RunAsync();
@@ -2137,27 +2123,7 @@ public class MethodCustomizationTests
                     (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
                 }
             },
-            ExpectedDiagnostics =
-            {
-                DiagnosticResult.CompilerWarning(ContainsSupersededFluentMethodTemplate.Id)
-                    .WithSpan(SourceFile, 11, 32, 11, 49)
-                    .WithSpan(SourceFile, 11, 64, 11, 72)
-                    .WithArguments(
-                        "FirstStep.Value1<T1, T2>(System.Func<T1, T2> value)",
-                        "System.Func<T1, T2> factory1",
-                        "MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)",
-                        "the parameter 'System.Func<T1, T2> factory1' in the constructor 'MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
-                new DiagnosticResult(FluentMethodTemplateSuperseded.Id, DiagnosticSeverity.Info)
-                    .WithSpan(SourceFile, 40, 32, 40, 38)
-                    .WithArguments(
-                        "System.Func<T1, T2> FirstStep.Value1<T1, T2>(System.Func<T1, T2> value)",
-                        "System.Func<T1, T2> factory1",
-                        "MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)",
-                        "System.Func<T1, T2> factory1",
-                        "MyClassA<T1, T2>.MyClassA(System.Func<T1, T2> factory1, System.Func<T1, T2, string> factory2)"),
-
-
-            }
+            // CVJG0002/CVJG0006 suppressed: Value1(Func) template has active sibling templates
         }.RunAsync();
     }
 
@@ -2469,24 +2435,7 @@ public class MethodCustomizationTests
                 {
                     (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
                 },
-                ExpectedDiagnostics =
-                {
-                    new DiagnosticResult(ContainsSupersededFluentMethodTemplate.Id, DiagnosticSeverity.Warning)
-                        .WithSpan(SourceFile, 12, 32, 12, 49)
-                        .WithSpan(SourceFile, 27, 39, 27, 45)
-                        .WithArguments(
-                            "Overloads.Value(string value)",
-                            "System.Func<T> value1", "MyClassA<T>.MyClassA(System.Func<T> value1, System.Func<T> value2)",
-                            "the parameter 'string value1' in the constructor 'MyClassB.MyClassB(string value1, System.Func<string> value2)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
-                    new DiagnosticResult(FluentMethodTemplateSuperseded.Id, DiagnosticSeverity.Info)
-                        .WithSpan(SourceFile, 62, 32, 62, 37)
-                        .WithArguments(
-                            "System.Func<string> Overloads.Value(string value)",
-                            "System.Func<T> value1",
-                            "MyClassA<T>.MyClassA(System.Func<T> value1, System.Func<T> value2)",
-                            "string value1",
-                            "MyClassB.MyClassB(string value1, System.Func<string> value2)")
-                },
+                // CVJG0002/CVJG0006 suppressed: Value(string) template has active sibling Value(Func<T>) template
             }
         }.RunAsync();
     }

@@ -34,7 +34,7 @@ internal class FluentStepBuilder(
     public IFluentStep? ConvertNodeToFluentStep(
         INamedTypeSymbol rootType,
         Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
-        Func<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node,
+        Func<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node, 
             OrderedDictionary<IParameterSymbol, IFluentValueStorage>, ImmutableArray<IFluentMethod>> getFluentMethods,
         Action<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node,
             IFluentStep, OrderedDictionary<IParameterSymbol, IFluentValueStorage>>? postCreateStep = null)
@@ -46,12 +46,22 @@ internal class FluentStepBuilder(
         var valueStorages = GetValueStorages();
 
         var fluentMethods = getFluentMethods(rootType, node, valueStorages);
-        if (fluentMethods.Length == 0) return null;
+
+        // For ExistingTypeFluentSteps with optional parameters, the step may start with
+        // no methods but gain them via postCreateStep (AddOptionalMethodsToStep).
+        // Only short-circuit for regular steps.
+        var hasOptionalParams = node.IsEnd &&
+                                node.EndValues.Any(v => v.OptionalParameters.Length > 0);
+        if (fluentMethods.Length == 0 && !(useExistingTypeAsStep && hasOptionalParams))
+            return null;
 
         var step = CreateStep(valueStorages);
         ReportUnresolvableStorage(step, valueStorages);
         postCreateStep?.Invoke(rootType, node, step, valueStorages);
-        return step;
+
+        return step.FluentMethods.Count > 0
+            ? step
+            : null;
 
         bool UseExistingTypeAsStep()
         {

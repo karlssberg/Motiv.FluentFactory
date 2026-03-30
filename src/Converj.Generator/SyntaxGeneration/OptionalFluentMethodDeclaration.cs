@@ -33,7 +33,14 @@ internal static class OptionalFluentMethodDeclaration
         var parameterName = method.SourceParameter.Name.ToCamelCase();
         var returnTypeName = ParseTypeName(step.IdentifierDisplayString());
 
-        var arguments = step.KnownConstructorParameters.Select(p =>
+        var threadedArgs = step.ThreadedParameters
+            .Select(b => Argument(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(b.TargetParameter.Name.ToParameterFieldName()))));
+
+        var knownArgs = step.KnownConstructorParameters.Select(p =>
             SymbolEqualityComparer.Default.Equals(p, method.SourceParameter)
                 ? Argument(IdentifierName(parameterName))
                 : Argument(
@@ -41,6 +48,8 @@ internal static class OptionalFluentMethodDeclaration
                         SyntaxKind.SimpleMemberAccessExpression,
                         ThisExpression(),
                         IdentifierName(p.Name.ToParameterFieldName()))));
+
+        var arguments = threadedArgs.Concat(knownArgs);
 
         var body = Block(
             ReturnStatement(

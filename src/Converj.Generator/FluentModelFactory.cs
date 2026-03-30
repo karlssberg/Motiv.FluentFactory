@@ -101,6 +101,11 @@ internal class FluentModelFactory(Compilation compilation)
         var (gatewayMethods, gatewaySteps) = CreateAllOptionalStepsAndGatewayMethods(
             rootType, stepTrie.Root, fluentBuilderSteps.Length);
 
+        if (!_threadedParameters.IsEmpty && !gatewaySteps.IsEmpty)
+        {
+            PropagateThreadedParametersToSteps(gatewaySteps);
+        }
+
         fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
         fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
 
@@ -1107,7 +1112,8 @@ internal class FluentModelFactory(Compilation compilation)
             // When all params are optional with exactly one param, insert it as a trie path
             // so that step methods are generated (e.g., Animal.WithLegs(2).CreateDog())
             // Multi-param all-optional constructors are handled by CreateAllOptionalStepsAndGatewayMethods
-            if (metadata.RequiredParameterCount == 0 && metadata.OptionalParameters.Length == 1)
+            var effectiveRequiredCount = metadata.RequiredParameterCount - preSatisfiedNames.Count;
+            if (effectiveRequiredCount <= 0 && metadata.OptionalParameters.Length == 1)
             {
                 var optionalParameters = constructorContext.Constructor.Parameters
                     .Where(p => p.HasExplicitDefaultValue)
@@ -1129,8 +1135,16 @@ internal class FluentModelFactory(Compilation compilation)
         if (!rootNode.IsEnd) return ([], []);
 
         // Find all-optional constructors with multiple params (not handled by trie insertion)
+        // Account for pre-satisfied (threaded) parameters when determining effective required count
         var allOptionalConstructors = rootNode.EndValues
-            .Where(v => v.RequiredParameterCount == 0 && v.OptionalParameters.Length > 1)
+            .Where(v =>
+            {
+                var preSatisfiedCount = IsSelfReferencing(v.Constructor, _rootType)
+                    ? 0
+                    : GetPreSatisfiedParameterNames(v.Constructor).Count;
+                return v.RequiredParameterCount - preSatisfiedCount <= 0
+                    && v.OptionalParameters.Length > 1;
+            })
             .ToList();
 
         if (allOptionalConstructors.Count == 0) return ([], []);
@@ -1200,15 +1214,21 @@ internal class FluentModelFactory(Compilation compilation)
                     ? verb
                     : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
 
-                var allParamFields = allOptionalParams
-                    .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)))
-                    .ToImmutableArray();
+                var preSatisfiedNames = IsSelfReferencing(metadata.Constructor, _rootType)
+                    ? new HashSet<string>()
+                    : GetPreSatisfiedParameterNames(metadata.Constructor);
+                var threadedParamFields = GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
+                var optionalParamFields = allOptionalParams
+                    .Select(p => new FluentMethodParameter(p, p.GetFluentMethodName(methodPrefix)));
+                var allParamFields = threadedParamFields.AddRange(optionalParamFields);
+                var mergedValueSources = MergeThreadedValueSources(
+                    metadata.Constructor, valueStorages, preSatisfiedNames);
 
                 var creationMethod = new CreationMethod(
                     rootType.ContainingNamespace,
                     metadata,
                     allParamFields,
-                    valueStorages,
+                    mergedValueSources,
                     createMethodName);
 
                 _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
