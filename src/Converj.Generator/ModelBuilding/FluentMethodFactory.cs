@@ -43,60 +43,78 @@ internal class FluentMethodFactory(
 
         foreach (var parameter in fluentParameterInstances)
         {
-            // Property-backed parameters don't support multi-method templates or attribute overrides
             if (parameter.IsPropertyBacked)
             {
-                var propParam = fluentParameterInstances.First();
-                foreach (var name in propParam.Names)
-                    yield return new RegularMethod(
-                        name,
-                        propParam.SourceProperty!,
-                        methodReturn,
-                        rootType.ContainingNamespace,
-                        node.Key,
-                        valueStorages);
+                foreach (var method in CreatePropertyBackedMethods(fluentParameterInstances, methodReturn, rootType, node, valueStorages))
+                    yield return method;
                 continue;
             }
 
-            var multipleFluentMethodInfo = compilation
-                .GetMultipleFluentMethodSymbols(parameter.ParameterSymbol!)
-                .ToList();
+            foreach (var method in CreateMultiMethods(parameter, methodReturn, rootType, node, valueStorages))
+                yield return method;
 
-            ValidateMultipleFluentMethodCompatibility(parameter, multipleFluentMethodInfo);
-
-            var normalizedFluentMethodSymbols = multipleFluentMethodInfo
-                .Where(methodInfo => methodInfo.Diagnostics.Count == 0)
-                .Select(methodInfo => NormalizedConverterMethod(methodInfo.Method, parameter.SourceType))
-                .ToImmutableArray();
-
-            foreach (var normalizedFluentMethodSymbol in normalizedFluentMethodSymbols)
-                yield return new MultiMethod(
-                    parameter.ParameterSymbol!,
-                    methodReturn,
-                    rootType.ContainingNamespace,
-                    normalizedFluentMethodSymbol,
-                    node.Key,
-                    valueStorages,
-                    normalizedFluentMethodSymbols);
-
-            var hasMultipleFluentMethodsAttribute = parameter.ParameterSymbol!
-                .GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null;
-
-            var hasFluentMethodAttribute = parameter.ParameterSymbol!
-                .GetAttribute(TypeName.FluentMethodAttribute) is not null;
-
-            if (!hasFluentMethodAttribute && hasMultipleFluentMethodsAttribute) continue;
-
-            var fluentParameter = fluentParameterInstances.First();
-            foreach (var name in fluentParameter.Names)
-                yield return new RegularMethod(
-                    name,
-                    fluentParameter.ParameterSymbol!,
-                    methodReturn,
-                    rootType.ContainingNamespace,
-                    node.Key,
-                    valueStorages);
+            if (ShouldCreateRegularMethod(parameter))
+            {
+                foreach (var method in CreateRegularMethods(fluentParameterInstances, methodReturn, rootType, node, valueStorages))
+                    yield return method;
+            }
         }
+    }
+
+    private static IEnumerable<IFluentMethod> CreatePropertyBackedMethods(
+        ICollection<FluentMethodParameter> fluentParameterInstances,
+        IFluentReturn methodReturn,
+        INamedTypeSymbol rootType,
+        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        var propParam = fluentParameterInstances.First();
+        return propParam.Names.Select(name =>
+            new RegularMethod(name, propParam.SourceProperty!, methodReturn, rootType.ContainingNamespace, node.Key, valueStorages));
+    }
+
+    private IEnumerable<IFluentMethod> CreateMultiMethods(
+        FluentMethodParameter parameter,
+        IFluentReturn methodReturn,
+        INamedTypeSymbol rootType,
+        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        var multipleFluentMethodInfo = compilation
+            .GetMultipleFluentMethodSymbols(parameter.ParameterSymbol!)
+            .ToList();
+
+        ValidateMultipleFluentMethodCompatibility(parameter, multipleFluentMethodInfo);
+
+        var normalizedFluentMethodSymbols = multipleFluentMethodInfo
+            .Where(methodInfo => methodInfo.Diagnostics.Count == 0)
+            .Select(methodInfo => NormalizedConverterMethod(methodInfo.Method, parameter.SourceType))
+            .ToImmutableArray();
+
+        return normalizedFluentMethodSymbols.Select(symbol =>
+            new MultiMethod(parameter.ParameterSymbol!, methodReturn, rootType.ContainingNamespace, symbol, node.Key, valueStorages, normalizedFluentMethodSymbols));
+    }
+
+    private static bool ShouldCreateRegularMethod(FluentMethodParameter parameter)
+    {
+        var hasMultipleFluentMethodsAttribute = parameter.ParameterSymbol!
+            .GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null;
+        var hasFluentMethodAttribute = parameter.ParameterSymbol!
+            .GetAttribute(TypeName.FluentMethodAttribute) is not null;
+
+        return hasFluentMethodAttribute || !hasMultipleFluentMethodsAttribute;
+    }
+
+    private static IEnumerable<IFluentMethod> CreateRegularMethods(
+        ICollection<FluentMethodParameter> fluentParameterInstances,
+        IFluentReturn methodReturn,
+        INamedTypeSymbol rootType,
+        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+    {
+        var fluentParameter = fluentParameterInstances.First();
+        return fluentParameter.Names.Select(name =>
+            new RegularMethod(name, fluentParameter.ParameterSymbol!, methodReturn, rootType.ContainingNamespace, node.Key, valueStorages));
     }
 
     private void ValidateMultipleFluentMethodCompatibility(FluentMethodParameter parameter,
