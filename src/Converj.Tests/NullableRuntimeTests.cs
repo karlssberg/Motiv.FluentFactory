@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class NullableFactory;
 
-[FluentConstructor<NullableFactory>]
+[FluentTarget<NullableFactory>]
 internal record NullableTarget(string? Name, int? Count);
 
 #endregion

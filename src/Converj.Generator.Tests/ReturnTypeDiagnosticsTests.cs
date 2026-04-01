@@ -22,12 +22,12 @@ public class ReturnTypeDiagnosticsTests
             {
                 public interface IUnrelated { }
 
-                [FluentFactory(ReturnType = typeof(IUnrelated))]
+                [FluentRoot(ReturnType = typeof(IUnrelated))]
                 public static partial class Factory;
 
                 public class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -65,12 +65,12 @@ public class ReturnTypeDiagnosticsTests
             {
                 public interface IUnrelated { }
 
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory), ReturnType = typeof(IUnrelated))]
+                    [FluentTarget(typeof(Factory), ReturnType = typeof(IUnrelated))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -89,7 +89,7 @@ public class ReturnTypeDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(ReturnTypeNotAssignable.Id)
-                        .WithSpan(SourceFile, 13, 10, 13, 77)
+                        .WithSpan(SourceFile, 13, 10, 13, 72)
                         .WithArguments("Test.MyBuildTarget", "Test.IUnrelated"),
                 }
             }
@@ -106,12 +106,12 @@ public class ReturnTypeDiagnosticsTests
 
             namespace Test
             {
-                [FluentFactory(ReturnType = typeof(MyBuildTarget))]
+                [FluentRoot(ReturnType = typeof(MyBuildTarget))]
                 public static partial class Factory;
 
                 public class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -179,7 +179,7 @@ public class ReturnTypeDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(PointlessReturnType.Id)
-                        .WithSpan(SourceFile, 6, 6, 6, 55)
+                        .WithSpan(SourceFile, 6, 6, 6, 52)
                         .WithArguments("Test.MyBuildTarget"),
                 }
             }
@@ -198,12 +198,12 @@ public class ReturnTypeDiagnosticsTests
             {
                 public interface IMyInterface { }
 
-                [FluentFactory(ReturnType = typeof(IMyInterface), CreateMethod = CreateMethod.None)]
+                [FluentRoot(ReturnType = typeof(IMyInterface), BuilderMethod = BuilderMethod.None)]
                 public static partial class Factory;
 
                 public partial class MyBuildTarget : IMyInterface
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -222,7 +222,7 @@ public class ReturnTypeDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(ReturnTypeWithNone.Id)
-                        .WithSpan(SourceFile, 8, 20, 8, 53)
+                        .WithSpan(SourceFile, 8, 17, 8, 50)
                 }
             }
         }.RunAsync();
@@ -240,12 +240,12 @@ public class ReturnTypeDiagnosticsTests
             {
                 public interface IMyInterface { }
 
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class MyBuildTarget : IMyInterface
                 {
-                    [FluentConstructor(typeof(Factory), ReturnType = typeof(IMyInterface), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), ReturnType = typeof(IMyInterface), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -264,7 +264,7 @@ public class ReturnTypeDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(ReturnTypeWithNone.Id)
-                        .WithSpan(SourceFile, 13, 45, 13, 78)
+                        .WithSpan(SourceFile, 13, 40, 13, 73)
                 }
             }
         }.RunAsync();
@@ -280,12 +280,12 @@ public class ReturnTypeDiagnosticsTests
 
             namespace Test
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory), ReturnType = typeof(MyBuildTarget))]
+                    [FluentTarget(typeof(Factory), ReturnType = typeof(MyBuildTarget))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -353,7 +353,7 @@ public class ReturnTypeDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(PointlessReturnType.Id)
-                        .WithSpan(SourceFile, 11, 10, 11, 80)
+                        .WithSpan(SourceFile, 11, 10, 11, 75)
                         .WithArguments("Test.MyBuildTarget"),
                 }
             }

@@ -13,7 +13,7 @@ public class ConstructorChainingTests
 {
     /// <summary>
     /// CTOR-03: A class has two constructors where one chains to the other via <c>this(...)</c>.
-    /// The [FluentConstructor] is placed on the chaining constructor (the one with MORE parameters).
+    /// The [FluentTarget] is placed on the chaining constructor (the one with MORE parameters).
     /// The generator should produce a 2-step fluent chain for the annotated constructor's parameters only.
     /// </summary>
     [Fact]
@@ -25,7 +25,7 @@ public class ConstructorChainingTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -35,7 +35,7 @@ public class ConstructorChainingTests
                     Value = value;
                 }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value, string name) : this(value)
                 {
                     Name = name;
@@ -104,7 +104,7 @@ public class ConstructorChainingTests
 
     /// <summary>
     /// CTOR-03: A class has a 3-parameter constructor that chains to a 1-parameter constructor
-    /// via <c>this(id)</c>. The [FluentConstructor] is on the 3-parameter constructor.
+    /// via <c>this(id)</c>. The [FluentTarget] is on the 3-parameter constructor.
     /// The generator should produce a full 3-step chain based on all 3 parameters.
     /// </summary>
     [Fact]
@@ -116,7 +116,7 @@ public class ConstructorChainingTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -126,7 +126,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id)
                 {
                     Name = name;
@@ -234,7 +234,7 @@ public class ConstructorChainingTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -244,7 +244,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id: id)
                 {
                     Name = name;
@@ -352,7 +352,7 @@ public class ConstructorChainingTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -363,7 +363,7 @@ public class ConstructorChainingTests
                     Active = active;
                 }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string name, int id, bool active) : this(active: active, id: id)
                 {
                     Name = name;
@@ -460,8 +460,8 @@ public class ConstructorChainingTests
     /// Ctor3(a, b, c) : this(a, b) -> Ctor2(a, b) : this(a) -> Ctor1(a) stores a in field.
     /// The generator must resolve storage transitively across multiple hops.
     ///
-    /// Two [FluentConstructor] annotations make Widget a custom intermediate step at (name, size).
-    /// The 2-param constructor uses CreateMethod.None so Widget itself becomes an ExistingTypeFluentStep.
+    /// Two [FluentTarget] annotations make Widget a custom intermediate step at (name, size).
+    /// The 2-param constructor uses BuilderMethod.None so Widget itself becomes an ExistingTypeFluentStep.
     /// The generated partial Widget class has a WithVisible method whose arguments reference the
     /// resolved storage — this._name (field, via 2-hop chain) and this.Size (property, via 1-hop chain) —
     /// proving that the multi-hop initializer chain resolution actually affects the output.
@@ -476,7 +476,7 @@ public class ConstructorChainingTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Widget
@@ -488,13 +488,13 @@ public class ConstructorChainingTests
                     _name = name;
                 }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Widget(string name, int size) : this(name)
                 {
                     Size = size;
                 }
 
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Widget(string name, int size, bool visible) : this(name, size)
                 {
                     Visible = visible;

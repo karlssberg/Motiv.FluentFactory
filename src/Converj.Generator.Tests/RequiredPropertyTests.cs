@@ -38,12 +38,12 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name)
                 {
                     Name = name;
@@ -150,10 +150,10 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public partial record Person(string Name)
             {
                 public required string Email { get; init; }
@@ -255,12 +255,12 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name)
                 {
                     Name = name;
@@ -369,12 +369,12 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 [SetsRequiredMembers]
                 public Person(string name, string email)
                 {
@@ -480,7 +480,7 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -494,7 +494,7 @@ public class RequiredPropertyTests
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels)
                 {
                     Wheels = wheels;
@@ -580,12 +580,12 @@ public class RequiredPropertyTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name)
                 {
                     Name = name;

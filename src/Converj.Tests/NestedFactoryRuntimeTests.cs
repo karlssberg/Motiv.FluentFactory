@@ -7,10 +7,10 @@ namespace Converj.Tests;
 
 internal partial class Outer
 {
-    [FluentFactory]
+    [FluentRoot]
     internal partial class NestedFactory;
 
-    [FluentConstructor<NestedFactory>]
+    [FluentTarget<NestedFactory>]
     internal record NestedTarget(int Value, string Name);
 }
 

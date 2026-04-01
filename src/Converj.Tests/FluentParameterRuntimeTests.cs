@@ -9,13 +9,13 @@ internal interface IService;
 
 internal record TestService(string Id) : IService;
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
 internal partial record ServiceFactoryForTest(IService Service);
 
-[FluentConstructor<ServiceFactoryForTest>]
+[FluentTarget<ServiceFactoryForTest>]
 internal record ServiceConsumer(IService Service, string Name);
 
-[FluentFactory]
+[FluentRoot]
 internal partial class FieldParameterFactory
 {
     [FluentParameter]
@@ -27,10 +27,10 @@ internal partial class FieldParameterFactory
     }
 }
 
-[FluentConstructor<FieldParameterFactory>]
+[FluentTarget<FieldParameterFactory>]
 internal record ScaledItem(int Scale, string Label);
 
-[FluentFactory]
+[FluentRoot]
 internal partial class PropertyParameterFactory
 {
     [FluentParameter]
@@ -42,10 +42,10 @@ internal partial class PropertyParameterFactory
     }
 }
 
-[FluentConstructor<PropertyParameterFactory>]
+[FluentTarget<PropertyParameterFactory>]
 internal record PrefixedItem(string Prefix, int Order);
 
-[FluentFactory]
+[FluentRoot]
 internal partial class MultiFluentParamFactory
 {
     [FluentParameter]
@@ -61,7 +61,7 @@ internal partial class MultiFluentParamFactory
     }
 }
 
-[FluentConstructor<MultiFluentParamFactory>]
+[FluentTarget<MultiFluentParamFactory>]
 internal record CoordinateItem(int X, int Y, string Label);
 
 #endregion

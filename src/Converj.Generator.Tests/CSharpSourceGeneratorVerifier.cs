@@ -28,7 +28,7 @@ internal static class CSharpSourceGeneratorVerifier<TSourceGenerator>
             // Reference the generator assembly (for any shared types if needed)
             TestState.AdditionalReferences.Add(typeof(FluentFactoryGenerator).Assembly);
             // Reference the attributes assembly so test code can resolve attribute types
-            TestState.AdditionalReferences.Add(typeof(Attributes.FluentConstructorAttribute).Assembly);
+            TestState.AdditionalReferences.Add(typeof(Attributes.FluentTargetAttribute).Assembly);
 
             // Add the source for required types and global aliases mapping old attribute names
             TestState.Sources.Add(

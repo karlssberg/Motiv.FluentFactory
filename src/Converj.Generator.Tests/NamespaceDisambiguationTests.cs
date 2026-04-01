@@ -40,7 +40,7 @@ public class NamespaceDisambiguationTests
 
             namespace MyFactory
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -48,7 +48,7 @@ public class NamespaceDisambiguationTests
             {
                 public class ProductA
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public ProductA(NamespaceA.Config config)
                     {
                         Config = config;
@@ -62,7 +62,7 @@ public class NamespaceDisambiguationTests
             {
                 public class ProductB
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public ProductB(NamespaceB.Config config)
                     {
                         Config = config;
@@ -151,7 +151,7 @@ public class NamespaceDisambiguationTests
 
             namespace MyFactory
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -159,7 +159,7 @@ public class NamespaceDisambiguationTests
             {
                 public class Product
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public Product(NamespaceA.Settings settingsA, NamespaceB.Settings settingsB)
                     {
                         SettingsA = settingsA;

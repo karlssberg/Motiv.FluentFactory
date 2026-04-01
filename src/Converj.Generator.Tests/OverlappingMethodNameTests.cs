@@ -21,12 +21,12 @@ public class OverlappingMethodNameTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget([FluentMethod("WithValue")]string text, [FluentMethod("WithValue")]int number)
                 {
                     Text = text;
@@ -108,12 +108,12 @@ public class OverlappingMethodNameTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetA([FluentMethod("Create")]string value)
                 {
                     Value = value;
@@ -124,7 +124,7 @@ public class OverlappingMethodNameTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetB([FluentMethod("Create")]int value)
                 {
                     Value = value;

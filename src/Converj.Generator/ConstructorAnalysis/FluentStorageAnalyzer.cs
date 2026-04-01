@@ -6,7 +6,7 @@ namespace Converj.Generator.ConstructorAnalysis;
 /// <summary>
 /// Analyzes a target type for fields and properties marked with [FluentStorage],
 /// which provide explicit storage for constructor parameters that cannot be auto-discovered.
-/// Used when a type has multiple constructors with CreateMethod.None and acts as an
+/// Used when a type has multiple constructors with BuilderMethod.None and acts as an
 /// intermediate step in the fluent chain.
 /// </summary>
 internal static class FluentStorageAnalyzer

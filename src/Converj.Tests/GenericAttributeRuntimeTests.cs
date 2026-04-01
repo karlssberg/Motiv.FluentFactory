@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class GenericAttrFactory;
 
-[FluentConstructor<GenericAttrFactory>]
+[FluentTarget<GenericAttrFactory>]
 internal record GenericAttrTarget(int Value, string Label);
 
 #endregion

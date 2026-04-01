@@ -27,12 +27,12 @@ public class InvalidGenericConstraintTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class Container<T> where T : struct
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public Container(T value)
                     {
                         Value = value;
@@ -122,12 +122,12 @@ public class InvalidGenericConstraintTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class BrokenConstraint<T> where T : class, struct
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public BrokenConstraint(T value)
                     {
                         Value = value;

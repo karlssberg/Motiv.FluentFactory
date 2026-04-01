@@ -19,12 +19,12 @@ public class NullableTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string? value)
                 {
                     Value = value;
@@ -83,12 +83,12 @@ public class NullableTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string? name, int count, List<string?> items)
                 {
                     Name = name;
@@ -196,12 +196,12 @@ public class NullableTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T> where T : class
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(T? value)
                 {
                     Value = value;

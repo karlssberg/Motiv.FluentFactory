@@ -19,12 +19,12 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget([FluentMethod("SetValue")]T value)
                 {
                     Value = value;
@@ -79,10 +79,10 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public class MyBuildTarget<T1, T2, T3>(
                 int x,
                 [MultipleFluentMethods(typeof(Methods))]Func<IEnumerable<T1>, T2, T3> function)
@@ -182,10 +182,10 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public class MyBuildTarget<T>([MultipleFluentMethods(typeof(Converter))]IEnumerable<IEnumerable<T>> function)
             {
                 public IEnumerable<IEnumerable<T>> Value { get; set; } = function;
@@ -259,12 +259,12 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2)
@@ -344,12 +344,12 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -457,12 +457,12 @@ public class MethodCustomizationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -599,12 +599,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -678,12 +678,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -757,12 +757,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]string value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]string value2)
@@ -886,12 +886,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]T value2)
@@ -1015,12 +1015,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T1 value1,
                     [MultipleFluentMethods(typeof(Value2Methods))]T2 value2,
@@ -1200,12 +1200,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T1A, T1B>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory)
                 {
@@ -1279,12 +1279,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T1A, T1B, T2A, T2B, T3A, T3B>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2A, T2B> factory2,
@@ -1458,12 +1458,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClass<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2, T3> factory2,
@@ -1637,12 +1637,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassACreateMethods))]Func<T1, T2, string> factory2)
@@ -1657,7 +1657,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassBCreateMethods))]Func<T1, T2, int> factory2)
@@ -1816,12 +1816,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [FluentMethod("Value")]Func<T1, T2> factory1,
                     [FluentMethod("Value")]Func<T1, T2, string> factory2)
@@ -1836,7 +1836,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2, int> factory2)
@@ -1979,12 +1979,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(FirstStep))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(SecondStep))]Func<T1, T2, string> factory2)
@@ -1999,7 +1999,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value1")]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, int> factory2)
@@ -2135,12 +2135,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, string> factory2)
@@ -2155,7 +2155,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(CreateMethods))]Func<T1, T2, int> factory2)
@@ -2291,12 +2291,12 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T> value1,
                     [FluentMethod("Create")]Func<T> value2)
@@ -2311,7 +2311,7 @@ public class MethodCustomizationTests
 
             public class MyClassB
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value")]string value1,
                     [FluentMethod("Create")]Func<string> value2)
@@ -2326,7 +2326,7 @@ public class MethodCustomizationTests
 
             public class MyClassC
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassC(
                     [MultipleFluentMethods(typeof(Overloads))]Func<string> value1,
                     [FluentMethod("Create")]Func<int> value2)
@@ -2448,12 +2448,12 @@ public class MethodCustomizationTests
             using System;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyClassA<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory)
                 {

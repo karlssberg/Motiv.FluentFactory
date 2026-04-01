@@ -24,12 +24,12 @@ public class StepIndexStabilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Dog(string name, int age)
                 {
                     Name = name;
@@ -42,7 +42,7 @@ public class StepIndexStabilityTests
 
             public class Cat
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Cat(string name, bool indoor)
                 {
                     Name = name;
@@ -55,7 +55,7 @@ public class StepIndexStabilityTests
 
             public class Bird
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Bird(string name)
                 {
                     Name = name;

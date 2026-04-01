@@ -3,23 +3,21 @@ using Microsoft.CodeAnalysis;
 namespace Converj.Generator.ConstructorAnalysis;
 
 /// <summary>
-/// Holds factory-level default values for CreateMethod, CreateVerb, MethodPrefix, and ReturnType,
-/// read from the [FluentFactory] attribute. Null means "not set at factory level".
+/// Holds root-level default values for Builder, TerminalVerb, MethodPrefix, and ReturnType,
+/// read from the [FluentRoot] attribute. Null means "not set at root level".
 /// </summary>
 internal sealed class FluentFactoryDefaults(
-    CreateMethodMode? createMethod,
-    string? createVerb,
+    BuilderMethodKind? builder,
+    string? terminalVerb,
     string? methodPrefix,
     INamedTypeSymbol? returnType,
     bool allowPartialParameterOverlap = false,
-    BuilderMode builderMode = BuilderMode.ParameterFirst,
-    string? typeFirstVerb = null)
+    string? initialVerb = null)
 {
-    public CreateMethodMode? CreateMethod { get; } = createMethod;
-    public string? CreateVerb { get; } = createVerb;
+    public BuilderMethodKind? Builder { get; } = builder;
+    public string? TerminalVerb { get; } = terminalVerb;
     public string? MethodPrefix { get; } = methodPrefix;
     public INamedTypeSymbol? ReturnType { get; } = returnType;
     public bool AllowPartialParameterOverlap { get; } = allowPartialParameterOverlap;
-    public BuilderMode BuilderMode { get; } = builderMode;
-    public string? TypeFirstVerb { get; } = typeFirstVerb;
+    public string? InitialVerb { get; } = initialVerb;
 }

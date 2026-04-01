@@ -26,6 +26,35 @@ namespace Converj.Example
             {
                 return new global::Converj.Example.Step_1__Converj_Example_Vehicles_Vehicle<TEngine>(engine);
             }
+
+            /// <summary>
+            /// Calls static method string Converj.Example.Vehicles.DispatchVehicle(Converj.Example.Vehicles.Car&lt;Converj.Example.Vehicles.ICarEngine&gt;? car = null, Converj.Example.Vehicles.Train&lt;Converj.Example.Vehicles.ITrainEngine&gt;? train = null).
+            ///
+            ///     <seealso cref="Converj.Example.Vehicles"/>
+            /// </summary>
+            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            public static string DispatchVehicle()
+            {
+                return global::Converj.Example.Vehicles.DispatchVehicle();
+            }
+
+            /// <summary>
+            ///     <seealso cref="Converj.Example.Vehicles"/>
+            /// </summary>
+            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            public static global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle WithCar(in global::Converj.Example.Vehicles.Car<global::Converj.Example.Vehicles.ICarEngine>? car)
+            {
+                return new global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle(car: car);
+            }
+
+            /// <summary>
+            ///     <seealso cref="Converj.Example.Vehicles"/>
+            /// </summary>
+            [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            public static global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle WithTrain(in global::Converj.Example.Vehicles.Train<global::Converj.Example.Vehicles.ITrainEngine>? train)
+            {
+                return new global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle(train: train);
+            }
         }
     }
 
@@ -72,6 +101,50 @@ namespace Converj.Example
         public global::Converj.Example.Vehicles.Train<TEngine> CreateVehicles_Train()
         {
             return new global::Converj.Example.Vehicles.Train<TEngine>(this._engine__parameter);
+        }
+    }
+
+    /// <summary>
+    ///     <seealso cref="Converj.Example.Vehicles"/>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
+    internal readonly struct Step_2__Converj_Example_Vehicles_Vehicle
+    {
+        private readonly global::Converj.Example.Vehicles.Car<global::Converj.Example.Vehicles.ICarEngine>? _car__parameter;
+        private readonly global::Converj.Example.Vehicles.Train<global::Converj.Example.Vehicles.ITrainEngine>? _train__parameter;
+        internal Step_2__Converj_Example_Vehicles_Vehicle(in global::Converj.Example.Vehicles.Car<global::Converj.Example.Vehicles.ICarEngine>? car = null, in global::Converj.Example.Vehicles.Train<global::Converj.Example.Vehicles.ITrainEngine>? train = null)
+        {
+            this._car__parameter = car;
+            this._train__parameter = train;
+        }
+
+        /// <summary>
+        ///     <seealso cref="Converj.Example.Vehicles"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle WithCar(in global::Converj.Example.Vehicles.Car<global::Converj.Example.Vehicles.ICarEngine>? car)
+        {
+            return new global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle(car, this._train__parameter);
+        }
+
+        /// <summary>
+        ///     <seealso cref="Converj.Example.Vehicles"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle WithTrain(in global::Converj.Example.Vehicles.Train<global::Converj.Example.Vehicles.ITrainEngine>? train)
+        {
+            return new global::Converj.Example.Step_2__Converj_Example_Vehicles_Vehicle(this._car__parameter, train);
+        }
+
+        /// <summary>
+        /// Calls static method string Converj.Example.Vehicles.DispatchVehicle(Converj.Example.Vehicles.Car&lt;Converj.Example.Vehicles.ICarEngine&gt;? car = null, Converj.Example.Vehicles.Train&lt;Converj.Example.Vehicles.ITrainEngine&gt;? train = null).
+        ///
+        ///     <seealso cref="Converj.Example.Vehicles"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public string DispatchVehicle()
+        {
+            return global::Converj.Example.Vehicles.DispatchVehicle(this._car__parameter, this._train__parameter);
         }
     }
 }

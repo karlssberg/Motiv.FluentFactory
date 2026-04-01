@@ -20,13 +20,20 @@ internal class CreationMethod : IFluentMethod
         RootNamespace = rootNamespace;
         AvailableParameterFields = availableParameterFields;
         ValueSources = valueSources;
+        IsStaticMethodTarget = constructorMetadata.IsStaticMethodTarget;
         Name = createMethodName ?? "Create";
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
             [..constructorMetadata.CandidateConstructors],
             new ParameterSequence(availableParameterFields),
-            constructorMetadata.ReturnType);
+            constructorMetadata.ReturnType,
+            IsStaticMethodTarget ? constructorMetadata.Constructor.ReturnType as INamedTypeSymbol : null);
     }
+
+    /// <summary>
+    /// Whether this creation method targets a static method instead of a constructor.
+    /// </summary>
+    public bool IsStaticMethodTarget { get; }
 
     public string Name { get; }
 
@@ -40,6 +47,19 @@ internal class CreationMethod : IFluentMethod
         {
             var constructorNames = Return.CandidateConstructors
                 .Select(ctor => ctor.ToFullDisplayString().Replace("<", "&lt;").Replace(">", "&gt;"));
+
+            if (IsStaticMethodTarget)
+            {
+                return Return.CandidateConstructors switch
+                {
+                    { Length: 1 } =>
+                        $"""
+                         Calls static method {constructorNames.First()}.
+
+                         """,
+                    _ => null
+                };
+            }
 
             return Return.CandidateConstructors switch
             {

@@ -7,33 +7,33 @@ using Converj.Generator.Diagnostics;
 
 namespace Converj.Generator;
 
-internal static class FluentConstructorValidatorExtensions
+internal static class FluentTargetValidatorExtensions
 {
-    private const string DefaultCreateVerb = "Create";
+    private const string DefaultTerminalVerb = "Create";
 
-    public static IEnumerable<Diagnostic> GetDiagnostics(this ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    public static IEnumerable<Diagnostic> GetDiagnostics(this ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        return ValidateRootTypeAttributes(fluentConstructorContexts)
-            .Concat(ValidateMissingPartialModifier(fluentConstructorContexts))
-            .Concat(ValidateFactoryDefaults(fluentConstructorContexts))
-            .Concat(ValidateCreateVerb(fluentConstructorContexts))
-            .Concat(ValidateMethodPrefix(fluentConstructorContexts))
-            .Concat(ValidateDuplicateCreateMethods(fluentConstructorContexts))
-            .Concat(ValidateCreateVerbConflicts(fluentConstructorContexts))
-            .Concat(ValidateParameterTypeAccessibility(fluentConstructorContexts))
-            .Concat(ValidateAccessibilityMismatch(fluentConstructorContexts))
-            .Concat(ValidateAmbiguousFluentMethodChains(fluentConstructorContexts))
-            .Concat(ValidateOptionalParameterAmbiguousChains(fluentConstructorContexts))
-            .Concat(ValidateConflictingTypeConstraints(fluentConstructorContexts))
-            .Concat(ValidateReturnType(fluentConstructorContexts))
-            .Concat(ValidateMultipleConstructorsWithCreateMethodNone(fluentConstructorContexts))
-            .Concat(ValidateFluentMethodNoEffectOnParameters(fluentConstructorContexts))
-            .Concat(ValidatePropertyWithCreateMethodNone(fluentConstructorContexts));
+        return ValidateRootTypeAttributes(fluentTargetContexts)
+            .Concat(ValidateMissingPartialModifier(fluentTargetContexts))
+            .Concat(ValidateFactoryDefaults(fluentTargetContexts))
+            .Concat(ValidateTerminalVerb(fluentTargetContexts))
+            .Concat(ValidateMethodPrefix(fluentTargetContexts))
+            .Concat(ValidateDuplicateTerminalMethods(fluentTargetContexts))
+            .Concat(ValidateTerminalVerbConflicts(fluentTargetContexts))
+            .Concat(ValidateParameterTypeAccessibility(fluentTargetContexts))
+            .Concat(ValidateAccessibilityMismatch(fluentTargetContexts))
+            .Concat(ValidateAmbiguousFluentMethodChains(fluentTargetContexts))
+            .Concat(ValidateOptionalParameterAmbiguousChains(fluentTargetContexts))
+            .Concat(ValidateConflictingTypeConstraints(fluentTargetContexts))
+            .Concat(ValidateReturnType(fluentTargetContexts))
+            .Concat(ValidateMultipleTargetsWithBuilderNone(fluentTargetContexts))
+            .Concat(ValidateFluentMethodNoEffectOnParameters(fluentTargetContexts))
+            .Concat(ValidatePropertyWithBuilderNone(fluentTargetContexts));
     }
 
-    private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateMissingPartialModifier(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var rootTypesWithoutPartial = fluentConstructorContexts
+        var rootTypesWithoutPartial = fluentTargetContexts
             .GroupBy(context => context.RootType, SymbolEqualityComparer.Default)
             .Where(group => !HasPartialModifier(group.Key as INamedTypeSymbol));
 
@@ -58,15 +58,15 @@ internal static class FluentConstructorValidatorExtensions
             .Any(declaration => declaration.Modifiers.Any(SyntaxKind.PartialKeyword));
     }
 
-    private static IEnumerable<Diagnostic> ValidateFactoryDefaults(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateFactoryDefaults(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var rootTypes = fluentConstructorContexts
+        var rootTypes = fluentTargetContexts
             .Select(context => context.RootType)
             .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default);
 
         foreach (var rootType in rootTypes)
         {
-            var factoryAttribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
+            var factoryAttribute = rootType.GetAttributes(TypeName.FluentRootAttribute).FirstOrDefault();
             if (factoryAttribute is null)
                 continue;
 
@@ -75,24 +75,24 @@ internal static class FluentConstructorValidatorExtensions
 
             switch (defaults)
             {
-                case { CreateVerb: not null }
-                        when !IsValidCreateVerbForMode(defaults.CreateVerb, defaults.CreateMethod ?? CreateMethodMode.Dynamic):
-                    yield return Diagnostic.Create(FluentDiagnostics.InvalidCreateVerb, location);
+                case { TerminalVerb: not null }
+                        when !IsValidTerminalVerbForMode(defaults.TerminalVerb, defaults.Builder ?? BuilderMethodKind.DynamicSuffix):
+                    yield return Diagnostic.Create(FluentDiagnostics.InvalidTerminalVerb, location);
                     break;
 
-                case { CreateMethod: CreateMethodMode.None,  CreateVerb.Length: > 0 }:
-                    yield return Diagnostic.Create(FluentDiagnostics.CreateVerbWithNone, location);
+                case { Builder: BuilderMethodKind.None,  TerminalVerb.Length: > 0 }:
+                    yield return Diagnostic.Create(FluentDiagnostics.TerminalVerbWithNone, location);
                     break;
 
-                case { CreateMethod: CreateMethodMode.None, CreateVerb: "" }:
-                    yield return Diagnostic.Create(FluentDiagnostics.EmptyCreateVerbWithNone, location);
+                case { Builder: BuilderMethodKind.None, TerminalVerb: "" }:
+                    yield return Diagnostic.Create(FluentDiagnostics.EmptyTerminalVerbWithNone, location);
                     break;
             }
 
             if (defaults.MethodPrefix is not null && !IsValidMethodPrefix(defaults.MethodPrefix))
                 yield return Diagnostic.Create(FluentDiagnostics.InvalidMethodPrefix, location);
 
-            if (defaults is { CreateMethod: CreateMethodMode.None, ReturnType: not null })
+            if (defaults is { Builder: BuilderMethodKind.None, ReturnType: not null })
                 yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
                     FindNamedArgumentLocation(factoryAttribute, "ReturnType"));
         }
@@ -105,42 +105,42 @@ internal static class FluentConstructorValidatorExtensions
             _ => Location.None,
         };
 
-    private static IEnumerable<Diagnostic> ValidateRootTypeAttributes(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateRootTypeAttributes(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Check if the target type has the FluentFactory attribute
-        var constructorContexts = fluentConstructorContexts
-            .Where(context => !context.RootType.HasAttribute(TypeName.FluentFactoryAttribute));
+        var constructorContexts = fluentTargetContexts
+            .Where(context => !context.RootType.HasAttribute(TypeName.FluentRootAttribute));
 
         foreach (var context in constructorContexts)
             yield return Diagnostic.Create(
-                FluentDiagnostics.FluentConstructorTargetTypeMissingFluentFactory,
+                FluentDiagnostics.FluentTargetTypeMissingFluentRoot,
                 FindRootTypeLocation(context.AttributeData, context),
                 context.RootType.ToDisplayString());
     }
 
-    private static IEnumerable<Diagnostic> ValidateCreateVerb(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateTerminalVerb(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Get contexts that have duplicates - we'll skip CVJG0007 for these since CVJG0008 will be reported
-        var duplicateContexts = new HashSet<FluentConstructorContext>(GetDuplicateConstructorContexts(fluentConstructorContexts)
+        var duplicateContexts = new HashSet<FluentTargetContext>(GetDuplicateTargetContexts(fluentTargetContexts)
             .SelectMany(group => group));
 
-        // Only validate constructors that explicitly set CreateVerb (not inherited from factory)
-        var constructorContextWithInvalidCreateVerb = fluentConstructorContexts
+        // Only validate constructors that explicitly set TerminalVerb (not inherited from factory)
+        var constructorContextWithInvalidTerminalVerb = fluentTargetContexts
             .Except(duplicateContexts)
-            .Where(HasExplicitCreateVerb)
-            .Where(context => !IsValidCreateVerbForMode(context.CreateVerb, context.CreateMethod));
+            .Where(HasExplicitTerminalVerb)
+            .Where(context => !IsValidTerminalVerbForMode(context.TerminalVerb, context.Builder));
 
-        foreach (var context in constructorContextWithInvalidCreateVerb)
+        foreach (var context in constructorContextWithInvalidTerminalVerb)
         {
             yield return Diagnostic.Create(
-                FluentDiagnostics.InvalidCreateVerb,
-                FindCreateVerbArgumentLocation(context));
+                FluentDiagnostics.InvalidTerminalVerb,
+                FindTerminalVerbArgumentLocation(context));
         }
     }
 
-    private static IEnumerable<Diagnostic> ValidateMethodPrefix(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateMethodPrefix(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var constructorsWithInvalidPrefix = fluentConstructorContexts
+        var constructorsWithInvalidPrefix = fluentTargetContexts
             .Where(HasExplicitMethodPrefix)
             .Where(context => !IsValidMethodPrefix(context.MethodPrefix));
 
@@ -160,15 +160,15 @@ internal static class FluentConstructorValidatorExtensions
         return char.IsLetter(prefix[0]) && prefix.Skip(1).All(char.IsLetterOrDigit);
     }
 
-    private static bool IsValidCreateVerbForMode(string? verb, CreateMethodMode mode)
+    private static bool IsValidTerminalVerbForMode(string? verb, BuilderMethodKind mode)
     {
-        if (verb is { Length: 0 } && mode is CreateMethodMode.Dynamic or CreateMethodMode.None)
+        if (verb is { Length: 0 } && mode is BuilderMethodKind.DynamicSuffix or BuilderMethodKind.None)
             return true;
 
-        return IsValidCreateVerb(verb);
+        return IsValidTerminalVerb(verb);
     }
 
-    private static bool IsValidCreateVerb(string? verb)
+    private static bool IsValidTerminalVerb(string? verb)
     {
         if (verb is null)
             return true;
@@ -179,77 +179,77 @@ internal static class FluentConstructorValidatorExtensions
         return char.IsLetter(verb[0]) && verb.Skip(1).All(char.IsLetterOrDigit);
     }
 
-    private static IEnumerable<Diagnostic> ValidateDuplicateCreateMethods(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateDuplicateTerminalMethods(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Check for duplicate resolved create method names within the same type
-        var duplicateGroups = GetDuplicateConstructorContexts(fluentConstructorContexts);
+        var duplicateGroups = GetDuplicateTargetContexts(fluentTargetContexts);
 
         foreach (var group in duplicateGroups)
         {
 
             var contexts = group.ToList();
-            var primaryLocation = FindCreateVerbArgumentLocation(contexts[0]);
+            var primaryLocation = FindTerminalVerbArgumentLocation(contexts[0]);
             var additionalLocations = contexts
                 .Skip(1)
-                .Select(FindCreateVerbArgumentLocation);
+                .Select(FindTerminalVerbArgumentLocation);
 
             yield return Diagnostic.Create(
-                FluentDiagnostics.DuplicateCreateMethodName,
+                FluentDiagnostics.DuplicateTerminalMethodName,
                 primaryLocation,
                 additionalLocations: additionalLocations);
         }
     }
 
-    private static IEnumerable<IGrouping<(string ResolvedName, string TypeName), FluentConstructorContext>> GetDuplicateConstructorContexts(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts) =>
-        fluentConstructorContexts
-            .Where(context => !string.IsNullOrEmpty(context.CreateVerb))
-            .Select(context => (Context: context, ResolvedName: ResolveCreateMethodName(context)))
+    private static IEnumerable<IGrouping<(string ResolvedName, string TypeName), FluentTargetContext>> GetDuplicateTargetContexts(
+        ImmutableArray<FluentTargetContext> fluentTargetContexts) =>
+        fluentTargetContexts
+            .Where(context => !string.IsNullOrEmpty(context.TerminalVerb))
+            .Select(context => (Context: context, ResolvedName: ResolveTerminalMethodName(context)))
             .GroupBy(x => (x.ResolvedName, TypeName: x.Context.Constructor.ContainingType.ToDisplayString()), x => x.Context)
             .Where(group => group.Count() > 1);
 
-    private static string ResolveCreateMethodName(FluentConstructorContext context)
+    private static string ResolveTerminalMethodName(FluentTargetContext context)
     {
-        var verb = context.CreateVerb ?? DefaultCreateVerb;
-        return context.CreateMethod switch
+        var verb = context.TerminalVerb ?? DefaultTerminalVerb;
+        return context.Builder switch
         {
-            CreateMethodMode.Fixed => verb,
+            BuilderMethodKind.FixedName => verb,
             _ => $"{verb}{context.Constructor.ContainingType.ToCreateMethodSuffix()}"
         };
     }
 
-    private static IEnumerable<Diagnostic> ValidateCreateVerbConflicts(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateTerminalVerbConflicts(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        // Check for CreateMethod.None used with non-empty CreateVerb, only when the constructor explicitly sets at least one
-        var conflictedContexts = fluentConstructorContexts.AsEnumerable().Where(context =>
-            context.CreateMethod == CreateMethodMode.None
-            && !string.IsNullOrEmpty(context.CreateVerb)
-            && (HasExplicitCreateVerb(context) || HasExplicitCreateMethod(context)));
+        // Check for BuilderMethod.None used with non-empty TerminalVerb, only when the constructor explicitly sets at least one
+        var conflictedContexts = fluentTargetContexts.AsEnumerable().Where(context =>
+            context.Builder == BuilderMethodKind.None
+            && !string.IsNullOrEmpty(context.TerminalVerb)
+            && (HasExplicitTerminalVerb(context) || HasExplicitBuilder(context)));
 
         foreach (var context in conflictedContexts)
         {
             yield return Diagnostic.Create(
-                FluentDiagnostics.CreateVerbWithNone,
+                FluentDiagnostics.TerminalVerbWithNone,
                 GetAttributeLocation(context.AttributeData));
         }
 
-        // Empty CreateVerb + None → warning CVJG0017
-        var emptyVerbWithNone = fluentConstructorContexts.AsEnumerable().Where(context =>
-            context.CreateMethod == CreateMethodMode.None
-            && context.CreateVerb is ""
-            && HasExplicitCreateVerb(context));
+        // Empty TerminalVerb + None -> warning CVJG0017
+        var emptyVerbWithNone = fluentTargetContexts.AsEnumerable().Where(context =>
+            context.Builder == BuilderMethodKind.None
+            && context.TerminalVerb is ""
+            && HasExplicitTerminalVerb(context));
 
         foreach (var context in emptyVerbWithNone)
         {
             yield return Diagnostic.Create(
-                FluentDiagnostics.EmptyCreateVerbWithNone,
-                FindCreateVerbArgumentLocation(context));
+                FluentDiagnostics.EmptyTerminalVerbWithNone,
+                FindTerminalVerbArgumentLocation(context));
         }
     }
 
-    private static IEnumerable<Diagnostic> ValidateParameterTypeAccessibility(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateParameterTypeAccessibility(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
             var factoryAccessibility = context.RootType.DeclaredAccessibility;
 
@@ -257,11 +257,11 @@ internal static class FluentConstructorValidatorExtensions
             {
                 var paramType = parameter.Type;
 
-                // Skip built-in types (string, int, etc.) — SpecialType.None means it's a user-defined type
+                // Skip built-in types (string, int, etc.) -- SpecialType.None means it's a user-defined type
                 if (paramType.SpecialType != SpecialType.None)
                     continue;
 
-                // Skip type parameters — their DeclaredAccessibility is NotApplicable
+                // Skip type parameters -- their DeclaredAccessibility is NotApplicable
                 if (paramType.DeclaredAccessibility == Accessibility.NotApplicable)
                     continue;
 
@@ -280,9 +280,9 @@ internal static class FluentConstructorValidatorExtensions
         }
     }
 
-    private static IEnumerable<Diagnostic> ValidateAccessibilityMismatch(ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateAccessibilityMismatch(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
             var targetType = context.Constructor.ContainingType;
             var factoryAccessibility = context.RootType.DeclaredAccessibility;
@@ -302,16 +302,16 @@ internal static class FluentConstructorValidatorExtensions
         }
     }
 
-    private static bool HasExplicitCreateVerb(FluentConstructorContext context) =>
-        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "CreateVerb");
+    private static bool HasExplicitTerminalVerb(FluentTargetContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "TerminalVerb");
 
-    private static bool HasExplicitCreateMethod(FluentConstructorContext context) =>
-        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "CreateMethod");
+    private static bool HasExplicitBuilder(FluentTargetContext context) =>
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "BuilderMethod");
 
-    private static bool HasExplicitMethodPrefix(FluentConstructorContext context) =>
+    private static bool HasExplicitMethodPrefix(FluentTargetContext context) =>
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "MethodPrefix");
 
-    private static Location FindRootTypeLocation(AttributeData? fluentConstructorAttribute, FluentConstructorContext context)
+    private static Location FindRootTypeLocation(AttributeData? fluentConstructorAttribute, FluentTargetContext context)
     {
         Location location;
         if (fluentConstructorAttribute?.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
@@ -333,13 +333,13 @@ internal static class FluentConstructorValidatorExtensions
         return location;
     }
 
-    private static Location FindCreateVerbArgumentLocation(FluentConstructorContext context) =>
-        FindNamedArgumentLocation(context, "CreateVerb");
+    private static Location FindTerminalVerbArgumentLocation(FluentTargetContext context) =>
+        FindNamedArgumentLocation(context, "TerminalVerb");
 
-    private static Location FindMethodPrefixArgumentLocation(FluentConstructorContext context) =>
+    private static Location FindMethodPrefixArgumentLocation(FluentTargetContext context) =>
         FindNamedArgumentLocation(context, "MethodPrefix");
 
-    private static Location FindNamedArgumentLocation(FluentConstructorContext context, string argumentName) =>
+    private static Location FindNamedArgumentLocation(FluentTargetContext context, string argumentName) =>
         FindNamedArgumentLocation(context.AttributeData, argumentName,
             context.Constructor.Locations.FirstOrDefault() ?? Location.None);
 
@@ -361,11 +361,11 @@ internal static class FluentConstructorValidatorExtensions
     }
 
     private static IEnumerable<Diagnostic> ValidateAmbiguousFluentMethodChains(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Skip constructors with [MultipleFluentMethods] parameters since their
         // fluent method names are resolved from template methods, not GetFluentMethodName()
-        var eligibleContexts = fluentConstructorContexts
+        var eligibleContexts = fluentTargetContexts
             .Where(ctx => !ctx.Constructor.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
 
@@ -401,7 +401,7 @@ internal static class FluentConstructorValidatorExtensions
         }
     }
 
-    private static bool HasAmbiguousCreateMethods(IGrouping<string, FluentConstructorContext> group)
+    private static bool HasAmbiguousCreateMethods(IGrouping<string, FluentTargetContext> group)
     {
         // Must have constructors from at least 2 different types
         var distinctTypes = group
@@ -414,11 +414,11 @@ internal static class FluentConstructorValidatorExtensions
 
         // Separate constructors with None from those that produce Create methods
         var constructorsWithCreate = group
-            .Where(ctx => ctx.CreateMethod != CreateMethodMode.None)
+            .Where(ctx => ctx.Builder != BuilderMethodKind.None)
             .ToList();
 
         var constructorsWithNoCreate = group
-            .Where(ctx => ctx.CreateMethod == CreateMethodMode.None)
+            .Where(ctx => ctx.Builder == BuilderMethodKind.None)
             .ToList();
 
         // NoCreateMethod constructors use the containing type as the step, so at most one
@@ -440,7 +440,7 @@ internal static class FluentConstructorValidatorExtensions
         return true;
     }
 
-    private static bool AreCreateMethodsDisambiguated(List<FluentConstructorContext> constructors)
+    private static bool AreCreateMethodsDisambiguated(List<FluentTargetContext> constructors)
     {
         // Zero or one constructor with Create methods cannot be ambiguous
         if (constructors.Count <= 1)
@@ -448,15 +448,15 @@ internal static class FluentConstructorValidatorExtensions
 
         // Constructors with None don't produce create methods and can't be disambiguated by name
         var constructorsWithCreate = constructors
-            .Where(ctx => ctx.CreateMethod != CreateMethodMode.None)
+            .Where(ctx => ctx.Builder != BuilderMethodKind.None)
             .ToList();
 
         if (constructorsWithCreate.Count != constructors.Count)
             return false;
 
-        // All constructors produce create methods — check resolved names are distinct
+        // All constructors produce create methods -- check resolved names are distinct
         var resolvedNames = constructorsWithCreate
-            .Select(ResolveCreateMethodName)
+            .Select(ResolveTerminalMethodName)
             .ToList();
 
         var distinctNames = resolvedNames.Distinct().Count();
@@ -464,12 +464,12 @@ internal static class FluentConstructorValidatorExtensions
         return distinctNames == resolvedNames.Count;
     }
 
-    private static string GetFluentParameterChainKey(FluentConstructorContext context) =>
+    private static string GetFluentParameterChainKey(FluentTargetContext context) =>
         string.Join("|", context.Constructor.Parameters
             .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
 
     private static string GetFirstParameterKey(
-        FluentConstructorContext context, Func<ITypeSymbol, string> typeStringResolver)
+        FluentTargetContext context, Func<ITypeSymbol, string> typeStringResolver)
     {
         if (context.Constructor.Parameters.Length == 0)
             return "";
@@ -479,9 +479,9 @@ internal static class FluentConstructorValidatorExtensions
     }
 
     private static IEnumerable<Diagnostic> ValidateConflictingTypeConstraints(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var eligibleContexts = fluentConstructorContexts
+        var eligibleContexts = fluentTargetContexts
             .Where(ctx => ctx.Constructor.Parameters.Length > 0)
             .Where(ctx => !ctx.Constructor.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
@@ -548,16 +548,16 @@ internal static class FluentConstructorValidatorExtensions
         return parameter.Locations.FirstOrDefault() ?? Location.None;
     }
 
-    private static string GetRequiredFluentParameterChainKey(FluentConstructorContext context) =>
+    private static string GetRequiredFluentParameterChainKey(FluentTargetContext context) =>
         string.Join("|", context.Constructor.Parameters
             .Where(p => !p.HasExplicitDefaultValue)
             .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
 
     private static IEnumerable<Diagnostic> ValidateOptionalParameterAmbiguousChains(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Skip constructors with [MultipleFluentMethods] parameters
-        var eligibleContexts = fluentConstructorContexts
+        var eligibleContexts = fluentTargetContexts
             .Where(ctx => !ctx.Constructor.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
 
@@ -625,23 +625,23 @@ internal static class FluentConstructorValidatorExtensions
     }
 
     private static IEnumerable<Diagnostic> ValidateReturnType(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         // Validate factory-level ReturnType defaults
-        var rootTypes = fluentConstructorContexts
+        var rootTypes = fluentTargetContexts
             .Select(context => context.RootType)
             .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default);
 
         foreach (var rootType in rootTypes)
         {
             var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
-            if (defaults.ReturnType is null || defaults.CreateMethod == CreateMethodMode.None)
+            if (defaults.ReturnType is null || defaults.Builder == BuilderMethodKind.None)
                 continue;
 
-            var factoryAttribute = rootType.GetAttributes(TypeName.FluentFactoryAttribute).FirstOrDefault();
+            var factoryAttribute = rootType.GetAttributes(TypeName.FluentRootAttribute).FirstOrDefault();
             var location = factoryAttribute is not null ? GetAttributeLocation(factoryAttribute) : Location.None;
 
-            var factoryContexts = fluentConstructorContexts
+            var factoryContexts = fluentTargetContexts
                 .Where(ctx => SymbolEqualityComparer.Default.Equals(ctx.RootType, rootType))
                 .Where(ctx => !HasExplicitReturnType(ctx));
 
@@ -659,14 +659,14 @@ internal static class FluentConstructorValidatorExtensions
         }
 
         // Validate constructor-level ReturnType overrides
-        foreach (var context in fluentConstructorContexts.Where(HasExplicitReturnType))
+        foreach (var context in fluentTargetContexts.Where(HasExplicitReturnType))
         {
             if (context.ReturnType is null)
                 continue;
 
             var location = GetAttributeLocation(context.AttributeData);
 
-            if (context.CreateMethod == CreateMethodMode.None)
+            if (context.Builder == BuilderMethodKind.None)
             {
                 yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
                     FindNamedArgumentLocation(context, "ReturnType"));
@@ -706,7 +706,7 @@ internal static class FluentConstructorValidatorExtensions
         return null;
     }
 
-    private static bool HasExplicitReturnType(FluentConstructorContext context) =>
+    private static bool HasExplicitReturnType(FluentTargetContext context) =>
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "ReturnType");
 
     private static bool IsAssignableTo(INamedTypeSymbol sourceType, INamedTypeSymbol targetType)
@@ -744,11 +744,11 @@ internal static class FluentConstructorValidatorExtensions
         return false;
     }
 
-    private static IEnumerable<Diagnostic> ValidateMultipleConstructorsWithCreateMethodNone(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidateMultipleTargetsWithBuilderNone(
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var groups = fluentConstructorContexts
-            .Where(ctx => ctx.CreateMethod == CreateMethodMode.None)
+        var groups = fluentTargetContexts
+            .Where(ctx => ctx.Builder == BuilderMethodKind.None)
             .GroupBy(ctx => (ctx.Constructor.ContainingType, ctx.RootType),
                 ContainingAndRootTypeComparer.Default);
 
@@ -757,7 +757,7 @@ internal static class FluentConstructorValidatorExtensions
             foreach (var context in group.Skip(1))
             {
                 yield return Diagnostic.Create(
-                    FluentDiagnostics.MultipleConstructorsWithCreateMethodNone,
+                    FluentDiagnostics.MultipleTargetsWithBuilderNone,
                     GetAttributeLocation(context.AttributeData),
                     context.Constructor.ContainingType.ToDisplayString(),
                     context.RootType.ToDisplayString());
@@ -787,11 +787,11 @@ internal static class FluentConstructorValidatorExtensions
     /// which has no effect since the parameter already generates a fluent method with the default name.
     /// </summary>
     private static IEnumerable<Diagnostic> ValidateFluentMethodNoEffectOnParameters(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var seen = new HashSet<IParameterSymbol>(SymbolEqualityComparer.Default);
 
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
             foreach (var parameter in context.Constructor.Parameters)
             {
@@ -818,21 +818,21 @@ internal static class FluentConstructorValidatorExtensions
 
     /// <summary>
     /// Reports a warning diagnostic when a target type has required properties but the constructor
-    /// uses CreateMethod.None, which doesn't generate a creation method for object initializer syntax.
+    /// uses BuilderMethod.None, which doesn't generate a creation method for object initializer syntax.
     /// </summary>
-    private static IEnumerable<Diagnostic> ValidatePropertyWithCreateMethodNone(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static IEnumerable<Diagnostic> ValidatePropertyWithBuilderNone(
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
-            if (context.CreateMethod != CreateMethodMode.None) continue;
+            if (context.Builder != BuilderMethodKind.None) continue;
 
             foreach (var prop in context.TargetTypeProperties)
             {
                 if (!prop.IsRequired) continue;
 
                 yield return Diagnostic.Create(
-                    FluentDiagnostics.FluentMethodPropertyWithCreateMethodNone,
+                    FluentDiagnostics.FluentMethodPropertyWithBuilderNone,
                     prop.Location,
                     prop.Property.Name,
                     context.Constructor.ContainingType.ToDisplayString());

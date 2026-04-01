@@ -32,12 +32,12 @@ public class CompilationErrorResilienceTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(NonExistentType value) { }
             }
             """;
@@ -70,7 +70,7 @@ public class CompilationErrorResilienceTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory
             {
                 // Missing closing brace is impossible to represent cleanly in a well-formed string,
@@ -108,12 +108,12 @@ public class CompilationErrorResilienceTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(string name, UndefinedType broken) { }
             }
             """;
@@ -144,12 +144,12 @@ public class CompilationErrorResilienceTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class ValidTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public ValidTarget(string name)
                 {
                     Name = name;
@@ -160,7 +160,7 @@ public class CompilationErrorResilienceTests
 
             public class ErrorTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public ErrorTarget(NonExistentType broken)
                 {
                 }

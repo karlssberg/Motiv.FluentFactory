@@ -19,12 +19,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {
@@ -128,12 +128,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -148,7 +148,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -265,12 +265,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -288,7 +288,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -433,12 +433,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -456,7 +456,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [FluentMethod("WithFunction")]Func<T> nativeFunction,
@@ -614,12 +614,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(NumberMethods))]int number,
                         [MultipleFluentMethods(typeof(AsMethods))]T data)
@@ -805,12 +805,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(MethodVariants))]Task<T> data)
                     {
@@ -915,12 +915,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -1106,12 +1106,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -1271,12 +1271,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<KeyValuePair<T1, T2>> first,
                         string second)
@@ -1378,12 +1378,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> first,
                         string second)
@@ -1483,12 +1483,12 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         string first)
                     {
@@ -1500,7 +1500,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         string first,
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> second,
@@ -1635,13 +1635,13 @@ public class MultipleMethodsGenerationTests
 
             public abstract class BooleanResultBase<T> {}
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
             public readonly partial struct MyTypeA<TModel, TPredicateResult>
             {
 
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public MyTypeA(
                     [FluentMethod("From")]Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, BooleanResultBase<string>, IEnumerable<string>> trueBecause,
@@ -1775,10 +1775,10 @@ public class MultipleMethodsGenerationTests
 
             public abstract class BooleanResultBase<T> {}
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(MyTypeB<,>.WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
             {
@@ -1838,7 +1838,7 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Spec;
 
                 internal class WhenTrueOverloads
@@ -1852,13 +1852,13 @@ public class MultipleMethodsGenerationTests
                         TNewMetadata whenTrue) => _ => whenTrue;
                 }
 
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public readonly struct ExplanationFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public readonly struct ExplanationWithNameFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,
@@ -1992,16 +1992,16 @@ public class MultipleMethodsGenerationTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Spec;
 
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public readonly struct ExplanationFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public readonly struct ExplanationWithNameFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,
@@ -2140,7 +2140,7 @@ public class MultipleMethodsGenerationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public static class Converters
@@ -2151,7 +2151,7 @@ public class MultipleMethodsGenerationTests
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value, string label)
                 {
                     Value = value;
@@ -2164,7 +2164,7 @@ public class MultipleMethodsGenerationTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Beta([MultipleFluentMethods(typeof(Converters))] int value, bool flag)
                 {
                     Value = value;

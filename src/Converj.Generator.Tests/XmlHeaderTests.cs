@@ -16,12 +16,12 @@ public class XmlHeaderTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;

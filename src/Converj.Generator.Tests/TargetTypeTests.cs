@@ -13,12 +13,12 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -73,10 +73,10 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -127,12 +127,12 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public struct MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -186,10 +186,10 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public struct MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -240,12 +240,12 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public record MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -299,10 +299,10 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public record MyBuildTarget(int Value)
             {
                 public int Value { get; set; } = Value;
@@ -352,10 +352,10 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public record MyBuildTarget(int Value)
             {
                 public int Value { get; set; } = Value;
@@ -429,16 +429,16 @@ public class TargetTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public record MyBuildTargetA(int Value)
             {
                 public int Value { get; set; } = Value;
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public record MyBuildTargetB(int Value)
             {
                 public int Value { get; set; } = Value;

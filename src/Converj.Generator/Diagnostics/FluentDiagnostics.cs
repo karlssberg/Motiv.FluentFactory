@@ -82,46 +82,46 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for invalid create verb.
+    /// Diagnostic for invalid terminal verb.
     /// </summary>
-    public static readonly DiagnosticDescriptor InvalidCreateVerb = new(
+    public static readonly DiagnosticDescriptor InvalidTerminalVerb = new(
         id: "CVJG0007",
-        title: "Invalid CreateVerb",
+        title: "Invalid TerminalVerb",
         category: Category,
-        messageFormat: "CreateVerb must be a valid identifier",
+        messageFormat: "TerminalVerb must be a valid identifier",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for duplicate create method name.
+    /// Diagnostic for duplicate terminal method name.
     /// </summary>
-    public static readonly DiagnosticDescriptor DuplicateCreateMethodName = new(
+    public static readonly DiagnosticDescriptor DuplicateTerminalMethodName = new(
         id: "CVJG0008",
-        title: "Duplicate create method name",
+        title: "Duplicate terminal method name",
         category: Category,
-        messageFormat: "Create method name must be unique",
+        messageFormat: "Terminal method name must be unique",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for FluentConstructor target type missing FluentFactory attribute.
+    /// Diagnostic for FluentTarget root type missing FluentRoot attribute.
     /// </summary>
-    public static readonly DiagnosticDescriptor FluentConstructorTargetTypeMissingFluentFactory = new(
+    public static readonly DiagnosticDescriptor FluentTargetTypeMissingFluentRoot = new(
         id: "CVJG0009",
-        title: "FluentConstructor target type missing FluentFactory attribute",
+        title: "FluentTarget root type missing FluentRoot attribute",
         category: Category,
-        messageFormat: "FluentConstructor references type '{0}' which does not have the FluentFactory attribute",
+        messageFormat: "FluentTarget references type '{0}' which does not have the FluentRoot attribute",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for CreateVerb specified with CreateMethod.None.
+    /// Diagnostic for TerminalVerb specified with BuilderMethod.None.
     /// </summary>
-    public static readonly DiagnosticDescriptor CreateVerbWithNone = new(
+    public static readonly DiagnosticDescriptor TerminalVerbWithNone = new(
         "CVJG0010",
-        title: "CreateVerb specified with CreateMethod.None",
+        title: "TerminalVerb specified with BuilderMethod.None",
         category: Category,
-        messageFormat: "CreateVerb cannot be used with CreateMethod.None",
+        messageFormat: "TerminalVerb cannot be used with BuilderMethod.None",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -193,13 +193,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for empty CreateVerb used with CreateMethod.None.
+    /// Diagnostic for empty TerminalVerb used with BuilderMethod.None.
     /// </summary>
-    public static readonly DiagnosticDescriptor EmptyCreateVerbWithNone = new(
+    public static readonly DiagnosticDescriptor EmptyTerminalVerbWithNone = new(
         id: "CVJG0017",
-        title: "Empty CreateVerb with CreateMethod.None",
+        title: "Empty TerminalVerb with BuilderMethod.None",
         category: Category,
-        messageFormat: "CreateVerb has no effect with CreateMethod.None",
+        messageFormat: "TerminalVerb has no effect with BuilderMethod.None",
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 
@@ -226,13 +226,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for ReturnType specified with CreateMethod.None.
+    /// Diagnostic for ReturnType specified with BuilderMethod.None.
     /// </summary>
     public static readonly DiagnosticDescriptor ReturnTypeWithNone = new(
         id: "CVJG0021",
-        title: "ReturnType specified with CreateMethod.None",
+        title: "ReturnType specified with BuilderMethod.None",
         category: Category,
-        messageFormat: "ReturnType cannot be used with CreateMethod.None because no creation method is generated",
+        messageFormat: "ReturnType cannot be used with BuilderMethod.None because no terminal method is generated",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -285,13 +285,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for [FluentParameter] applied to a member of a type without [FluentFactory].
+    /// Diagnostic for [FluentParameter] applied to a member of a type without [FluentRoot].
     /// </summary>
-    public static readonly DiagnosticDescriptor FluentParameterWithoutFluentFactory = new(
+    public static readonly DiagnosticDescriptor FluentParameterWithoutFluentRoot = new(
         id: "CVJG0025",
-        title: "FluentParameter on type without FluentFactory",
+        title: "FluentParameter on type without FluentRoot",
         messageFormat:
-        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' does not have the [FluentFactory] attribute",
+        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' does not have the [FluentRoot] attribute",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -419,15 +419,15 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for multiple [FluentConstructor] attributes on the same type with CreateMethod.None.
-    /// When CreateMethod.None is in effect, the target type itself becomes the fluent step and all
+    /// Diagnostic for multiple [FluentTarget] attributes on the same type with BuilderMethod.None.
+    /// When BuilderMethod.None is in effect, the target type itself becomes the fluent step and all
     /// generated methods live on the same type, preventing step ordering enforcement.
     /// </summary>
-    public static readonly DiagnosticDescriptor MultipleConstructorsWithCreateMethodNone = new(
+    public static readonly DiagnosticDescriptor MultipleTargetsWithBuilderNone = new(
         id: "CVJG0037",
-        title: "Multiple FluentConstructors with CreateMethod.None",
+        title: "Multiple FluentTargets with BuilderMethod.None",
         messageFormat:
-        "Type '{0}' has multiple [FluentConstructor] attributes for factory '{1}' with CreateMethod.None — only one constructor per type is allowed when CreateMethod.None is in effect",
+        "Type '{0}' has multiple [FluentTarget] attributes for root '{1}' with BuilderMethod.None — only one constructor per type is allowed when BuilderMethod.None is in effect",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
@@ -445,13 +445,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for property support being used with CreateMethod.None.
+    /// Diagnostic for property support being used with BuilderMethod.None.
     /// </summary>
-    public static readonly DiagnosticDescriptor FluentMethodPropertyWithCreateMethodNone = new(
+    public static readonly DiagnosticDescriptor FluentMethodPropertyWithBuilderNone = new(
         id: "CVJG0039",
-        title: "Property support excluded from CreateMethod.None",
+        title: "Property support excluded from BuilderMethod.None",
         messageFormat:
-        "Required property '{0}' on type '{1}' cannot be used with CreateMethod.None. Property initialization via object initializer requires a creation method.",
+        "Required property '{0}' on type '{1}' cannot be used with BuilderMethod.None. Property initialization via object initializer requires a terminal method.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -493,14 +493,26 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for ambiguous type-first entry method names across different target types.
+    /// Diagnostic for ambiguous initial method names across different target types.
     /// </summary>
-    public static readonly DiagnosticDescriptor AmbiguousTypeFirstEntryMethod = new(
+    public static readonly DiagnosticDescriptor AmbiguousInitialMethod = new(
         id: "CVJG0043",
-        title: "Ambiguous type-first entry method",
+        title: "Ambiguous initial method",
         messageFormat:
-        "Type-first entry method '{0}' is ambiguous between types {1}. Disambiguate by setting TypeFirstVerb on [FluentConstructor] to change the entry method, or use CreateVerb with CreateMethod.Fixed to change the terminal method.",
+        "Initial method '{0}' is ambiguous between types {1}. Disambiguate by setting InitialVerb on [FluentTarget] to change the entry method, or use TerminalVerb with BuilderMethod.FixedName to change the terminal method.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for [FluentTarget] applied to an instance method instead of a static method.
+    /// </summary>
+    public static readonly DiagnosticDescriptor InstanceMethodTarget = new(
+        id: "CVJG0044",
+        title: "FluentTarget on instance method",
+        messageFormat:
+        "Method '{0}' must be static to be used as a FluentTarget",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 }

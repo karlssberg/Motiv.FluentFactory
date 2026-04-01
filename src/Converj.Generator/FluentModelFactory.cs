@@ -19,14 +19,28 @@ internal class FluentModelFactory(Compilation compilation)
 
     public FluentFactoryCompilationUnit CreateFluentFactoryCompilationUnit(
         INamedTypeSymbol rootType,
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         _regularFluentSteps.Clear();
         _diagnostics.Clear();
         _unreachableConstructorAnalyzer.Clear();
 
+        // Filter out instance method targets and report diagnostics
+        foreach (var instanceMethod in fluentTargetContexts.Where(c => c.IsInstanceMethodTarget))
+        {
+            var location = instanceMethod.AttributeData.ApplicationSyntaxReference?.GetSyntax().GetLocation()
+                           ?? Location.None;
+            _diagnostics.Add(Diagnostic.Create(
+                Diagnostics.FluentDiagnostics.InstanceMethodTarget,
+                location,
+                instanceMethod.Constructor.Name));
+        }
+        fluentTargetContexts = fluentTargetContexts
+            .Where(c => !c.IsInstanceMethodTarget)
+            .ToImmutableArray();
+
         var (validContexts, unsupportedModifierDiagnostics) =
-            FilterUnsupportedParameterModifierConstructors(fluentConstructorContexts);
+            FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
 
         _diagnostics.AddRange(unsupportedModifierDiagnostics);
 
@@ -41,23 +55,23 @@ internal class FluentModelFactory(Compilation compilation)
         if (validContexts.IsEmpty)
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
 
-        fluentConstructorContexts = validContexts;
+        fluentTargetContexts = validContexts;
 
-        _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentConstructorContexts.Select(context => context.Constructor));
+        _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentTargetContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
 
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
         _rootType = rootType;
 
         var fluentParameterMembers = FluentParameterAnalyzer.Analyze(rootType, _diagnostics);
-        _threadedParameters = CreateThreadedParameterBindings(rootType, fluentParameterMembers, fluentConstructorContexts);
+        _threadedParameters = CreateThreadedParameterBindings(rootType, fluentParameterMembers, fluentTargetContexts);
 
-        var usings = GetUsingStatements(fluentConstructorContexts);
+        var usings = GetUsingStatements(fluentTargetContexts);
 
-        _diagnostics.AddRange(fluentConstructorContexts.GetDiagnostics());
+        _diagnostics.AddRange(fluentTargetContexts.GetDiagnostics());
 
         // Collect property analysis diagnostics
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
             _diagnostics.AddRange(context.PropertyDiagnostics);
 
         if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
@@ -66,8 +80,8 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         // Split constructors: type-first ones are excluded from the parameter-first trie
-        var parameterFirstContexts = fluentConstructorContexts
-            .Where(c => c.BuilderMode != BuilderMode.TypeFirst)
+        var parameterFirstContexts = fluentTargetContexts
+            .Where(c => c.Builder != BuilderMethodKind.First)
             .ToImmutableArray();
 
         var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
@@ -110,8 +124,8 @@ internal class FluentModelFactory(Compilation compilation)
         fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
 
         // Type-first chain generation: group by target type, build per-type trie
-        var typeFirstContexts = fluentConstructorContexts
-            .Where(c => c.BuilderMode == BuilderMode.TypeFirst)
+        var typeFirstContexts = fluentTargetContexts
+            .Where(c => c.Builder == BuilderMethodKind.First)
             .ToImmutableArray();
         if (!typeFirstContexts.IsEmpty)
         {
@@ -139,7 +153,7 @@ internal class FluentModelFactory(Compilation compilation)
         fluentRootMethods = updatedRootMethods;
 
         _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
-        var sampleConstructorContext = fluentConstructorContexts.First();
+        var sampleConstructorContext = fluentTargetContexts.First();
 
         return new FluentFactoryCompilationUnit(rootType)
         {
@@ -700,9 +714,9 @@ internal class FluentModelFactory(Compilation compilation)
                 : GetPreSatisfiedParameterNames(value.Constructor)
             where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count
             where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count
-            where value.CreateMethod != CreateMethodMode.None
-            let verb = value.Context.CreateVerb ?? "Create"
-            let methodName = value.CreateMethod == CreateMethodMode.Fixed
+            where value.Builder != BuilderMethodKind.None
+            let verb = value.Context.TerminalVerb ?? "Create"
+            let methodName = value.Builder == BuilderMethodKind.FixedName
                 ? verb
                 : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
             let keyParamFieldNames = new HashSet<string>(
@@ -838,14 +852,14 @@ internal class FluentModelFactory(Compilation compilation)
     private ImmutableArray<FluentParameterBinding> CreateThreadedParameterBindings(
         INamedTypeSymbol rootType,
         ImmutableArray<FluentParameterMember> fluentParameterMembers,
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         if (fluentParameterMembers.IsEmpty)
             return [];
 
         var bindings = ImmutableArray.CreateBuilder<FluentParameterBinding>();
 
-        var allTargetParams = fluentConstructorContexts
+        var allTargetParams = fluentTargetContexts
             .Where(ctx => !IsSelfReferencing(ctx.Constructor, rootType))
             .SelectMany(ctx => ctx.Constructor.Parameters)
             .ToList();
@@ -925,7 +939,7 @@ internal class FluentModelFactory(Compilation compilation)
     private (ImmutableArray<IFluentMethod> EntryMethods, ImmutableArray<IFluentStep> Steps)
         CreateTypeFirstChains(
             INamedTypeSymbol rootType,
-            ImmutableArray<FluentConstructorContext> typeFirstContexts,
+            ImmutableArray<FluentTargetContext> typeFirstContexts,
             int startingStepIndex)
     {
         var allEntryMethods = new List<IFluentMethod>();
@@ -948,7 +962,7 @@ internal class FluentModelFactory(Compilation compilation)
             .GroupBy(g =>
             {
                 var context = g.First();
-                return $"{context.TypeFirstVerb}{context.Constructor.ContainingType.Name}";
+                return $"{context.InitialVerb}{context.Constructor.ContainingType.Name}";
             })
             .Where(nameGroup => nameGroup.Count() > 1)
             .ToList();
@@ -968,7 +982,7 @@ internal class FluentModelFactory(Compilation compilation)
                     .FirstOrDefault(l => l is not null) ?? Location.None;
 
                 _diagnostics.Add(Diagnostic.Create(
-                    Diagnostics.FluentDiagnostics.AmbiguousTypeFirstEntryMethod,
+                    Diagnostics.FluentDiagnostics.AmbiguousInitialMethod,
                     location,
                     collision.Key,
                     string.Join(", ", collidingTypes.Select(t => $"'{t}'"))));
@@ -979,7 +993,7 @@ internal class FluentModelFactory(Compilation compilation)
             groups.RemoveAll(g =>
             {
                 var context = g.First();
-                return collidingNames.Contains($"{context.TypeFirstVerb}{context.Constructor.ContainingType.Name}");
+                return collidingNames.Contains($"{context.InitialVerb}{context.Constructor.ContainingType.Name}");
             });
         }
 
@@ -1051,7 +1065,7 @@ internal class FluentModelFactory(Compilation compilation)
             }
 
             // Determine entry method name
-            var verb = contexts.First().TypeFirstVerb;
+            var verb = contexts.First().InitialVerb;
             var entryMethodName = $"{verb}{targetTypeName}";
 
             var candidateConstructors = contexts
@@ -1079,19 +1093,19 @@ internal class FluentModelFactory(Compilation compilation)
     private static void ForceFixedCreateMethod(Trie<FluentMethodParameter, ConstructorMetadata>.Node node)
     {
         foreach (var endValue in node.EndValues)
-            endValue.CreateMethod = CreateMethodMode.Fixed;
+            endValue.Builder = BuilderMethodKind.FixedName;
 
         foreach (var child in node.Children.Values)
             ForceFixedCreateMethod(child);
     }
 
     private Trie<FluentMethodParameter, ConstructorMetadata> CreateFluentStepTrie(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var trie = new Trie<FluentMethodParameter, ConstructorMetadata>();
-        foreach (var constructorContext in fluentConstructorContexts)
+        foreach (var targetContext in fluentTargetContexts)
         {
-            var methodPrefix = constructorContext.MethodPrefix ?? "With";
+            var methodPrefix = targetContext.MethodPrefix ?? "With";
 
             FluentMethodParameter ToFluentMethodParameter(IParameterSymbol parameter)
             {
@@ -1103,16 +1117,16 @@ internal class FluentModelFactory(Compilation compilation)
                 return FluentMethodParameter.FromParameter(parameter, methodNames);
             }
 
-            var preSatisfiedNames = IsSelfReferencing(constructorContext.Constructor, _rootType)
+            var preSatisfiedNames = IsSelfReferencing(targetContext.Constructor, _rootType)
                 ? new HashSet<string>()
-                : GetPreSatisfiedParameterNames(constructorContext.Constructor);
+                : GetPreSatisfiedParameterNames(targetContext.Constructor);
 
-            var requiredParameters = constructorContext.Constructor.Parameters
+            var requiredParameters = targetContext.Constructor.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
                 .Where(p => !preSatisfiedNames.Contains(p.Name))
                 .Select(ToFluentMethodParameter);
 
-            var metadata = new ConstructorMetadata(constructorContext);
+            var metadata = new ConstructorMetadata(targetContext);
 
             // Always insert the required-only path (marks root as end when all params are optional)
             trie.Insert(requiredParameters, metadata);
@@ -1123,7 +1137,7 @@ internal class FluentModelFactory(Compilation compilation)
             var effectiveRequiredCount = metadata.RequiredParameterCount - preSatisfiedNames.Count;
             if (effectiveRequiredCount <= 0 && metadata.OptionalParameters.Length == 1)
             {
-                var optionalParameters = constructorContext.Constructor.Parameters
+                var optionalParameters = targetContext.Constructor.Parameters
                     .Where(p => p.HasExplicitDefaultValue)
                     .Select(ToFluentMethodParameter);
 
@@ -1215,10 +1229,10 @@ internal class FluentModelFactory(Compilation compilation)
             // Add creation methods to the step
             foreach (var metadata in constructors)
             {
-                if (metadata.CreateMethod == CreateMethodMode.None) continue;
+                if (metadata.Builder == BuilderMethodKind.None) continue;
 
-                var verb = metadata.Context.CreateVerb ?? "Create";
-                var createMethodName = metadata.CreateMethod == CreateMethodMode.Fixed
+                var verb = metadata.Context.TerminalVerb ?? "Create";
+                var createMethodName = metadata.Builder == BuilderMethodKind.FixedName
                     ? verb
                     : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
 
@@ -1263,14 +1277,14 @@ internal class FluentModelFactory(Compilation compilation)
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         return
         [
-            ..fluentConstructorContexts
+            ..fluentTargetContexts
                 .SelectMany(ctx => ctx.Constructor.Parameters)
                 .Select(parameter => parameter.Type.ContainingNamespace)
-                .Concat(fluentConstructorContexts.Select(ctx => ctx.Constructor.ContainingType.ContainingNamespace))
+                .Concat(fluentTargetContexts.Select(ctx => ctx.Constructor.ContainingType.ContainingNamespace))
                 .Where(namespaceSymbol => namespaceSymbol is not null)
                 .Select(namespaceSymbol => (namespaceSymbol, displayString: namespaceSymbol.ToDisplayString()))
                 .DistinctBy(ns => ns.displayString)
@@ -1279,14 +1293,14 @@ internal class FluentModelFactory(Compilation compilation)
         ];
     }
 
-    private static (ImmutableArray<FluentConstructorContext> Valid, IEnumerable<Diagnostic> Diagnostics)
+    private static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
         FilterInaccessibleConstructors(
-            ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+            ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var diagnostics = new List<Diagnostic>();
-        var validContexts = ImmutableArray.CreateBuilder<FluentConstructorContext>(fluentConstructorContexts.Length);
+        var validContexts = ImmutableArray.CreateBuilder<FluentTargetContext>(fluentTargetContexts.Length);
 
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
             var accessibility = context.Constructor.DeclaredAccessibility;
             var isInaccessible = accessibility is
@@ -1311,14 +1325,14 @@ internal class FluentModelFactory(Compilation compilation)
         return (validContexts.ToImmutable(), diagnostics);
     }
 
-    private static (ImmutableArray<FluentConstructorContext> Valid, IEnumerable<Diagnostic> Diagnostics)
+    private static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
         FilterUnsupportedParameterModifierConstructors(
-            ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+            ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var diagnostics = new List<Diagnostic>();
-        var validContexts = ImmutableArray.CreateBuilder<FluentConstructorContext>(fluentConstructorContexts.Length);
+        var validContexts = ImmutableArray.CreateBuilder<FluentTargetContext>(fluentTargetContexts.Length);
 
-        foreach (var context in fluentConstructorContexts)
+        foreach (var context in fluentTargetContexts)
         {
             var unsupportedParameter = context.Constructor.Parameters
                 .FirstOrDefault(p => p.RefKind is RefKind.Ref or RefKind.Out or RefKind.RefReadOnlyParameter);
@@ -1349,12 +1363,12 @@ internal class FluentModelFactory(Compilation compilation)
         return (validContexts.ToImmutable(), diagnostics);
     }
 
-    private static ImmutableArray<FluentConstructorContext> FilterErrorTypeConstructors(
-        ImmutableArray<FluentConstructorContext> fluentConstructorContexts)
+    private static ImmutableArray<FluentTargetContext> FilterErrorTypeConstructors(
+        ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         return
         [
-            ..fluentConstructorContexts
+            ..fluentTargetContexts
                 .Where(ctx => ctx.Constructor.Parameters
                     .All(p => p.Type.TypeKind != TypeKind.Error))
         ];

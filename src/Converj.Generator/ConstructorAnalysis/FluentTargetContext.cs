@@ -8,9 +8,9 @@ using Converj.Generator.Diagnostics;
 namespace Converj.Generator.ConstructorAnalysis;
 
 [DebuggerDisplay("{ToDisplayString()}}")]
-internal record FluentConstructorContext
+internal record FluentTargetContext
 {
-    public FluentConstructorContext(
+    public FluentTargetContext(
         IMethodSymbol constructor,
         AttributeData attributeData,
         INamedTypeSymbol rootSymbol,
@@ -20,19 +20,36 @@ internal record FluentConstructorContext
     {
         Constructor = constructor;
         AttributeData = attributeData;
-        CreateMethod = metadata.CreateMethod ?? CreateMethodMode.Dynamic;
-        CreateVerb = metadata.CreateVerb;
         MethodPrefix = metadata.MethodPrefix;
         ReturnType = metadata.ReturnType;
-        BuilderMode = metadata.BuilderMode ?? BuilderMode.ParameterFirst;
-        TypeFirstVerb = metadata.TypeFirstVerb ?? "Build";
+        InitialVerb = metadata.InitialVerb ?? "Build";
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;
         IsRecord = rootSymbol.IsRecord;
         TypeKind = rootSymbol.TypeKind;
         Accessibility = rootSymbol.DeclaredAccessibility;
-        ValueStorage = new ConstructorAnalyzer(semanticModel).FindParameterValueStorage(constructor);
         RootType = rootSymbol;
+
+        // Detect method targets (non-constructor IMethodSymbol)
+        IsStaticMethodTarget = constructor.MethodKind == MethodKind.Ordinary && constructor.IsStatic;
+        IsInstanceMethodTarget = constructor.MethodKind == MethodKind.Ordinary && !constructor.IsStatic;
+
+        // For static methods, default terminal verb to the method name and builder to FixedName
+        Builder = IsStaticMethodTarget
+            ? metadata.Builder ?? BuilderMethodKind.FixedName
+            : metadata.Builder ?? BuilderMethodKind.DynamicSuffix;
+        TerminalVerb = metadata.TerminalVerb ?? (IsStaticMethodTarget ? constructor.Name : null);
+
+        if (IsStaticMethodTarget || IsInstanceMethodTarget)
+        {
+            // Method targets don't have value storage or property analysis
+            ValueStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(FluentParameterComparer.Default);
+            TargetTypeProperties = [];
+            PropertyDiagnostics = new DiagnosticList();
+            return;
+        }
+
+        ValueStorage = new ConstructorAnalyzer(semanticModel).FindParameterValueStorage(constructor);
 
         // Get all declarations of the type to find modifiers
         var declarations = constructor.ContainingType.DeclaringSyntaxReferences
@@ -65,7 +82,7 @@ internal record FluentConstructorContext
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         new(FluentParameterComparer.Default);
 
-    public CreateMethodMode CreateMethod { get; }
+    public BuilderMethodKind Builder { get; }
 
     public bool IsRecord { get; }
 
@@ -78,7 +95,17 @@ internal record FluentConstructorContext
     public IMethodSymbol Constructor { get; }
     public AttributeData AttributeData { get; }
 
-    public string? CreateVerb { get; }
+    /// <summary>
+    /// Whether this target is a static method (not a constructor).
+    /// </summary>
+    public bool IsStaticMethodTarget { get; }
+
+    /// <summary>
+    /// Whether this target is an instance method (not a constructor or static method).
+    /// </summary>
+    public bool IsInstanceMethodTarget { get; }
+
+    public string? TerminalVerb { get; }
 
     public string? MethodPrefix { get; }
 
@@ -87,14 +114,9 @@ internal record FluentConstructorContext
     public bool IsAttributedUsedOnContainingType { get; }
 
     /// <summary>
-    /// The builder mode for this constructor (ParameterFirst or TypeFirst).
+    /// The verb used for the initial method name in First mode (e.g., "Build" -> "BuildDog").
     /// </summary>
-    public BuilderMode BuilderMode { get; }
-
-    /// <summary>
-    /// The verb used for the type-first entry method name (e.g., "Build" → "BuildDog").
-    /// </summary>
-    public string TypeFirstVerb { get; }
+    public string InitialVerb { get; }
 
     public SyntaxTokenList OriginalTypeModifiers { get; }
 

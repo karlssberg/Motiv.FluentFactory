@@ -11,7 +11,7 @@ namespace Converj.Attributes;
 /// <example>
 /// <code>
 /// // Line2D's TNum will be treated as "T" for matching with Line1D and Line3D
-/// [FluentConstructor&lt;Line&gt;]
+/// [FluentTarget&lt;Line&gt;]
 /// record Line2D&lt;[As("T")] TNum&gt;(TNum X, TNum Y) where TNum : INumber&lt;TNum&gt;;
 /// </code>
 /// </example>

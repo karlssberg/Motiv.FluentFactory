@@ -15,12 +15,12 @@ public class GenericAttributeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor<Factory>]
+                [FluentTarget<Factory>]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -98,14 +98,14 @@ public class GenericAttributeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class FactoryA;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class FactoryB;
 
-            [FluentConstructor<FactoryA>]
-            [FluentConstructor(typeof(FactoryB))]
+            [FluentTarget<FactoryA>]
+            [FluentTarget(typeof(FactoryB))]
             public class MyBuildTarget
             {
                 public MyBuildTarget(int value)
@@ -231,10 +231,10 @@ public class GenericAttributeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory;
 
-            [FluentConstructor<Factory>]
+            [FluentTarget<Factory>]
             public class MyBuildTarget
             {
                 public MyBuildTarget(string name)

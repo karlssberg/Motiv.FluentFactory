@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Converj is a C# Roslyn incremental source generator that creates fluent factory/builder patterns from constructors. Users annotate classes with `[FluentFactory]` and constructors with `[FluentConstructor]`, and the generator produces chainable, strongly-typed builder methods at compile time.
+Converj is a C# Roslyn incremental source generator that creates fluent builder patterns from constructors and static methods. Users annotate classes with `[FluentRoot]` and constructors/methods with `[FluentTarget]`, and the generator produces chainable, strongly-typed builder methods at compile time.
 
 ## Build & Test Commands
 
 ```bash
 dotnet build                          # Build entire solution
 dotnet test                           # Run all tests
-dotnet test --filter "FullyQualifiedName~FluentFactoryGeneratorNonGenericTests"   # Run a single test class
+dotnet test --filter "FullyQualifiedName~NonGenericTests"   # Run a single test class
 dotnet test --filter "DisplayName~Should_generate_when_applied_to_a_class_constructor"  # Run a single test method
 ```
 
@@ -19,7 +19,7 @@ dotnet test --filter "DisplayName~Should_generate_when_applied_to_a_class_constr
 
 Five projects under `src/`:
 
-- **Converj.Attributes** (netstandard2.0) — User-facing attributes (`[FluentFactory]`, `[FluentConstructor]`, `[FluentMethod]`, etc.)
+- **Converj.Attributes** (netstandard2.0) — User-facing attributes (`[FluentRoot]`, `[FluentTarget]`, `[FluentMethod]`, etc.)
 - **Converj.Generator** (netstandard2.0) — The Roslyn `IIncrementalGenerator` and all code generation logic
 - **Converj** (netstandard2.0) — NuGet packaging wrapper that bundles generator + attributes as an analyzer
 - **Converj.Generator.Tests** (net9.0) — xUnit tests using Roslyn's `CSharpSourceGeneratorTest` verifier
@@ -31,18 +31,27 @@ Global settings in `Directory.Build.props`: C# latest, nullable enabled, warning
 
 The generator follows a 4-step incremental pipeline in `FluentFactoryGenerator.cs`:
 
-1. **Syntax Filtering** — Find `[FluentConstructor]` on types and constructors via `ForAttributeWithMetadataName`
-2. **Constructor Analysis** (`ConstructorAnalysis/`) — Extract metadata from Roslyn symbols: storage strategies (field, property, primary constructor, record), constructor parameters, factory metadata
-3. **Model Building** (`ModelBuilding/`) — Construct fluent API intermediate representation. Uses a `Trie<FluentMethodParameter, ConstructorMetadata>` to merge shared parameter prefixes across multiple constructors
-4. **Syntax Generation** (`SyntaxGeneration/`) — Emit Roslyn syntax trees producing `{Namespace}.{FactoryName}.g.cs` files
+1. **Syntax Filtering** — Find `[FluentTarget]` on types, constructors, and methods via `ForAttributeWithMetadataName`
+2. **Target Analysis** (`ConstructorAnalysis/`) — Extract metadata from Roslyn symbols: storage strategies (field, property, primary constructor, record), parameters, root metadata
+3. **Model Building** (`ModelBuilding/`) — Construct fluent API intermediate representation. Uses a `Trie<FluentMethodParameter, ConstructorMetadata>` to merge shared parameter prefixes across multiple targets
+4. **Syntax Generation** (`SyntaxGeneration/`) — Emit Roslyn syntax trees producing `{Namespace}.{RootName}.g.cs` files
 
 Key domain types at the generator root level:
-- `FluentFactoryCompilationUnit` — Top-level output unit per factory
+- `FluentFactoryCompilationUnit` — Top-level output unit per root
 - `IFluentMethod` / `IFluentReturn` — Polymorphic method-to-return chain
 - `IFluentStep` — Builder step abstraction (regular struct steps vs existing partial types)
 - `IFluentValueStorage` — Strategy for how parameters are stored (field, property, primary constructor, null)
 
 Generated code uses structs with `[MethodImpl(AggressiveInlining)]` for zero-overhead builder chains. All type references in generated code are fully qualified with `global::` prefix.
+
+### Key Enums
+
+- **`BuilderMethod`** — Controls chain structure: `DynamicSuffix` (default, terminal named from target), `FixedName` (terminal verb as-is), `None` (no terminal, inline call), `First` (type-first mode with initial entry method)
+- Internal mirror: `BuilderKind` in `Domain/BuilderKind.cs`
+
+### Static Method Targets
+
+`[FluentTarget]` can be applied to static methods on any class. The static method's parameters feed into the root's trie like constructor parameters, but the terminal step calls the static method instead of `new T(...)`. Default terminal name is the method name, default builder mode is `FixedName`.
 
 ## Test Patterns
 
@@ -69,7 +78,7 @@ internal async Task Should_generate_when_...()
 }
 ```
 
-Generated source file naming convention: `{Namespace}.{FactoryTypeName}.g.cs`
+Generated source file naming convention: `{Namespace}.{RootTypeName}.g.cs`
 
 For diagnostic tests, use `test.TestState.ExpectedDiagnostics.Add(...)` with descriptors from `FluentDiagnostics`.
 

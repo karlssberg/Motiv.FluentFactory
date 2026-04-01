@@ -5,13 +5,13 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class CustomMethodFactory;
 
-[FluentConstructor<CustomMethodFactory>]
+[FluentTarget<CustomMethodFactory>]
 internal record EngineTarget([FluentMethod("WithCarEngine")] string Engine, int Horsepower);
 
-[FluentConstructor<CustomMethodFactory>]
+[FluentTarget<CustomMethodFactory>]
 internal record MotorTarget([FluentMethod("WithBoatMotor")] string Engine);
 
 #endregion

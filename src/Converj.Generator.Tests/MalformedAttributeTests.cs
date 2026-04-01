@@ -26,15 +26,15 @@ public class MalformedAttributeTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory;
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
                 public partial record MyRecord(int Value, string Name);
             }
             """;
 
-        // Line 8: [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
+        // Line 8: [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
         // Attribute starts at col 6 (1-based), ends after closing bracket.
         // The entire attribute span is expected for CVJG0010.
         await new VerifyCS.Test
@@ -43,15 +43,15 @@ public class MalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 96)
-                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
+                    .WithSpan("Source.cs", 8, 6, 8, 95)
+                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
             }
         }.RunAsync();
     }
 
     /// <summary>
     /// Exercises multiple simultaneous validation errors on a single FluentConstructor attribute:
-    /// (1) the target type lacks [FluentFactory] (CVJG0009), and
+    /// (1) the target type lacks [FluentRoot] (CVJG0009), and
     /// (2) the CreateVerb is an invalid identifier (CVJG0007).
     /// Tests assert DESIRED behavior where both diagnostics fire independently.
     /// If only one fires, the test documents the validation short-circuit.
@@ -65,16 +65,16 @@ public class MalformedAttributeTests
 
             namespace Test.Namespace
             {
-                // Missing [FluentFactory] attribute on purpose
+                // Missing [FluentRoot] attribute on purpose
                 public partial class NonFactoryType;
 
-                [FluentConstructor(typeof(NonFactoryType), CreateVerb = "123invalid")]
+                [FluentTarget(typeof(NonFactoryType), TerminalVerb = "123invalid")]
                 public partial record MyRecord(int Value);
             }
             """;
 
         // CVJG0009 fires on the typeof(NonFactoryType) argument expression
-        // CVJG0007 fires on the CreateVerb = "123invalid" named argument
+        // CVJG0007 fires on the TerminalVerb = "123invalid" named argument
         // DESIRED: both CVJG0009 and CVJG0007 fire. If only CVJG0009 fires, this test will fail,
         // documenting that validation short-circuits after the missing-FluentFactory error.
         await new VerifyCS.Test
@@ -83,18 +83,18 @@ public class MalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0009")
-                    .WithSpan("Source.cs", 8, 24, 8, 46)
-                    .WithMessage("FluentConstructor references type 'Test.Namespace.NonFactoryType' which does not have the FluentFactory attribute"),
+                    .WithSpan("Source.cs", 8, 19, 8, 41)
+                    .WithMessage("FluentTarget references type 'Test.Namespace.NonFactoryType' which does not have the FluentRoot attribute"),
                 DiagnosticResult.CompilerError("CVJG0007")
-                    .WithSpan("Source.cs", 8, 48, 8, 73)
-                    .WithMessage("CreateVerb must be a valid identifier"),
+                    .WithSpan("Source.cs", 8, 43, 8, 70)
+                    .WithMessage("TerminalVerb must be a valid identifier"),
             }
         }.RunAsync();
     }
 
     /// <summary>
     /// Exercises cascading validation errors across two constructors on the same type:
-    /// both use CreateVerb = "Build" (triggering CVJG0008 — duplicate),
+    /// both use TerminalVerb = "Build" (triggering CVJG0008 — duplicate),
     /// and one also has NoCreateMethod (triggering CVJG0010 — conflict).
     /// Tests assert DESIRED behavior where both independent errors are reported.
     /// </summary>
@@ -107,15 +107,15 @@ public class MalformedAttributeTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory;
 
                 public partial class MyTarget
                 {
-                    [FluentConstructor(typeof(Factory), CreateVerb = "Build")]
+                    [FluentTarget(typeof(Factory), TerminalVerb = "Build")]
                     public MyTarget(int value) { }
 
-                    [FluentConstructor(typeof(Factory), CreateVerb = "Build", CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalVerb = "Build", BuilderMethod = BuilderMethod.None)]
                     public MyTarget(string name) { }
                 }
             }
@@ -129,12 +129,12 @@ public class MalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0008")
-                    .WithSpan("Source.cs", 10, 45, 10, 65)
-                    .WithSpan("Source.cs", 13, 45, 13, 65)
-                    .WithMessage("Create method name must be unique"),
+                    .WithSpan("Source.cs", 10, 40, 10, 62)
+                    .WithSpan("Source.cs", 13, 40, 13, 62)
+                    .WithMessage("Terminal method name must be unique"),
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 13, 10, 13, 100)
-                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
+                    .WithSpan("Source.cs", 13, 10, 13, 99)
+                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
             }
         }.RunAsync();
     }

@@ -5,16 +5,16 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory(MethodPrefix = "")]
+[FluentRoot(MethodPrefix = "")]
 internal partial class BarePrefixFactory;
 
-[FluentConstructor<BarePrefixFactory>]
+[FluentTarget<BarePrefixFactory>]
 internal record BarePrefixTarget(int Width, int Height);
 
-[FluentFactory(MethodPrefix = "Having")]
+[FluentRoot(MethodPrefix = "Having")]
 internal partial class CustomPrefixFactory;
 
-[FluentConstructor<CustomPrefixFactory>]
+[FluentTarget<CustomPrefixFactory>]
 internal record CustomPrefixTarget(string Name, int Value);
 
 #endregion

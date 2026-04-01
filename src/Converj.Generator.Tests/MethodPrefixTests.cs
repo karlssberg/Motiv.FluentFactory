@@ -18,12 +18,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "Having")]
+            [FluentRoot(MethodPrefix = "Having")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -100,12 +100,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "Having")]
+            [FluentRoot(MethodPrefix = "Having")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -182,12 +182,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "")]
+            [FluentRoot(MethodPrefix = "")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -264,12 +264,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "Having")]
+            [FluentRoot(MethodPrefix = "Having")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha([FluentMethod("CustomName")] int value)
                 {
                     Value = value;
@@ -346,12 +346,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "Having")]
+            [FluentRoot(MethodPrefix = "Having")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -362,7 +362,7 @@ public class MethodPrefixTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
                 public Beta(string name)
                 {
                     Name = name;
@@ -472,12 +472,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "123Bad")]
+            [FluentRoot(MethodPrefix = "123Bad")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -495,7 +495,7 @@ public class MethodPrefixTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(InvalidMethodPrefix.Id)
-                        .WithSpan(SourceFile, 5, 2, 5, 40)
+                        .WithSpan(SourceFile, 5, 2, 5, 37)
                         .WithMessage("MethodPrefix must be a valid identifier")
                 }
             }
@@ -511,12 +511,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory), MethodPrefix = "1Bad")]
+                [FluentTarget(typeof(Factory), MethodPrefix = "1Bad")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -534,7 +534,7 @@ public class MethodPrefixTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(InvalidMethodPrefix.Id)
-                        .WithSpan(SourceFile, 10, 41, 10, 62)
+                        .WithSpan(SourceFile, 10, 36, 10, 57)
                         .WithMessage("MethodPrefix must be a valid identifier")
                 }
             }
@@ -550,12 +550,12 @@ public class MethodPrefixTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "")]
+            [FluentRoot(MethodPrefix = "")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;

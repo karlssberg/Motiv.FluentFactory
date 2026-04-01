@@ -17,10 +17,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget))]
+                [FluentTarget(typeof(MyTarget))]
                 public partial class MyBuildTarget
                 {
                     public MyBuildTarget(int value) { }
@@ -162,16 +162,16 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget))]
+                [FluentTarget(typeof(MyTarget))]
                 public partial class MyBuildTarget
                 {
                     public MyBuildTarget(int value) { }
                     public MyBuildTarget(string name) { }
 
-                    [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(double amount) { }
                 }
             }
@@ -286,10 +286,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.None, CreateVerb = "New")]
+                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.None, TerminalVerb = "New")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -301,8 +301,8 @@ public class BugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 95)
-                    .WithMessage("CreateVerb cannot be used with CreateMethod.None"),
+                    .WithSpan("Source.cs", 8, 6, 8, 94)
+                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
             }
         }.RunAsync();
     }
@@ -316,11 +316,11 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.Fixed, CreateVerb = "CreateFirst")]
-                [FluentConstructor(typeof(MyTarget), CreateMethod = CreateMethod.Fixed, CreateVerb = "CreateSecond")]
+                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "CreateFirst")]
+                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "CreateSecond")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -401,7 +401,7 @@ public class BugDiscoveryTests
         // Tests CreateVerb handling with edge case error values and putting red squiggles on them
         var createMethodNameArgument =
             $"""
-             CreateVerb = "{invalidMethodName}"
+             TerminalVerb = "{invalidMethodName}"
              """;
 
         var source =
@@ -410,10 +410,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), {{createMethodNameArgument}}, CreateMethod = CreateMethod.Fixed)]
+                [FluentTarget(typeof(MyTarget), {{createMethodNameArgument}}, BuilderMethod = BuilderMethod.FixedName)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -426,8 +426,8 @@ public class BugDiscoveryTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CVJG0007")
-                        .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
-                        .WithMessage("CreateVerb must be a valid identifier")
+                        .WithSpan("Source.cs", 8, 37, 8, 37 + createMethodNameArgument.Length)
+                        .WithMessage("TerminalVerb must be a valid identifier")
                 }
             }
         }.RunAsync();
@@ -449,7 +449,7 @@ public class BugDiscoveryTests
         // Tests what happens with completely identical FluentConstructor attributes
         var createMethodNameArgument =
             $"""
-             CreateVerb = "{methodName}"
+             TerminalVerb = "{methodName}"
              """;
 
         var source =
@@ -458,11 +458,11 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), {{createMethodNameArgument}})] // First occurrence
-                [FluentConstructor(typeof(MyTarget), {{createMethodNameArgument}})] // Exact duplicate
+                [FluentTarget(typeof(MyTarget), {{createMethodNameArgument}})] // First occurrence
+                [FluentTarget(typeof(MyTarget), {{createMethodNameArgument}})] // Exact duplicate
                 public partial record DuplicateAttributes(int Value);
             }
             """;
@@ -473,9 +473,9 @@ public class BugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0008")
-                    .WithSpan("Source.cs", 8, 42, 8, 42 + createMethodNameArgument.Length)
-                    .WithSpan("Source.cs", 9, 42, 9, 42 + createMethodNameArgument.Length)
-                    .WithMessage("Create method name must be unique")
+                    .WithSpan("Source.cs", 8, 37, 8, 37 + createMethodNameArgument.Length)
+                    .WithSpan("Source.cs", 9, 37, 9, 37 + createMethodNameArgument.Length)
+                    .WithMessage("Terminal method name must be unique")
             }
         }.RunAsync();
     }
@@ -490,15 +490,15 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
                 // constructor with a string parameter
-                [FluentConstructor(typeof(MyTarget))]
+                [FluentTarget(typeof(MyTarget))]
                 public partial record MyRecordA(string Value);
 
                 // constructor with an int parameter
-                [FluentConstructor(typeof(MyTarget))]
+                [FluentTarget(typeof(MyTarget))]
                 public partial record MyRecordB(int Value);
             }
             """;
@@ -606,10 +606,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                // Missing [FluentFactory] attribute
+                // Missing [FluentRoot] attribute
                 public partial class MyTarget;
 
-                [FluentConstructor({{fluentFactoryRootType}})] // References type without FluentFactory
+                [FluentTarget({{fluentFactoryRootType}})] // References type without FluentFactory
                 public partial record InvalidTarget(int Value);
             }
             """;
@@ -620,8 +620,8 @@ public class BugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0009")
-                    .WithSpan("Source.cs", 8, 24, 8, 24 + fluentFactoryRootType.Length)
-                    .WithMessage("FluentConstructor references type 'Test.Namespace.MyTarget' which does not have the FluentFactory attribute"),
+                    .WithSpan("Source.cs", 8, 19, 8, 19 + fluentFactoryRootType.Length)
+                    .WithMessage("FluentTarget references type 'Test.Namespace.MyTarget' which does not have the FluentRoot attribute"),
             }
         }.RunAsync();
     }
@@ -629,7 +629,7 @@ public class BugDiscoveryTests
     [Fact]
     internal async Task Should_error_when_empty_create_verb_with_fixed_create_method()
     {
-        const string createVerbArgument = "CreateVerb = \"\"";
+        const string createVerbArgument = "TerminalVerb = \"\"";
 
         const string source =
             """
@@ -637,10 +637,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateVerb = "", CreateMethod = CreateMethod.Fixed)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.FixedName)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -653,8 +653,8 @@ public class BugDiscoveryTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CVJG0007")
-                        .WithSpan("Source.cs", 8, 42, 8, 42 + createVerbArgument.Length)
-                        .WithMessage("CreateVerb must be a valid identifier")
+                        .WithSpan("Source.cs", 8, 37, 8, 37 + createVerbArgument.Length)
+                        .WithMessage("TerminalVerb must be a valid identifier")
                 }
             }
         }.RunAsync();
@@ -663,7 +663,7 @@ public class BugDiscoveryTests
     [Fact]
     internal async Task Should_warn_when_empty_create_verb_with_none_create_method()
     {
-        const string createVerbArgument = "CreateVerb = \"\"";
+        const string createVerbArgument = "TerminalVerb = \"\"";
 
         const string source =
             """
@@ -671,10 +671,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateVerb = "", CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.None)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -712,8 +712,8 @@ public class BugDiscoveryTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning("CVJG0017")
-                        .WithSpan("Source.cs", 8, 42, 8, 42 + createVerbArgument.Length)
-                        .WithMessage("CreateVerb has no effect with CreateMethod.None")
+                        .WithSpan("Source.cs", 8, 37, 8, 37 + createVerbArgument.Length)
+                        .WithMessage("TerminalVerb has no effect with BuilderMethod.None")
                 }
             }
         }.RunAsync();
@@ -728,10 +728,10 @@ public class BugDiscoveryTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentConstructor(typeof(MyTarget), CreateVerb = "", CreateMethod = CreateMethod.Dynamic)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.DynamicSuffix)]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -803,12 +803,12 @@ public class BugDiscoveryTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -819,7 +819,7 @@ public class BugDiscoveryTests
 
                 public class Company
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public Company(string name)
                     {
                         Name = name;

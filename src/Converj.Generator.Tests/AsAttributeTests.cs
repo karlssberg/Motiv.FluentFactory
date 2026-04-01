@@ -14,12 +14,12 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<[As("T")] TNum>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(TNum value)
                 {
                     Value = value;
@@ -96,16 +96,16 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+            [FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
             public static partial class Line;
 
-            [FluentConstructor(typeof(Line))]
+            [FluentTarget(typeof(Line))]
             public partial record Line1D<[As("T")] TNum>(TNum X);
 
-            [FluentConstructor(typeof(Line))]
+            [FluentTarget(typeof(Line))]
             public partial record Line2D<T>(T X, T Y);
 
-            [FluentConstructor(typeof(Line))]
+            [FluentTarget(typeof(Line))]
             public partial record Line3D<T>(T X, T Y, T Z);
             """;
 
@@ -181,12 +181,12 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed)]
-            [FluentConstructor(typeof(Square<>))]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentTarget(typeof(Square<>))]
             public partial record Square<[As("T")] TUnit>(TUnit Width);
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed)]
-            [FluentConstructor(typeof(Rectangle<>))]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentTarget(typeof(Rectangle<>))]
             public partial record Rectangle<T>(T Width, T Height);
             """;
 
@@ -327,12 +327,12 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Target1<T>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target1(T value1, int value2)
                 {
                     Value1 = value1;
@@ -345,7 +345,7 @@ public class AsAttributeTests
 
             public class Target2<[As("T")] TNum>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target2(TNum value1, string value2)
                 {
                     Value1 = value1;
@@ -485,15 +485,15 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentFactory(MethodPrefix = "")]
+            [FluentRoot(MethodPrefix = "")]
             public static partial class Factory;
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed)]
-            [FluentConstructor(typeof(Square<>))]
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentTarget(typeof(Square<>))]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial record Square<[As("T")] TUnit>(TUnit Width);
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public partial record Rectangle<T>(T Width, T Height);
             """;
 

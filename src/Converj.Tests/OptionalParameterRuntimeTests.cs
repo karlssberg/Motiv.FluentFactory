@@ -5,16 +5,16 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class OptionalParamFactory;
 
-[FluentConstructor<OptionalParamFactory>]
+[FluentTarget<OptionalParamFactory>]
 internal record OptionalTarget(string Name, int Count = 10);
 
-[FluentFactory]
+[FluentRoot]
 internal partial class AllOptionalFactory;
 
-[FluentConstructor<AllOptionalFactory>]
+[FluentTarget<AllOptionalFactory>]
 internal record AllOptionalTarget(int X = 1, int Y = 2, int Z = 3);
 
 #endregion

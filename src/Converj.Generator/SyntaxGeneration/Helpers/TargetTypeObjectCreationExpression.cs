@@ -45,6 +45,26 @@ internal static class TargetTypeObjectCreationExpression
         return objectCreation;
     }
 
+    /// <summary>
+    /// Creates an invocation expression for a static method target (e.g., Class.Method(args)).
+    /// </summary>
+    public static InvocationExpressionSyntax CreateStaticMethodInvocation(
+        CreationMethod method,
+        IEnumerable<ArgumentSyntax> fieldArguments,
+        IEnumerable<ArgumentSyntax> methodArguments)
+    {
+        var containingType = method.Return.CandidateConstructors[0].ContainingType.ToGlobalDisplayString();
+        var methodName = method.Return.CandidateConstructors[0].Name;
+
+        var memberAccess = MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            ParseExpression(containingType),
+            IdentifierName(methodName));
+
+        return InvocationExpression(memberAccess)
+            .WithArgumentList(ArgumentList(SeparatedList([..fieldArguments, ..methodArguments])));
+    }
+
     private static ObjectCreationExpressionSyntax CreateMethodOverloadExpression(
         MultiMethod method,
         IEnumerable<ArgumentSyntax> fieldArguments,

@@ -21,12 +21,12 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -37,7 +37,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Company(string name)
                     {
                         Name = name;
@@ -76,12 +76,12 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Person
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -92,7 +92,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Company([MultipleFluentMethods(typeof(Convert))]int? id)
                     {
                         Id = id;
@@ -168,10 +168,10 @@ public class DiagnosticsTests
 
             public abstract class BooleanResultBase<T> {}
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, MyNamespace.BooleanResultBase<string>, string> trueBecause);
 
@@ -225,10 +225,10 @@ public class DiagnosticsTests
 
             public abstract class BooleanResultBase<T> {}
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, string> trueBecause);
 
@@ -317,22 +317,22 @@ public class DiagnosticsTests
 
             public class BooleanResultBase<T>;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, BooleanResultBase<string>, string> trueBecause);
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct ExplanationWithNameExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [FluentMethod("WhenTrue")]string trueBecause);
 
             public readonly partial struct MultiAssertionExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>
             {
-                [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
                 public MultiAssertionExplanationExpressionTreePropositionFactory(
                     Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
@@ -446,11 +446,11 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Shape;
 
-            [FluentFactory]
-            [FluentConstructor(typeof(Shape))]
+            [FluentRoot]
+            [FluentTarget(typeof(Shape))]
             public partial record Square(int Width);
             """;
 
@@ -521,12 +521,12 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Foo
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -539,7 +539,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Bar(string name)
                     {
                         Name = name;
@@ -574,12 +574,12 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Foo
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -592,7 +592,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Bar(string name, bool active = true)
                     {
                         Name = name;
@@ -632,12 +632,12 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Foo
                 {
-                    [FluentConstructor(typeof(Factory), CreateVerb = "MakeFoo")]
+                    [FluentTarget(typeof(Factory), TerminalVerb = "MakeFoo")]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -650,7 +650,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentConstructor(typeof(Factory), CreateVerb = "MakeBar")]
+                    [FluentTarget(typeof(Factory), TerminalVerb = "MakeBar")]
                     public Bar(string name)
                     {
                         Name = name;
@@ -754,19 +754,19 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class MyClass
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyClass(string name, int age = 25)
                     {
                         Name = name;
                         Age = age;
                     }
 
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyClass(string name)
                     {
                         Name = name;
@@ -875,12 +875,12 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class MyStep
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyStep(
                     [FluentMethod("WithName")]string name,
                     [FluentMethod("WithAge")]int age)
@@ -894,7 +894,7 @@ public class DiagnosticsTests
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(string name, int age, bool active)
                 {
                     Name = name;
@@ -932,21 +932,21 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { }
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int X, int Y, string Z, int W)
                 {
                     this.X = X;
@@ -969,8 +969,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 13, 6, 13, 74)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 13, 6, 13, 71)
                         .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
@@ -986,21 +986,21 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int X, int Y, string? Z) : this(X, Y) { }
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int X, int Y, string? Z, int W)
                 {
                     this.X = X;
@@ -1024,8 +1024,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 13, 6, 13, 74)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 13, 6, 13, 71)
                         .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
@@ -1041,10 +1041,10 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
@@ -1052,13 +1052,13 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { get; init; }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { this.Z = Z; }
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int X, int Y, string Z, int W)
                 {
                     this.X = X;
@@ -1081,8 +1081,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 16, 6, 16, 74)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 16, 6, 16, 71)
                         .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
@@ -1098,7 +1098,7 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class TypeA
@@ -1109,7 +1109,7 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { set { } }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int x, int y, string z) { }
             }
             """;
@@ -1138,12 +1138,12 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class TypeA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int x, int y) { X = x; Y = y; }
 
                 public int X { get; set; }
@@ -1155,13 +1155,13 @@ public class DiagnosticsTests
                 [FluentStorage("Z")]
                 public string AnotherZ { get; set; }
 
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TypeA(int x, int y, string z) : this(x, y) { }
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int x, int y, string z, int w)
                 {
                     X = x; Y = y; Z = z; W = w;
@@ -1181,8 +1181,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 22, 6, 22, 74)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 22, 6, 22, 71)
                         .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
@@ -1198,15 +1198,15 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory(CreateMethod = CreateMethod.None)]
+                [FluentRoot(BuilderMethod = BuilderMethod.None)]
                 public static partial class Factory;
 
                 public partial class Target
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public Target(int a, int b) { A = a; B = b; }
 
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public Target(int b) { B = b; }
 
                     public int A { get; }
@@ -1222,8 +1222,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 13, 10, 13, 44)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 13, 10, 13, 39)
                         .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
                 }
             }
@@ -1239,15 +1239,15 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class Target
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Target(int a, int b) { A = a; B = b; }
 
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public Target(int b) { B = b; }
 
                     public int A { get; }
@@ -1263,8 +1263,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(MultipleConstructorsWithCreateMethodNone.Id)
-                        .WithSpan(SourceFile, 13, 10, 13, 78)
+                    DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
+                        .WithSpan(SourceFile, 13, 10, 13, 75)
                         .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
                 }
             }
@@ -1284,12 +1284,12 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None, CreateVerb = "Build")]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
                 public Target(string name)
                 {
                     Name = name;
@@ -1299,7 +1299,7 @@ public class DiagnosticsTests
             }
             """;
 
-        // CreateMethod.None + non-empty CreateVerb should produce a diagnostic about the conflict
+        // BuilderMethod.None + non-empty CreateVerb should produce a diagnostic about the conflict
         var test = new VerifyCS.Test
         {
             TestState =
@@ -1307,8 +1307,8 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(CreateVerbWithNone.Id)
-                        .WithSpan(SourceFile, 10, 6, 10, 96),
+                    DiagnosticResult.CompilerError(TerminalVerbWithNone.Id)
+                        .WithSpan(SourceFile, 10, 6, 10, 95),
                 }
             }
         };
@@ -1328,12 +1328,12 @@ public class DiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class ValidTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public ValidTarget(string name)
                 {
                     Name = name;
@@ -1344,7 +1344,7 @@ public class DiagnosticsTests
 
             public class AnotherTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public AnotherTarget(string name)
                 {
                     Name = name;

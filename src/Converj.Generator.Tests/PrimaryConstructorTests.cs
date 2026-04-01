@@ -15,10 +15,10 @@ public class PrimaryConstructorTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -71,10 +71,10 @@ public class PrimaryConstructorTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public record MyBuildTarget(int Number, string text);
             """;
 
@@ -145,10 +145,10 @@ public class PrimaryConstructorTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public record MyBuildTarget(
                 int Number,
                 string text)
@@ -222,10 +222,10 @@ public class PrimaryConstructorTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public struct MyBuildTarget(
                 int number,
                 string text,
@@ -330,10 +330,10 @@ public class PrimaryConstructorTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public ref struct MyBuildTarget(
                 int number,
                 string text,

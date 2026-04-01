@@ -8,17 +8,17 @@ namespace Converj.Tests;
 // Scenario 1: [FluentStorage] on a single-constructor step type.
 // StorageStepA has ctor (x, y, z) with Z stored via [FluentStorage].
 // Target takes (x, y, z) — the generated Create reads all values from the step.
-[FluentFactory]
+[FluentRoot]
 internal partial class StorageFactory;
 
-[FluentConstructor<StorageFactory>(CreateMethod = CreateMethod.None)]
+[FluentTarget<StorageFactory>(BuilderMethod = BuilderMethod.None)]
 internal partial record StorageStepA(int X, int Y, string Z)
 {
     [FluentStorage]
     public string Z { get; init; } = Z;
 }
 
-[FluentConstructor<StorageFactory>]
+[FluentTarget<StorageFactory>]
 internal class StorageTargetA
 {
     public int X { get; }
@@ -34,17 +34,17 @@ internal class StorageTargetA
 }
 
 // Scenario 2: [FluentStorage] with explicit parameter name mapping.
-[FluentFactory]
+[FluentRoot]
 internal partial class ExplicitStorageFactory;
 
-[FluentConstructor<ExplicitStorageFactory>(CreateMethod = CreateMethod.None)]
+[FluentTarget<ExplicitStorageFactory>(BuilderMethod = BuilderMethod.None)]
 internal partial record ExplicitStepA(int Id, string Label)
 {
     [FluentStorage("label")]
     public string MappedLabel { get; init; } = Label;
 }
 
-[FluentConstructor<ExplicitStorageFactory>]
+[FluentTarget<ExplicitStorageFactory>]
 internal class ExplicitTargetA
 {
     public int Id { get; }
@@ -58,13 +58,13 @@ internal class ExplicitTargetA
 }
 
 // Scenario 3: Step with a nullable parameter threaded to target.
-[FluentFactory]
+[FluentRoot]
 internal partial class NullableStorageFactory;
 
-[FluentConstructor<NullableStorageFactory>(CreateMethod = CreateMethod.None)]
+[FluentTarget<NullableStorageFactory>(BuilderMethod = BuilderMethod.None)]
 internal partial record NullableStepA(int A, int B, string? Tag);
 
-[FluentConstructor<NullableStorageFactory>]
+[FluentTarget<NullableStorageFactory>]
 internal class NullableTargetA
 {
     public int A { get; }
@@ -79,13 +79,13 @@ internal class NullableTargetA
     }
 }
 
-// Scenario 4: Single constructor step with CreateMethod.None.
-[FluentFactory(CreateMethod = CreateMethod.None)]
+// Scenario 4: Single constructor step with BuilderMethod.None.
+[FluentRoot(BuilderMethod = BuilderMethod.None)]
 internal partial class TwoCtorStepFactory;
 
 internal partial class TwoCtorStep
 {
-    [FluentConstructor<TwoCtorStepFactory>]
+    [FluentTarget<TwoCtorStepFactory>]
     public TwoCtorStep(int a, int b, double c)
     {
         A = a;

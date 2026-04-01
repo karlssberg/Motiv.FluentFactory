@@ -1,12 +1,16 @@
+using Microsoft.CodeAnalysis.Testing;
+using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
     Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
 
 namespace Converj.Generator.Tests;
 
-public class GeneratedCodeAttributeTests
+public class StaticMethodTargetTests
 {
+    private const string SourceFile = "Source.cs";
+
     [Fact]
-    internal async Task Should_add_GeneratedCode_attribute_to_root_type_and_step_struct()
+    internal async Task Should_warn_when_FluentTarget_applied_to_instance_method()
     {
         const string code =
             """
@@ -18,14 +22,56 @@ public class GeneratedCodeAttributeTests
             [FluentRoot]
             public static partial class Factory;
 
-            public class MyTarget
+            public class Creators
             {
                 [FluentTarget(typeof(Factory))]
-                public MyTarget(int value)
-                {
-                    Value = value;
-                }
-                public int Value { get; }
+                public Result MakeResult(int value) => new Result { Value = value };
+            }
+
+            public class Result
+            {
+                public int Value { get; set; }
+            }
+            """;
+
+        var test = new VerifyCS.Test
+        {
+            TestState =
+            {
+                Sources = { code },
+            }
+        };
+
+        test.TestState.ExpectedDiagnostics.Add(
+            DiagnosticResult.CompilerWarning(InstanceMethodTarget.Id)
+                .WithSpan("/0/Test1.cs", 11, 6, 11, 35)
+                .WithArguments("MakeResult"));
+
+        await test.RunAsync();
+    }
+
+    [Fact]
+    internal async Task Should_generate_fluent_chain_for_static_method_target()
+    {
+        const string code =
+            """
+            using System;
+            using Converj.Generator;
+
+            namespace Test;
+
+            [FluentRoot]
+            public static partial class Factory;
+
+            public class Result
+            {
+                public int Value { get; set; }
+            }
+
+            public static class Creators
+            {
+                [FluentTarget(typeof(Factory))]
+                public static Result MakeResult(int value) => new Result { Value = value };
             }
             """;
 
@@ -39,7 +85,7 @@ public class GeneratedCodeAttributeTests
                 public static partial class Factory
                 {
                     /// <summary>
-                    ///     <seealso cref="Test.MyTarget"/>
+                    ///     <seealso cref="Test.Creators"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Step_0__Test_Factory WithValue(in int value)
@@ -49,7 +95,7 @@ public class GeneratedCodeAttributeTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.MyTarget"/>
+                ///     <seealso cref="Test.Creators"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
@@ -61,14 +107,14 @@ public class GeneratedCodeAttributeTests
                     }
 
                     /// <summary>
-                    /// Creates a new instance using constructor Test.MyTarget.MyTarget(int value).
+                    /// Calls static method Test.Result Test.Creators.MakeResult(int value).
                     ///
-                    ///     <seealso cref="Test.MyTarget"/>
+                    ///     <seealso cref="Test.Creators"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.MyTarget CreateMyTarget()
+                    public global::Test.Result MakeResult()
                     {
-                        return new global::Test.MyTarget(this._value__parameter);
+                        return global::Test.Creators.MakeResult(this._value__parameter);
                     }
                 }
             }
@@ -85,14 +131,5 @@ public class GeneratedCodeAttributeTests
                 }
             }
         }.RunAsync();
-    }
-
-    [Fact]
-    internal void Should_have_non_empty_well_formed_version_string()
-    {
-        var version = typeof(FluentFactoryGenerator).Assembly.GetName().Version?.ToString();
-        Assert.NotNull(version);
-        Assert.NotEmpty(version);
-        Assert.Matches(@"^\d+\.\d+\.\d+(\.\d+)?$", version);
     }
 }

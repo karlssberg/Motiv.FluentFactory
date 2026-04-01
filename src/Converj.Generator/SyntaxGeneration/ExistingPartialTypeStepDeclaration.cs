@@ -82,7 +82,7 @@ internal static class ExistingPartialTypeStepDeclaration
     private static bool HasOwnFactoryDeclaration(ExistingTypeFluentStep step)
     {
         return step.ConstructorContext.Constructor.ContainingType
-            .GetAttributes(TypeName.FluentFactoryAttribute)
+            .GetAttributes(TypeName.FluentRootAttribute)
             .Any();
     }
 

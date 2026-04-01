@@ -17,12 +17,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Dog(string name)
                 {
                     Name = name;
@@ -120,12 +120,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Dog(string name)
                 {
                     Name = name;
@@ -136,7 +136,7 @@ public class TypeFirstTests
 
             public class Cat
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Cat(int lives)
                 {
                     Lives = lives;
@@ -287,12 +287,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public static partial class Factory;
 
             public class Circle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Circle(double radius)
                 {
                     Radius = radius;
@@ -303,7 +303,7 @@ public class TypeFirstTests
 
             public class Circle<T>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Circle(T radius)
                 {
                     Radius = radius;
@@ -436,12 +436,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory), BuilderMode = BuilderMode.TypeFirst)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.First)]
                 public Dog(string name)
                 {
                     Name = name;
@@ -452,7 +452,7 @@ public class TypeFirstTests
 
             public class Cat
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Cat(int lives)
                 {
                     Lives = lives;
@@ -583,12 +583,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst, TypeFirstVerb = "Make")]
+            [FluentRoot(BuilderMethod = BuilderMethod.First, InitialVerb = "Make")]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Dog(string name)
                 {
                     Name = name;
@@ -606,7 +606,7 @@ public class TypeFirstTests
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public static partial class Factory
-                { 
+                {
                     /// <summary>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
@@ -688,14 +688,14 @@ public class TypeFirstTests
 
             namespace Test
             {
-                [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+                [FluentRoot(BuilderMethod = BuilderMethod.First)]
                 public static partial class Factory;
 
                 namespace A
                 {
                     public class Circle
                     {
-                        [FluentConstructor(typeof(Test.Factory))]
+                        [FluentTarget(typeof(Test.Factory))]
                         public Circle(double radius)
                         {
                             Radius = radius;
@@ -709,7 +709,7 @@ public class TypeFirstTests
                 {
                     public class Circle
                     {
-                        [FluentConstructor(typeof(Test.Factory))]
+                        [FluentTarget(typeof(Test.Factory))]
                         public Circle(int radius)
                         {
                             Radius = radius;
@@ -729,8 +729,8 @@ public class TypeFirstTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(FluentDiagnostics.AmbiguousTypeFirstEntryMethod.Id)
-                        .WithSpan(sourceFile, 13, 14, 13, 53)
+                        .CompilerError(FluentDiagnostics.AmbiguousInitialMethod.Id)
+                        .WithSpan(sourceFile, 13, 14, 13, 48)
                         .WithArguments("BuildCircle", "'Test.A.Circle', 'Test.B.Circle'"),
                     DiagnosticResult
                         .CompilerError(FluentDiagnostics.UnreachableConstructor.Id)
@@ -760,12 +760,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public static partial class Factory;
 
             public class Config
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Config(string host = "localhost", int port = 8080, bool ssl = false)
                 {
                     Host = host;
@@ -886,7 +886,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -900,7 +900,7 @@ public class TypeFirstTests
 
             public class Car
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Car(int wheels, string color)
                 {
                     Wheels = wheels;
@@ -996,7 +996,7 @@ public class TypeFirstTests
     }
 
     /// <summary>
-    /// Issue #11: TypeFirst + CreateMethod.None — ExistingTypeFluentStep skipped in
+    /// Issue #11: TypeFirst + BuilderMethod.None — ExistingTypeFluentStep skipped in
     /// TypeFirst indexing loop. Only RegularFluentStep gets Index/TypeFirstTargetName set.
     /// </summary>
     [Fact]
@@ -1009,12 +1009,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+            [FluentRoot(BuilderMethod = BuilderMethod.First)]
             public static partial class Factory;
 
             public partial class Widget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Widget(string label, int count)
                 {
                     Label = label;
@@ -1039,9 +1039,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Widget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Widget_0__Test_Factory BuildWidget()
+                    public static global::Test.Step_0__Test_Factory WithLabel(in string label)
                     {
-                        return new global::Test.Step_Widget_0__Test_Factory();
+                        return new global::Test.Step_0__Test_Factory(label);
                     }
                 }
 
@@ -1049,30 +1049,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Widget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Widget_0__Test_Factory
-                {
-                    public Step_Widget_0__Test_Factory()
-                    {
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Widget"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Widget_1__Test_Factory WithLabel(in string label)
-                    {
-                        return new global::Test.Step_Widget_1__Test_Factory(label);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Widget"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Widget_1__Test_Factory
+                public readonly struct Step_0__Test_Factory
                 {
                     private readonly string _label__parameter;
-                    internal Step_Widget_1__Test_Factory(in string label)
+                    internal Step_0__Test_Factory(in string label)
                     {
                         this._label__parameter = label;
                     }
@@ -1081,35 +1061,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Widget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Widget_2__Test_Factory WithCount(in int count)
+                    public global::Test.Widget WithCount(in int count)
                     {
-                        return new global::Test.Step_Widget_2__Test_Factory(this._label__parameter, count);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Widget"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Widget_2__Test_Factory
-                {
-                    private readonly string _label__parameter;
-                    private readonly int _count__parameter;
-                    internal Step_Widget_2__Test_Factory(in string label, in int count)
-                    {
-                        this._label__parameter = label;
-                        this._count__parameter = count;
-                    }
-
-                    /// <summary>
-                    /// Creates a new instance using constructor Test.Widget.Widget(string label, int count).
-                    ///
-                    ///     <seealso cref="Test.Widget"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Widget Create()
-                    {
-                        return new global::Test.Widget(this._label__parameter, this._count__parameter);
+                        return new global::Test.Widget(this._label__parameter, count);
                     }
                 }
             }

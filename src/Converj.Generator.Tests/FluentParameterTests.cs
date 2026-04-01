@@ -17,7 +17,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -31,7 +31,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -113,7 +113,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory(int wheels)
             {
                 [FluentParameter("wheels")]
@@ -122,7 +122,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -204,7 +204,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -213,7 +213,7 @@ public class FluentParameterTests
                 public Factory(int wheels) { _wheels = wheels; }
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -291,7 +291,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -300,7 +300,7 @@ public class FluentParameterTests
                 public Factory(int wheels) { Wheels = wheels; }
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public record Vehicle(int wheels, string Name);
             """;
 
@@ -374,7 +374,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory(int wheels, string name)
             {
                 [FluentParameter("wheels")]
@@ -384,7 +384,7 @@ public class FluentParameterTests
                 private readonly string _name = name;
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -440,12 +440,12 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial {{typeKeyword}} Factory(int wheels);
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -527,12 +527,12 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record Factory([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -614,12 +614,12 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -701,7 +701,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory([FluentParameter("wheels")] int wheels)
             {
                 private readonly int _wheels = wheels;
@@ -709,7 +709,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -791,12 +791,12 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -879,14 +879,14 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Container<T>(T scale)
             {
                 [FluentParameter("Scale")]
                 public T Scale { get; set; } = scale;
             }
 
-            [FluentConstructor(typeof(Container<>))]
+            [FluentTarget(typeof(Container<>))]
             public record Widget<T>(T Scale, string Label);
             """;
 
@@ -960,7 +960,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter]
@@ -969,7 +969,7 @@ public class FluentParameterTests
                 public Factory(int wheels) { Wheels = wheels; }
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -1047,7 +1047,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter]
@@ -1056,7 +1056,7 @@ public class FluentParameterTests
                 public Factory(int wheels) { _wheels = wheels; }
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -1135,14 +1135,14 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Container<T>(T scale)
             {
                 [FluentParameter]
                 public T Scale { get; set; } = scale;
             }
 
-            [FluentConstructor(typeof(Container<>))]
+            [FluentTarget(typeof(Container<>))]
             public record Widget<T>(T Scale, string Label);
             """;
 
@@ -1216,14 +1216,14 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory(int wheels)
             {
                 [FluentParameter]
                 public int Wheels { get; set; } = wheels;
             }
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public record Vehicle(int Wheels, string Name);
             """;
 
@@ -1326,7 +1326,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("name")]
@@ -1340,7 +1340,7 @@ public class FluentParameterTests
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name)
                 {
                     Name = name;
@@ -1432,7 +1432,7 @@ public class FluentParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -1446,7 +1446,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Vehicle(int wheels, string color = "red", int seats = 4)
                 {
                     Wheels = wheels;

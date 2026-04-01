@@ -5,31 +5,31 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory(CreateMethod = CreateMethod.Dynamic)]
+[FluentRoot(BuilderMethod = BuilderMethod.DynamicSuffix)]
 internal partial class DynamicCreateFactory;
 
-[FluentConstructor<DynamicCreateFactory>]
+[FluentTarget<DynamicCreateFactory>]
 internal record DynamicTarget(int Value);
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
 internal partial class FixedCreateFactory;
 
-[FluentConstructor<FixedCreateFactory>]
+[FluentTarget<FixedCreateFactory>]
 internal record FixedTarget(int Value);
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed, CreateVerb = "Build")]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "Build")]
 internal partial class CustomVerbFactory;
 
-[FluentConstructor<CustomVerbFactory>]
+[FluentTarget<CustomVerbFactory>]
 internal record CustomVerbTarget(int Value);
 
-[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+[FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
 internal partial class NoCreateFactory;
 
-[FluentConstructor<NoCreateFactory>]
+[FluentTarget<NoCreateFactory>]
 internal partial record NoCreateStep1(int X);
 
-[FluentConstructor<NoCreateFactory>]
+[FluentTarget<NoCreateFactory>]
 internal partial record NoCreateStep2(int X, int Y);
 
 #endregion

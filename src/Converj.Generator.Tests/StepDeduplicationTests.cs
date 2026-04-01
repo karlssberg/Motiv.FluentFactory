@@ -25,12 +25,12 @@ public class StepDeduplicationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Dog(string name, int age)
                 {
                     Name = name;
@@ -43,7 +43,7 @@ public class StepDeduplicationTests
 
             public class Cat
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Cat(string name, int age)
                 {
                     Name = name;
@@ -166,12 +166,12 @@ public class StepDeduplicationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(string value)
                 {
                     Value = value;
@@ -182,7 +182,7 @@ public class StepDeduplicationTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Beta(string value)
                 {
                     Value = value;
@@ -193,7 +193,7 @@ public class StepDeduplicationTests
 
             public class Gamma
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Gamma(string value)
                 {
                     Value = value;

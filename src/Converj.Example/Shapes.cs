@@ -4,38 +4,38 @@ using Converj.Attributes;
 namespace Converj.Example;
 
 
-[FluentFactory(MethodPrefix = "")]
+[FluentRoot(MethodPrefix = "")]
 internal partial class Shape<T> where T : INumber<T>;
 
-[FluentFactory(MethodPrefix = "")]
+[FluentRoot(MethodPrefix = "")]
 internal partial class Shape;
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor(typeof(Square<>))]
-[FluentConstructor<Shape>]
-[FluentConstructor(typeof(Shape<>))]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+[FluentTarget(typeof(Square<>))]
+[FluentTarget<Shape>]
+[FluentTarget(typeof(Shape<>))]
 internal partial record Square<[As("T")] TUnit>(TUnit Width) where TUnit : INumber<TUnit>;
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor(typeof(Rectangle<>))]
-[FluentConstructor<Shape>]
-[FluentConstructor(typeof(Shape<>))]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+[FluentTarget(typeof(Rectangle<>))]
+[FluentTarget<Shape>]
+[FluentTarget(typeof(Shape<>))]
 internal partial record Rectangle<T>(T Width, T Height) where T : INumber<T>;
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor(typeof(Circle<>))]
-[FluentConstructor<Shape>]
-[FluentConstructor(typeof(Shape<>))]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+[FluentTarget(typeof(Circle<>))]
+[FluentTarget<Shape>]
+[FluentTarget(typeof(Shape<>))]
 internal partial record Circle<T>(T Radius) where T : INumber<T>;
 
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor(typeof(Diamond<>))]
-[FluentConstructor<Shape>]
-[FluentConstructor(typeof(Shape<>))]
+[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+[FluentTarget(typeof(Diamond<>))]
+[FluentTarget<Shape>]
+[FluentTarget(typeof(Shape<>))]
 internal partial record Diamond<T>(T Width, T Height) where T : INumber<T>;
 
-[FluentFactory]
-[FluentConstructor(typeof(Cuboid<>), CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor<Shape>]
-[FluentConstructor(typeof(Shape<>))]
+[FluentRoot]
+[FluentTarget(typeof(Cuboid<>), BuilderMethod = BuilderMethod.FixedName)]
+[FluentTarget<Shape>]
+[FluentTarget(typeof(Shape<>))]
 internal partial record Cuboid<T>(T Width, T Height, T Depth) where T : INumber<T>;

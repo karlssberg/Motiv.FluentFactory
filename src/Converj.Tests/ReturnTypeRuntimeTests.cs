@@ -10,21 +10,21 @@ internal interface IAnimal
     int Legs { get; }
 }
 
-[FluentFactory(ReturnType = typeof(IAnimal))]
+[FluentRoot(ReturnType = typeof(IAnimal))]
 internal partial class AnimalFactory;
 
-[FluentConstructor<AnimalFactory>]
+[FluentTarget<AnimalFactory>]
 internal record Parrot(int Legs) : IAnimal;
 
-[FluentConstructor<AnimalFactory>]
+[FluentTarget<AnimalFactory>]
 internal record Spider(int Legs) : IAnimal;
 
 internal abstract record BaseVehicle(int Speed);
 
-[FluentFactory(ReturnType = typeof(BaseVehicle))]
+[FluentRoot(ReturnType = typeof(BaseVehicle))]
 internal partial class VehicleFactory;
 
-[FluentConstructor<VehicleFactory>]
+[FluentTarget<VehicleFactory>]
 internal record Bicycle(int Speed) : BaseVehicle(Speed);
 
 #endregion

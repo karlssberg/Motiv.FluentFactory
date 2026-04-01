@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class PrimaryCtorFactory;
 
-[FluentConstructor<PrimaryCtorFactory>]
+[FluentTarget<PrimaryCtorFactory>]
 internal class PrimaryCtorTarget(int value, string name)
 {
     public int Value { get; } = value;

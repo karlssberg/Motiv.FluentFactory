@@ -25,12 +25,12 @@ public class GatewayMethodStorageTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Settings
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Settings(int width = 100, int height = 200)
                 {
                     Width = width;

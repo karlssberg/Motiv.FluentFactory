@@ -20,12 +20,12 @@ public class ReturnTypeTests
                 int Value { get; }
             }
 
-            [FluentFactory(ReturnType = typeof(IMyInterface))]
+            [FluentRoot(ReturnType = typeof(IMyInterface))]
             public static partial class Factory;
 
             public class MyBuildTarget : IMyInterface
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -109,12 +109,12 @@ public class ReturnTypeTests
                 int Value { get; }
             }
 
-            [FluentFactory(ReturnType = typeof(IBase))]
+            [FluentRoot(ReturnType = typeof(IBase))]
             public static partial class Factory;
 
             public class MyBuildTarget : ISpecific
             {
-                [FluentConstructor(typeof(Factory), ReturnType = typeof(ISpecific))]
+                [FluentTarget(typeof(Factory), ReturnType = typeof(ISpecific))]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -192,16 +192,16 @@ public class ReturnTypeTests
 
             namespace Test;
 
-            [FluentFactory(ReturnType = typeof(Animal))]
+            [FluentRoot(ReturnType = typeof(Animal))]
             public abstract partial class Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public class Dog() : Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public class Cat() : Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public class Fish() : Animal;
             """;
 
@@ -278,12 +278,12 @@ public class ReturnTypeTests
                 string Name { get; }
             }
 
-            [FluentFactory(ReturnType = typeof(IAnimal))]
+            [FluentRoot(ReturnType = typeof(IAnimal))]
             public static partial class AnimalFactory;
 
             public class Dog : IAnimal
             {
-                [FluentConstructor(typeof(AnimalFactory))]
+                [FluentTarget(typeof(AnimalFactory))]
                 public Dog(string name)
                 {
                     Name = name;
@@ -294,7 +294,7 @@ public class ReturnTypeTests
 
             public class Cat : IAnimal
             {
-                [FluentConstructor(typeof(AnimalFactory))]
+                [FluentTarget(typeof(AnimalFactory))]
                 public Cat(string name)
                 {
                     Name = name;

@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class LargeParamFactory;
 
-[FluentConstructor<LargeParamFactory>]
+[FluentTarget<LargeParamFactory>]
 internal record LargeTarget(
     int P1, int P2, int P3, int P4, int P5,
     int P6, int P7, int P8);

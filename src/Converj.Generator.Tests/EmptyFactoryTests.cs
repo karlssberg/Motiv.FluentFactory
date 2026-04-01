@@ -4,7 +4,7 @@ using VerifyCS =
 namespace Converj.Generator.Tests;
 
 /// <summary>
-/// Issue #19: A [FluentFactory] with no [FluentConstructor] attributes anywhere.
+/// Issue #19: A [FluentRoot] with no [FluentTarget] attributes anywhere.
 /// The generator should gracefully produce nothing without crashing.
 /// </summary>
 public class EmptyFactoryTests
@@ -19,7 +19,7 @@ public class EmptyFactoryTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
             """;
 

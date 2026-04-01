@@ -5,7 +5,7 @@ using static Converj.Example.Point;
 
 namespace Converj.Example;
 
-[FluentFactory]
+[FluentRoot]
 internal partial class Polygon<T> where T : INumber<T>
 {
     [FluentParameter]
@@ -17,13 +17,13 @@ internal partial class Polygon<T> where T : INumber<T>
     }
 }
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class Point;
 
-[FluentConstructor(typeof(Point), MethodPrefix = "", CreateMethod = CreateMethod.None)]
+[FluentTarget(typeof(Point), MethodPrefix = "", BuilderMethod = BuilderMethod.None)]
 internal record Point<T>(T X, T Y, T Z) where T : INumber<T>;
 
-[FluentConstructor(typeof(Polygon<>))]
+[FluentTarget(typeof(Polygon<>))]
 internal record Triangle<T>(T Scale) where T : INumber<T>
 {
     [Required]

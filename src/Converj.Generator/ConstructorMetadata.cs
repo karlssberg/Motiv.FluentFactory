@@ -7,30 +7,34 @@ using FluentPropertyMember = Converj.Generator.ConstructorAnalysis.FluentPropert
 namespace Converj.Generator;
 
 [DebuggerDisplay("{ToDisplayString()}")]
-internal class ConstructorMetadata(FluentConstructorContext constructorContext)
+internal class ConstructorMetadata(FluentTargetContext targetContext)
 {
-    public IMethodSymbol Constructor { get; set; } = constructorContext.Constructor;
+    public IMethodSymbol Constructor { get; set; } = targetContext.Constructor;
 
-    public IList<IMethodSymbol> CandidateConstructors { get; } = [constructorContext.Constructor];
+    public IList<IMethodSymbol> CandidateConstructors { get; } = [targetContext.Constructor];
 
-    public CreateMethodMode CreateMethod { get; set; } = constructorContext.CreateMethod;
+    public BuilderMethodKind Builder { get; set; } = targetContext.Builder;
 
-    public INamedTypeSymbol? ReturnType { get; } = constructorContext.ReturnType;
+    public INamedTypeSymbol? ReturnType { get; } = targetContext.ReturnType;
 
-    public BuilderMode BuilderMode { get; } = constructorContext.BuilderMode;
+    public string InitialVerb { get; } = targetContext.InitialVerb;
 
-    public string TypeFirstVerb { get; } = constructorContext.TypeFirstVerb;
+    /// <summary>
+    /// Whether this target is a static method (not a constructor).
+    /// When true, the terminal step calls the static method instead of new T(...).
+    /// </summary>
+    public bool IsStaticMethodTarget { get; } = targetContext.IsStaticMethodTarget;
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
-        constructorContext.ValueStorage;
+        targetContext.ValueStorage;
 
-    public FluentConstructorContext Context { get; } = constructorContext;
+    public FluentTargetContext Context { get; } = targetContext;
 
     /// <summary>
     /// Parameters with explicit default values that become optional fluent setter methods.
     /// </summary>
     public ImmutableArray<IParameterSymbol> OptionalParameters { get; } =
-        [..constructorContext.Constructor.Parameters.Where(p => p.HasExplicitDefaultValue)];
+        [..targetContext.Constructor.Parameters.Where(p => p.HasExplicitDefaultValue)];
 
     /// <summary>
     /// The count of required (non-optional) parameters in the constructor.
@@ -43,13 +47,13 @@ internal class ConstructorMetadata(FluentConstructorContext constructorContext)
     /// that need to be set via object initializer.
     /// </summary>
     public ImmutableArray<FluentPropertyMember> RequiredProperties { get; } =
-        [..constructorContext.TargetTypeProperties.Where(p => p.IsRequired)];
+        [..targetContext.TargetTypeProperties.Where(p => p.IsRequired)];
 
     /// <summary>
     /// Optional properties opted in via [FluentMethod] that become setter methods.
     /// </summary>
     public ImmutableArray<FluentPropertyMember> OptionalProperties { get; } =
-        [..constructorContext.TargetTypeProperties.Where(p => !p.IsRequired)];
+        [..targetContext.TargetTypeProperties.Where(p => !p.IsRequired)];
 
     public ConstructorMetadata Clone()
     {

@@ -7,7 +7,7 @@ namespace Converj.Generator.Tests;
 
 /// <summary>
 /// Tests for constructor scope and accessibility edge cases.
-/// Private or protected constructors with [FluentConstructor] cannot be called from generated code.
+/// Private or protected constructors with [FluentTarget] cannot be called from generated code.
 /// Factory root types missing the partial modifier cannot receive generated methods.
 /// </summary>
 public class ScopeAndAccessibilityTests
@@ -15,7 +15,7 @@ public class ScopeAndAccessibilityTests
     private const string SourceFile = "Source.cs";
 
     /// <summary>
-    /// A private constructor with [FluentConstructor] cannot be used in a fluent factory
+    /// A private constructor with [FluentTarget] cannot be used in a fluent factory
     /// because the generated code cannot call it. The generator should emit CVJG0012
     /// warning and skip generation for that constructor.
     /// </summary>
@@ -28,12 +28,12 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 private MyTarget(int value)
                 {
                     Value = value;
@@ -59,7 +59,7 @@ public class ScopeAndAccessibilityTests
     }
 
     /// <summary>
-    /// A protected constructor with [FluentConstructor] cannot be used in a fluent factory
+    /// A protected constructor with [FluentTarget] cannot be used in a fluent factory
     /// because the generated code cannot call it. The generator should emit CVJG0012
     /// warning and skip generation for that constructor.
     /// </summary>
@@ -72,12 +72,12 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 protected MyTarget(int value)
                 {
                     Value = value;
@@ -116,7 +116,7 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             internal class InternalParam
@@ -126,7 +126,7 @@ public class ScopeAndAccessibilityTests
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(InternalParam param)
                 {
                     Param = param;
@@ -212,12 +212,12 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             internal class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(int value)
                 {
                     Value = value;
@@ -302,12 +302,12 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             internal static partial class Factory;
 
             internal class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(int value)
                 {
                     Value = value;
@@ -373,7 +373,7 @@ public class ScopeAndAccessibilityTests
     }
 
     /// <summary>
-    /// A nested private class with [FluentConstructor] pointing to an outer public factory.
+    /// A nested private class with [FluentTarget] pointing to an outer public factory.
     /// The private nested class is less accessible than the public factory (Private &lt; Public),
     /// so CVJG0015 (accessibility mismatch) should fire.
     /// This test documents the generator's behavior for nested private classes as factory targets.
@@ -387,14 +387,14 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class OuterFactory;
 
             public class OuterContainer
             {
                 private class NestedTarget
                 {
-                    [FluentConstructor(typeof(OuterFactory))]
+                    [FluentTarget(typeof(OuterFactory))]
                     public NestedTarget(int value)
                     {
                         Value = value;
@@ -486,12 +486,12 @@ public class ScopeAndAccessibilityTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(int value)
                 {
                     Value = value;

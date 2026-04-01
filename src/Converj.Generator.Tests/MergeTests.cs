@@ -20,7 +20,7 @@ public class MergeTests
 
             public class MyClass<T>
             {
-                [FluentConstructor(typeof(MyClass), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(MyClass), BuilderMethod = BuilderMethod.None)]
                 public MyClass([FluentMethod("Create")]Func<T> value)
                 {
                     Value = value;
@@ -29,10 +29,10 @@ public class MergeTests
                 public Func<T> Value { get; set; }
             }
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class MyClass
             {
-                [FluentConstructor(typeof(MyClass), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(MyClass), BuilderMethod = BuilderMethod.None)]
                 public MyClass([FluentMethod("Create")]Func<string> value)
                 {
                     Value = value;
@@ -92,12 +92,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -113,7 +113,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     String value1,
                     String value2)
@@ -225,7 +225,7 @@ public class MergeTests
 
             namespace MyFactory
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -233,7 +233,7 @@ public class MergeTests
             {
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         T1 value1,
                         T2 value2)
@@ -252,7 +252,7 @@ public class MergeTests
             {
                 public class MyBuildTarget
                 {
-                    [FluentConstructor(typeof(MyFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTarget(
                         String value1,
                         String value2)
@@ -365,12 +365,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -386,7 +386,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     String value2)
@@ -478,12 +478,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -503,7 +503,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     String value1,
                     String value2,
@@ -667,12 +667,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -696,7 +696,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     String value2,
@@ -896,14 +896,14 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory))]
-                [FluentConstructor(typeof(MyBuildTarget))]
+                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(MyBuildTarget))]
                 public MyBuildTarget(
                     string value1,
                     string value2)
@@ -1080,12 +1080,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueX1,
                     [FluentMethod("WithValueB")]string valueX2,
@@ -1105,7 +1105,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueY1,
                     [FluentMethod("WithValueB")]string valueY2,
@@ -1227,12 +1227,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]T1 valueX1,
                     [FluentMethod("WithValueB")]T2 valueX2,
@@ -1252,7 +1252,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueY1,
                     [FluentMethod("WithValueB")]string valueY2,
@@ -1416,10 +1416,10 @@ public class MergeTests
             using System.Collections.Generic;
             using Converj.Generator;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec;
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct ExplanationWithNamePropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [FluentMethod("WhenTrue")]string trueBecause,
@@ -1427,7 +1427,7 @@ public class MergeTests
             {
             }
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct MultiAssertionExplanationWithNamePropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [FluentMethod("WhenTrue")]string trueBecause,
@@ -1435,7 +1435,7 @@ public class MergeTests
             {
             }
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct ExplanationPropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, string> whenTrue,
@@ -1679,12 +1679,12 @@ public class MergeTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public partial class MyEnumerableBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyEnumerableBuildTarget(
                         [MultipleFluentMethods(typeof(EnumerableOverloads))]Func<T1, IEnumerable<T2>> first,
                         string second)
@@ -1700,7 +1700,7 @@ public class MergeTests
 
                 public partial class MyCollectionBuildTarget<T1, T2>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyCollectionBuildTarget(
                         [MultipleFluentMethods(typeof(CollectionOverloads))]Func<T1, ICollection<T2>> first,
                         string second)
@@ -1857,12 +1857,12 @@ public class MergeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(string name, int x)
                 {
                     Name = name;
@@ -1875,7 +1875,7 @@ public class MergeTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Beta(string name, int x, bool z)
                 {
                     Name = name;
@@ -1890,7 +1890,7 @@ public class MergeTests
 
             public class Gamma
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Gamma(string name, double y)
                 {
                     Name = name;

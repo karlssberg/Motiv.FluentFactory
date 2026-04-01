@@ -25,12 +25,12 @@ public class TrieKeyCollisionTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -43,7 +43,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetB(string label, int count)
                 {
                     Label = label;
@@ -156,12 +156,12 @@ public class TrieKeyCollisionTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class StructContainer<T> where T : struct
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public StructContainer(T value)
                 {
                     Value = value;
@@ -172,7 +172,7 @@ public class TrieKeyCollisionTests
 
             public class ClassContainer<T> where T : class
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public ClassContainer(T value)
                 {
                     Value = value;
@@ -223,7 +223,7 @@ public class TrieKeyCollisionTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public interface IEngineA;
@@ -231,7 +231,7 @@ public class TrieKeyCollisionTests
 
             public class CarA<T> where T : IEngineA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public CarA(T engine, int age)
                 {
                     Engine = engine;
@@ -244,7 +244,7 @@ public class TrieKeyCollisionTests
 
             public class CarB<T> where T : IEngineB
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public CarB(T engine)
                 {
                     Engine = engine;
@@ -291,12 +291,12 @@ public class TrieKeyCollisionTests
 
             public interface IConstraint<T>;
 
-            [FluentFactory(CreateMethod = CreateMethod.None)]
+            [FluentRoot(BuilderMethod = BuilderMethod.None)]
             public static partial class Factory;
 
             public class TargetA<[As("T")]TNum> where TNum : IConstraint<TNum>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public TargetA(TNum value, int extra) { Value = value; Extra = extra; }
                 public TNum Value { get; }
                 public int Extra { get; }
@@ -304,7 +304,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB<T> where T : IConstraint<T>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public TargetB(T value, bool flag) { Value = value; Flag = flag; }
                 public T Value { get; }
                 public bool Flag { get; }
@@ -395,12 +395,12 @@ public class TrieKeyCollisionTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class TargetA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -413,7 +413,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public TargetB(string name, bool isActive)
                 {
                     Name = name;

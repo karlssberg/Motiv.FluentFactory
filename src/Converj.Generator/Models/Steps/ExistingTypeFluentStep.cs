@@ -44,7 +44,7 @@ internal class ExistingTypeFluentStep(
 
     public ImmutableArray<IMethodSymbol> CandidateConstructors { get; set; }
     
-    public FluentConstructorContext ConstructorContext => constructorMetadata.Context;
+    public FluentTargetContext ConstructorContext => constructorMetadata.Context;
 
     public string IdentifierDisplayString()
     {

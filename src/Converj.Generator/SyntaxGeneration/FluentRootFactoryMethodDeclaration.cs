@@ -18,12 +18,11 @@ internal static class FluentRootFactoryMethodDeclaration
         var fieldSourcedArguments = GetFieldSourcedArguments(method);
         var methodSourcedArguments = GetMethodSourcedArguments(method);
 
-        var returnObjectExpression = TargetTypeObjectCreationExpression.Create(
-            method,
-            fieldSourcedArguments,
-            methodSourcedArguments);
+        ExpressionSyntax returnExpression = method is CreationMethod { IsStaticMethodTarget: true } staticCreation
+            ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldSourcedArguments, methodSourcedArguments)
+            : TargetTypeObjectCreationExpression.Create(method, fieldSourcedArguments, methodSourcedArguments);
 
-        var methodDeclaration = CreateBaseMethodDeclaration(method, returnObjectExpression);
+        var methodDeclaration = CreateBaseMethodDeclaration(method, returnExpression);
 
         return RootMethodTypeParameterResolver.AttachTypeParametersAndConstraints(methodDeclaration, method, rootType)
             .WithLeadingTrivia(
@@ -36,11 +35,12 @@ internal static class FluentRootFactoryMethodDeclaration
 
     private static MethodDeclarationSyntax CreateBaseMethodDeclaration(
         IFluentMethod method,
-        ObjectCreationExpressionSyntax returnObjectExpression)
+        ExpressionSyntax returnExpression)
     {
         var returnType = method.Return is TargetTypeReturn targetTypeReturn
             ? ParseTypeName(targetTypeReturn.ReturnTypeDisplayString())
-            : returnObjectExpression.Type;
+            : returnExpression is ObjectCreationExpressionSyntax objCreation ? objCreation.Type
+            : ParseTypeName(method.Return.IdentifierDisplayString());
 
         var methodDeclaration = MethodDeclaration(
                 returnType,
@@ -52,7 +52,7 @@ internal static class FluentRootFactoryMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)));
+            .WithBody(Block(ReturnStatement(returnExpression)));
 
         if (method.MethodParameters.Length > 0)
         {

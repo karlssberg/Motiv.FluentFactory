@@ -5,19 +5,19 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class RecordFactory;
 
-[FluentConstructor<RecordFactory>]
+[FluentTarget<RecordFactory>]
 internal record PositionalRecord(int X, int Y);
 
-[FluentConstructor<RecordFactory>]
+[FluentTarget<RecordFactory>]
 internal record struct PositionalRecordStruct(int X, int Y);
 
-[FluentFactory]
+[FluentRoot]
 internal partial class ClassFactory;
 
-[FluentConstructor<ClassFactory>]
+[FluentTarget<ClassFactory>]
 internal class ClassTarget
 {
     public int Value { get; }

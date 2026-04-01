@@ -10,9 +10,9 @@ internal class TypeName
         _fullName = fullName;
     }
 
-    public static readonly TypeName FluentConstructorAttribute = new(GeneratorAttributesNamespace + "FluentConstructorAttribute");
-    public static readonly TypeName GenericFluentConstructorAttribute = new(GeneratorAttributesNamespace + "FluentConstructorAttribute`1");
-    public static readonly TypeName FluentFactoryAttribute = new(GeneratorAttributesNamespace + "FluentFactoryAttribute");
+    public static readonly TypeName FluentTargetAttribute = new(GeneratorAttributesNamespace + "FluentTargetAttribute");
+    public static readonly TypeName GenericFluentTargetAttribute = new(GeneratorAttributesNamespace + "FluentTargetAttribute`1");
+    public static readonly TypeName FluentRootAttribute = new(GeneratorAttributesNamespace + "FluentRootAttribute");
     public static readonly TypeName FluentMethodAttribute = new(GeneratorAttributesNamespace + "FluentMethodAttribute");
     public static readonly TypeName MultipleFluentMethodsAttribute = new(GeneratorAttributesNamespace + "MultipleFluentMethodsAttribute");
     public static readonly TypeName FluentMethodTemplateAttribute = new(GeneratorAttributesNamespace + "FluentMethodTemplateAttribute");

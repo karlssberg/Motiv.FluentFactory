@@ -15,12 +15,12 @@ public class NestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(Func<T, bool> value)
                 {
                     Value = value;
@@ -75,12 +75,12 @@ public class NestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2)
@@ -163,12 +163,12 @@ public class NestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]Func<IEnumerable<KeyValuePair<T1, T1>>, bool> value1,
                     [FluentMethod("SetValue2")]Func<IEnumerable<KeyValuePair<T2, T2>>, bool> value2)
@@ -251,12 +251,12 @@ public class NestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2,
@@ -365,12 +365,12 @@ public class NestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3, T4, T5, T6>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(
                     Func<T1, T2> value1,
                     Func<T3, T4> value2,

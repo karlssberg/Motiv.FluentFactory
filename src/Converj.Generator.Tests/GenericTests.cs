@@ -14,12 +14,12 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -97,12 +97,12 @@ public class GenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -208,12 +208,12 @@ public class GenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -349,12 +349,12 @@ public class GenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -522,12 +522,12 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory<T>;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentConstructor(typeof(Factory<>))]
+                    [FluentTarget(typeof(Factory<>))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -605,12 +605,12 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory<T>;
 
                 public class MyBuildTarget<T, TAlt>
                 {
-                    [FluentConstructor(typeof(Factory<>))]
+                    [FluentTarget(typeof(Factory<>))]
                     public MyBuildTarget(T value1, TAlt value2)
                     {
                         Value1 = value1;
@@ -715,14 +715,14 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory<T> where T : struct, IComparable<T>
                 {
                 }
 
                 public class MyBuildTarget<T> where T : struct, IComparable<T>
                 {
-                    [FluentConstructor(typeof(Factory<>))]
+                    [FluentTarget(typeof(Factory<>))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -802,12 +802,12 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory;
 
                 public class MyBuildTarget<T> where T : struct, IComparable<T>
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -887,14 +887,14 @@ public class GenericTests
 
             namespace Test.Namespace
             {
-                [FluentFactory]
+                [FluentRoot]
                 public partial class Factory;
 
                 public class MyBuildTarget<T, TAlt>
                     where T : struct, IComparable<T>
                     where TAlt : class, new()
                 {
-                    [FluentConstructor(typeof(Factory))]
+                    [FluentTarget(typeof(Factory))]
                     public MyBuildTarget(T value1, TAlt value2)
                     {
                         Value1 = value1;

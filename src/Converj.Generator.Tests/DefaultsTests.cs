@@ -18,12 +18,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed)]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -100,12 +100,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateVerb = "Build")]
+            [FluentRoot(TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -182,12 +182,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed, CreateVerb = "Build")]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -264,12 +264,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateVerb = "Build")]
+            [FluentRoot(TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory), CreateVerb = "Make")]
+                [FluentTarget(typeof(Factory), TerminalVerb = "Make")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -346,12 +346,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.Dynamic, CreateVerb = "Build")]
+            [FluentRoot(BuilderMethod = BuilderMethod.DynamicSuffix, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.Fixed)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.FixedName)]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -428,12 +428,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -510,12 +510,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.None)]
+            [FluentRoot(BuilderMethod = BuilderMethod.None)]
             public static partial class Factory;
 
             public partial class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -568,12 +568,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.Fixed, CreateVerb = "Build")]
+            [FluentRoot(BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -584,7 +584,7 @@ public class DefaultsTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory), CreateVerb = "Make")]
+                [FluentTarget(typeof(Factory), TerminalVerb = "Make")]
                 public Beta(string name)
                 {
                     Name = name;
@@ -694,12 +694,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateVerb = "123Bad")]
+            [FluentRoot(TerminalVerb = "123Bad")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -716,9 +716,9 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(InvalidCreateVerb.Id)
-                        .WithSpan(SourceFile, 5, 2, 5, 38)
-                        .WithMessage("CreateVerb must be a valid identifier")
+                    DiagnosticResult.CompilerError(InvalidTerminalVerb.Id)
+                        .WithSpan(SourceFile, 5, 2, 5, 37)
+                        .WithMessage("TerminalVerb must be a valid identifier")
                 }
             }
         }.RunAsync();
@@ -733,12 +733,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateMethod = CreateMethod.None, CreateVerb = "Build")]
+            [FluentRoot(BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public partial class Alpha
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -755,9 +755,9 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(CreateVerbWithNone.Id)
-                        .WithSpan(SourceFile, 5, 2, 5, 71)
-                        .WithMessage("CreateVerb cannot be used with CreateMethod.None")
+                    DiagnosticResult.CompilerError(TerminalVerbWithNone.Id)
+                        .WithSpan(SourceFile, 5, 2, 5, 72)
+                        .WithMessage("TerminalVerb cannot be used with BuilderMethod.None")
                 }
             }
         }.RunAsync();
@@ -772,12 +772,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentFactory(CreateVerb = "Build")]
+            [FluentRoot(TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentConstructor(typeof(Factory), CreateVerb = "1Bad")]
+                [FluentTarget(typeof(Factory), TerminalVerb = "1Bad")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -794,9 +794,9 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerError(InvalidCreateVerb.Id)
-                        .WithSpan(SourceFile, 10, 41, 10, 60)
-                        .WithMessage("CreateVerb must be a valid identifier")
+                    DiagnosticResult.CompilerError(InvalidTerminalVerb.Id)
+                        .WithSpan(SourceFile, 10, 36, 10, 57)
+                        .WithMessage("TerminalVerb must be a valid identifier")
                 }
             }
         }.RunAsync();

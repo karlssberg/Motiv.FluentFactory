@@ -6,22 +6,22 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class GenericFactory;
 
-[FluentConstructor(typeof(GenericFactory))]
+[FluentTarget(typeof(GenericFactory))]
 internal record GenericTarget<T>(T Value);
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class ConstrainedGenericFactory;
 
-[FluentConstructor(typeof(ConstrainedGenericFactory))]
+[FluentTarget(typeof(ConstrainedGenericFactory))]
 internal record NumericTarget<T>(T X, T Y) where T : INumber<T>;
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class MultiGenericFactory;
 
-[FluentConstructor(typeof(MultiGenericFactory))]
+[FluentTarget(typeof(MultiGenericFactory))]
 internal record PairTarget<TKey, TValue>(TKey Key, TValue Value);
 
 #endregion

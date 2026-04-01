@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class ChainingFactory;
 
-[FluentConstructor<ChainingFactory>]
+[FluentTarget<ChainingFactory>]
 internal class ChainingTarget
 {
     public int X { get; }

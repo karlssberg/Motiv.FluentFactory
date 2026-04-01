@@ -4,10 +4,10 @@ namespace Converj.Example;
 
 internal interface IDependency;
 
-[FluentFactory(CreateVerb = "Build", CreateMethod = CreateMethod.Fixed)]
+[FluentRoot(TerminalVerb = "Build", BuilderMethod = BuilderMethod.FixedName)]
 internal partial record ServiceFactory(IDependency Dependency);
 
-[FluentConstructor<ServiceFactory>]
+[FluentTarget<ServiceFactory>]
 internal record CustomizableService(IDependency Dependency, string Name);
 
 internal class ConsumerService(ServiceFactory factory)

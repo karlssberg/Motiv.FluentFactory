@@ -20,15 +20,17 @@ public class FluentFactoryGenerator : IIncrementalGenerator
     {
         var compilationProvider = context.CompilationProvider;
 
-        // Step 1: Match FluentConstructorAttribute usages (non-generic and generic)
+        // Step 1: Match FluentTargetAttribute usages (non-generic and generic)
         var nonGenericDeclarations = context.SyntaxProvider
-            .ForAttributeWithMetadataName(TypeName.FluentConstructorAttribute,
+            .ForAttributeWithMetadataName(TypeName.FluentTargetAttribute,
                 (node, _) => node switch
                 {
-                    // Capture type declarations with FluentConstructor attributes (for applying to all constructors)
+                    // Capture type declarations with FluentTarget attributes (for applying to all constructors)
                     TypeDeclarationSyntax { AttributeLists.Count: > 0 } => true,
                     // Capture explicit constructors
                     ConstructorDeclarationSyntax { AttributeLists.Count: > 0 } => true,
+                    // Capture static methods
+                    MethodDeclarationSyntax { AttributeLists.Count: > 0 } => true,
                     _ => false
                 },
                 (ctx, _) =>
@@ -40,11 +42,12 @@ public class FluentFactoryGenerator : IIncrementalGenerator
             );
 
         var genericDeclarations = context.SyntaxProvider
-            .ForAttributeWithMetadataName(TypeName.GenericFluentConstructorAttribute,
+            .ForAttributeWithMetadataName(TypeName.GenericFluentTargetAttribute,
                 (node, _) => node switch
                 {
                     TypeDeclarationSyntax { AttributeLists.Count: > 0 } => true,
                     ConstructorDeclarationSyntax { AttributeLists.Count: > 0 } => true,
+                    MethodDeclarationSyntax { AttributeLists.Count: > 0 } => true,
                     _ => false
                 },
                 (ctx, _) =>
@@ -67,7 +70,7 @@ public class FluentFactoryGenerator : IIncrementalGenerator
             {
                 var compilation = data.Right;
                 var syntax = data.Left.syntax;
-                return FluentConstructorContextFactory.CreateConstructorContexts(compilation, syntax, ct);
+                return FluentTargetContextFactory.CreateTargetContexts(compilation, syntax, ct);
             })
             .WithTrackingName("ConstructorModelCreation");
 
@@ -86,7 +89,7 @@ public class FluentFactoryGenerator : IIncrementalGenerator
                         new FluentModelFactory(compilation)
                             .CreateFluentFactoryCompilationUnit(
                                 (INamedTypeSymbol)fluentApiConstructors.Key!,
-                                [..FluentConstructorContextFactory.DeDuplicateFluentConstructors(fluentApiConstructors)]));
+                                [..FluentTargetContextFactory.DeDuplicateFluentTargets(fluentApiConstructors)]));
             })
             .WithTrackingName("ConstructorModelsToFluentBuilderFiles");
 

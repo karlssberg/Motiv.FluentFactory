@@ -5,21 +5,21 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory(ReturnType = typeof(IMergeShape))]
+[FluentRoot(ReturnType = typeof(IMergeShape))]
 internal partial class MergeShapeFactory;
 
 internal interface IMergeShape;
 
-[FluentConstructor<MergeShapeFactory>]
+[FluentTarget<MergeShapeFactory>]
 internal record MergeSquare(int Width) : IMergeShape;
 
-[FluentConstructor<MergeShapeFactory>]
+[FluentTarget<MergeShapeFactory>]
 internal record MergeRectangle(int Width, int Height) : IMergeShape;
 
-[FluentConstructor<MergeShapeFactory>]
+[FluentTarget<MergeShapeFactory>]
 internal record MergeCuboid(int Width, int Height, int Depth) : IMergeShape;
 
-[FluentConstructor<MergeShapeFactory>]
+[FluentTarget<MergeShapeFactory>]
 internal record MergeCircle(double Radius) : IMergeShape;
 
 #endregion

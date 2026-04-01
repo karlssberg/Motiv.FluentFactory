@@ -14,12 +14,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -73,12 +73,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -132,12 +132,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial struct Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -191,12 +191,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -250,12 +250,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(in MyParameterValue value)
                 {
                     Value = value;
@@ -314,12 +314,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
             public partial class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3)
                 {
                     Value1 = value1;
@@ -427,12 +427,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
             public partial class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(in MyParameterValue<T1, T2> value1, in MyParameterValue<T1, T2> value2, MyParameterValue<T1, T2> value3)
                 {
                     Value1 = value1;
@@ -538,12 +538,12 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
             public partial class MyBuildTargetA
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTargetA(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3, MyParameterValue value4)
                 {
                     Value1 = value1;
@@ -560,7 +560,7 @@ public class RootTypeTests
 
             public partial class MyBuildTargetB
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTargetB(in MyParameterValue value1, in MyParameterValue value2)
                 {
                     Value1 = value1;
@@ -681,13 +681,13 @@ public class RootTypeTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial record struct Factory;
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial class MyBuildTargetA(MyParameterValue value1, MyParameterValue value2, MyParameterValue value3, MyParameterValue value4);
 
-            [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
             public partial class MyBuildTargetB(MyParameterValue value1, MyParameterValue value2);
 
             public record MyParameterValue();

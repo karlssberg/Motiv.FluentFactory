@@ -5,13 +5,13 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class NestedGenericFactory;
 
-[FluentConstructor(typeof(NestedGenericFactory))]
+[FluentTarget(typeof(NestedGenericFactory))]
 internal record ListTarget<T>(List<T> Items);
 
-[FluentConstructor(typeof(NestedGenericFactory))]
+[FluentTarget(typeof(NestedGenericFactory))]
 internal record DeepNestedTarget<T>(List<List<T>> DeepItems);
 
 #endregion

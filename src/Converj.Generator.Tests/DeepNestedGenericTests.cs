@@ -20,12 +20,12 @@ public class DeepNestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T, U>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(Dictionary<string, List<KeyValuePair<T, U>>> value)
                 {
                     Value = value;
@@ -85,12 +85,12 @@ public class DeepNestedGenericTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T, U>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(IReadOnlyDictionary<string, IEnumerable<Tuple<T, List<U>>>> value)
                 {
                     Value = value;

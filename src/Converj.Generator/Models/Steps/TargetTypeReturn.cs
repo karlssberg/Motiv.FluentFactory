@@ -7,7 +7,8 @@ internal class TargetTypeReturn(
     IMethodSymbol targetTypeConstructor,
     ImmutableArray<IMethodSymbol> candidateConstructors,
     ParameterSequence knownConstructorParameters,
-    INamedTypeSymbol? returnTypeOverride = null) : IFluentReturn
+    INamedTypeSymbol? returnTypeOverride = null,
+    INamedTypeSymbol? staticMethodReturnType = null) : IFluentReturn
 {
     public ImmutableArray<IParameterSymbol> GenericConstructorParameters { get; } =
     [
@@ -21,12 +22,17 @@ internal class TargetTypeReturn(
 
     public IMethodSymbol Constructor => targetTypeConstructor;
 
-    public string IdentifierDisplayString() => 
+    /// <summary>
+    /// Whether this return targets a static method invocation instead of object creation.
+    /// </summary>
+    public bool IsStaticMethodTarget => staticMethodReturnType is not null;
+
+    public string IdentifierDisplayString() =>
         IdentifierDisplayString(new Dictionary<FluentType, ITypeSymbol>());
 
     public string IdentifierDisplayString(
         IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) =>
-        ConstructAndDisplay(targetTypeConstructor.ContainingType, genericTypeArgumentMap);
+        ConstructAndDisplay(staticMethodReturnType ?? targetTypeConstructor.ContainingType, genericTypeArgumentMap);
 
     /// <summary>
     /// Returns the identifier display string with type parameter names remapped
@@ -39,7 +45,9 @@ internal class TargetTypeReturn(
     /// Returns the display string for the method return type, using the override if set.
     /// </summary>
     public string ReturnTypeDisplayString() =>
-        returnTypeOverride?.ToGlobalDisplayString() ?? IdentifierDisplayString();
+        returnTypeOverride?.ToGlobalDisplayString()
+        ?? staticMethodReturnType?.ToGlobalDisplayString()
+        ?? IdentifierDisplayString();
 
     /// <summary>
     /// Returns the display string for the method return type, applying generic type argument mappings.

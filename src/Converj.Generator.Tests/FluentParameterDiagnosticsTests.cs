@@ -20,7 +20,7 @@ public class FluentParameterDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("value")]
@@ -31,7 +31,7 @@ public class FluentParameterDiagnosticsTests
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int value) { Value = value; }
 
                 public int Value { get; set; }
@@ -61,7 +61,7 @@ public class FluentParameterDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("value")]
@@ -75,7 +75,7 @@ public class FluentParameterDiagnosticsTests
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int value) { Value = value; }
 
                 public int Value { get; set; }
@@ -105,7 +105,7 @@ public class FluentParameterDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("value")]
@@ -114,7 +114,7 @@ public class FluentParameterDiagnosticsTests
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(int value) { }
             }
             """;

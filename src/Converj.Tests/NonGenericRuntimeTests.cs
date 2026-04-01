@@ -5,10 +5,10 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal partial class NonGenericFactory;
 
-[FluentConstructor<NonGenericFactory>]
+[FluentTarget<NonGenericFactory>]
 internal record NonGenericTarget(int Number, string Text);
 
 #endregion

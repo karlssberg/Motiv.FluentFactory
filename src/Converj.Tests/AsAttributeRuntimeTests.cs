@@ -6,13 +6,13 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+[FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
 internal partial class AsAliasFactory;
 
-[FluentConstructor<AsAliasFactory>]
+[FluentTarget<AsAliasFactory>]
 internal partial record AsStep1<[As("T")] TNum>(TNum X) where TNum : INumber<TNum>;
 
-[FluentConstructor<AsAliasFactory>]
+[FluentTarget<AsAliasFactory>]
 internal partial record AsStep2<T>(T X, T Y) where T : INumber<T>;
 
 #endregion

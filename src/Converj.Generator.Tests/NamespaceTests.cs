@@ -13,7 +13,7 @@ public class NamespaceTests
 
             namespace Test
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -22,7 +22,7 @@ public class NamespaceTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Test.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Test.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -40,7 +40,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -157,7 +157,7 @@ public class NamespaceTests
 
             namespace Test
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -165,7 +165,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(Test.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Test.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -183,7 +183,7 @@ public class NamespaceTests
             {
                 public partial class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {

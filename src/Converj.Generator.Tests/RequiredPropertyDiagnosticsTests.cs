@@ -40,12 +40,12 @@ public class RequiredPropertyDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name) { Name = name; }
                 public string Name { get; set; }
 
@@ -78,12 +78,12 @@ public class RequiredPropertyDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Person
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Person(string name) { Name = name; }
                 public string Name { get; set; }
 
@@ -122,7 +122,7 @@ public class RequiredPropertyDiagnosticsTests
                     DiagnosticResult.CompilerError("CS9035")
                         .WithSpan("Converj.Generator\\Converj.Generator.FluentFactoryGenerator\\Test.Factory.g.cs", 14, 24, 14, 43)
                         .WithArguments("Test.Person.Email"),
-                    DiagnosticResult.CompilerWarning(FluentMethodPropertyWithCreateMethodNone.Id)
+                    DiagnosticResult.CompilerWarning(FluentMethodPropertyWithBuilderNone.Id)
                         .WithSpan(SourceFile, 14, 28, 14, 33)
                         .WithArguments("Email", "Test.Person")
                 },
@@ -143,12 +143,12 @@ public class RequiredPropertyDiagnosticsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Person
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person([FluentMethod] string name) { Name = name; }
                 public string Name { get; set; }
             }

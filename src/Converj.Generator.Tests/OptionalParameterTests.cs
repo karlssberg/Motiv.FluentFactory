@@ -15,12 +15,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyService
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyService(string name, int timeout = 30)
                 {
                     Name = name;
@@ -112,12 +112,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyHandler
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyHandler(string host, int port, int retries = 3)
                 {
                     Host = host;
@@ -236,12 +236,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyWidget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyWidget(string name, string label = "default", bool isEnabled = true, IDisposable? handler = null)
                 {
                     Name = name;
@@ -361,12 +361,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyService
             {
-                [FluentConstructor(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
                 public MyService(string name, int timeout = 30)
                 {
                     Name = name;
@@ -457,16 +457,16 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory(ReturnType = typeof(Animal))]
+            [FluentRoot(ReturnType = typeof(Animal))]
             public abstract partial record Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public record Dog(int Legs = 4) : Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public record Cat(int Legs = 4) : Animal;
 
-            [FluentConstructor(typeof(Animal))]
+            [FluentTarget(typeof(Animal))]
             public record Fish(int FinCount = 1, int EyeCount = 2) : Animal;
             """;
 
@@ -646,12 +646,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyService
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyService(
                     string name,
                     [FluentMethod("HavingTimeout")] int timeout = 30)
@@ -749,12 +749,12 @@ public class OptionalParameterTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Config
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Config(string host = "localhost", int port = 80)
                 {
                     Host = host;

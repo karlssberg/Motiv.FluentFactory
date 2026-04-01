@@ -5,13 +5,13 @@ using VerifyCS =
 namespace Converj.Generator.Tests;
 
 /// <summary>
-/// Tests for the interaction between CreateMethod.None (ExistingTypeFluentStep) and optional parameters.
+/// Tests for the interaction between BuilderMethod.None (ExistingTypeFluentStep) and optional parameters.
 /// ExistingTypeFluentStep lacks PropertyFieldStorage, so optional methods may reference non-existent fields.
 /// </summary>
 public class CreateMethodNoneOptionalTests
 {
     /// <summary>
-    /// When a constructor uses CreateMethod.None on a partial class and has an optional parameter,
+    /// When a constructor uses BuilderMethod.None on a partial class and has an optional parameter,
     /// the generated partial class should include a fluent setter method for the optional parameter.
     /// The method returns a new instance with the optional value set.
     /// </summary>
@@ -25,12 +25,12 @@ public class CreateMethodNoneOptionalTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Config
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Config(string name, int timeout = 30)
                 {
                     Name = name;
@@ -90,7 +90,7 @@ public class CreateMethodNoneOptionalTests
     }
 
     /// <summary>
-    /// When a constructor uses CreateMethod.None on a partial class and has multiple optional
+    /// When a constructor uses BuilderMethod.None on a partial class and has multiple optional
     /// parameters, the generated partial class should include fluent setter methods for each.
     /// </summary>
     [Fact]
@@ -103,12 +103,12 @@ public class CreateMethodNoneOptionalTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Config
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Config(string name, int timeout = 30, bool verbose = false)
                 {
                     Name = name;
@@ -179,7 +179,7 @@ public class CreateMethodNoneOptionalTests
     }
 
     /// <summary>
-    /// Variant: CreateMethod.None where ALL parameters are optional (zero required).
+    /// Variant: BuilderMethod.None where ALL parameters are optional (zero required).
     /// The target type itself is the step, with no required parameters to create steps for.
     /// </summary>
     [Fact]
@@ -192,12 +192,12 @@ public class CreateMethodNoneOptionalTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Config
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Config(string host = "localhost", int port = 8080)
                 {
                     Host = host;

@@ -30,12 +30,12 @@ public class ParameterModifierTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(ref int value)
                 {
                     Value = value;
@@ -74,12 +74,12 @@ public class ParameterModifierTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(out int value)
                 {
                     value = 0;
@@ -119,12 +119,12 @@ public class ParameterModifierTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyTarget(ref readonly int value)
                 {
                     Value = value;
@@ -163,10 +163,10 @@ public class ParameterModifierTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
-            [FluentConstructor(typeof(Factory))]
+            [FluentTarget(typeof(Factory))]
             public class MyTarget
             {
                 public MyTarget(int value)

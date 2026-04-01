@@ -17,12 +17,12 @@ public class NamespaceConflictTests
 
             public class String { }
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(string name, int value)
                 {
                     Name = name;
@@ -128,12 +128,12 @@ public class NamespaceConflictTests
 
             public class List { }
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Target
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Target(List<string> items)
                 {
                     Items = items;

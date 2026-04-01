@@ -5,13 +5,13 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentFactory]
+[FluentRoot]
 internal static partial class ArrayFactory;
 
-[FluentConstructor(typeof(ArrayFactory))]
+[FluentTarget(typeof(ArrayFactory))]
 internal record ArrayTarget(int[] Items);
 
-[FluentConstructor(typeof(ArrayFactory))]
+[FluentTarget(typeof(ArrayFactory))]
 internal record StringArrayTarget(string[] Names);
 
 #endregion

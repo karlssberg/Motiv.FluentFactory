@@ -9,7 +9,7 @@ public class RecordVariationTests
 
     /// <summary>
     /// Tests that the generator uses the explicit constructor parameters when a record has both positional parameters
-    /// (synthesized primary constructor) and an explicit constructor annotated with [FluentConstructor].
+    /// (synthesized primary constructor) and an explicit constructor annotated with [FluentTarget].
     /// The generator should use the 3-parameter explicit constructor (name, age, email) rather than
     /// the 2-parameter synthesized one from the positional parameters.
     /// </summary>
@@ -23,12 +23,12 @@ public class RecordVariationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public record MyBuildTarget(string Name, int Age)
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string name, int age, string email) : this(name, age)
                 {
                     Email = email;
@@ -121,7 +121,7 @@ public class RecordVariationTests
     /// <summary>
     /// Tests that the generator treats a record with only an explicit constructor (no positional parameters)
     /// the same as a regular class constructor. The record has no synthesized primary constructor from
-    /// positional parameters, so the [FluentConstructor]-annotated explicit constructor is the only one.
+    /// positional parameters, so the [FluentTarget]-annotated explicit constructor is the only one.
     /// </summary>
     [Fact]
     internal async Task Should_generate_standard_fluent_chain_when_record_has_only_explicit_constructor()
@@ -133,12 +133,12 @@ public class RecordVariationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public record MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(int id, string value)
                 {
                     Id = id;
@@ -208,7 +208,7 @@ public class RecordVariationTests
 
     /// <summary>
     /// Tests that the generator handles a record that mixes positional parameters with explicit additional members.
-    /// The record has one positional parameter (Name) but an explicit constructor annotated with [FluentConstructor]
+    /// The record has one positional parameter (Name) but an explicit constructor annotated with [FluentTarget]
     /// that takes 3 parameters (name, priority, isEnabled). The generator should produce a fluent chain
     /// for the full 3-parameter explicit constructor, not just the 1-parameter positional one.
     /// </summary>
@@ -222,12 +222,12 @@ public class RecordVariationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public record MyBuildTarget(string Name)
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string name, int priority, bool isEnabled) : this(name)
                 {
                     Priority = priority;
@@ -325,7 +325,7 @@ public class RecordVariationTests
     /// from running. The secondary constructor's non-positional parameter (email) may get NullStorage,
     /// causing the generated code to pass 'default' instead of the actual value.
     ///
-    /// This test uses CreateMethod.Dynamic (not None) to exercise the RegularFluentStep path
+    /// This test uses BuilderMethod.DynamicSuffix (not None) to exercise the RegularFluentStep path
     /// where the generator must store the email parameter in a generated step field.
     /// </summary>
     [Fact]
@@ -338,12 +338,12 @@ public class RecordVariationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public record Person(string Name, int Age)
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Person(string name, int age, string email) : this(name, age)
                 {
                     Email = email;

@@ -17,12 +17,11 @@ internal static class FluentFactoryMethodDeclaration
 
         var methodArguments = GetMethodArguments(method);
 
-        var returnObjectExpression = TargetTypeObjectCreationExpression.Create(
-            method,
-            fieldArguments,
-            methodArguments);
+        ExpressionSyntax returnExpression = method is CreationMethod { IsStaticMethodTarget: true } staticCreation
+            ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldArguments, methodArguments)
+            : TargetTypeObjectCreationExpression.Create(method, fieldArguments, methodArguments);
 
-        var methodDeclaration = CreateMethodDeclarationSyntax(method, returnObjectExpression);
+        var methodDeclaration = CreateMethodDeclarationSyntax(method, returnExpression);
 
         if (!method.TypeParameters.Any())
             return methodDeclaration;
@@ -39,11 +38,12 @@ internal static class FluentFactoryMethodDeclaration
 
     private static MethodDeclarationSyntax CreateMethodDeclarationSyntax(
         IFluentMethod method,
-        ObjectCreationExpressionSyntax returnObjectExpression)
+        ExpressionSyntax returnExpression)
     {
         var returnType = method.Return is TargetTypeReturn targetTypeReturn
             ? ParseTypeName(targetTypeReturn.ReturnTypeDisplayString())
-            : returnObjectExpression.Type;
+            : returnExpression is ObjectCreationExpressionSyntax objCreation ? objCreation.Type
+            : ParseTypeName(method.Return.IdentifierDisplayString());
 
         var methodDeclaration = MethodDeclaration(
                 returnType,
@@ -55,7 +55,7 @@ internal static class FluentFactoryMethodDeclaration
             .WithModifiers(
                 TokenList(
                     Token(SyntaxKind.PublicKeyword)))
-            .WithBody(Block(ReturnStatement(returnObjectExpression)));
+            .WithBody(Block(ReturnStatement(returnExpression)));
 
         if (method.SourceParameter is not null)
         {

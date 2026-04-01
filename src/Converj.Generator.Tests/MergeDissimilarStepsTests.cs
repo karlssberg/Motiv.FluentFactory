@@ -19,12 +19,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T>
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(T value1)
                 {
                     Value1 = value1;
@@ -35,7 +35,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public MyBuildTarget(string value1, string value2)
                 {
                     Value1 = value1;
@@ -123,12 +123,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -144,7 +144,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     String string1,
                     String string2,
@@ -338,12 +338,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     String value2,
@@ -354,7 +354,7 @@ public class MergeDissimilarStepsTests
                     Value3 = value3;
                 }
 
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value3)
@@ -524,12 +524,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -538,7 +538,7 @@ public class MergeDissimilarStepsTests
                     Value2 = value2;
                 }
 
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(
                     T2 value2,
                     T1 value1)
@@ -703,23 +703,23 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Shape;
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial record Square(int Width)
             {
                 public int Width { get; set; } = Width;
             }
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int Width { get; set; } = width;
                 public int Height { get; set; } = height;
             }
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int Width { get; set; } = Width;
@@ -801,7 +801,7 @@ public class MergeDissimilarStepsTests
 
             namespace TestFactory
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -809,7 +809,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -824,7 +824,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [FluentMethod("WithValueB")]string valueB2,
@@ -847,7 +847,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -866,7 +866,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetD<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetD(
                         [FluentMethod("WithValueA")]T valueD1,
                         [FluentMethod("WithValueB")]string valueD2,
@@ -977,7 +977,7 @@ public class MergeDissimilarStepsTests
 
             namespace TestFactory
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
@@ -985,7 +985,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -1000,7 +1000,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -1019,7 +1019,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentConstructor(typeof(TestFactory.Factory), CreateMethod = CreateMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [MultipleFluentMethods(typeof(MultipleMethods))]Func<string> valueB2,
@@ -1169,23 +1169,23 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Shape;
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial record Square(int Width)
             {
                 public int A { get; set; } = Width;
             }
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int B { get; set; } = width;
                 public int C { get; set; } = height;
             }
 
-            [FluentConstructor(typeof(Shape), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int D { get; set; } = Width;
@@ -1268,7 +1268,7 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Spec
             {
             }
@@ -1277,13 +1277,13 @@ public class MergeDissimilarStepsTests
             {
             }
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct PolicyResultPredicatePropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate)
             {
             }
 
-            [FluentConstructor(typeof(Spec), CreateMethod = CreateMethod.None)]
+            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
             public readonly partial struct MultiAssertionExplanationFromPolicyPropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate,
                 [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, PolicyResultBase<TMetadata>, IEnumerable<string>> trueBecause,
@@ -1402,9 +1402,9 @@ public class MergeDissimilarStepsTests
     }
 
     /// <summary>
-    /// Issue #12: CreateMethod.None taints merged metadata asymmetrically.
-    /// Two constructors share the prefix (string name). Alpha uses CreateMethod.None (returns Alpha directly),
-    /// Beta uses CreateMethod.Dynamic (creates via CreateBeta()). After the shared WithName step,
+    /// Issue #12: BuilderMethod.None taints merged metadata asymmetrically.
+    /// Two constructors share the prefix (string name). Alpha uses BuilderMethod.None (returns Alpha directly),
+    /// Beta uses BuilderMethod.DynamicSuffix (creates via CreateBeta()). After the shared WithName step,
     /// both paths must be reachable — the None shouldn't prevent Beta's creation method.
     /// </summary>
     [Fact]
@@ -1417,12 +1417,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Alpha
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;
@@ -1433,7 +1433,7 @@ public class MergeDissimilarStepsTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Beta(string name, int age)
                 {
                     Name = name;
@@ -1529,12 +1529,12 @@ public class MergeDissimilarStepsTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Alpha
             {
-                [FluentConstructor(typeof(Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;
@@ -1545,7 +1545,7 @@ public class MergeDissimilarStepsTests
 
             public class Beta
             {
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public Beta(string name)
                 {
                     Name = name;

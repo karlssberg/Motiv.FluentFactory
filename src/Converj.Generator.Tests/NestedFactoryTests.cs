@@ -4,7 +4,7 @@ using VerifyCS =
 namespace Converj.Generator.Tests;
 
 /// <summary>
-/// Tests for <c>[FluentFactory]</c> applied to types nested inside other types.
+/// Tests for <c>[FluentRoot]</c> applied to types nested inside other types.
 /// The generator must wrap the generated partial class inside the containing type hierarchy.
 /// </summary>
 public class NestedFactoryTests
@@ -12,7 +12,7 @@ public class NestedFactoryTests
     private const string SourceFile = "Source.cs";
 
     /// <summary>
-    /// Verifies that when a <c>[FluentFactory]</c> is declared as a nested type inside another class,
+    /// Verifies that when a <c>[FluentRoot]</c> is declared as a nested type inside another class,
     /// the generated partial class is correctly wrapped inside the containing type declaration.
     /// Without this fix, the generator emits <c>partial class Factory</c> at namespace level,
     /// which creates a new unrelated type instead of extending the nested factory.
@@ -28,13 +28,13 @@ public class NestedFactoryTests
 
             public partial class Outer
             {
-                [FluentFactory]
+                [FluentRoot]
                 public static partial class Factory;
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Outer.Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Outer.Factory), BuilderMethod = BuilderMethod.None)]
                 public Target(string name)
                 {
                     Name = name;
@@ -98,14 +98,14 @@ public class NestedFactoryTests
             {
                 public partial class Level2
                 {
-                    [FluentFactory]
+                    [FluentRoot]
                     public static partial class Factory;
                 }
             }
 
             public class Target
             {
-                [FluentConstructor(typeof(Level1.Level2.Factory), CreateMethod = CreateMethod.None)]
+                [FluentTarget(typeof(Level1.Level2.Factory), BuilderMethod = BuilderMethod.None)]
                 public Target(int value)
                 {
                     Value = value;

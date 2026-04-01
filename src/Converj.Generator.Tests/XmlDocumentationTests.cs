@@ -16,7 +16,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -25,7 +25,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance of MyBuildTarget.
                 /// </summary>
                 /// <param name="value">The initial value for the target.</param>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -105,7 +105,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -113,7 +113,7 @@ public class XmlDocumentationTests
                 /// <summary>
                 /// Constructs a new instance with the given value.
                 /// </summary>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -193,7 +193,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -202,7 +202,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance of MyBuildTarget.
                 /// </summary>
                 /// <param name="value">The input value to process.</param>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget([MultipleFluentMethods(typeof(Methods))]string value)
                 {
                     Value = value;
@@ -314,7 +314,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -324,7 +324,7 @@ public class XmlDocumentationTests
                 /// </summary>
                 /// <param name="name">The name of the instance.</param>
                 /// <param name="value">The numeric value to store.</param>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(string name, int value)
                 {
                     Name = name;
@@ -432,7 +432,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -441,7 +441,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance.
                 /// <param name="value">Unclosed parameter tag
                 /// </summary>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -520,7 +520,7 @@ public class XmlDocumentationTests
 
             namespace Test;
 
-            [FluentFactory]
+            [FluentRoot]
             public static partial class Factory;
 
             public class MyBuildTarget
@@ -529,7 +529,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance.
                 /// </summary>
                 /// <param name="processor">This parameter documentation should be ignored.</param>
-                [FluentConstructor(typeof(Factory))]
+                [FluentTarget(typeof(Factory))]
                 public MyBuildTarget([MultipleFluentMethods(typeof(Methods))]string processor)
                 {
                     Value = processor;
