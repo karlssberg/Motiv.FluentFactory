@@ -36,10 +36,19 @@ internal partial class Vehicles
         [FluentMethod("WithCar")]Car<ICarEngine>? car = null,
         [FluentMethod("WithTrain")]Train<ITrainEngine>? train = null)
     {
-        if (car is not null)
-            return $"Dispatched car: {car}";
-        if (train is not null)
-            return $"Dispatched train: {train}";
-        return "No vehicle to dispatch";
+        return (car, train) switch
+        {
+            (not null, not null) => 
+                $"Both car ({car}) and train ({train}) are dispatched",
+            
+            (not null, null) =>
+                $"Dispatched car: {car}",
+            
+            (null, not null) =>
+                $"Dispatched train: {train}",
+            
+            _ =>
+                "No vehicle to dispatch"
+        };
     }
 }
