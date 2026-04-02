@@ -45,7 +45,7 @@ public class FluentRootAttribute : Attribute
     public bool AllowPartialParameterOverlap { get; set; }
 
     /// <summary>
-    /// The verb used for initial method names when <see cref="BuilderMethod"/> is <see cref="Attributes.BuilderMethod.First"/>. Default is "Build".
+    /// The verb used for initial method names when <see cref="BuilderMethod"/> is <see cref="Attributes.BuilderMethod.Eager"/>. Default is "Build".
     /// For example, "Build" + "Dog" = <c>BuildDog()</c>.
     /// Can be overridden per-target via <see cref="FluentTargetAttribute.InitialVerb"/>.
     /// </summary>

@@ -33,5 +33,5 @@ public enum BuilderMethod
     /// The initial method name is controlled by <see cref="FluentTargetAttribute.InitialVerb"/>
     /// or <see cref="FluentRootAttribute.InitialVerb"/>.
     /// </summary>
-    First = 3,
+    Eager = 3,
 }

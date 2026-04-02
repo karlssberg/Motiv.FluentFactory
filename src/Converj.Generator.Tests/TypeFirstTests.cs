@@ -17,7 +17,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public static partial class Factory;
 
             public class Dog
@@ -120,7 +120,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public static partial class Factory;
 
             public class Dog
@@ -287,7 +287,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public static partial class Factory;
 
             public class Circle
@@ -441,7 +441,7 @@ public class TypeFirstTests
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.First)]
+                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.Eager)]
                 public Dog(string name)
                 {
                     Name = name;
@@ -583,7 +583,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First, InitialVerb = "Make")]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager, InitialVerb = "Make")]
             public static partial class Factory;
 
             public class Dog
@@ -688,7 +688,7 @@ public class TypeFirstTests
 
             namespace Test
             {
-                [FluentRoot(BuilderMethod = BuilderMethod.First)]
+                [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
                 public static partial class Factory;
 
                 namespace A
@@ -760,7 +760,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public static partial class Factory;
 
             public class Config
@@ -886,7 +886,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -1009,7 +1009,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.First)]
+            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
             public static partial class Factory;
 
             public partial class Widget

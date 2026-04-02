@@ -114,7 +114,7 @@ internal record FluentTargetContext
     public bool IsAttributedUsedOnContainingType { get; }
 
     /// <summary>
-    /// The verb used for the initial method name in First mode (e.g., "Build" -> "BuildDog").
+    /// The verb used for the initial method name in Eager mode (e.g., "Build" -> "BuildDog").
     /// </summary>
     public string InitialVerb { get; }
 

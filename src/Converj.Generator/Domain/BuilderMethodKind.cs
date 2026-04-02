@@ -8,5 +8,5 @@ internal enum BuilderMethodKind
     DynamicSuffix = 0,
     FixedName = 1,
     None = 2,
-    First = 3
+    Eager = 3
 }

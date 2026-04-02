@@ -81,7 +81,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         // Split constructors: type-first ones are excluded from the parameter-first trie
         var parameterFirstContexts = fluentTargetContexts
-            .Where(c => c.Builder != BuilderMethodKind.First)
+            .Where(c => c.Builder != BuilderMethodKind.Eager)
             .ToImmutableArray();
 
         var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
@@ -125,7 +125,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         // Type-first chain generation: group by target type, build per-type trie
         var typeFirstContexts = fluentTargetContexts
-            .Where(c => c.Builder == BuilderMethodKind.First)
+            .Where(c => c.Builder == BuilderMethodKind.Eager)
             .ToImmutableArray();
         if (!typeFirstContexts.IsEmpty)
         {

@@ -43,7 +43,7 @@ public class FluentTargetAttribute(Type rootType) : Attribute
     public Type? ReturnType { get; set; }
 
     /// <summary>
-    /// The verb for this target's initial method when using <see cref="Attributes.BuilderMethod.First"/>.
+    /// The verb for this target's initial method when using <see cref="Attributes.BuilderMethod.Eager"/>.
     /// Overrides the root-level <see cref="FluentRootAttribute.InitialVerb"/> if set.
     /// </summary>
     public string? InitialVerb { get; set; }
