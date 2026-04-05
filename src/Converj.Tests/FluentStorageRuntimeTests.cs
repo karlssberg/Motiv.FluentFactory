@@ -11,7 +11,7 @@ namespace Converj.Tests;
 [FluentRoot]
 internal partial class StorageFactory;
 
-[FluentTarget<StorageFactory>(BuilderMethod = BuilderMethod.None)]
+[FluentTarget<StorageFactory>(TerminalMethod = TerminalMethod.None)]
 internal partial record StorageStepA(int X, int Y, string Z)
 {
     [FluentStorage]
@@ -37,7 +37,7 @@ internal class StorageTargetA
 [FluentRoot]
 internal partial class ExplicitStorageFactory;
 
-[FluentTarget<ExplicitStorageFactory>(BuilderMethod = BuilderMethod.None)]
+[FluentTarget<ExplicitStorageFactory>(TerminalMethod = TerminalMethod.None)]
 internal partial record ExplicitStepA(int Id, string Label)
 {
     [FluentStorage("label")]
@@ -61,7 +61,7 @@ internal class ExplicitTargetA
 [FluentRoot]
 internal partial class NullableStorageFactory;
 
-[FluentTarget<NullableStorageFactory>(BuilderMethod = BuilderMethod.None)]
+[FluentTarget<NullableStorageFactory>(TerminalMethod = TerminalMethod.None)]
 internal partial record NullableStepA(int A, int B, string? Tag);
 
 [FluentTarget<NullableStorageFactory>]
@@ -79,8 +79,8 @@ internal class NullableTargetA
     }
 }
 
-// Scenario 4: Single constructor step with BuilderMethod.None.
-[FluentRoot(BuilderMethod = BuilderMethod.None)]
+// Scenario 4: Single constructor step with TerminalMethod.None.
+[FluentRoot(TerminalMethod = TerminalMethod.None)]
 internal partial class TwoCtorStepFactory;
 
 internal partial class TwoCtorStep

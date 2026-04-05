@@ -25,7 +25,7 @@ public class LargeParameterCountTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int id,
                     string name,
@@ -202,7 +202,7 @@ public class LargeParameterCountTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int id,
                     string name,

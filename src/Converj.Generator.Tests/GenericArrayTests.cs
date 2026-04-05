@@ -23,7 +23,7 @@ public class GenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T[] values)
                 {
                     Values = values;
@@ -86,7 +86,7 @@ public class GenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(List<T>[] values)
                 {
                     Values = values;
@@ -148,7 +148,7 @@ public class GenericArrayTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T[][] values)
                 {
                     Values = values;

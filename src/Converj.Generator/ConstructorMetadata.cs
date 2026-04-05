@@ -13,11 +13,13 @@ internal class ConstructorMetadata(FluentTargetContext targetContext)
 
     public IList<IMethodSymbol> CandidateConstructors { get; } = [targetContext.Constructor];
 
-    public BuilderMethodKind Builder { get; set; } = targetContext.Builder;
+    public TerminalMethodKind TerminalMethod { get; set; } = targetContext.TerminalMethod;
 
     public INamedTypeSymbol? ReturnType { get; } = targetContext.ReturnType;
 
-    public string InitialVerb { get; } = targetContext.InitialVerb;
+    public bool HasEntryMethod { get; } = targetContext.HasEntryMethod;
+
+    public string EntryMethodName { get; } = targetContext.EntryMethodName;
 
     /// <summary>
     /// Whether this target is a static method (not a constructor).

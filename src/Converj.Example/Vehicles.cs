@@ -20,7 +20,7 @@ internal partial class Vehicles
     internal interface ITrainEngine;
     internal class TrainEngine : ITrainEngine;
 
-    [FluentTarget<Vehicle>(BuilderMethod = BuilderMethod.None)]
+    [FluentTarget<Vehicle>(TerminalMethod = TerminalMethod.None)]
     internal partial record Car<[As("TEngine")]TCarEngine>(
         [FluentMethod("WithCarEngine")] TCarEngine Engine,
         int Age) 

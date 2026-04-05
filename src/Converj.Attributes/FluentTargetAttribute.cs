@@ -19,12 +19,12 @@ public class FluentTargetAttribute(Type rootType) : Attribute
     /// <summary>
     /// Controls how the builder chain is structured for this target.
     /// </summary>
-    public BuilderMethod BuilderMethod { get; set; }
+    public TerminalMethod TerminalMethod { get; set; }
 
     /// <summary>
     /// The verb used for the terminal method name. If not set, "Create" will be used.
-    /// In <see cref="Attributes.BuilderMethod.DynamicSuffix"/> mode, the target type name is appended (e.g., "Create" + "User" = "CreateUser").
-    /// In <see cref="Attributes.BuilderMethod.FixedName"/> mode, the verb is used as-is.
+    /// In <see cref="Attributes.TerminalMethod.DynamicSuffix"/> mode, the target type name is appended (e.g., "Create" + "User" = "CreateUser").
+    /// In <see cref="Attributes.TerminalMethod.FixedName"/> mode, the verb is used as-is.
     /// </summary>
     public string? TerminalVerb { get; set; }
 
@@ -41,12 +41,6 @@ public class FluentTargetAttribute(Type rootType) : Attribute
     /// The target type must be assignable to this type (e.g., implement the interface or extend the base class).
     /// </summary>
     public Type? ReturnType { get; set; }
-
-    /// <summary>
-    /// The verb for this target's initial method when using <see cref="Attributes.BuilderMethod.Eager"/>.
-    /// Overrides the root-level <see cref="FluentRootAttribute.InitialVerb"/> if set.
-    /// </summary>
-    public string? EagerVerb { get; set; }
 }
 
 /// <summary>

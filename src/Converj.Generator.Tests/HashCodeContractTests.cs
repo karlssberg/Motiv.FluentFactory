@@ -34,7 +34,7 @@ public class HashCodeContractTests
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetA([FluentMethod("SetValue")] string text)
                 {
                     Text = text;
@@ -45,7 +45,7 @@ public class HashCodeContractTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("WithText")] string text)
                 {
                     Text = text;
@@ -119,7 +119,7 @@ public class HashCodeContractTests
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string value)
                 {
                     Value = value;
@@ -130,7 +130,7 @@ public class HashCodeContractTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("WithValue")] string value)
                 {
                     Value = value;

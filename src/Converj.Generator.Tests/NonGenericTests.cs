@@ -103,7 +103,7 @@ public class NonGenericTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int number,
                     string text)
@@ -189,7 +189,7 @@ public class NonGenericTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int number,
                     string text,
@@ -304,7 +304,7 @@ public class NonGenericTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int number,
                     string text,

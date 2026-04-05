@@ -29,12 +29,12 @@ public class MalformedAttributeTests
                 [FluentRoot]
                 public partial class Factory;
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
                 public partial record MyRecord(int Value, string Name);
             }
             """;
 
-        // Line 8: [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
+        // Line 8: [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
         // Attribute starts at col 6 (1-based), ends after closing bracket.
         // The entire attribute span is expected for CVJG0010.
         await new VerifyCS.Test
@@ -43,8 +43,8 @@ public class MalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 95)
-                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
+                    .WithSpan("Source.cs", 8, 6, 8, 97)
+                    .WithMessage("TerminalVerb cannot be used with TerminalMethod.None"),
             }
         }.RunAsync();
     }
@@ -115,7 +115,7 @@ public class MalformedAttributeTests
                     [FluentTarget(typeof(Factory), TerminalVerb = "Build")]
                     public MyTarget(int value) { }
 
-                    [FluentTarget(typeof(Factory), TerminalVerb = "Build", BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalVerb = "Build", TerminalMethod = TerminalMethod.None)]
                     public MyTarget(string name) { }
                 }
             }
@@ -133,8 +133,8 @@ public class MalformedAttributeTests
                     .WithSpan("Source.cs", 13, 40, 13, 62)
                     .WithMessage("Terminal method name must be unique"),
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 13, 10, 13, 99)
-                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
+                    .WithSpan("Source.cs", 13, 10, 13, 101)
+                    .WithMessage("TerminalVerb cannot be used with TerminalMethod.None"),
             }
         }.RunAsync();
     }

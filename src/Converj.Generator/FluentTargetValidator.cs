@@ -76,15 +76,15 @@ internal static class FluentTargetValidatorExtensions
             switch (defaults)
             {
                 case { TerminalVerb: not null }
-                        when !IsValidTerminalVerbForMode(defaults.TerminalVerb, defaults.Builder ?? BuilderMethodKind.DynamicSuffix):
+                        when !IsValidTerminalVerbForMode(defaults.TerminalVerb, defaults.TerminalMethod ?? TerminalMethodKind.DynamicSuffix):
                     yield return Diagnostic.Create(FluentDiagnostics.InvalidTerminalVerb, location);
                     break;
 
-                case { Builder: BuilderMethodKind.None,  TerminalVerb.Length: > 0 }:
+                case { TerminalMethod: TerminalMethodKind.None,  TerminalVerb.Length: > 0 }:
                     yield return Diagnostic.Create(FluentDiagnostics.TerminalVerbWithNone, location);
                     break;
 
-                case { Builder: BuilderMethodKind.None, TerminalVerb: "" }:
+                case { TerminalMethod: TerminalMethodKind.None, TerminalVerb: "" }:
                     yield return Diagnostic.Create(FluentDiagnostics.EmptyTerminalVerbWithNone, location);
                     break;
             }
@@ -92,7 +92,7 @@ internal static class FluentTargetValidatorExtensions
             if (defaults.MethodPrefix is not null && !IsValidMethodPrefix(defaults.MethodPrefix))
                 yield return Diagnostic.Create(FluentDiagnostics.InvalidMethodPrefix, location);
 
-            if (defaults is { Builder: BuilderMethodKind.None, ReturnType: not null })
+            if (defaults is { TerminalMethod: TerminalMethodKind.None, ReturnType: not null })
                 yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
                     FindNamedArgumentLocation(factoryAttribute, "ReturnType"));
         }
@@ -128,7 +128,7 @@ internal static class FluentTargetValidatorExtensions
         var constructorContextWithInvalidTerminalVerb = fluentTargetContexts
             .Except(duplicateContexts)
             .Where(HasExplicitTerminalVerb)
-            .Where(context => !IsValidTerminalVerbForMode(context.TerminalVerb, context.Builder));
+            .Where(context => !IsValidTerminalVerbForMode(context.TerminalVerb, context.TerminalMethod));
 
         foreach (var context in constructorContextWithInvalidTerminalVerb)
         {
@@ -160,9 +160,9 @@ internal static class FluentTargetValidatorExtensions
         return char.IsLetter(prefix[0]) && prefix.Skip(1).All(char.IsLetterOrDigit);
     }
 
-    private static bool IsValidTerminalVerbForMode(string? verb, BuilderMethodKind mode)
+    private static bool IsValidTerminalVerbForMode(string? verb, TerminalMethodKind mode)
     {
-        if (verb is { Length: 0 } && mode is BuilderMethodKind.DynamicSuffix or BuilderMethodKind.None)
+        if (verb is { Length: 0 } && mode is TerminalMethodKind.DynamicSuffix or TerminalMethodKind.None)
             return true;
 
         return IsValidTerminalVerb(verb);
@@ -211,18 +211,18 @@ internal static class FluentTargetValidatorExtensions
     private static string ResolveTerminalMethodName(FluentTargetContext context)
     {
         var verb = context.TerminalVerb ?? DefaultTerminalVerb;
-        return context.Builder switch
+        return context.TerminalMethod switch
         {
-            BuilderMethodKind.FixedName => verb,
+            TerminalMethodKind.FixedName => verb,
             _ => $"{verb}{context.Constructor.ContainingType.ToCreateMethodSuffix()}"
         };
     }
 
     private static IEnumerable<Diagnostic> ValidateTerminalVerbConflicts(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        // Check for BuilderMethod.None used with non-empty TerminalVerb, only when the constructor explicitly sets at least one
+        // Check for TerminalMethod.None used with non-empty TerminalVerb, only when the constructor explicitly sets at least one
         var conflictedContexts = fluentTargetContexts.AsEnumerable().Where(context =>
-            context.Builder == BuilderMethodKind.None
+            context.TerminalMethod == TerminalMethodKind.None
             && !string.IsNullOrEmpty(context.TerminalVerb)
             && (HasExplicitTerminalVerb(context) || HasExplicitBuilder(context)));
 
@@ -235,7 +235,7 @@ internal static class FluentTargetValidatorExtensions
 
         // Empty TerminalVerb + None -> warning CVJG0017
         var emptyVerbWithNone = fluentTargetContexts.AsEnumerable().Where(context =>
-            context.Builder == BuilderMethodKind.None
+            context.TerminalMethod == TerminalMethodKind.None
             && context.TerminalVerb is ""
             && HasExplicitTerminalVerb(context));
 
@@ -306,7 +306,7 @@ internal static class FluentTargetValidatorExtensions
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "TerminalVerb");
 
     private static bool HasExplicitBuilder(FluentTargetContext context) =>
-        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "BuilderMethod");
+        context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "TerminalMethod");
 
     private static bool HasExplicitMethodPrefix(FluentTargetContext context) =>
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "MethodPrefix");
@@ -414,11 +414,11 @@ internal static class FluentTargetValidatorExtensions
 
         // Separate constructors with None from those that produce Create methods
         var constructorsWithCreate = group
-            .Where(ctx => ctx.Builder != BuilderMethodKind.None)
+            .Where(ctx => ctx.TerminalMethod != TerminalMethodKind.None)
             .ToList();
 
         var constructorsWithNoCreate = group
-            .Where(ctx => ctx.Builder == BuilderMethodKind.None)
+            .Where(ctx => ctx.TerminalMethod == TerminalMethodKind.None)
             .ToList();
 
         // NoCreateMethod constructors use the containing type as the step, so at most one
@@ -448,7 +448,7 @@ internal static class FluentTargetValidatorExtensions
 
         // Constructors with None don't produce create methods and can't be disambiguated by name
         var constructorsWithCreate = constructors
-            .Where(ctx => ctx.Builder != BuilderMethodKind.None)
+            .Where(ctx => ctx.TerminalMethod != TerminalMethodKind.None)
             .ToList();
 
         if (constructorsWithCreate.Count != constructors.Count)
@@ -635,7 +635,7 @@ internal static class FluentTargetValidatorExtensions
         foreach (var rootType in rootTypes)
         {
             var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
-            if (defaults.ReturnType is null || defaults.Builder == BuilderMethodKind.None)
+            if (defaults.ReturnType is null || defaults.TerminalMethod == TerminalMethodKind.None)
                 continue;
 
             var factoryAttribute = rootType.GetAttributes(TypeName.FluentRootAttribute).FirstOrDefault();
@@ -666,7 +666,7 @@ internal static class FluentTargetValidatorExtensions
 
             var location = GetAttributeLocation(context.AttributeData);
 
-            if (context.Builder == BuilderMethodKind.None)
+            if (context.TerminalMethod == TerminalMethodKind.None)
             {
                 yield return Diagnostic.Create(FluentDiagnostics.ReturnTypeWithNone,
                     FindNamedArgumentLocation(context, "ReturnType"));
@@ -748,7 +748,7 @@ internal static class FluentTargetValidatorExtensions
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var groups = fluentTargetContexts
-            .Where(ctx => ctx.Builder == BuilderMethodKind.None)
+            .Where(ctx => ctx.TerminalMethod == TerminalMethodKind.None)
             .GroupBy(ctx => (ctx.Constructor.ContainingType, ctx.RootType),
                 ContainingAndRootTypeComparer.Default);
 
@@ -818,14 +818,14 @@ internal static class FluentTargetValidatorExtensions
 
     /// <summary>
     /// Reports a warning diagnostic when a target type has required properties but the constructor
-    /// uses BuilderMethod.None, which doesn't generate a creation method for object initializer syntax.
+    /// uses TerminalMethod.None, which doesn't generate a creation method for object initializer syntax.
     /// </summary>
     private static IEnumerable<Diagnostic> ValidatePropertyWithBuilderNone(
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         foreach (var context in fluentTargetContexts)
         {
-            if (context.Builder != BuilderMethodKind.None) continue;
+            if (context.TerminalMethod != TerminalMethodKind.None) continue;
 
             foreach (var prop in context.TargetTypeProperties)
             {

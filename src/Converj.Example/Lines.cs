@@ -3,7 +3,7 @@ using Converj.Attributes;
 
 namespace Converj.Example;
 
-[FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
+[FluentRoot(TerminalMethod = TerminalMethod.None, MethodPrefix = "")]
 internal partial class Line;
 
 [FluentTarget<Line>]

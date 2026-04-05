@@ -11,9 +11,9 @@ public class FluentRootAttribute : Attribute
 {
     /// <summary>
     /// Controls how the builder chain is structured for all targets in this root.
-    /// Can be overridden per-target via <see cref="FluentTargetAttribute.BuilderMethod"/>.
+    /// Can be overridden per-target via <see cref="FluentTargetAttribute.TerminalMethod"/>.
     /// </summary>
-    public BuilderMethod BuilderMethod { get; set; }
+    public TerminalMethod TerminalMethod { get; set; }
 
     /// <summary>
     /// The default verb used for the terminal method name across all targets in this root.
@@ -43,11 +43,4 @@ public class FluentRootAttribute : Attribute
     /// or a diagnostic error is reported.
     /// </summary>
     public bool AllowPartialParameterOverlap { get; set; }
-
-    /// <summary>
-    /// The verb used for initial method names when <see cref="BuilderMethod"/> is <see cref="Attributes.BuilderMethod.Eager"/>. Default is "Build".
-    /// For example, "Build" + "Dog" = <c>BuildDog()</c>.
-    /// Can be overridden per-target via <see cref="FluentTargetAttribute.EagerVerb"/>.
-    /// </summary>
-    public string? InitialVerb { get; set; }
 }

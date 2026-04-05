@@ -20,7 +20,7 @@ public class MergeTests
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(MyClass), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(MyClass), TerminalMethod = TerminalMethod.None)]
                 public MyClass([FluentMethod("Create")]Func<T> value)
                 {
                     Value = value;
@@ -32,7 +32,7 @@ public class MergeTests
             [FluentRoot]
             public partial class MyClass
             {
-                [FluentTarget(typeof(MyClass), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(MyClass), TerminalMethod = TerminalMethod.None)]
                 public MyClass([FluentMethod("Create")]Func<string> value)
                 {
                     Value = value;
@@ -97,7 +97,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -113,7 +113,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     String value1,
                     String value2)
@@ -233,7 +233,7 @@ public class MergeTests
             {
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         T1 value1,
                         T2 value2)
@@ -252,7 +252,7 @@ public class MergeTests
             {
                 public class MyBuildTarget
                 {
-                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         String value1,
                         String value2)
@@ -370,7 +370,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -386,7 +386,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     String value2)
@@ -483,7 +483,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -503,7 +503,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     String value1,
                     String value2,
@@ -672,7 +672,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -696,7 +696,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     T1 value1,
                     String value2,
@@ -1085,7 +1085,7 @@ public class MergeTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueX1,
                     [FluentMethod("WithValueB")]string valueX2,
@@ -1105,7 +1105,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueY1,
                     [FluentMethod("WithValueB")]string valueY2,
@@ -1232,7 +1232,7 @@ public class MergeTests
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]T1 valueX1,
                     [FluentMethod("WithValueB")]T2 valueX2,
@@ -1252,7 +1252,7 @@ public class MergeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("WithValueA")]string valueY1,
                     [FluentMethod("WithValueB")]string valueY2,
@@ -1419,7 +1419,7 @@ public class MergeTests
             [FluentRoot]
             public static partial class Spec;
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct ExplanationWithNamePropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [FluentMethod("WhenTrue")]string trueBecause,
@@ -1427,7 +1427,7 @@ public class MergeTests
             {
             }
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct MultiAssertionExplanationWithNamePropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [FluentMethod("WhenTrue")]string trueBecause,
@@ -1435,7 +1435,7 @@ public class MergeTests
             {
             }
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct ExplanationPropositionFactory<TModel>(
                 [FluentMethod("Build")]Func<TModel, bool> predicate,
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, string> whenTrue,
@@ -1684,7 +1684,7 @@ public class MergeTests
 
                 public partial class MyEnumerableBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyEnumerableBuildTarget(
                         [MultipleFluentMethods(typeof(EnumerableOverloads))]Func<T1, IEnumerable<T2>> first,
                         string second)
@@ -1700,7 +1700,7 @@ public class MergeTests
 
                 public partial class MyCollectionBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyCollectionBuildTarget(
                         [MultipleFluentMethods(typeof(CollectionOverloads))]Func<T1, ICollection<T2>> first,
                         string second)

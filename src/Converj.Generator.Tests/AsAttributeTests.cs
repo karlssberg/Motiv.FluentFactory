@@ -96,7 +96,7 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
+            [FluentRoot(TerminalMethod = TerminalMethod.None, MethodPrefix = "")]
             public static partial class Line;
 
             [FluentTarget(typeof(Line))]
@@ -181,11 +181,11 @@ public class AsAttributeTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
             [FluentTarget(typeof(Square<>))]
             public partial record Square<[As("T")] TUnit>(TUnit Width);
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
             [FluentTarget(typeof(Rectangle<>))]
             public partial record Rectangle<T>(T Width, T Height);
             """;
@@ -488,9 +488,9 @@ public class AsAttributeTests
             [FluentRoot(MethodPrefix = "")]
             public static partial class Factory;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
             [FluentTarget(typeof(Square<>))]
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial record Square<[As("T")] TUnit>(TUnit Width);
 
             [FluentTarget(typeof(Factory))]

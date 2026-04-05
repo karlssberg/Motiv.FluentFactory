@@ -24,7 +24,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T value1)
                 {
                     Value1 = value1;
@@ -35,7 +35,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string value1, string value2)
                 {
                     Value1 = value1;
@@ -706,20 +706,20 @@ public class MergeDissimilarStepsTests
             [FluentRoot]
             public static partial class Shape;
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial record Square(int Width)
             {
                 public int Width { get; set; } = Width;
             }
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int Width { get; set; } = width;
                 public int Height { get; set; } = height;
             }
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int Width { get; set; } = Width;
@@ -809,7 +809,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -824,7 +824,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [FluentMethod("WithValueB")]string valueB2,
@@ -847,7 +847,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -866,7 +866,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetD<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetD(
                         [FluentMethod("WithValueA")]T valueD1,
                         [FluentMethod("WithValueB")]string valueD2,
@@ -985,7 +985,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -1000,7 +1000,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -1019,7 +1019,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [MultipleFluentMethods(typeof(MultipleMethods))]Func<string> valueB2,
@@ -1172,20 +1172,20 @@ public class MergeDissimilarStepsTests
             [FluentRoot]
             public static partial class Shape;
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial record Square(int Width)
             {
                 public int A { get; set; } = Width;
             }
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial class Rectangle(int width, in int height)
             {
                 public int B { get; set; } = width;
                 public int C { get; set; } = height;
             }
 
-            [FluentTarget(typeof(Shape), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Shape), TerminalMethod = TerminalMethod.None)]
             public partial record Cuboid(in int Width, int Height, in int Depth)
             {
                 public int D { get; set; } = Width;
@@ -1277,13 +1277,13 @@ public class MergeDissimilarStepsTests
             {
             }
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct PolicyResultPredicatePropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate)
             {
             }
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct MultiAssertionExplanationFromPolicyPropositionFactory<TModel, TMetadata>(
                 [MultipleFluentMethods(typeof(PolicyResultBuildOverloads))]Func<TModel, PolicyResultBase<TMetadata>> predicate,
                 [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, PolicyResultBase<TMetadata>, IEnumerable<string>> trueBecause,
@@ -1402,9 +1402,9 @@ public class MergeDissimilarStepsTests
     }
 
     /// <summary>
-    /// Issue #12: BuilderMethod.None taints merged metadata asymmetrically.
-    /// Two constructors share the prefix (string name). Alpha uses BuilderMethod.None (returns Alpha directly),
-    /// Beta uses BuilderMethod.DynamicSuffix (creates via CreateBeta()). After the shared WithName step,
+    /// Issue #12: TerminalMethod.None taints merged metadata asymmetrically.
+    /// Two constructors share the prefix (string name). Alpha uses TerminalMethod.None (returns Alpha directly),
+    /// Beta uses TerminalMethod.DynamicSuffix (creates via CreateBeta()). After the shared WithName step,
     /// both paths must be reachable — the None shouldn't prevent Beta's creation method.
     /// </summary>
     [Fact]
@@ -1422,7 +1422,7 @@ public class MergeDissimilarStepsTests
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;
@@ -1534,7 +1534,7 @@ public class MergeDissimilarStepsTests
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;

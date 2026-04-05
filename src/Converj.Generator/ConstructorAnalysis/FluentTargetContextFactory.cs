@@ -39,11 +39,16 @@ internal static class FluentTargetContextFactory
                         return [];
 
                     var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
-                    metadata.Builder ??= defaults.Builder;
+                    metadata.TerminalMethod ??= defaults.TerminalMethod;
                     metadata.TerminalVerb ??= defaults.TerminalVerb;
                     metadata.MethodPrefix ??= defaults.MethodPrefix;
                     metadata.ReturnType ??= defaults.ReturnType;
-                    metadata.InitialVerb ??= defaults.InitialVerb;
+
+                    // Check for [FluentEntryMethod] on the symbol
+                    var (hasEntryMethod, entryMethodName) =
+                        FluentFactoryMetadataReader.ReadFluentEntryMethodAttribute(symbol);
+                    metadata.HasEntryMethod = hasEntryMethod;
+                    metadata.EntryMethodName = entryMethodName;
 
                     return symbol switch
                     {

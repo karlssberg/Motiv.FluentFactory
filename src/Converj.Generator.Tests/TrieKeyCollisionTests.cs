@@ -30,7 +30,7 @@ public class TrieKeyCollisionTests
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -43,7 +43,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetB(string label, int count)
                 {
                     Label = label;
@@ -161,7 +161,7 @@ public class TrieKeyCollisionTests
 
             public class StructContainer<T> where T : struct
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public StructContainer(T value)
                 {
                     Value = value;
@@ -172,7 +172,7 @@ public class TrieKeyCollisionTests
 
             public class ClassContainer<T> where T : class
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public ClassContainer(T value)
                 {
                     Value = value;
@@ -231,7 +231,7 @@ public class TrieKeyCollisionTests
 
             public class CarA<T> where T : IEngineA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public CarA(T engine, int age)
                 {
                     Engine = engine;
@@ -291,7 +291,7 @@ public class TrieKeyCollisionTests
 
             public interface IConstraint<T>;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.None)]
+            [FluentRoot(TerminalMethod = TerminalMethod.None)]
             public static partial class Factory;
 
             public class TargetA<[As("T")]TNum> where TNum : IConstraint<TNum>
@@ -400,7 +400,7 @@ public class TrieKeyCollisionTests
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -413,7 +413,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetB(string name, bool isActive)
                 {
                     Name = name;

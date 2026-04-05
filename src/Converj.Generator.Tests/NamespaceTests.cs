@@ -22,7 +22,7 @@ public class NamespaceTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Test.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Test.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -40,7 +40,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -165,7 +165,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Test.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Test.Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -183,7 +183,7 @@ public class NamespaceTests
             {
                 public partial class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {

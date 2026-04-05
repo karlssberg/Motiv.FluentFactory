@@ -198,7 +198,7 @@ public class ReturnTypeDiagnosticsTests
             {
                 public interface IMyInterface { }
 
-                [FluentRoot(ReturnType = typeof(IMyInterface), BuilderMethod = BuilderMethod.None)]
+                [FluentRoot(ReturnType = typeof(IMyInterface), TerminalMethod = TerminalMethod.None)]
                 public static partial class Factory;
 
                 public partial class MyBuildTarget : IMyInterface
@@ -245,7 +245,7 @@ public class ReturnTypeDiagnosticsTests
 
                 public partial class MyBuildTarget : IMyInterface
                 {
-                    [FluentTarget(typeof(Factory), ReturnType = typeof(IMyInterface), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), ReturnType = typeof(IMyInterface), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(int value)
                     {
                         Value = value;

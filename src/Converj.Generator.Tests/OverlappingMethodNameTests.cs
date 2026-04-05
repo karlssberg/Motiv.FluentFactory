@@ -26,7 +26,7 @@ public class OverlappingMethodNameTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget([FluentMethod("WithValue")]string text, [FluentMethod("WithValue")]int number)
                 {
                     Text = text;
@@ -113,7 +113,7 @@ public class OverlappingMethodNameTests
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetA([FluentMethod("Create")]string value)
                 {
                     Value = value;
@@ -124,7 +124,7 @@ public class OverlappingMethodNameTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("Create")]int value)
                 {
                     Value = value;

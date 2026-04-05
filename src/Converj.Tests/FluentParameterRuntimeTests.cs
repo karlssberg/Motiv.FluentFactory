@@ -9,7 +9,7 @@ internal interface IService;
 
 internal record TestService(string Id) : IService;
 
-[FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+[FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
 internal partial record ServiceFactoryForTest(IService Service);
 
 [FluentTarget<ServiceFactoryForTest>]

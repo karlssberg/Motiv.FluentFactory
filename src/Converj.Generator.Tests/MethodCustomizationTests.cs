@@ -24,7 +24,7 @@ public class MethodCustomizationTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget([FluentMethod("SetValue")]T value)
                 {
                     Value = value;
@@ -82,7 +82,7 @@ public class MethodCustomizationTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget<T1, T2, T3>(
                 int x,
                 [MultipleFluentMethods(typeof(Methods))]Func<IEnumerable<T1>, T2, T3> function)
@@ -185,7 +185,7 @@ public class MethodCustomizationTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget<T>([MultipleFluentMethods(typeof(Converter))]IEnumerable<IEnumerable<T>> function)
             {
                 public IEnumerable<IEnumerable<T>> Value { get; set; } = function;
@@ -264,7 +264,7 @@ public class MethodCustomizationTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2)
@@ -349,7 +349,7 @@ public class MethodCustomizationTests
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -462,7 +462,7 @@ public class MethodCustomizationTests
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -604,7 +604,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -683,7 +683,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -762,7 +762,7 @@ public class MethodCustomizationTests
 
             public class MyClass
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]string value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]string value2)
@@ -891,7 +891,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]T value2)
@@ -1020,7 +1020,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T1 value1,
                     [MultipleFluentMethods(typeof(Value2Methods))]T2 value2,
@@ -1205,7 +1205,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T1A, T1B>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory)
                 {
@@ -1284,7 +1284,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T1A, T1B, T2A, T2B, T3A, T3B>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2A, T2B> factory2,
@@ -1463,7 +1463,7 @@ public class MethodCustomizationTests
 
             public class MyClass<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2, T3> factory2,
@@ -1642,7 +1642,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassACreateMethods))]Func<T1, T2, string> factory2)
@@ -1657,7 +1657,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassBCreateMethods))]Func<T1, T2, int> factory2)
@@ -1821,7 +1821,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [FluentMethod("Value")]Func<T1, T2> factory1,
                     [FluentMethod("Value")]Func<T1, T2, string> factory2)
@@ -1836,7 +1836,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2, int> factory2)
@@ -1984,7 +1984,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(FirstStep))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(SecondStep))]Func<T1, T2, string> factory2)
@@ -1999,7 +1999,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value1")]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, int> factory2)
@@ -2140,7 +2140,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, string> factory2)
@@ -2155,7 +2155,7 @@ public class MethodCustomizationTests
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(CreateMethods))]Func<T1, T2, int> factory2)
@@ -2296,7 +2296,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T> value1,
                     [FluentMethod("Create")]Func<T> value2)
@@ -2311,7 +2311,7 @@ public class MethodCustomizationTests
 
             public class MyClassB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value")]string value1,
                     [FluentMethod("Create")]Func<string> value2)
@@ -2326,7 +2326,7 @@ public class MethodCustomizationTests
 
             public class MyClassC
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassC(
                     [MultipleFluentMethods(typeof(Overloads))]Func<string> value1,
                     [FluentMethod("Create")]Func<int> value2)
@@ -2453,7 +2453,7 @@ public class MethodCustomizationTests
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory)
                 {

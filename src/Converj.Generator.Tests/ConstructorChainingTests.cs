@@ -35,7 +35,7 @@ public class ConstructorChainingTests
                     Value = value;
                 }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value, string name) : this(value)
                 {
                     Name = name;
@@ -126,7 +126,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id)
                 {
                     Name = name;
@@ -244,7 +244,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id: id)
                 {
                     Name = name;
@@ -363,7 +363,7 @@ public class ConstructorChainingTests
                     Active = active;
                 }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int id, bool active) : this(active: active, id: id)
                 {
                     Name = name;
@@ -461,7 +461,7 @@ public class ConstructorChainingTests
     /// The generator must resolve storage transitively across multiple hops.
     ///
     /// Two [FluentTarget] annotations make Widget a custom intermediate step at (name, size).
-    /// The 2-param constructor uses BuilderMethod.None so Widget itself becomes an ExistingTypeFluentStep.
+    /// The 2-param constructor uses TerminalMethod.None so Widget itself becomes an ExistingTypeFluentStep.
     /// The generated partial Widget class has a WithVisible method whose arguments reference the
     /// resolved storage — this._name (field, via 2-hop chain) and this.Size (property, via 1-hop chain) —
     /// proving that the multi-hop initializer chain resolution actually affects the output.
@@ -488,7 +488,7 @@ public class ConstructorChainingTests
                     _name = name;
                 }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public Widget(string name, int size) : this(name)
                 {
                     Size = size;

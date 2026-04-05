@@ -9,13 +9,11 @@ namespace Converj.Generator.ConstructorAnalysis;
 /// </summary>
 internal static class FluentFactoryMetadataReader
 {
-    private const string BuilderKey = "BuilderMethod";
+    private const string BuilderKey = "TerminalMethod";
     private const string TerminalVerbKey = "TerminalVerb";
     private const string MethodPrefixKey = "MethodPrefix";
     private const string ReturnTypeKey = "ReturnType";
     private const string AllowPartialParameterOverlapKey = "AllowPartialParameterOverlap";
-    private const string InitialVerbKey = "InitialVerb";
-    private const string EagerVerbKey = "EagerVerb";
 
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentTarget attributes.
@@ -36,13 +34,12 @@ internal static class FluentFactoryMetadataReader
 
                 return new FluentFactoryMetadata(typeSymbol)
                 {
-                    Builder = args.Builder,
+                    TerminalMethod = args.TerminalMethod,
                     RootTypeFullName = typeSymbol.ToDisplayString(),
                     TerminalVerb = args.TerminalVerb,
                     MethodPrefix = args.MethodPrefix,
                     ReturnType = args.ReturnType,
                     AttributeData = attribute,
-                    InitialVerb = args.InitialVerb,
                 };
             });
     }
@@ -107,16 +104,15 @@ internal static class FluentFactoryMetadataReader
         var args = ReadNamedArguments(attribute.NamedArguments);
 
         return new FluentFactoryDefaults(
-            args.Builder, args.TerminalVerb, args.MethodPrefix, args.ReturnType, args.AllowPartialParameterOverlap,
-            args.InitialVerb);
+            args.TerminalMethod, args.TerminalVerb, args.MethodPrefix, args.ReturnType, args.AllowPartialParameterOverlap);
     }
 
     /// <summary>
-    /// Reads Builder, TerminalVerb, and MethodPrefix from an attribute's named arguments.
+    /// Reads TerminalMethod, TerminalVerb, and MethodPrefix from an attribute's named arguments.
     /// Returns null for each value not explicitly present.
     /// </summary>
     /// <param name="namedArguments">The named arguments from an attribute.</param>
-    /// <returns>A tuple of nullable Builder, TerminalVerb, and MethodPrefix values.</returns>
+    /// <returns>A tuple of nullable TerminalMethod, TerminalVerb, and MethodPrefix values.</returns>
     private static ParsedNamedArguments ReadNamedArguments(
         ImmutableArray<KeyValuePair<string, TypedConstant>> namedArguments)
     {
@@ -127,7 +123,7 @@ internal static class FluentFactoryMetadataReader
             switch (arg.Key)
             {
                 case BuilderKey:
-                    result.Builder = ConvertToBuilderMethodKind(arg.Value);
+                    result.TerminalMethod = ConvertToTerminalMethodKind(arg.Value);
                     break;
                 case TerminalVerbKey:
                     result.TerminalVerb = arg.Value.Value as string;
@@ -141,10 +137,6 @@ internal static class FluentFactoryMetadataReader
                 case AllowPartialParameterOverlapKey:
                     result.AllowPartialParameterOverlap = arg.Value.Value is true;
                     break;
-                case InitialVerbKey:
-                case EagerVerbKey:
-                    result.InitialVerb = arg.Value.Value as string;
-                    break;
             }
         }
 
@@ -153,31 +145,30 @@ internal static class FluentFactoryMetadataReader
 
     private sealed class ParsedNamedArguments
     {
-        public BuilderMethodKind? Builder { get; set; }
+        public TerminalMethodKind? TerminalMethod { get; set; }
         public string? TerminalVerb { get; set; }
         public string? MethodPrefix { get; set; }
         public INamedTypeSymbol? ReturnType { get; set; }
         public bool AllowPartialParameterOverlap { get; set; }
-        public string? InitialVerb { get; set; }
     }
 
     /// <summary>
-    /// Converts a typed constant from an attribute argument to BuilderMethodKind.
+    /// Converts a typed constant from an attribute argument to TerminalMethodKind.
     /// </summary>
-    /// <param name="namedAttributeArgument">The typed constant representing the Builder argument.</param>
-    /// <returns>The parsed BuilderMethodKind value.</returns>
-    public static BuilderMethodKind ConvertToBuilderMethodKind(
+    /// <param name="namedAttributeArgument">The typed constant representing the TerminalMethod argument.</param>
+    /// <returns>The parsed TerminalMethodKind value.</returns>
+    public static TerminalMethodKind ConvertToTerminalMethodKind(
         TypedConstant namedAttributeArgument)
     {
         if (namedAttributeArgument.Kind != TypedConstantKind.Enum)
-            return BuilderMethodKind.DynamicSuffix;
+            return TerminalMethodKind.DynamicSuffix;
 
         // Get the underlying int value
         var value = (int?)namedAttributeArgument.Value ?? 0;
 
         // Get the type symbol for the enum
         if (namedAttributeArgument.Type is not INamedTypeSymbol enumType)
-            return BuilderMethodKind.DynamicSuffix;
+            return TerminalMethodKind.DynamicSuffix;
 
         // Find the matching member by value
         var matchingMember = enumType.GetMembers()
@@ -185,10 +176,28 @@ internal static class FluentFactoryMetadataReader
             .FirstOrDefault(f => f.HasConstantValue && f.ConstantValue is int memberValue && memberValue == value);
 
         if (matchingMember is null)
-            return BuilderMethodKind.DynamicSuffix;
+            return TerminalMethodKind.DynamicSuffix;
 
-        return Enum.TryParse<BuilderMethodKind>(matchingMember.Name, true, out var mode)
+        return Enum.TryParse<TerminalMethodKind>(matchingMember.Name, true, out var mode)
             ? mode
-            : BuilderMethodKind.DynamicSuffix;
+            : TerminalMethodKind.DynamicSuffix;
+    }
+
+    /// <summary>
+    /// Checks whether a symbol has a <c>[FluentEntryMethod]</c> attribute and reads its <c>Name</c> property.
+    /// </summary>
+    /// <param name="symbol">The symbol to inspect.</param>
+    /// <returns>A tuple indicating whether the attribute is present and its optional name value.</returns>
+    public static (bool HasEntryMethod, string? EntryMethodName) ReadFluentEntryMethodAttribute(ISymbol symbol)
+    {
+        var attribute = symbol.GetAttributes()
+            .FirstOrDefault(a =>
+                a.AttributeClass?.ToDisplayString() == TypeName.FluentEntryMethodAttribute);
+
+        if (attribute is null)
+            return (false, null);
+
+        var name = attribute.ConstructorArguments[0].Value as string;
+        return (true, name);
     }
 }

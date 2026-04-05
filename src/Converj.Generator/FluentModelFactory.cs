@@ -81,7 +81,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         // Split constructors: type-first ones are excluded from the parameter-first trie
         var parameterFirstContexts = fluentTargetContexts
-            .Where(c => c.Builder != BuilderMethodKind.Eager)
+            .Where(c => !c.HasEntryMethod)
             .ToImmutableArray();
 
         var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
@@ -125,7 +125,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         // Type-first chain generation: group by target type, build per-type trie
         var typeFirstContexts = fluentTargetContexts
-            .Where(c => c.Builder == BuilderMethodKind.Eager)
+            .Where(c => c.HasEntryMethod)
             .ToImmutableArray();
         if (!typeFirstContexts.IsEmpty)
         {
@@ -714,9 +714,9 @@ internal class FluentModelFactory(Compilation compilation)
                 : GetPreSatisfiedParameterNames(value.Constructor)
             where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count
             where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count
-            where value.Builder != BuilderMethodKind.None
+            where value.TerminalMethod != TerminalMethodKind.None
             let verb = value.Context.TerminalVerb ?? "Create"
-            let methodName = value.Builder == BuilderMethodKind.FixedName
+            let methodName = value.TerminalMethod == TerminalMethodKind.FixedName
                 ? verb
                 : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
             let keyParamFieldNames = new HashSet<string>(
@@ -959,11 +959,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         // Detect ambiguous entry method names across groups
         var entryMethodNames = groups
-            .GroupBy(g =>
-            {
-                var context = g.First();
-                return $"{context.InitialVerb}{context.Constructor.ContainingType.Name}";
-            })
+            .GroupBy(g => g.First().EntryMethodName)
             .Where(nameGroup => nameGroup.Count() > 1)
             .ToList();
 
@@ -982,7 +978,7 @@ internal class FluentModelFactory(Compilation compilation)
                     .FirstOrDefault(l => l is not null) ?? Location.None;
 
                 _diagnostics.Add(Diagnostic.Create(
-                    Diagnostics.FluentDiagnostics.AmbiguousInitialMethod,
+                    Diagnostics.FluentDiagnostics.AmbiguousEntryMethod,
                     location,
                     collision.Key,
                     string.Join(", ", collidingTypes.Select(t => $"'{t}'"))));
@@ -990,11 +986,7 @@ internal class FluentModelFactory(Compilation compilation)
 
             // Remove colliding groups
             var collidingNames = new HashSet<string>(entryMethodNames.Select(n => n.Key));
-            groups.RemoveAll(g =>
-            {
-                var context = g.First();
-                return collidingNames.Contains($"{context.InitialVerb}{context.Constructor.ContainingType.Name}");
-            });
+            groups.RemoveAll(g => collidingNames.Contains(g.First().EntryMethodName));
         }
 
         foreach (var group in groups)
@@ -1065,8 +1057,7 @@ internal class FluentModelFactory(Compilation compilation)
             }
 
             // Determine entry method name
-            var verb = contexts.First().InitialVerb;
-            var entryMethodName = $"{verb}{targetTypeName}";
+            var entryMethodName = contexts.First().EntryMethodName;
 
             var candidateConstructors = contexts
                 .Select(c => c.Constructor)
@@ -1093,7 +1084,7 @@ internal class FluentModelFactory(Compilation compilation)
     private static void ForceFixedCreateMethod(Trie<FluentMethodParameter, ConstructorMetadata>.Node node)
     {
         foreach (var endValue in node.EndValues)
-            endValue.Builder = BuilderMethodKind.FixedName;
+            endValue.TerminalMethod = TerminalMethodKind.FixedName;
 
         foreach (var child in node.Children.Values)
             ForceFixedCreateMethod(child);
@@ -1229,10 +1220,10 @@ internal class FluentModelFactory(Compilation compilation)
             // Add creation methods to the step
             foreach (var metadata in constructors)
             {
-                if (metadata.Builder == BuilderMethodKind.None) continue;
+                if (metadata.TerminalMethod == TerminalMethodKind.None) continue;
 
                 var verb = metadata.Context.TerminalVerb ?? "Create";
-                var createMethodName = metadata.Builder == BuilderMethodKind.FixedName
+                var createMethodName = metadata.TerminalMethod == TerminalMethodKind.FixedName
                     ? verb
                     : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
 

@@ -19,7 +19,7 @@ public class RootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -78,7 +78,7 @@ public class RootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -137,7 +137,7 @@ public class RootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -196,7 +196,7 @@ public class RootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -255,7 +255,7 @@ public class RootTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue value)
                 {
                     Value = value;
@@ -319,7 +319,7 @@ public class RootTypeTests
 
             public partial class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3)
                 {
                     Value1 = value1;
@@ -432,7 +432,7 @@ public class RootTypeTests
 
             public partial class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue<T1, T2> value1, in MyParameterValue<T1, T2> value2, MyParameterValue<T1, T2> value3)
                 {
                     Value1 = value1;
@@ -543,7 +543,7 @@ public class RootTypeTests
 
             public partial class MyBuildTargetA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTargetA(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3, MyParameterValue value4)
                 {
                     Value1 = value1;
@@ -560,7 +560,7 @@ public class RootTypeTests
 
             public partial class MyBuildTargetB
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTargetB(in MyParameterValue value1, in MyParameterValue value2)
                 {
                     Value1 = value1;
@@ -684,10 +684,10 @@ public class RootTypeTests
             [FluentRoot]
             public partial record struct Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial class MyBuildTargetA(MyParameterValue value1, MyParameterValue value2, MyParameterValue value3, MyParameterValue value4);
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial class MyBuildTargetB(MyParameterValue value1, MyParameterValue value2);
 
             public record MyParameterValue();

@@ -83,7 +83,7 @@ public class RequiredPropertyDiagnosticsTests
 
             public partial class Person
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public Person(string name) { Name = name; }
                 public string Name { get; set; }
 

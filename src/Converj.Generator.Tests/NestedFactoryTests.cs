@@ -34,7 +34,7 @@ public class NestedFactoryTests
 
             public class Target
             {
-                [FluentTarget(typeof(Outer.Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Outer.Factory), TerminalMethod = TerminalMethod.None)]
                 public Target(string name)
                 {
                     Name = name;
@@ -105,7 +105,7 @@ public class NestedFactoryTests
 
             public class Target
             {
-                [FluentTarget(typeof(Level1.Level2.Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Level1.Level2.Factory), TerminalMethod = TerminalMethod.None)]
                 public Target(int value)
                 {
                     Value = value;

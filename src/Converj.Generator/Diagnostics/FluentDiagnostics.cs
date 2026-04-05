@@ -115,13 +115,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for TerminalVerb specified with BuilderMethod.None.
+    /// Diagnostic for TerminalVerb specified with TerminalMethod.None.
     /// </summary>
     public static readonly DiagnosticDescriptor TerminalVerbWithNone = new(
         "CVJG0010",
-        title: "TerminalVerb specified with BuilderMethod.None",
+        title: "TerminalVerb specified with TerminalMethod.None",
         category: Category,
-        messageFormat: "TerminalVerb cannot be used with BuilderMethod.None",
+        messageFormat: "TerminalVerb cannot be used with TerminalMethod.None",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -193,13 +193,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for empty TerminalVerb used with BuilderMethod.None.
+    /// Diagnostic for empty TerminalVerb used with TerminalMethod.None.
     /// </summary>
     public static readonly DiagnosticDescriptor EmptyTerminalVerbWithNone = new(
         id: "CVJG0017",
-        title: "Empty TerminalVerb with BuilderMethod.None",
+        title: "Empty TerminalVerb with TerminalMethod.None",
         category: Category,
-        messageFormat: "TerminalVerb has no effect with BuilderMethod.None",
+        messageFormat: "TerminalVerb has no effect with TerminalMethod.None",
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 
@@ -226,13 +226,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for ReturnType specified with BuilderMethod.None.
+    /// Diagnostic for ReturnType specified with TerminalMethod.None.
     /// </summary>
     public static readonly DiagnosticDescriptor ReturnTypeWithNone = new(
         id: "CVJG0021",
-        title: "ReturnType specified with BuilderMethod.None",
+        title: "ReturnType specified with TerminalMethod.None",
         category: Category,
-        messageFormat: "ReturnType cannot be used with BuilderMethod.None because no terminal method is generated",
+        messageFormat: "ReturnType cannot be used with TerminalMethod.None because no terminal method is generated",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
@@ -419,15 +419,15 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for multiple [FluentTarget] attributes on the same type with BuilderMethod.None.
-    /// When BuilderMethod.None is in effect, the target type itself becomes the fluent step and all
+    /// Diagnostic for multiple [FluentTarget] attributes on the same type with TerminalMethod.None.
+    /// When TerminalMethod.None is in effect, the target type itself becomes the fluent step and all
     /// generated methods live on the same type, preventing step ordering enforcement.
     /// </summary>
     public static readonly DiagnosticDescriptor MultipleTargetsWithBuilderNone = new(
         id: "CVJG0037",
-        title: "Multiple FluentTargets with BuilderMethod.None",
+        title: "Multiple FluentTargets with TerminalMethod.None",
         messageFormat:
-        "Type '{0}' has multiple [FluentTarget] attributes for root '{1}' with BuilderMethod.None — only one constructor per type is allowed when BuilderMethod.None is in effect",
+        "Type '{0}' has multiple [FluentTarget] attributes for root '{1}' with TerminalMethod.None — only one constructor per type is allowed when TerminalMethod.None is in effect",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
@@ -445,13 +445,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for property support being used with BuilderMethod.None.
+    /// Diagnostic for property support being used with TerminalMethod.None.
     /// </summary>
     public static readonly DiagnosticDescriptor FluentMethodPropertyWithBuilderNone = new(
         id: "CVJG0039",
-        title: "Property support excluded from BuilderMethod.None",
+        title: "Property support excluded from TerminalMethod.None",
         messageFormat:
-        "Required property '{0}' on type '{1}' cannot be used with BuilderMethod.None. Property initialization via object initializer requires a terminal method.",
+        "Required property '{0}' on type '{1}' cannot be used with TerminalMethod.None. Property initialization via object initializer requires a terminal method.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -493,13 +493,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for ambiguous initial method names across different target types.
+    /// Diagnostic for ambiguous entry method names across different target types.
     /// </summary>
-    public static readonly DiagnosticDescriptor AmbiguousInitialMethod = new(
+    public static readonly DiagnosticDescriptor AmbiguousEntryMethod = new(
         id: "CVJG0043",
-        title: "Ambiguous initial method",
+        title: "Ambiguous entry method",
         messageFormat:
-        "Initial method '{0}' is ambiguous between types {1}. Disambiguate by setting EagerVerb on [FluentTarget] to change the entry method, or use TerminalVerb with BuilderMethod.FixedName to change the terminal method.",
+        "Entry method '{0}' is ambiguous between types {1}. Disambiguate by setting Name on [FluentEntryMethod] to change the entry method, or use TerminalVerb with TerminalMethod.FixedName to change the terminal method.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);

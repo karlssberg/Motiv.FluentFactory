@@ -20,7 +20,7 @@ internal partial class Polygon<T> where T : INumber<T>
 [FluentRoot]
 internal static partial class Point;
 
-[FluentTarget(typeof(Point), MethodPrefix = "", BuilderMethod = BuilderMethod.None)]
+[FluentTarget(typeof(Point), MethodPrefix = "", TerminalMethod = TerminalMethod.None)]
 internal record Point<T>(T X, T Y, T Z) where T : INumber<T>;
 
 [FluentTarget(typeof(Polygon<>))]

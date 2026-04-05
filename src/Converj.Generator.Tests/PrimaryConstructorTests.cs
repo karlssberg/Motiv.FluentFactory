@@ -18,7 +18,7 @@ public class PrimaryConstructorTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -74,7 +74,7 @@ public class PrimaryConstructorTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public record MyBuildTarget(int Number, string text);
             """;
 
@@ -148,7 +148,7 @@ public class PrimaryConstructorTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public record MyBuildTarget(
                 int Number,
                 string text)
@@ -225,7 +225,7 @@ public class PrimaryConstructorTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public struct MyBuildTarget(
                 int number,
                 string text,
@@ -333,7 +333,7 @@ public class PrimaryConstructorTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public ref struct MyBuildTarget(
                 int number,
                 string text,

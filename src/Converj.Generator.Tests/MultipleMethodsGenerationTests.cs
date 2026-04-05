@@ -133,7 +133,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -148,7 +148,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -270,7 +270,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -288,7 +288,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -438,7 +438,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -456,7 +456,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [FluentMethod("WithFunction")]Func<T> nativeFunction,
@@ -1111,7 +1111,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -1276,7 +1276,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<KeyValuePair<T1, T2>> first,
                         string second)
@@ -1383,7 +1383,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> first,
                         string second)
@@ -1488,7 +1488,7 @@ public class MultipleMethodsGenerationTests
 
                 public partial class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         string first)
                     {
@@ -1500,7 +1500,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         string first,
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> second,
@@ -1641,7 +1641,7 @@ public class MultipleMethodsGenerationTests
             public readonly partial struct MyTypeA<TModel, TPredicateResult>
             {
 
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public MyTypeA(
                     [FluentMethod("From")]Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueYieldOverloads))]Func<TModel, BooleanResultBase<string>, IEnumerable<string>> trueBecause,
@@ -1778,7 +1778,7 @@ public class MultipleMethodsGenerationTests
             [FluentRoot]
             public static partial class Spec;
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(MyTypeB<,>.WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
             {
@@ -1852,13 +1852,13 @@ public class MultipleMethodsGenerationTests
                         TNewMetadata whenTrue) => _ => whenTrue;
                 }
 
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public readonly struct ExplanationFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public readonly struct ExplanationWithNameFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,
@@ -1995,13 +1995,13 @@ public class MultipleMethodsGenerationTests
                 [FluentRoot]
                 public static partial class Spec;
 
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public readonly struct ExplanationFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public readonly struct ExplanationWithNameFactory<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,

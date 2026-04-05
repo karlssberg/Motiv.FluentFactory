@@ -4,7 +4,7 @@ namespace Converj.Example;
 
 internal interface IDependency;
 
-[FluentRoot(TerminalVerb = "Build", BuilderMethod = BuilderMethod.FixedName)]
+[FluentRoot(TerminalVerb = "Build", TerminalMethod = TerminalMethod.FixedName)]
 internal partial record ServiceFactory(IDependency Dependency);
 
 [FluentTarget<ServiceFactory>]

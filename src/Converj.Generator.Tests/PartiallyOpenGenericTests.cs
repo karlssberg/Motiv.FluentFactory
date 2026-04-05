@@ -24,7 +24,7 @@ public class PartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> value)
                 {
                     Value = value;
@@ -87,7 +87,7 @@ public class PartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Func<int, T> selector)
                 {
                     Selector = selector;
@@ -152,7 +152,7 @@ public class PartiallyOpenGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> lookup, List<int> counts, Func<T, bool> predicate)
                 {
                     Lookup = lookup;

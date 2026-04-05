@@ -28,7 +28,7 @@ public class RecordVariationTests
 
             public record MyBuildTarget(string Name, int Age)
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int age, string email) : this(name, age)
                 {
                     Email = email;
@@ -138,7 +138,7 @@ public class RecordVariationTests
 
             public record MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string value)
                 {
                     Id = id;
@@ -227,7 +227,7 @@ public class RecordVariationTests
 
             public record MyBuildTarget(string Name)
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int priority, bool isEnabled) : this(name)
                 {
                     Priority = priority;
@@ -325,7 +325,7 @@ public class RecordVariationTests
     /// from running. The secondary constructor's non-positional parameter (email) may get NullStorage,
     /// causing the generated code to pass 'default' instead of the actual value.
     ///
-    /// This test uses BuilderMethod.DynamicSuffix (not None) to exercise the RegularFluentStep path
+    /// This test uses TerminalMethod.DynamicSuffix (not None) to exercise the RegularFluentStep path
     /// where the generator must store the email parameter in a generated step field.
     /// </summary>
     [Fact]

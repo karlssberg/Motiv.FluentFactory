@@ -3,7 +3,7 @@ namespace Converj.Attributes;
 /// <summary>
 /// Controls how the fluent builder chain is structured and how the terminal step is generated.
 /// </summary>
-public enum BuilderMethod
+public enum TerminalMethod
 {
     /// <summary>
     /// Generates a terminal method with the target type name appended (e.g., <c>CreateUser()</c>).
@@ -25,13 +25,4 @@ public enum BuilderMethod
     /// This is so that the generator can continue creating the fluent step methods beyond the present sequence.
     /// </summary>
     None = 2,
-
-    /// <summary>
-    /// Type-first mode. Consumers select the target type up front via an initial method,
-    /// then fill in only that type's parameters
-    /// (e.g., <c>Factory.BuildDog().WithName("Rex").Create()</c>).
-    /// The initial method name is controlled by <see cref="FluentTargetAttribute.EagerVerb"/>
-    /// or <see cref="FluentRootAttribute.InitialVerb"/>.
-    /// </summary>
-    Eager = 3,
 }

@@ -26,7 +26,7 @@ public class DiagnosticsTests
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -37,7 +37,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Company(string name)
                     {
                         Name = name;
@@ -81,7 +81,7 @@ public class DiagnosticsTests
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -92,7 +92,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Company([MultipleFluentMethods(typeof(Convert))]int? id)
                     {
                         Id = id;
@@ -171,7 +171,7 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Spec;
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, MyNamespace.BooleanResultBase<string>, string> trueBecause);
 
@@ -228,7 +228,7 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Spec;
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct MyTypeB<TModel, TPredicateResult>(
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, string> trueBecause);
 
@@ -320,19 +320,19 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Spec;
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, BooleanResultBase<string>, string> trueBecause);
 
-            [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
             public readonly partial struct ExplanationWithNameExpressionTreePropositionFactory<TModel, TPredicateResult>(
                 Expression<Func<TModel, TPredicateResult>> expression,
                 [FluentMethod("WhenTrue")]string trueBecause);
 
             public readonly partial struct MultiAssertionExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>
             {
-                [FluentTarget(typeof(Spec), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
                 public MultiAssertionExplanationExpressionTreePropositionFactory(
                     Expression<Func<TModel, TPredicateResult>> expression,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))]Func<TModel, BooleanResultBase<string>, string> trueBecause)
@@ -526,7 +526,7 @@ public class DiagnosticsTests
 
                 public partial class Foo
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -539,7 +539,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Bar(string name)
                     {
                         Name = name;
@@ -579,7 +579,7 @@ public class DiagnosticsTests
 
                 public partial class Foo
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -592,7 +592,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Bar(string name, bool active = true)
                     {
                         Name = name;
@@ -880,7 +880,7 @@ public class DiagnosticsTests
 
             public partial class MyStep
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyStep(
                     [FluentMethod("WithName")]string name,
                     [FluentMethod("WithAge")]int age)
@@ -935,12 +935,12 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { }
             }
 
@@ -970,7 +970,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
-                        .WithSpan(SourceFile, 13, 6, 13, 71)
+                        .WithSpan(SourceFile, 13, 6, 13, 73)
                         .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
@@ -989,12 +989,12 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string? Z) : this(X, Y) { }
             }
 
@@ -1025,7 +1025,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
-                        .WithSpan(SourceFile, 13, 6, 13, 71)
+                        .WithSpan(SourceFile, 13, 6, 13, 73)
                         .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
@@ -1044,7 +1044,7 @@ public class DiagnosticsTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
@@ -1052,7 +1052,7 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { get; init; }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { this.Z = Z; }
             }
 
@@ -1082,7 +1082,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
-                        .WithSpan(SourceFile, 16, 6, 16, 71)
+                        .WithSpan(SourceFile, 16, 6, 16, 73)
                         .WithArguments("Test.TypeA", "Test.Factory"),
                 }
             }
@@ -1109,7 +1109,7 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { set { } }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y, string z) { }
             }
             """;
@@ -1143,7 +1143,7 @@ public class DiagnosticsTests
 
             public partial class TypeA
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y) { X = x; Y = y; }
 
                 public int X { get; set; }
@@ -1155,7 +1155,7 @@ public class DiagnosticsTests
                 [FluentStorage("Z")]
                 public string AnotherZ { get; set; }
 
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y, string z) : this(x, y) { }
             }
 
@@ -1182,7 +1182,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
-                        .WithSpan(SourceFile, 22, 6, 22, 71)
+                        .WithSpan(SourceFile, 22, 6, 22, 73)
                         .WithArguments("Test.TypeA", "Test.Factory")
                 }
             }
@@ -1198,7 +1198,7 @@ public class DiagnosticsTests
 
             namespace MyNamespace
             {
-                [FluentRoot(BuilderMethod = BuilderMethod.None)]
+                [FluentRoot(TerminalMethod = TerminalMethod.None)]
                 public static partial class Factory;
 
                 public partial class Target
@@ -1244,10 +1244,10 @@ public class DiagnosticsTests
 
                 public partial class Target
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Target(int a, int b) { A = a; B = b; }
 
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Target(int b) { B = b; }
 
                     public int A { get; }
@@ -1264,7 +1264,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
-                        .WithSpan(SourceFile, 13, 10, 13, 75)
+                        .WithSpan(SourceFile, 13, 10, 13, 77)
                         .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
                 }
             }
@@ -1289,7 +1289,7 @@ public class DiagnosticsTests
 
             public class Target
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
                 public Target(string name)
                 {
                     Name = name;
@@ -1299,7 +1299,7 @@ public class DiagnosticsTests
             }
             """;
 
-        // BuilderMethod.None + non-empty CreateVerb should produce a diagnostic about the conflict
+        // TerminalMethod.None + non-empty CreateVerb should produce a diagnostic about the conflict
         var test = new VerifyCS.Test
         {
             TestState =
@@ -1308,7 +1308,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(TerminalVerbWithNone.Id)
-                        .WithSpan(SourceFile, 10, 6, 10, 95),
+                        .WithSpan(SourceFile, 10, 6, 10, 97),
                 }
             }
         };

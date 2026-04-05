@@ -18,7 +18,7 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName)]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
             public static partial class Factory;
 
             public class Alpha
@@ -182,7 +182,7 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "Build")]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
@@ -346,12 +346,12 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.DynamicSuffix, TerminalVerb = "Build")]
+            [FluentRoot(TerminalMethod = TerminalMethod.DynamicSuffix, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.FixedName)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.FixedName)]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -510,7 +510,7 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.None)]
+            [FluentRoot(TerminalMethod = TerminalMethod.None)]
             public static partial class Factory;
 
             public partial class Alpha
@@ -568,7 +568,7 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "Build")]
+            [FluentRoot(TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public class Alpha
@@ -733,7 +733,7 @@ public class DefaultsTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.None, TerminalVerb = "Build")]
+            [FluentRoot(TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
             public static partial class Factory;
 
             public partial class Alpha
@@ -756,8 +756,8 @@ public class DefaultsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError(TerminalVerbWithNone.Id)
-                        .WithSpan(SourceFile, 5, 2, 5, 72)
-                        .WithMessage("TerminalVerb cannot be used with BuilderMethod.None")
+                        .WithSpan(SourceFile, 5, 2, 5, 74)
+                        .WithMessage("TerminalVerb cannot be used with TerminalMethod.None")
                 }
             }
         }.RunAsync();

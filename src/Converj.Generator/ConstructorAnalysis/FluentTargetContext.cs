@@ -22,7 +22,10 @@ internal record FluentTargetContext
         AttributeData = attributeData;
         MethodPrefix = metadata.MethodPrefix;
         ReturnType = metadata.ReturnType;
-        InitialVerb = metadata.InitialVerb ?? "Build";
+        HasEntryMethod = metadata.HasEntryMethod;
+        EntryMethodName = metadata.HasEntryMethod
+            ? metadata.EntryMethodName ?? string.Empty
+            : string.Empty;
         IsAttributedUsedOnContainingType = isAttributedUsedOnContainingType;
         IsStatic = rootSymbol.IsStatic;
         IsRecord = rootSymbol.IsRecord;
@@ -35,9 +38,9 @@ internal record FluentTargetContext
         IsInstanceMethodTarget = constructor.MethodKind == MethodKind.Ordinary && !constructor.IsStatic;
 
         // For static methods, default terminal verb to the method name and builder to FixedName
-        Builder = IsStaticMethodTarget
-            ? metadata.Builder ?? BuilderMethodKind.FixedName
-            : metadata.Builder ?? BuilderMethodKind.DynamicSuffix;
+        TerminalMethod = IsStaticMethodTarget
+            ? metadata.TerminalMethod ?? TerminalMethodKind.FixedName
+            : metadata.TerminalMethod ?? TerminalMethodKind.DynamicSuffix;
         TerminalVerb = metadata.TerminalVerb ?? (IsStaticMethodTarget ? constructor.Name : null);
 
         if (IsStaticMethodTarget || IsInstanceMethodTarget)
@@ -82,7 +85,7 @@ internal record FluentTargetContext
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         new(FluentParameterComparer.Default);
 
-    public BuilderMethodKind Builder { get; }
+    public TerminalMethodKind TerminalMethod { get; }
 
     public bool IsRecord { get; }
 
@@ -114,9 +117,14 @@ internal record FluentTargetContext
     public bool IsAttributedUsedOnContainingType { get; }
 
     /// <summary>
-    /// The verb used for the initial method name in Eager mode (e.g., "Build" -> "BuildDog").
+    /// Whether this target has a <c>[FluentEntryMethod]</c> attribute for type-first chain entry.
     /// </summary>
-    public string InitialVerb { get; }
+    public bool HasEntryMethod { get; }
+
+    /// <summary>
+    /// The full entry method name (e.g., "BuildDog"). Only meaningful when <see cref="HasEntryMethod"/> is true.
+    /// </summary>
+    public string EntryMethodName { get; }
 
     public SyntaxTokenList OriginalTypeModifiers { get; }
 

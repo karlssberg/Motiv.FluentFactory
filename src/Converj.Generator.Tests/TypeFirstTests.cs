@@ -17,12 +17,13 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
                     Name = name;
@@ -120,12 +121,13 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
                     Name = name;
@@ -137,6 +139,7 @@ public class TypeFirstTests
             public class Cat
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildCat")]
                 public Cat(int lives)
                 {
                     Lives = lives;
@@ -287,12 +290,13 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Circle
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildCircle")]
                 public Circle(double radius)
                 {
                     Radius = radius;
@@ -304,6 +308,7 @@ public class TypeFirstTests
             public class Circle<T>
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildCircle")]
                 public Circle(T radius)
                 {
                     Radius = radius;
@@ -441,7 +446,8 @@ public class TypeFirstTests
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.Eager)]
+                [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
                     Name = name;
@@ -583,12 +589,13 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager, InitialVerb = "Make")]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Dog
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("MakeDog")]
                 public Dog(string name)
                 {
                     Name = name;
@@ -688,7 +695,7 @@ public class TypeFirstTests
 
             namespace Test
             {
-                [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+                [FluentRoot]
                 public static partial class Factory;
 
                 namespace A
@@ -696,6 +703,7 @@ public class TypeFirstTests
                     public class Circle
                     {
                         [FluentTarget(typeof(Test.Factory))]
+                        [FluentEntryMethod("BuildCircle")]
                         public Circle(double radius)
                         {
                             Radius = radius;
@@ -710,6 +718,7 @@ public class TypeFirstTests
                     public class Circle
                     {
                         [FluentTarget(typeof(Test.Factory))]
+                        [FluentEntryMethod("BuildCircle")]
                         public Circle(int radius)
                         {
                             Radius = radius;
@@ -729,16 +738,16 @@ public class TypeFirstTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(FluentDiagnostics.AmbiguousInitialMethod.Id)
+                        .CompilerError(FluentDiagnostics.AmbiguousEntryMethod.Id)
                         .WithSpan(sourceFile, 13, 14, 13, 48)
                         .WithArguments("BuildCircle", "'Test.A.Circle', 'Test.B.Circle'"),
                     DiagnosticResult
                         .CompilerError(FluentDiagnostics.UnreachableConstructor.Id)
-                        .WithSpan(sourceFile, 14, 20, 14, 26)
+                        .WithSpan(sourceFile, 15, 20, 15, 26)
                         .WithArguments("Circle.Circle(double radius)"),
                     DiagnosticResult
                         .CompilerError(FluentDiagnostics.UnreachableConstructor.Id)
-                        .WithSpan(sourceFile, 28, 20, 28, 26)
+                        .WithSpan(sourceFile, 30, 20, 30, 26)
                         .WithArguments("Circle.Circle(int radius)")
                 }
             }
@@ -760,12 +769,13 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public static partial class Factory;
 
             public class Config
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildConfig")]
                 public Config(string host = "localhost", int port = 8080, bool ssl = false)
                 {
                     Host = host;
@@ -886,7 +896,7 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public partial class Factory
             {
                 [FluentParameter("wheels")]
@@ -901,6 +911,7 @@ public class TypeFirstTests
             public class Car
             {
                 [FluentTarget(typeof(Factory))]
+                [FluentEntryMethod("BuildCar")]
                 public Car(int wheels, string color)
                 {
                     Wheels = wheels;
@@ -996,7 +1007,7 @@ public class TypeFirstTests
     }
 
     /// <summary>
-    /// Issue #11: TypeFirst + BuilderMethod.None — ExistingTypeFluentStep skipped in
+    /// Issue #11: TypeFirst + TerminalMethod.None — ExistingTypeFluentStep skipped in
     /// TypeFirst indexing loop. Only RegularFluentStep gets Index/TypeFirstTargetName set.
     /// </summary>
     [Fact]
@@ -1009,12 +1020,12 @@ public class TypeFirstTests
 
             namespace Test;
 
-            [FluentRoot(BuilderMethod = BuilderMethod.Eager)]
+            [FluentRoot]
             public static partial class Factory;
 
             public partial class Widget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public Widget(string label, int count)
                 {
                     Label = label;

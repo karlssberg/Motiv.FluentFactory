@@ -68,7 +68,7 @@ internal class FluentStepBuilder(
             if (constructorMetadata is null) return false;
 
             var containingType = constructorMetadata.Constructor.ContainingType;
-            var doNotGenerateCreateMethod = constructorMetadata.Builder == BuilderMethodKind.None;
+            var doNotGenerateCreateMethod = constructorMetadata.TerminalMethod == TerminalMethodKind.None;
 
             // FUTURE ENHANCEMENT: Create a dedicated analyzer to validate that target types are partial and instantiatable.
             // This would help avoid issues where constructors with similar build steps might be hidden.

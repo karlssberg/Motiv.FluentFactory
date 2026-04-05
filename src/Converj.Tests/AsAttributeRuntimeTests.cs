@@ -6,7 +6,7 @@ namespace Converj.Tests;
 
 #region Test types
 
-[FluentRoot(BuilderMethod = BuilderMethod.None, MethodPrefix = "")]
+[FluentRoot(TerminalMethod = TerminalMethod.None, MethodPrefix = "")]
 internal partial class AsAliasFactory;
 
 [FluentTarget<AsAliasFactory>]

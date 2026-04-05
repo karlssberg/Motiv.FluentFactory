@@ -171,7 +171,7 @@ public class BugDiscoveryTests
                     public MyBuildTarget(int value) { }
                     public MyBuildTarget(string name) { }
 
-                    [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyTarget), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(double amount) { }
                 }
             }
@@ -289,7 +289,7 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.None, TerminalVerb = "New")]
+                [FluentTarget(typeof(MyTarget), TerminalMethod = TerminalMethod.None, TerminalVerb = "New")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -301,8 +301,8 @@ public class BugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0010")
-                    .WithSpan("Source.cs", 8, 6, 8, 94)
-                    .WithMessage("TerminalVerb cannot be used with BuilderMethod.None"),
+                    .WithSpan("Source.cs", 8, 6, 8, 96)
+                    .WithMessage("TerminalVerb cannot be used with TerminalMethod.None"),
             }
         }.RunAsync();
     }
@@ -319,8 +319,8 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "CreateFirst")]
-                [FluentTarget(typeof(MyTarget), BuilderMethod = BuilderMethod.FixedName, TerminalVerb = "CreateSecond")]
+                [FluentTarget(typeof(MyTarget), TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "CreateFirst")]
+                [FluentTarget(typeof(MyTarget), TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "CreateSecond")]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -413,7 +413,7 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), {{createMethodNameArgument}}, BuilderMethod = BuilderMethod.FixedName)]
+                [FluentTarget(typeof(MyTarget), {{createMethodNameArgument}}, TerminalMethod = TerminalMethod.FixedName)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -640,7 +640,7 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.FixedName)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", TerminalMethod = TerminalMethod.FixedName)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -674,7 +674,7 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", TerminalMethod = TerminalMethod.None)]
                 public partial record EmptyName(int Value);
             }
             """;
@@ -713,7 +713,7 @@ public class BugDiscoveryTests
                 {
                     DiagnosticResult.CompilerWarning("CVJG0017")
                         .WithSpan("Source.cs", 8, 37, 8, 37 + createVerbArgument.Length)
-                        .WithMessage("TerminalVerb has no effect with BuilderMethod.None")
+                        .WithMessage("TerminalVerb has no effect with TerminalMethod.None")
                 }
             }
         }.RunAsync();
@@ -731,7 +731,7 @@ public class BugDiscoveryTests
                 [FluentRoot]
                 public partial class MyTarget;
 
-                [FluentTarget(typeof(MyTarget), TerminalVerb = "", BuilderMethod = BuilderMethod.DynamicSuffix)]
+                [FluentTarget(typeof(MyTarget), TerminalVerb = "", TerminalMethod = TerminalMethod.DynamicSuffix)]
                 public partial record MyBuildTarget(int Value);
             }
             """;
@@ -808,7 +808,7 @@ public class BugDiscoveryTests
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;

@@ -48,7 +48,7 @@ public class NamespaceDisambiguationTests
             {
                 public class ProductA
                 {
-                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public ProductA(NamespaceA.Config config)
                     {
                         Config = config;
@@ -62,7 +62,7 @@ public class NamespaceDisambiguationTests
             {
                 public class ProductB
                 {
-                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public ProductB(NamespaceB.Config config)
                     {
                         Config = config;
@@ -159,7 +159,7 @@ public class NamespaceDisambiguationTests
             {
                 public class Product
                 {
-                    [FluentTarget(typeof(MyFactory.Factory), BuilderMethod = BuilderMethod.None)]
+                    [FluentTarget(typeof(MyFactory.Factory), TerminalMethod = TerminalMethod.None)]
                     public Product(NamespaceA.Settings settingsA, NamespaceB.Settings settingsB)
                     {
                         SettingsA = settingsA;

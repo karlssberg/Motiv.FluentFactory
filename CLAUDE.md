@@ -46,8 +46,12 @@ Generated code uses structs with `[MethodImpl(AggressiveInlining)]` for zero-ove
 
 ### Key Enums
 
-- **`BuilderMethod`** — Controls chain structure: `DynamicSuffix` (default, terminal named from target), `FixedName` (terminal verb as-is), `None` (no terminal, inline call), `First` (type-first mode with initial entry method)
-- Internal mirror: `BuilderKind` in `Domain/BuilderKind.cs`
+- **`TerminalMethod`** — Controls chain structure: `DynamicSuffix` (default, terminal named from target), `FixedName` (terminal verb as-is), `None` (no terminal, inline call)
+- Internal mirror: `TerminalMethodKind` in `Domain/TerminalMethodKind.cs`
+
+### Entry Method Attribute
+
+- **`[FluentEntryMethod("name")]`** — Companion attribute applied alongside `[FluentTarget]` to enable type-first mode. Generates a parameterless entry method that narrows the chain to a specific target type (e.g., `Factory.BuildDog().WithName("Rex").Create()`). The `name` constructor parameter is required and sets the full method identifier.
 
 ### Static Method Targets
 

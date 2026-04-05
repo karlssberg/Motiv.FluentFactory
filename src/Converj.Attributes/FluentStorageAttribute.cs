@@ -5,7 +5,7 @@ namespace Converj.Attributes;
 /// <summary>
 /// Marks a field or property on a target type as explicit storage for a constructor parameter.
 /// Used when a type has multiple <see cref="FluentTargetAttribute"/> entries with
-/// <c>BuilderMethod.None</c> and the generator cannot auto-discover storage for parameters
+/// <c>TerminalMethod.None</c> and the generator cannot auto-discover storage for parameters
 /// beyond the shortest constructor's parameter list.
 /// When no parameter name is specified, the name is inferred from the member name
 /// (stripping leading underscores and matching case-insensitively).

@@ -19,6 +19,7 @@ internal class TypeName
     public static readonly TypeName AsAttribute = new(GeneratorAttributesNamespace + "AsAttribute");
     public static readonly TypeName FluentParameterAttribute = new(GeneratorAttributesNamespace + "FluentParameterAttribute");
     public static readonly TypeName FluentStorageAttribute = new(GeneratorAttributesNamespace + "FluentStorageAttribute");
+    public static readonly TypeName FluentEntryMethodAttribute = new(GeneratorAttributesNamespace + "FluentEntryMethodAttribute");
 
     public static readonly TypeName RequiredAttribute = new("System.ComponentModel.DataAnnotations.RequiredAttribute");
 

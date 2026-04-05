@@ -18,7 +18,7 @@ public class TargetTypeTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -76,7 +76,7 @@ public class TargetTypeTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -132,7 +132,7 @@ public class TargetTypeTests
 
             public struct MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -189,7 +189,7 @@ public class TargetTypeTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public struct MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -245,7 +245,7 @@ public class TargetTypeTests
 
             public record MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -302,7 +302,7 @@ public class TargetTypeTests
             [FluentRoot]
             public static partial class Factory;
 
-            [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
             public record MyBuildTarget(int Value)
             {
                 public int Value { get; set; } = Value;

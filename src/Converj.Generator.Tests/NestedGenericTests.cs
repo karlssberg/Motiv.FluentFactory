@@ -20,7 +20,7 @@ public class NestedGenericTests
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Func<T, bool> value)
                 {
                     Value = value;
@@ -80,7 +80,7 @@ public class NestedGenericTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2)
@@ -168,7 +168,7 @@ public class NestedGenericTests
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]Func<IEnumerable<KeyValuePair<T1, T1>>, bool> value1,
                     [FluentMethod("SetValue2")]Func<IEnumerable<KeyValuePair<T2, T2>>, bool> value2)
@@ -256,7 +256,7 @@ public class NestedGenericTests
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2,
@@ -370,7 +370,7 @@ public class NestedGenericTests
 
             public class MyBuildTarget<T1, T2, T3, T4, T5, T6>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, T2> value1,
                     Func<T3, T4> value2,

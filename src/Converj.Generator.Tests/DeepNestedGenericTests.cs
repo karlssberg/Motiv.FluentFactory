@@ -25,7 +25,7 @@ public class DeepNestedGenericTests
 
             public class MyBuildTarget<T, U>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Dictionary<string, List<KeyValuePair<T, U>>> value)
                 {
                     Value = value;
@@ -90,7 +90,7 @@ public class DeepNestedGenericTests
 
             public class MyBuildTarget<T, U>
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(IReadOnlyDictionary<string, IEnumerable<Tuple<T, List<U>>>> value)
                 {
                     Value = value;

@@ -24,7 +24,7 @@ public class NullableTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string? value)
                 {
                     Value = value;
@@ -88,7 +88,7 @@ public class NullableTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string? name, int count, List<string?> items)
                 {
                     Name = name;
@@ -201,7 +201,7 @@ public class NullableTests
 
             public class MyBuildTarget<T> where T : class
             {
-                [FluentTarget(typeof(Factory), BuilderMethod = BuilderMethod.None)]
+                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T? value)
                 {
                     Value = value;
