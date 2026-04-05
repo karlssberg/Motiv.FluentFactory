@@ -499,7 +499,7 @@ public static class FluentDiagnostics
         id: "CVJG0043",
         title: "Ambiguous initial method",
         messageFormat:
-        "Initial method '{0}' is ambiguous between types {1}. Disambiguate by setting InitialVerb on [FluentTarget] to change the entry method, or use TerminalVerb with BuilderMethod.FixedName to change the terminal method.",
+        "Initial method '{0}' is ambiguous between types {1}. Disambiguate by setting EagerVerb on [FluentTarget] to change the entry method, or use TerminalVerb with BuilderMethod.FixedName to change the terminal method.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);

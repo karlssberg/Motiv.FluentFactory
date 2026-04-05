@@ -15,6 +15,7 @@ internal static class FluentFactoryMetadataReader
     private const string ReturnTypeKey = "ReturnType";
     private const string AllowPartialParameterOverlapKey = "AllowPartialParameterOverlap";
     private const string InitialVerbKey = "InitialVerb";
+    private const string EagerVerbKey = "EagerVerb";
 
     /// <summary>
     /// Extracts fluent factory metadata from a symbol's FluentTarget attributes.
@@ -141,6 +142,7 @@ internal static class FluentFactoryMetadataReader
                     result.AllowPartialParameterOverlap = arg.Value.Value is true;
                     break;
                 case InitialVerbKey:
+                case EagerVerbKey:
                     result.InitialVerb = arg.Value.Value as string;
                     break;
             }

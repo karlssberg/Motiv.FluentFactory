@@ -47,7 +47,7 @@ public class FluentRootAttribute : Attribute
     /// <summary>
     /// The verb used for initial method names when <see cref="BuilderMethod"/> is <see cref="Attributes.BuilderMethod.Eager"/>. Default is "Build".
     /// For example, "Build" + "Dog" = <c>BuildDog()</c>.
-    /// Can be overridden per-target via <see cref="FluentTargetAttribute.InitialVerb"/>.
+    /// Can be overridden per-target via <see cref="FluentTargetAttribute.EagerVerb"/>.
     /// </summary>
     public string? InitialVerb { get; set; }
 }

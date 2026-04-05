@@ -46,7 +46,7 @@ public class FluentTargetAttribute(Type rootType) : Attribute
     /// The verb for this target's initial method when using <see cref="Attributes.BuilderMethod.Eager"/>.
     /// Overrides the root-level <see cref="FluentRootAttribute.InitialVerb"/> if set.
     /// </summary>
-    public string? InitialVerb { get; set; }
+    public string? EagerVerb { get; set; }
 }
 
 /// <summary>

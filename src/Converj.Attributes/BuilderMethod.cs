@@ -30,7 +30,7 @@ public enum BuilderMethod
     /// Type-first mode. Consumers select the target type up front via an initial method,
     /// then fill in only that type's parameters
     /// (e.g., <c>Factory.BuildDog().WithName("Rex").Create()</c>).
-    /// The initial method name is controlled by <see cref="FluentTargetAttribute.InitialVerb"/>
+    /// The initial method name is controlled by <see cref="FluentTargetAttribute.EagerVerb"/>
     /// or <see cref="FluentRootAttribute.InitialVerb"/>.
     /// </summary>
     Eager = 3,
