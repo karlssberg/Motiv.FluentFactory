@@ -94,7 +94,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
 
-        var fluentRootMethods = ConvertNodeToFluentFluentMethods(rootType, stepTrie.Root, []);
+        var fluentRootMethods = ConvertNodeToFluentFluentMethods(rootType, stepTrie.Root, [], _stepBuilder);
 
         var childFluentSteps = fluentRootMethods
             .Select(m => m.Return)
@@ -197,14 +197,17 @@ internal class FluentModelFactory(Compilation compilation)
     private ImmutableArray<IFluentMethod> ConvertNodeToFluentFluentMethods(
         INamedTypeSymbol type,
         Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
-        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages,
+        FluentStepBuilder stepBuilder)
     {
         ImmutableArray<IFluentMethod> fluentMethods =
         [
             .._methodSelector.ConvertNodeToFluentMethods(
                 type, node, valueStorages,
-                (rootType, child) => _stepBuilder.ConvertNodeToFluentStep(
-                    rootType, child, ConvertNodeToFluentFluentMethods, AddOptionalMethodsToStep)),
+                (rootType, child) => stepBuilder.ConvertNodeToFluentStep(
+                    rootType, child,
+                    (t, n, vs) => ConvertNodeToFluentFluentMethods(t, n, vs, stepBuilder),
+                    AddOptionalMethodsToStep)),
             ..ConvertNodeToCreationMethods(type, node, valueStorages)
         ];
 
@@ -387,10 +390,7 @@ internal class FluentModelFactory(Compilation compilation)
             var typeFirstStepBuilder = new FluentStepBuilder(typeFirstStepDict, _diagnostics);
 
             // Convert the trie using the separate step builder
-            var originalStepBuilder = _stepBuilder;
-            _stepBuilder = typeFirstStepBuilder;
-            var trieRootMethods = ConvertNodeToFluentFluentMethods(rootType, trie.Root, []);
-            _stepBuilder = originalStepBuilder;
+            var trieRootMethods = ConvertNodeToFluentFluentMethods(rootType, trie.Root, [], typeFirstStepBuilder);
 
             if (trieRootMethods.IsEmpty) continue;
 
