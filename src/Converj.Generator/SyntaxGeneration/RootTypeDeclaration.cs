@@ -146,6 +146,12 @@ internal static class RootTypeDeclaration
                     };
                 }
 
+                // Rewrite extension method entry: add 'this' parameter and prepend receiver argument
+                if (method.Return is IFluentStep { ReceiverParameter: not null } receiverStep)
+                {
+                    syntax = RewriteRootMethodForExtensionReceiver(syntax, receiverStep.ReceiverParameter);
+                }
+
                 return (syntax, isInstance);
             })
             .Select(pair =>
@@ -240,6 +246,41 @@ internal static class RootTypeDeclaration
                                 ThisExpression(),
                                 IdentifierName(factoryMemberName)))
                         : arg));
+    }
+
+    /// <summary>
+    /// Rewrites a root method to be an extension method: prepends a 'this' parameter
+    /// and adds the receiver as the first argument to the step constructor.
+    /// </summary>
+    private static MethodDeclarationSyntax RewriteRootMethodForExtensionReceiver(
+        MethodDeclarationSyntax method,
+        IParameterSymbol receiverParameter)
+    {
+        // Add 'this' receiver as the first parameter (no 'in' modifier for extension receiver)
+        var receiverParam = Parameter(Identifier(receiverParameter.Name.ToCamelCase()))
+            .WithModifiers(TokenList(Token(SyntaxKind.ThisKeyword)))
+            .WithType(ParseTypeName(receiverParameter.Type.ToGlobalDisplayString()));
+
+        var existingParams = method.ParameterList?.Parameters ?? SeparatedList<ParameterSyntax>();
+        method = method.WithParameterList(
+            ParameterList(SeparatedList(
+                new[] { receiverParam }.Concat(existingParams))));
+
+        // Prepend receiver identifier to the step constructor arguments
+        var returnStatement = method.Body?.Statements.OfType<ReturnStatementSyntax>().FirstOrDefault();
+        if (returnStatement?.Expression is ObjectCreationExpressionSyntax creation)
+        {
+            var receiverArg = Argument(IdentifierName(receiverParameter.Name.ToCamelCase()));
+            var existingArgs = creation.ArgumentList?.Arguments ?? SeparatedList<ArgumentSyntax>();
+            var newCreation = creation.WithArgumentList(
+                ArgumentList(SeparatedList(
+                    new[] { receiverArg }.Concat(existingArgs))));
+            var newReturn = returnStatement.WithExpression(newCreation);
+            var newBody = method.Body!.WithStatements(SingletonList<StatementSyntax>(newReturn));
+            method = method.WithBody(newBody);
+        }
+
+        return method;
     }
 
     private static IEnumerable<SyntaxToken> GetSyntaxTokens(bool isInstance)

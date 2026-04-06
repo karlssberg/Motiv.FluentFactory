@@ -37,6 +37,9 @@ internal record FluentTargetContext
         IsStaticMethodTarget = constructor.MethodKind == MethodKind.Ordinary && constructor.IsStatic;
         IsInstanceMethodTarget = constructor.MethodKind == MethodKind.Ordinary && !constructor.IsStatic;
 
+        // Detect extension receiver: [This] attribute or C# 'this' modifier on first parameter
+        ReceiverParameter = DetectReceiverParameter(constructor);
+
         // For static methods, default terminal verb to the method name and builder to FixedName
         TerminalMethod = IsStaticMethodTarget
             ? metadata.TerminalMethod ?? TerminalMethodKind.FixedName
@@ -138,5 +141,35 @@ internal record FluentTargetContext
     /// </summary>
     public DiagnosticList PropertyDiagnostics { get; }
 
+    /// <summary>
+    /// The first parameter designated as the extension receiver, either via
+    /// the C# <c>this</c> modifier or the <c>[This]</c> attribute.
+    /// </summary>
+    public IParameterSymbol? ReceiverParameter { get; }
+
+    /// <summary>
+    /// Whether this target has an extension receiver parameter.
+    /// </summary>
+    public bool HasReceiver => ReceiverParameter is not null;
+
     public string ToDisplayString() => $"{Constructor.ToDisplayString()}";
+
+    private static IParameterSymbol? DetectReceiverParameter(IMethodSymbol method)
+    {
+        if (method.Parameters.IsEmpty)
+            return null;
+
+        var firstParam = method.Parameters[0];
+
+        // C# 'this' modifier on first parameter (extension method)
+        if (method.IsExtensionMethod)
+            return firstParam;
+
+        // [This] attribute on first parameter
+        if (firstParam.GetAttributes().Any(a =>
+                a.AttributeClass?.ToDisplayString() == TypeName.ThisAttribute))
+            return firstParam;
+
+        return null;
+    }
 }

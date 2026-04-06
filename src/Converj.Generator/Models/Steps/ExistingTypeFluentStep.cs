@@ -42,6 +42,11 @@ internal class ExistingTypeFluentStep(
 
     public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
 
+    /// <summary>
+    /// The extension receiver parameter, threaded through all steps in the chain.
+    /// </summary>
+    public IParameterSymbol? ReceiverParameter { get; set; }
+
     public ImmutableArray<IMethodSymbol> CandidateConstructors { get; set; }
     
     public FluentTargetContext ConstructorContext => constructorMetadata.Context;

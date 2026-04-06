@@ -6,6 +6,7 @@ namespace Converj.Example
     internal partial record Animal
     {
         /// <summary>
+        ///     <seealso cref="Converj.Example.Bird"/>
         ///     <seealso cref="Converj.Example.Cat"/>
         ///     <seealso cref="Converj.Example.Dog"/>
         /// </summary>
@@ -52,22 +53,23 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.Monster"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static global::Converj.Example.Step_1__Converj_Example_Animal WithArmCount(in int armCount)
+        public static global::Converj.Example.Step_2__Converj_Example_Animal WithArmCount(in int armCount)
         {
-            return new global::Converj.Example.Step_1__Converj_Example_Animal(armCount: armCount);
+            return new global::Converj.Example.Step_2__Converj_Example_Animal(armCount: armCount);
         }
 
         /// <summary>
         ///     <seealso cref="Converj.Example.Monster"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static global::Converj.Example.Step_1__Converj_Example_Animal WithEyeCount(in int eyeCount)
+        public static global::Converj.Example.Step_2__Converj_Example_Animal WithEyeCount(in int eyeCount)
         {
-            return new global::Converj.Example.Step_1__Converj_Example_Animal(eyeCount: eyeCount);
+            return new global::Converj.Example.Step_2__Converj_Example_Animal(eyeCount: eyeCount);
         }
     }
 
     /// <summary>
+    ///     <seealso cref="Converj.Example.Bird"/>
     ///     <seealso cref="Converj.Example.Cat"/>
     ///     <seealso cref="Converj.Example.Dog"/>
     /// </summary>
@@ -78,6 +80,15 @@ namespace Converj.Example
         internal Step_0__Converj_Example_Animal(in int legs)
         {
             this._legs__parameter = legs;
+        }
+
+        /// <summary>
+        ///     <seealso cref="Converj.Example.Bird"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_1__Converj_Example_Animal WithBirdThings(in int wings, in string name)
+        {
+            return new global::Converj.Example.Step_1__Converj_Example_Animal(this._legs__parameter, wings, name);
         }
 
         /// <summary>
@@ -104,14 +115,42 @@ namespace Converj.Example
     }
 
     /// <summary>
-    ///     <seealso cref="Converj.Example.Monster"/>
+    ///     <seealso cref="Converj.Example.Bird"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Animal
     {
+        private readonly int _legs__parameter;
+        private readonly int _wings__parameter;
+        private readonly string _name__parameter;
+        internal Step_1__Converj_Example_Animal(in int legs, in int wings, in string name)
+        {
+            this._legs__parameter = legs;
+            this._wings__parameter = wings;
+            this._name__parameter = name;
+        }
+
+        /// <summary>
+        /// Creates a new instance using constructor Converj.Example.Bird.Bird(int Legs, (int Wings, string name) BirdThings).
+        ///
+        ///     <seealso cref="Converj.Example.Bird"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Animal CreateBird()
+        {
+            return new global::Converj.Example.Bird(this._legs__parameter, (this._wings__parameter, this._name__parameter));
+        }
+    }
+
+    /// <summary>
+    ///     <seealso cref="Converj.Example.Monster"/>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
+    internal readonly struct Step_2__Converj_Example_Animal
+    {
         private readonly int _armCount__parameter;
         private readonly int _eyeCount__parameter;
-        internal Step_1__Converj_Example_Animal(in int armCount = 1, in int eyeCount = 2)
+        internal Step_2__Converj_Example_Animal(in int armCount = 1, in int eyeCount = 2)
         {
             this._armCount__parameter = armCount;
             this._eyeCount__parameter = eyeCount;
@@ -121,18 +160,18 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.Monster"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_1__Converj_Example_Animal WithArmCount(in int armCount)
+        public global::Converj.Example.Step_2__Converj_Example_Animal WithArmCount(in int armCount)
         {
-            return new global::Converj.Example.Step_1__Converj_Example_Animal(armCount, this._eyeCount__parameter);
+            return new global::Converj.Example.Step_2__Converj_Example_Animal(armCount, this._eyeCount__parameter);
         }
 
         /// <summary>
         ///     <seealso cref="Converj.Example.Monster"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_1__Converj_Example_Animal WithEyeCount(in int eyeCount)
+        public global::Converj.Example.Step_2__Converj_Example_Animal WithEyeCount(in int eyeCount)
         {
-            return new global::Converj.Example.Step_1__Converj_Example_Animal(this._armCount__parameter, eyeCount);
+            return new global::Converj.Example.Step_2__Converj_Example_Animal(this._armCount__parameter, eyeCount);
         }
 
         /// <summary>

@@ -68,6 +68,11 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; } = [];
 
+    /// <summary>
+    /// The extension receiver parameter, threaded through all steps in the chain.
+    /// </summary>
+    public IParameterSymbol? ReceiverParameter { get; set; }
+
     public INamedTypeSymbol RootType { get; } = rootType;
 
     public ImmutableArray<IMethodSymbol> CandidateConstructors => [..candidateConstructors];

@@ -27,6 +27,11 @@ internal class ConstructorMetadata(FluentTargetContext targetContext)
     /// </summary>
     public bool IsStaticMethodTarget { get; } = targetContext.IsStaticMethodTarget;
 
+    /// <summary>
+    /// The extension receiver parameter, if this target uses extension method syntax.
+    /// </summary>
+    public IParameterSymbol? ReceiverParameter { get; } = targetContext.ReceiverParameter;
+
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; } =
         targetContext.ValueStorage;
 

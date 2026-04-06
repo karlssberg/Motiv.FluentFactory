@@ -100,6 +100,12 @@ internal class OrderedDictionary<TKey, TValue>(IEqualityComparer<TKey>? comparer
         return ((IEnumerable)GetOrderedItems()).GetEnumerator();
     }
 
+    public void Insert(int index, TKey key, TValue value)
+    {
+        _dictionary.Add(key, value);
+        _keys.Insert(index, key);
+    }
+
     public TValue GetOrAdd(TKey key, Func<TValue> getValue)
     {
         if (TryGetValue(key, out var existingValue)) return existingValue;

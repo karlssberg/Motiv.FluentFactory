@@ -113,6 +113,15 @@ internal class FluentModelFactory(Compilation compilation)
             PropagateThreadedParametersToSteps(fluentBuilderSteps);
         }
 
+        // Propagate extension receiver to all steps in the chain
+        var receiverParameter = parameterFirstContexts
+            .Select(c => c.ReceiverParameter)
+            .FirstOrDefault(r => r is not null);
+        if (receiverParameter is not null)
+        {
+            PropagateReceiverToSteps(fluentBuilderSteps, receiverParameter);
+        }
+
         // Handle multi-param all-optional constructors via post-processing
         var (gatewayMethods, gatewaySteps) = CreateAllOptionalStepsAndGatewayMethods(
             rootType, stepTrie.Root, fluentBuilderSteps.Length);
@@ -714,8 +723,9 @@ internal class FluentModelFactory(Compilation compilation)
             let preSatisfiedNames = IsSelfReferencing(value.Constructor, _rootType)
                 ? new HashSet<string>()
                 : GetPreSatisfiedParameterNames(value.Constructor)
-            where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count
-            where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count
+            let receiverCount = value.ReceiverParameter is not null ? 1 : 0
+            where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount
+            where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count - receiverCount
             where value.TerminalMethod != TerminalMethodKind.None
             let verb = value.Context.TerminalVerb ?? "Create"
             let methodName = value.TerminalMethod == TerminalMethodKind.FixedName
@@ -728,9 +738,12 @@ internal class FluentModelFactory(Compilation compilation)
                 .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)))
             let hasStep = node.Key.Length > 0
             let threadedParamFields = GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
+            let receiverField = value.ReceiverParameter is { } receiver
+                ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
+                : ImmutableArray<FluentMethodParameter>.Empty
             let allParameterFields = hasStep
-                ? threadedParamFields.AddRange(node.Key).AddRange(optionalParamFields)
-                : threadedParamFields.AddRange(node.Key)
+                ? receiverField.AddRange(threadedParamFields).AddRange(node.Key).AddRange(optionalParamFields)
+                : receiverField.AddRange(threadedParamFields).AddRange(node.Key)
             let mergedValueSources = MergeThreadedValueSources(value.Constructor, valueSources, preSatisfiedNames)
             select new CreationMethod(
                 rootType.ContainingNamespace,
@@ -844,6 +857,31 @@ internal class FluentModelFactory(Compilation compilation)
                     step.ValueStorage.Add(binding.TargetParameter,
                         FieldStorage.FromParameter(binding.TargetParameter, _rootType.ContainingNamespace));
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Propagates the extension receiver parameter to all steps in the chain.
+    /// Prepends it to KnownConstructorParameters and adds field storage.
+    /// </summary>
+    private static void PropagateReceiverToSteps(ImmutableArray<IFluentStep> steps, IParameterSymbol receiverParameter)
+    {
+        foreach (var step in steps)
+        {
+            step.ReceiverParameter = receiverParameter;
+
+            // Prepend receiver to known parameters so it gets a field and constructor parameter
+            if (step is RegularFluentStep regularStep)
+            {
+                regularStep.KnownConstructorParameters = new ParameterSequence(
+                    [receiverParameter, ..regularStep.KnownConstructorParameters]);
+            }
+
+            if (!step.ValueStorage.ContainsKey(receiverParameter))
+            {
+                step.ValueStorage.Insert(0, receiverParameter,
+                    FieldStorage.FromParameter(receiverParameter, step.Namespace));
             }
         }
     }
@@ -1107,6 +1145,7 @@ internal class FluentModelFactory(Compilation compilation)
             var requiredParameters = targetContext.Constructor.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
                 .Where(p => !preSatisfiedNames.Contains(p.Name))
+                .Where(p => !SymbolEqualityComparer.Default.Equals(p, targetContext.ReceiverParameter))
                 .Select(ToFluentMethodParameter);
 
             var metadata = new ConstructorMetadata(targetContext);

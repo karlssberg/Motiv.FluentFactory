@@ -22,4 +22,10 @@ internal interface IFluentStep : IFluentReturn
     /// These are carried as additional fields on the step but are not part of the fluent step chain.
     /// </summary>
     ImmutableArray<FluentParameterBinding> ThreadedParameters { get; set; }
+
+    /// <summary>
+    /// The extension receiver parameter, threaded through all steps in the chain.
+    /// When set, the entry method is generated as an extension method on this parameter's type.
+    /// </summary>
+    IParameterSymbol? ReceiverParameter { get; set; }
 }
