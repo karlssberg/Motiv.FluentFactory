@@ -5,7 +5,7 @@ namespace Converj.Generator.Models.Parameters;
 
 internal class FluentMethodParameter : IEquatable<FluentMethodParameter>
 {
-    private FluentMethodParameter(
+    protected FluentMethodParameter(
         IParameterSymbol? parameterSymbol,
         IPropertySymbol? sourceProperty,
         string sourceName,

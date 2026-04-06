@@ -10,17 +10,21 @@ internal static class FieldAndPropertySyntax
 {
     public static ImmutableArray<MemberDeclarationSyntax> CreateDeclarations(
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages) =>
-        [..valueStorages.Values.Select(CreateDeclaration).OfType<MemberDeclarationSyntax>()];
+        [..valueStorages.Values.SelectMany(CreateDeclarations)];
 
-    private static MemberDeclarationSyntax? CreateDeclaration(IFluentValueStorage valueStorage)
+    private static IEnumerable<MemberDeclarationSyntax> CreateDeclarations(IFluentValueStorage valueStorage)
     {
         return valueStorage switch
         {
+            TupleFieldStorage tupleStorage =>
+                tupleStorage.ElementStorages
+                    .Where(e => !e.DefinitionExists)
+                    .Select(CreateFieldDeclaration),
             FieldStorage { DefinitionExists: false } fieldStorage =>
-                CreateFieldDeclaration(fieldStorage),
+                [CreateFieldDeclaration(fieldStorage)],
             PropertyStorage { DefinitionExists: false } propertyStorage =>
-                CreatePropertyDeclaration(propertyStorage),
-            _ => null
+                [CreatePropertyDeclaration(propertyStorage)],
+            _ => []
         };
     }
 

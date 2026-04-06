@@ -14,13 +14,14 @@ internal class RegularMethod : IFluentMethod
         IFluentReturn fluentReturn,
         INamespaceSymbol rootNamespace,
         ImmutableArray<FluentMethodParameter> availableParameterFields,
-        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages,
+        FluentMethodParameter? sourceFluentParameter = null)
     {
         _lazyTypeParameters = new Lazy<ImmutableArray<FluentTypeParameter>>(GetTypeParameters);
 
         Name = name;
         SourceParameter = sourceParameterSymbol;
-        MethodParameters = [FluentMethodParameter.FromParameter(sourceParameterSymbol, name)];
+        MethodParameters = [sourceFluentParameter ?? FluentMethodParameter.FromParameter(sourceParameterSymbol, name)];
         RootNamespace = rootNamespace;
         ValueSources = valueStorages;
         AvailableParameterFields = availableParameterFields;

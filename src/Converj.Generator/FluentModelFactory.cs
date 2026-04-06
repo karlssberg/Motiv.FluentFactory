@@ -35,9 +35,10 @@ internal class FluentModelFactory(Compilation compilation)
                 location,
                 instanceMethod.Constructor.Name));
         }
-        fluentTargetContexts = fluentTargetContexts
-            .Where(c => !c.IsInstanceMethodTarget)
-            .ToImmutableArray();
+        fluentTargetContexts = [
+            ..fluentTargetContexts
+                .Where(c => !c.IsInstanceMethodTarget)
+        ];
 
         var (validContexts, unsupportedModifierDiagnostics) =
             FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
@@ -80,9 +81,10 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         // Split constructors: type-first ones are excluded from the parameter-first trie
-        var parameterFirstContexts = fluentTargetContexts
-            .Where(c => !c.HasEntryMethod)
-            .ToImmutableArray();
+        ImmutableArray<FluentTargetContext> parameterFirstContexts = [
+            ..fluentTargetContexts
+                .Where(c => !c.HasEntryMethod)
+        ];
 
         var stepTrie = CreateFluentStepTrie(parameterFirstContexts);
 
@@ -1098,18 +1100,8 @@ internal class FluentModelFactory(Compilation compilation)
         {
             var methodPrefix = targetContext.MethodPrefix ?? "With";
 
-            FluentMethodParameter ToFluentMethodParameter(IParameterSymbol parameter)
-            {
-                var methodNames = compilation
-                    .GetMultipleFluentMethodSymbols(parameter)
-                    .Select(methodInfo => methodInfo.Method.Name)
-                    .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix));
-
-                return FluentMethodParameter.FromParameter(parameter, methodNames);
-            }
-
             var preSatisfiedNames = IsSelfReferencing(targetContext.Constructor, _rootType)
-                ? new HashSet<string>()
+                ? []
                 : GetPreSatisfiedParameterNames(targetContext.Constructor);
 
             var requiredParameters = targetContext.Constructor.Parameters
@@ -1133,6 +1125,39 @@ internal class FluentModelFactory(Compilation compilation)
                     .Select(ToFluentMethodParameter);
 
                 trie.Insert(optionalParameters, metadata.Clone());
+            }
+
+            continue;
+
+            FluentMethodParameter ToFluentMethodParameter(IParameterSymbol parameter)
+            {
+                var methodNames = compilation
+                    .GetMultipleFluentMethodSymbols(parameter)
+                    .Select(methodInfo => methodInfo.Method.Name)
+                    .DefaultIfEmpty(parameter.GetFluentMethodName(methodPrefix))
+                    .ToImmutableArray();
+
+                if (parameter.Type is not INamedTypeSymbol { IsTupleType: true } tupleType)
+                    return FluentMethodParameter.FromParameter(parameter, methodNames);
+                
+                var tupleElements = tupleType.TupleElements;
+                var allNamed = tupleElements.All(e => !e.IsImplicitlyDeclared);
+
+                if (allNamed)
+                {
+                    var elements = tupleElements
+                        .Select(e => (e.Name, e.Type))
+                        .ToImmutableArray();
+
+                    return TupleFluentMethodParameter.FromTupleParameter(parameter, methodNames, elements);
+                }
+
+                _diagnostics.Add(Diagnostic.Create(
+                    FluentDiagnostics.UnnamedTupleElements,
+                    parameter.Locations.FirstOrDefault(),
+                    parameter.Name));
+
+                return FluentMethodParameter.FromParameter(parameter, methodNames);
             }
         }
 

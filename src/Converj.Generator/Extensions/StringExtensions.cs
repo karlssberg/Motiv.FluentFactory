@@ -46,6 +46,15 @@ internal static class StringExtensions
     }
 
     /// <summary>
+    /// Reverses <see cref="ToParameterFieldName"/> to recover the original camelCase parameter name.
+    /// For example, "_wheels__parameter" becomes "wheels".
+    /// </summary>
+    /// <param name="fieldName">The parameter field name to convert back.</param>
+    /// <returns>The original camelCase parameter name.</returns>
+    public static string FromParameterFieldName(this string fieldName) =>
+        fieldName.Replace("__parameter", "").TrimStart('_').ToCamelCase();
+
+    /// <summary>
     /// Converts a type symbol to a safe identifier string by replacing namespace
     /// separators and generic type markers with underscores.
     /// </summary>

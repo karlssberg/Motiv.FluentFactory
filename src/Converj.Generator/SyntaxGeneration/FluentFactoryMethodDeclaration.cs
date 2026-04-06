@@ -85,25 +85,39 @@ internal static class FluentFactoryMethodDeclaration
             .Select(fluentTypeParameter => fluentTypeParameter.TypeParameterSymbol.ToTypeParameterSyntax())
             .ToImmutableArray();
     }
-    private static IEnumerable<ArgumentSyntax> GetMethodArguments(IFluentMethod method)
-    {
-        return method.MethodParameters
-            .Select(ExpressionSyntax (p) =>
-                MemberAccessExpression(
-                    SyntaxKind.SimpleMemberAccessExpression,
-                    ThisExpression(),
-                    IdentifierName(p.SourceName.ToParameterFieldName())))
-            .Select(Argument);
-    }
+    private static IEnumerable<ArgumentSyntax> GetMethodArguments(IFluentMethod method) =>
+        ExpandFieldAccessArguments(method.MethodParameters);
 
-    private static IEnumerable<ArgumentSyntax> GetFieldArguments(IFluentMethod method)
-    {
-        return method.AvailableParameterFields
-            .Select(ExpressionSyntax (p) =>
-                MemberAccessExpression(
-                    SyntaxKind.SimpleMemberAccessExpression,
-                    ThisExpression(),
-                    IdentifierName(p.SourceName.ToParameterFieldName())))
+    private static IEnumerable<ArgumentSyntax> GetFieldArguments(IFluentMethod method) =>
+        ExpandFieldAccessArguments(method.AvailableParameterFields);
+
+    private static IEnumerable<ArgumentSyntax> ExpandFieldAccessArguments(
+        IEnumerable<FluentMethodParameter> parameters) =>
+        parameters
+            .Select(p => RepackTupleFieldArgument(p, p.SourceName.ToParameterFieldName()))
             .Select(Argument);
+
+    /// <summary>
+    /// For tuple parameters, creates a tuple literal expression from the individual element fields.
+    /// For regular parameters, creates a simple field access.
+    /// </summary>
+    private static ExpressionSyntax RepackTupleFieldArgument(FluentMethodParameter parameter, string fieldName)
+    {
+        if (parameter is TupleFluentMethodParameter tuple)
+        {
+            var elementAccesses = tuple.Elements.Select(element =>
+                Argument(
+                    MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        ThisExpression(),
+                        IdentifierName(element.Name.ToParameterFieldName()))));
+
+            return TupleExpression(SeparatedList(elementAccesses));
+        }
+
+        return MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            ThisExpression(),
+            IdentifierName(fieldName));
     }
 }

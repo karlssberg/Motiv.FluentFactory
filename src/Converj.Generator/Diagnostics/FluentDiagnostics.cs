@@ -515,4 +515,17 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for tuple parameters with unnamed elements, which cannot be unpacked
+    /// into individual fluent method parameters.
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnnamedTupleElements = new(
+        id: "CVJG0045",
+        title: "Tuple parameter has unnamed elements",
+        messageFormat:
+        "Tuple parameter '{0}' has unnamed elements; the fluent method will receive a tuple instead of individual parameters",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true);
 }

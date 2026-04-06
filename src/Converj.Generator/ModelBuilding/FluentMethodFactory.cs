@@ -114,7 +114,14 @@ internal class FluentMethodFactory(
     {
         var fluentParameter = fluentParameterInstances.First();
         return fluentParameter.Names.Select(name =>
-            new RegularMethod(name, fluentParameter.ParameterSymbol!, methodReturn, rootType.ContainingNamespace, node.Key, valueStorages));
+            new RegularMethod(
+                name,
+                fluentParameter.ParameterSymbol!,
+                methodReturn, 
+                rootType.ContainingNamespace, 
+                node.Key,
+                valueStorages,
+                sourceFluentParameter: fluentParameter is TupleFluentMethodParameter ? fluentParameter : null));
     }
 
     private void ValidateMultipleFluentMethodCompatibility(FluentMethodParameter parameter,

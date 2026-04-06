@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Converj.Generator.Models.Parameters;
 using Converj.Generator.SyntaxGeneration.Helpers;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -15,12 +16,12 @@ internal static class FluentRootFactoryMethodDeclaration
         IFluentMethod method,
         INamedTypeSymbol rootType)
     {
-        var fieldSourcedArguments = GetFieldSourcedArguments(method);
-        var methodSourcedArguments = GetMethodSourcedArguments(method);
+        var fieldArguments = ExpandArguments(method.AvailableParameterFields);
+        var methodArguments = ExpandArguments(method.MethodParameters);
 
         ExpressionSyntax returnExpression = method is CreationMethod { IsStaticMethodTarget: true } staticCreation
-            ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldSourcedArguments, methodSourcedArguments)
-            : TargetTypeObjectCreationExpression.Create(method, fieldSourcedArguments, methodSourcedArguments);
+            ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldArguments, methodArguments)
+            : TargetTypeObjectCreationExpression.Create(method, fieldArguments, methodArguments);
 
         var methodDeclaration = CreateBaseMethodDeclaration(method, returnExpression);
 
@@ -60,28 +61,13 @@ internal static class FluentRootFactoryMethodDeclaration
                 .WithParameterList(
                     ParameterList(SeparatedList(
                         method.MethodParameters
-                            .Select(parameter =>
-                                Parameter(
-                                        Identifier(parameter.SourceName.ToCamelCase()))
-                                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
-                                    .WithType(
-                                        ParseTypeName(parameter.SourceType.ToGlobalDisplayString()))))));
+                            .SelectMany(FluentStepMethodDeclaration.ExpandMethodParameter))));
         }
 
         return methodDeclaration;
     }
 
-    private static IEnumerable<ArgumentSyntax> GetMethodSourcedArguments(IFluentMethod method)
-    {
-        return method.MethodParameters
-            .Select(parameter => IdentifierName(parameter.SourceName.ToCamelCase()))
-            .Select(Argument);
-    }
-
-    private static IEnumerable<ArgumentSyntax> GetFieldSourcedArguments(IFluentMethod method)
-    {
-        return method.AvailableParameterFields
-            .Select(parameter => IdentifierName(parameter.SourceName.ToCamelCase()))
-            .Select(Argument);
-    }
+    private static IEnumerable<ArgumentSyntax> ExpandArguments(
+        IEnumerable<FluentMethodParameter> parameters) =>
+        parameters.SelectMany(FluentStepMethodDeclaration.ExpandMethodParameterArguments);
 }

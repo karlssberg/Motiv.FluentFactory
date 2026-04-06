@@ -194,9 +194,24 @@ internal class FluentStepBuilder(
         var parameterStoragePairs =
             from parameter in knownConstructorParameters
             select new KeyValuePair<IParameterSymbol, IFluentValueStorage>(
-                parameter, FieldStorage.FromParameter(parameter, rootType.ContainingNamespace));
+                parameter,
+                CreateStorageForParameter(parameter, knownConstructorParameters, rootType.ContainingNamespace));
 
         return new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(parameterStoragePairs);
+    }
+
+    private static IFluentValueStorage CreateStorageForParameter(
+        IParameterSymbol parameter,
+        ParameterSequence knownConstructorParameters,
+        INamespaceSymbol containingNamespace)
+    {
+        var fluentParam = knownConstructorParameters.GetFluentMethodParameter(parameter);
+        if (fluentParam is TupleFluentMethodParameter tuple)
+        {
+            return TupleFieldStorage.FromTupleParameter(parameter, tuple.Elements, containingNamespace);
+        }
+
+        return FieldStorage.FromParameter(parameter, containingNamespace);
     }
 
     /// <summary>

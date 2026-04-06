@@ -107,12 +107,29 @@ internal static class FluentStepMethodDeclaration
             .WithParameterList(
                 ParameterList(SeparatedList(
                     method.MethodParameters
-                        .Select(parameter =>
-                            Parameter(
-                                    Identifier(parameter.SourceName.ToCamelCase()))
-                                .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
-                                .WithType(
-                                    ParseTypeName(parameter.SourceType.ToGlobalDisplayString()))))));
+                        .SelectMany(ExpandMethodParameter))));
+    }
+
+    /// <summary>
+    /// Expands a fluent method parameter into one or more syntax parameters.
+    /// For tuple parameters, each element becomes a separate method parameter.
+    /// </summary>
+    internal static IEnumerable<ParameterSyntax> ExpandMethodParameter(FluentMethodParameter parameter)
+    {
+        if (parameter is TupleFluentMethodParameter tuple)
+        {
+            return tuple.Elements.Select(element =>
+                Parameter(Identifier(element.Name.ToCamelCase()))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                    .WithType(ParseTypeName(element.Type.ToGlobalDisplayString())));
+        }
+
+        return
+        [
+            Parameter(Identifier(parameter.SourceName.ToCamelCase()))
+                .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                .WithType(ParseTypeName(parameter.SourceType.ToGlobalDisplayString()))
+        ];
     }
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
@@ -153,18 +170,89 @@ internal static class FluentStepMethodDeclaration
             propertyFieldArgs = currentPropFieldNames;
         }
 
+        var isTerminalCreation = method.Return is TargetTypeReturn;
+
         return threadedArgs
             .Concat(knownConstructorParameters
-                .Select(parameter =>
-                    Argument(
-                        MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            ThisExpression(),
-                            IdentifierName(parameter.Name.ToParameterFieldName())))))
+                .SelectMany(parameter => ExpandFieldArguments(parameter, method)))
             .Concat(propertyFieldArgs)
-            .Concat(
-                method.MethodParameters.Select(p => p.SourceName.ToCamelCase())
-                    .Select(IdentifierName)
-                    .Select(Argument));
+            .Concat(isTerminalCreation
+                ? method.MethodParameters.Select(RepackMethodParameterArgument)
+                : method.MethodParameters.SelectMany(ExpandMethodParameterArguments));
+    }
+
+    /// <summary>
+    /// Expands field access arguments for forwarding known parameters to the next step or target constructor.
+    /// For tuple parameters, expands to individual element field accesses (or re-packs into a tuple literal
+    /// when forwarding to the target constructor).
+    /// </summary>
+    private static IEnumerable<ArgumentSyntax> ExpandFieldArguments(
+        IParameterSymbol parameter,
+        IFluentMethod method)
+    {
+        // Check if next step has tuple storage for this parameter
+        if (method.Return is IFluentStep nextStep
+            && nextStep.ValueStorage.TryGetValue(parameter, out var storage)
+            && storage is TupleFieldStorage tupleStorage)
+        {
+            return tupleStorage.ElementStorages.Select(ElementFieldArgument);
+        }
+
+        // When returning to the target constructor, re-pack tuple elements into a tuple literal
+        if (method.Return is TargetTypeReturn
+            && method.ValueSources.TryGetValue(parameter, out var valueStorage)
+            && valueStorage is TupleFieldStorage terminalTupleStorage)
+        {
+            return [Argument(TupleExpression(SeparatedList(
+                terminalTupleStorage.ElementStorages.Select(ElementFieldArgument))))];
+        }
+
+        return
+        [
+            Argument(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(parameter.Name.ToParameterFieldName())))
+        ];
+    }
+
+    private static ArgumentSyntax ElementFieldArgument(FieldStorage element) =>
+        Argument(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                ThisExpression(),
+                IdentifierName(element.IdentifierName)));
+
+    /// <summary>
+    /// Expands method parameter arguments (inline from caller) for forwarding to the next step constructor.
+    /// For tuple parameters, expands to individual element identifier names.
+    /// </summary>
+    internal static IEnumerable<ArgumentSyntax> ExpandMethodParameterArguments(FluentMethodParameter parameter)
+    {
+        if (parameter is TupleFluentMethodParameter tuple)
+        {
+            return tuple.Elements.Select(element =>
+                Argument(IdentifierName(element.Name.ToCamelCase())));
+        }
+
+        return [Argument(IdentifierName(parameter.SourceName.ToCamelCase()))];
+    }
+
+    /// <summary>
+    /// Re-packs a method parameter argument for the target constructor call.
+    /// For tuple parameters, wraps element identifiers in a tuple literal.
+    /// </summary>
+    private static ArgumentSyntax RepackMethodParameterArgument(FluentMethodParameter parameter)
+    {
+        if (parameter is TupleFluentMethodParameter tuple)
+        {
+            var elementArgs = tuple.Elements.Select(element =>
+                Argument(IdentifierName(element.Name.ToCamelCase())));
+
+            return Argument(TupleExpression(SeparatedList(elementArgs)));
+        }
+
+        return Argument(IdentifierName(parameter.SourceName.ToCamelCase()));
     }
 }

@@ -21,12 +21,7 @@ internal static class FluentStepConstructorDeclaration
                         IdentifierName(b.TargetParameter.Name.ToCamelCase()))));
 
         var requiredParamAssignments = step.KnownConstructorParameters
-            .Select(p =>
-                ExpressionStatement(
-                    AssignmentExpression(
-                        SyntaxKind.SimpleAssignmentExpression,
-                        MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(p.Name.ToParameterFieldName())),
-                        IdentifierName(p.Name.ToCamelCase()))));
+            .SelectMany(p => CreateParameterAssignments(p, step.ValueStorage));
 
         var propertyParamAssignments = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } propStep
             ? propStep.PropertyFieldStorage
@@ -35,7 +30,7 @@ internal static class FluentStepConstructorDeclaration
                         AssignmentExpression(
                             SyntaxKind.SimpleAssignmentExpression,
                             MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(pf.IdentifierName)),
-                            IdentifierName(pf.IdentifierName.Replace("__parameter", "").TrimStart('_').ToCamelCase()))))
+                            IdentifierName(pf.IdentifierName.FromParameterFieldName()))))
             : Enumerable.Empty<StatementSyntax>();
 
         var optionalParamInitializations = GetOptionalParameterInitializations(step);
@@ -73,25 +68,12 @@ internal static class FluentStepConstructorDeclaration
                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))));
 
         var regularParams = step.KnownConstructorParameters
-            .Select(parameter =>
-            {
-                var param = Parameter(Identifier(parameter.Name.ToCamelCase()))
-                    .WithType(ParseTypeName(parameter.Type.ToGlobalDisplayString()))
-                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)));
-
-                if (isAllOptionalStep && parameter.HasExplicitDefaultValue)
-                {
-                    param = param.WithDefault(
-                        EqualsValueClause(DefaultValueExpressionSyntax.Create(parameter)));
-                }
-
-                return param;
-            });
+            .SelectMany(parameter => CreateConstructorParameters(parameter, step.ValueStorage, isAllOptionalStep));
 
         var propertyParams = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } ps
             ? ps.PropertyFieldStorage
                 .Select(pf =>
-                    Parameter(Identifier(pf.IdentifierName.Replace("__parameter", "").TrimStart('_').ToCamelCase()))
+                    Parameter(Identifier(pf.IdentifierName.FromParameterFieldName()))
                         .WithType(ParseTypeName(pf.Type.ToGlobalDisplayString()))
                         .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))))
             : Enumerable.Empty<ParameterSyntax>();
@@ -118,6 +100,56 @@ internal static class FluentStepConstructorDeclaration
                     MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(fieldStorage.IdentifierName)),
                     defaultExpression));
         }
+    }
+
+    private static IEnumerable<ParameterSyntax> CreateConstructorParameters(
+        IParameterSymbol parameter,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorage,
+        bool isAllOptionalStep)
+    {
+        if (valueStorage.TryGetValue(parameter, out var storage) && storage is TupleFieldStorage tupleStorage)
+        {
+            return tupleStorage.ElementStorages.Select(element =>
+                Parameter(Identifier(element.IdentifierName.FromParameterFieldName()))
+                    .WithType(ParseTypeName(element.Type.ToGlobalDisplayString()))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))));
+        }
+
+        var param = Parameter(Identifier(parameter.Name.ToCamelCase()))
+            .WithType(ParseTypeName(parameter.Type.ToGlobalDisplayString()))
+            .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)));
+
+        if (isAllOptionalStep && parameter.HasExplicitDefaultValue)
+        {
+            param = param.WithDefault(
+                EqualsValueClause(DefaultValueExpressionSyntax.Create(parameter)));
+        }
+
+        return [param];
+    }
+
+    private static IEnumerable<StatementSyntax> CreateParameterAssignments(
+        IParameterSymbol parameter,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorage)
+    {
+        if (valueStorage.TryGetValue(parameter, out var storage) && storage is TupleFieldStorage tupleStorage)
+        {
+            return tupleStorage.ElementStorages.Select(element =>
+                ExpressionStatement(
+                    AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(element.IdentifierName)),
+                        IdentifierName(element.IdentifierName.FromParameterFieldName()))));
+        }
+
+        return
+        [
+            ExpressionStatement(
+                AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
+                    MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(parameter.Name.ToParameterFieldName())),
+                    IdentifierName(parameter.Name.ToCamelCase())))
+        ];
     }
 
     private static IEnumerable<StatementSyntax> GetOptionalParameterInitializations(IFluentStep step)
