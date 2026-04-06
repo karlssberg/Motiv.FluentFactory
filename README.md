@@ -1,25 +1,35 @@
 # Converj
 
-A Roslyn source generator that turns constructors into compile-time fluent builders 
-— no boilerplate, no runtime cost.
+Stop writing builders by hand. Curry them instead.
 
-Annotate a constructor with `[FluentConstructor]`,
-and the generator produces a chain of fluent methods that mirror the sequence of constructor parameters.
-Required parameters are enforced, optional parameters stay optional, 
+Converj is a C# source generator that creates fluent builder patterns from your constructors and static methods.
+Annotate with [FluentRoot] and [FluentTarget], and get zero-allocation,
+strongly-typed builder chains — generated at compile time.
+
+Use Converj if:
+
+* You want to create complex fluent interfaces
+* You despise boilerplate ceremony
+* Performance matters
+
+Annotate methods or constructors with `[FluentTarget]`,
+and the generator produces a chain of fluent methods starting from `[FluentRoot]` that mirror the parameter sequence.
+Required parameters are enforced, optional parameters stay optional,
 and the whole chain compiles down to zero-allocation, JIT optimizer-friendly code.
+
 
 ```csharp
 // You write this:
-[FluentFactory]
+[FluentRoot]
 public partial class Shape;
 
-[FluentConstructor<Shape>]
+[FluentTarget<Shape>]
 public record Square<T>(T Width);
 
-[FluentConstructor<Shape>] 
+[FluentTarget<Shape>] 
 public record Rectangle<T>(T Width, T Height);
 
-[FluentConstructor<Shape>] 
+[FluentTarget<Shape>] 
 public record Cube<T>(T Width, T Height, T Depth);
 
 // You get this:
@@ -36,7 +46,13 @@ Supports generics, records, primary constructors, required properties, type-firs
 Install the NuGet package in your project:
 
 ```xml
-<PackageReference Include="Converj" Version="1.0.0" />
+<PackageReference Include="Converj" Version="2.0.0" />
+```
+
+Via the command line:
+
+```bash
+dotnet add package Converj
 ```
 
 Or via Package Manager Console:
@@ -51,16 +67,16 @@ Install-Package Converj
 
 The simplest fluent factory requires two attributes:
 
-1. `[FluentFactory]` - marks a partial class as the entry point for fluent methods
-2. `[FluentConstructor]` - marks a constructor to generate fluent methods for using the constructor parameters as the fluent steps
+1. `[FluentRoot]` - marks a partial class as the entry point for fluent methods
+2. `[FluentTarget]` - marks a constructor to generate fluent methods for using the constructor parameters as the fluent steps
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class BookFactory;
 
 public class Book
 {
-    [FluentConstructor(typeof(BookFactory))]
+    [FluentTarget(typeof(BookFactory))]
     public Book(string title)
     {
         Title = title;
@@ -103,12 +119,12 @@ var book = BookFactory.WithTitle("The C# Guide").CreateBook();
 With multiple parameters, each becomes a separate step in the fluent chain:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class ProductFactory;
 
 public class Product
 {
-    [FluentConstructor(typeof(ProductFactory))]
+    [FluentTarget(typeof(ProductFactory))]
     public Product(string name, decimal price, int stock)
     {
         Name = name;
@@ -133,15 +149,15 @@ var product = ProductFactory
 
 By default, the create method name includes the target type name (Dynamic mode): `CreateCar()`, `CreateAddress()`, etc. This automatically disambiguates when a factory serves multiple types.
 
-Customize the create verb using the `CreateVerb` parameter:
+Customize the create verb using the `TerminalVerb` parameter:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class VehicleFactory;
 
 public class Car
 {
-    [FluentConstructor(typeof(VehicleFactory), CreateMethod = CreateMethod.Fixed, CreateVerb = "BuildCar")]
+    [FluentTarget(typeof(VehicleFactory), TerminalMethod = TerminalMethod.Fixed, TerminalVerb = "BuildCar")]
     public Car(string make, string model)
     {
         Make = make;
@@ -161,12 +177,12 @@ var car = VehicleFactory
 
 ### Skipping the Create() Method
 
-Use `CreateMethod = CreateMethod.None` to eliminate the final Create call:
+Use `TerminalMethod = TerminalMethod.None` to eliminate the final Create call:
 
 ```csharp
 public class Address
 {
-    [FluentConstructor(typeof(AddressFactory), CreateMethod = CreateMethod.None)]
+    [FluentTarget(typeof(AddressFactory), TerminalMethod = TerminalMethod.None)]
     public Address(string street, string city)
     {
         Street = street;
@@ -183,7 +199,7 @@ var address = AddressFactory
     .WithCity("New York");
 ```
 
-**Note:** You cannot use `CreateVerb` or `ReturnType` together with `CreateMethod.None` as there would be no create method to name or type. Additionally, only one `[FluentConstructor]` per type per factory is allowed when `CreateMethod.None` is in effect — multiple constructors on the same type would break step ordering enforcement since all generated methods live on the same type.
+**Note:** You cannot use `TerminalVerb` or `ReturnType` together with `TerminalMethod.None` as there would be no create method to name or type. Additionally, only one `[FluentTarget]` per type per factory is allowed when `TerminalMethod.None` is in effect — multiple constructors on the same type would break step ordering enforcement since all generated methods live on the same type.
 
 ### Custom Method Names
 
@@ -192,7 +208,7 @@ Customize method names using `[FluentMethod]`:
 ```csharp
 public class User
 {
-    [FluentConstructor(typeof(UserFactory))]
+    [FluentTarget(typeof(UserFactory))]
     public User(
         [FluentMethod("SetName")] string name,
         [FluentMethod("SetEmail")] string email)
@@ -214,16 +230,16 @@ var user = UserFactory
 
 ### Method Prefix
 
-By default, fluent methods are prefixed with `With` (e.g., `WithName`, `WithAge`). You can customize this with the `MethodPrefix` property on either `[FluentFactory]` or `[FluentConstructor]`:
+By default, fluent methods are prefixed with `With` (e.g., `WithName`, `WithAge`). You can customize this with the `MethodPrefix` property on either `[FluentRoot]` or `[FluentTarget]`:
 
 ```csharp
 // Factory-level prefix applies to all constructors
-[FluentFactory(MethodPrefix = "Having")]
+[FluentRoot(MethodPrefix = "Having")]
 public static partial class ConfigFactory;
 
 public class Config
 {
-    [FluentConstructor(typeof(ConfigFactory))]
+    [FluentTarget(typeof(ConfigFactory))]
     public Config(string host, int port)
     {
         Host = host;
@@ -244,12 +260,12 @@ var config = ConfigFactory
 Use an empty string to produce bare parameter names:
 
 ```csharp
-[FluentFactory(MethodPrefix = "")]
+[FluentRoot(MethodPrefix = "")]
 public static partial class PointFactory;
 
 public class Point
 {
-    [FluentConstructor(typeof(PointFactory))]
+    [FluentTarget(typeof(PointFactory))]
     public Point(int x, int y) { X = x; Y = y; }
 
     public int X { get; }
@@ -263,12 +279,12 @@ var point = PointFactory.X(10).Y(20).CreatePoint();
 Constructor-level `MethodPrefix` overrides the factory-level default:
 
 ```csharp
-[FluentFactory(MethodPrefix = "With")]
+[FluentRoot(MethodPrefix = "With")]
 public static partial class ShapeFactory;
 
 public class Circle
 {
-    [FluentConstructor(typeof(ShapeFactory), MethodPrefix = "Having")]
+    [FluentTarget(typeof(ShapeFactory), MethodPrefix = "Having")]
     public Circle(double radius) { Radius = radius; }
 
     public double Radius { get; }
@@ -288,12 +304,12 @@ public interface IAnimal
     string Name { get; }
 }
 
-[FluentFactory]
+[FluentRoot]
 public static partial class AnimalFactory;
 
 public class Dog : IAnimal
 {
-    [FluentConstructor(typeof(AnimalFactory), ReturnType = typeof(IAnimal))]
+    [FluentTarget(typeof(AnimalFactory), ReturnType = typeof(IAnimal))]
     public Dog(string name) { Name = name; }
 
     public string Name { get; }
@@ -301,7 +317,7 @@ public class Dog : IAnimal
 
 public class Cat : IAnimal
 {
-    [FluentConstructor(typeof(AnimalFactory), ReturnType = typeof(IAnimal))]
+    [FluentTarget(typeof(AnimalFactory), ReturnType = typeof(IAnimal))]
     public Cat(string name) { Name = name; }
 
     public string Name { get; }
@@ -315,7 +331,7 @@ IAnimal cat = AnimalFactory.WithName("Whiskers").CreateCat();
 You can also set `ReturnType` at the factory level to apply it to all constructors:
 
 ```csharp
-[FluentFactory(ReturnType = typeof(IAnimal))]
+[FluentRoot(ReturnType = typeof(IAnimal))]
 public static partial class AnimalFactory;
 ```
 
@@ -326,12 +342,12 @@ public static partial class AnimalFactory;
 Parameters with default values become optional setter methods. They can be called in any order and are not required:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class ConnectionFactory;
 
 public class Connection
 {
-    [FluentConstructor(typeof(ConnectionFactory))]
+    [FluentTarget(typeof(ConnectionFactory))]
     public Connection(string host, int port = 443, int timeout = 30, bool useSsl = true)
     {
         Host = host;
@@ -364,12 +380,12 @@ var defaultConn = ConnectionFactory
 The generator handles generic types seamlessly:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class ContainerFactory;
 
 public class Container<T>
 {
-    [FluentConstructor(typeof(ContainerFactory))]
+    [FluentTarget(typeof(ContainerFactory))]
     public Container(T value, string label)
     {
         Value = value;
@@ -397,11 +413,11 @@ var stringContainer = ContainerFactory
 The generator supports records with positional parameters and C# 12+ primary constructors:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class UserFactory;
 
 // Record with primary constructor
-[FluentConstructor(typeof(UserFactory))]
+[FluentTarget(typeof(UserFactory))]
 public record User(string Name, string Email);
 
 var user = UserFactory
@@ -415,13 +431,13 @@ var user = UserFactory
 Instead of passing `typeof(...)`, you can use the generic `FluentConstructor<T>` syntax:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public partial class UserFactory;
 
 public class User
 {
     // Generic syntax - cleaner and type-safe
-    [FluentConstructor<UserFactory>]
+    [FluentTarget<UserFactory>]
     public User(string name, string email)
     {
         Name = name;
@@ -439,37 +455,37 @@ Language constraints mean that generic attributes will only work with non-static
 
 ### FluentConstructor on Types
 
-`[FluentConstructor]` can be applied directly to classes, structs, and records (not just constructors). This is especially useful with records that use positional parameters:
+`[FluentTarget]` can be applied directly to classes, structs, and records (not just constructors). This is especially useful with records that use positional parameters:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class Line;
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
+[FluentTarget(typeof(Line), TerminalMethod = TerminalMethod.None)]
 public partial record Line1D([FluentMethod("X")] int X);
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
+[FluentTarget(typeof(Line), TerminalMethod = TerminalMethod.None)]
 public partial record Line2D([FluentMethod("X")] int X, [FluentMethod("Y")] int Y);
 
-[FluentConstructor(typeof(Line), CreateMethod = CreateMethod.None)]
+[FluentTarget(typeof(Line), TerminalMethod = TerminalMethod.None)]
 public partial record Line3D([FluentMethod("X")] int X, [FluentMethod("Y")] int Y, [FluentMethod("Z")] int Z);
 ```
 
 ### Advanced: Custom Partial Types as Fluent Steps
 
-When using `CreateMethod.None`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
+When using `TerminalMethod.None`, you can create custom partial types that function as both fluent steps and construction targets. This advanced pattern allows you to build complex fluent chains where each type can be both an intermediate step and a final result:
 
 ```csharp
-[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+[FluentRoot(TerminalMethod = TerminalMethod.None, MethodPrefix = "")]
 public partial class Line;
 
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line1D<T>(T X) where T : INumber<T>;
 
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line2D<T>(T X, T Y) where T : INumber<T>;
 
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line3D<T>(T X, T Y, T Z) where T : INumber<T>;
 ```
 
@@ -521,17 +537,17 @@ This pattern is powerful because:
 When multiple constructors use different generic type parameter names for the same conceptual type, the generator can't merge them into a shared fluent chain. The `[As]` attribute solves this by aliasing type parameters to a common name:
 
 ```csharp
-[FluentFactory(CreateMethod = CreateMethod.None, MethodPrefix = "")]
+[FluentRoot(TerminalMethod = TerminalMethod.None, MethodPrefix = "")]
 public partial class Line;
 
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line1D<T>(T X) where T : INumber<T>;
 
 // TNum is aliased to "T" so the generator merges this with Line1D
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line2D<[As("T")] TNum>(TNum X, TNum Y) where TNum : INumber<TNum>;
 
-[FluentConstructor<Line>]
+[FluentTarget<Line>]
 public partial record Line3D<T>(T X, T Y, T Z) where T : INumber<T>;
 ```
 
@@ -550,10 +566,10 @@ Use `[FluentParameter]` or record primary constructor parameters on the factory 
 ```csharp
 public interface IDependency;
 
-[FluentFactory(CreateVerb = "Build", CreateMethod = CreateMethod.Fixed)]
+[FluentRoot(TerminalVerb = "Build", TerminalMethod = TerminalMethod.Fixed)]
 public partial record ServiceFactory(IDependency Dependency);
 
-[FluentConstructor<ServiceFactory>]
+[FluentTarget<ServiceFactory>]
 public record CustomizableService(IDependency Dependency, string Name);
 
 // Usage - Dependency is provided by the factory, not the caller:
@@ -569,8 +585,8 @@ Record primary constructor parameters are auto-threaded when they match target c
 A type can be both the factory and a constructor target. This is useful when you want the fluent API to start from the type itself:
 
 ```csharp
-[FluentFactory(CreateMethod = CreateMethod.Fixed)]
-[FluentConstructor(typeof(Square<>))]
+[FluentRoot(TerminalMethod = TerminalMethod.Fixed)]
+[FluentTarget(typeof(Square<>))]
 public partial record Square<T>(T Width) where T : INumber<T>;
 
 // Usage - the type IS the factory:
@@ -584,7 +600,7 @@ Create multiple factory methods for the same parameter using `[MultipleFluentMet
 ```csharp
 public class Calculator
 {
-    [FluentConstructor(typeof(CalculatorFactory))]
+    [FluentTarget(typeof(CalculatorFactory))]
     public Calculator([MultipleFluentMethods(typeof(OperationMethods))] Func<int, int, int> operation)
     {
         Operation = operation;
@@ -625,12 +641,12 @@ var customCalc = CalculatorFactory.Custom((a, b) => a - b).CreateCalculator();
 Properties marked with the `required` keyword or `[System.ComponentModel.DataAnnotations.Required]` are automatically discovered and added to the fluent chain as required steps after the constructor parameters:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class Factory;
 
 public class Person
 {
-    [FluentConstructor(typeof(Factory))]
+    [FluentTarget(typeof(Factory))]
     public Person(string name)
     {
         Name = name;
@@ -664,7 +680,7 @@ Properties that are already initialized by a constructor parameter (e.g., record
 public required string Email { get; set; }
 ```
 
-**Note:** Required properties are not supported with `CreateMethod.None` since property initialization requires a creation method with object initializer syntax.
+**Note:** Required properties are not supported with `TerminalMethod.None` since property initialization requires a creation method with object initializer syntax.
 
 ### Optional Properties with `[FluentMethod]`
 
@@ -673,7 +689,7 @@ Non-required properties can be opted into the fluent chain using `[FluentMethod]
 ```csharp
 public class Person
 {
-    [FluentConstructor(typeof(Factory))]
+    [FluentTarget(typeof(Factory))]
     public Person(string name)
     {
         Name = name;
@@ -701,19 +717,19 @@ var person = Factory
 By default, Converj uses parameter-first chains where consumers discover available types as they progress through shared parameter steps. Type-first mode inverts this — consumers select the target type up front, then fill in only that type's parameters:
 
 ```csharp
-[FluentFactory(BuilderMode = BuilderMode.TypeFirst)]
+[FluentRoot(BuilderMode = BuilderMode.TypeFirst)]
 public static partial class Factory;
 
 public class Dog
 {
-    [FluentConstructor(typeof(Factory))]
+    [FluentTarget(typeof(Factory))]
     public Dog(string name) { Name = name; }
     public string Name { get; set; }
 }
 
 public class Cat
 {
-    [FluentConstructor(typeof(Factory))]
+    [FluentTarget(typeof(Factory))]
     public Cat(string name, int lives) { Name = name; Lives = lives; }
     public string Name { get; set; }
     public int Lives { get; set; }
@@ -727,7 +743,7 @@ Cat cat = Factory.BuildCat().WithName("Whiskers").WithLives(9).Create();
 The entry method verb defaults to `"Build"` but can be customized with `TypeFirstVerb`:
 
 ```csharp
-[FluentFactory(BuilderMode = BuilderMode.TypeFirst, TypeFirstVerb = "Make")]
+[FluentRoot(BuilderMode = BuilderMode.TypeFirst, TypeFirstVerb = "Make")]
 public static partial class Factory;
 
 // Usage:
@@ -737,13 +753,13 @@ Dog dog = Factory.MakeDog().WithName("Rex").Create();
 Both `BuilderMode` and `TypeFirstVerb` can be overridden per-constructor:
 
 ```csharp
-[FluentFactory]
+[FluentRoot]
 public static partial class Factory;
 
 public class Dog
 {
     // Only this constructor uses type-first mode
-    [FluentConstructor(typeof(Factory), BuilderMode = BuilderMode.TypeFirst)]
+    [FluentTarget(typeof(Factory), BuilderMode = BuilderMode.TypeFirst)]
     public Dog(string name) { Name = name; }
     public string Name { get; set; }
 }
@@ -756,25 +772,25 @@ public class Dog
 When using factory-scoped parameters (`[FluentParameter]`), a parameter must match all target constructors by default. Set `AllowPartialParameterOverlap` to allow a factory parameter to match only a subset of constructors:
 
 ```csharp
-[FluentFactory(AllowPartialParameterOverlap = true)]
+[FluentRoot(AllowPartialParameterOverlap = true)]
 public partial record ServiceFactory(IDependency Dependency);
 
-[FluentConstructor<ServiceFactory>]
+[FluentTarget<ServiceFactory>]
 public record ServiceA(IDependency Dependency, string Name);
 
 // ServiceB doesn't use IDependency — that's OK with AllowPartialParameterOverlap
-[FluentConstructor<ServiceFactory>]
+[FluentTarget<ServiceFactory>]
 public record ServiceB(string Name);
 ```
 
 ### Factory-Level Defaults
 
-Set defaults on `[FluentFactory]` that apply to all constructors. Individual `[FluentConstructor]` attributes can override any factory-level default:
+Set defaults on `[FluentRoot]` that apply to all constructors. Individual `[FluentTarget]` attributes can override any factory-level default:
 
 ```csharp
-[FluentFactory(
-    CreateMethod = CreateMethod.Dynamic,
-    CreateVerb = "Build",
+[FluentRoot(
+    TerminalMethod = TerminalMethod.Dynamic,
+    TerminalVerb = "Build",
     MethodPrefix = "With",
     ReturnType = typeof(IShape))]
 public static partial class ShapeFactory;
@@ -782,7 +798,7 @@ public static partial class ShapeFactory;
 public class Circle : IShape
 {
     // Inherits factory defaults: BuildCircle(), "With" prefix, returns IShape
-    [FluentConstructor(typeof(ShapeFactory))]
+    [FluentTarget(typeof(ShapeFactory))]
     public Circle(double radius) { Radius = radius; }
 
     public double Radius { get; }
@@ -791,7 +807,7 @@ public class Circle : IShape
 public class Square : IShape
 {
     // Overrides: custom verb, custom prefix
-    [FluentConstructor(typeof(ShapeFactory), CreateVerb = "Make", MethodPrefix = "Having")]
+    [FluentTarget(typeof(ShapeFactory), TerminalVerb = "Make", MethodPrefix = "Having")]
     public Square(double side) { Side = side; }
 
     public double Side { get; }
@@ -802,27 +818,27 @@ public class Square : IShape
 
 ### Attributes
 
-#### `[FluentFactory]`
+#### `[FluentRoot]`
 Marks a static partial type as a fluent factory. The type must be `partial`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `CreateMethod` | `CreateMethod` | `Dynamic` | Controls create method generation for all constructors |
-| `CreateVerb` | `string?` | `"Create"` | Default verb for Create method names |
+| `TerminalMethod` | `TerminalMethod` | `Dynamic` | Controls create method generation for all constructors |
+| `TerminalVerb` | `string?` | `"Create"` | Default verb for Create method names |
 | `MethodPrefix` | `string?` | `"With"` | Default prefix for fluent method names |
 | `ReturnType` | `Type?` | _none_ | Default return type for creation methods |
 | `AllowPartialParameterOverlap` | `bool` | `false` | Allow `[FluentParameter]` to match only a subset of target constructors |
 | `BuilderMode` | `BuilderMode` | `ParameterFirst` | Controls builder chain structure for all constructors |
 | `TypeFirstVerb` | `string?` | `"Build"` | Verb for type-first entry method names (e.g., `BuildDog()`) |
 
-#### `[FluentConstructor(Type rootType)]` / `[FluentConstructor<TFluentFactory>]`
+#### `[FluentTarget(Type rootType)]` / `[FluentTarget<TFluentFactory>]`
 Marks a constructor, class, or struct to generate fluent methods for. Can be applied multiple times (`AllowMultiple = true`). The generic form `FluentConstructor<T>` is available for C# 11+ projects as a type-safe alternative to `typeof(...)`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `RootType` | `Type` | _(required)_ | The factory type to generate methods in |
-| `CreateMethod` | `CreateMethod` | _inherits_ | Overrides factory-level setting |
-| `CreateVerb` | `string?` | _inherits_ | Overrides factory-level setting |
+| `TerminalMethod` | `TerminalMethod` | _inherits_ | Overrides factory-level setting |
+| `TerminalVerb` | `string?` | _inherits_ | Overrides factory-level setting |
 | `MethodPrefix` | `string?` | _inherits_ | Overrides factory-level setting |
 | `ReturnType` | `Type?` | _inherits_ | Overrides factory-level setting |
 | `BuilderMode` | `BuilderMode` | _inherits_ | Overrides factory-level setting |
@@ -862,19 +878,19 @@ Marks a factory field, property, or record primary constructor parameter as a va
 Record primary constructor parameters on factories are auto-threaded without needing an explicit `[FluentParameter]` attribute.
 
 #### `[FluentStorage]` / `[FluentStorage(string parameterName)]`
-Marks a property on a custom step type as storage for a constructor parameter value. Used with `CreateMethod.None` to bridge values between steps.
+Marks a property on a custom step type as storage for a constructor parameter value. Used with `TerminalMethod.None` to bridge values between steps.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `ParameterName` | `string?` | _property name_ | Name of the constructor parameter this property stores |
 
-### CreateMethod Enum
+### TerminalMethod Enum
 
 | Value | Description |
 |-------|-------------|
 | `Dynamic` | _(default)_ Appends target type name to verb (e.g., `CreateUser()`) |
 | `Fixed` | Uses verb as-is (e.g., `Create()` or `Build()`) |
-| `None` | No create method; constructor called at final step. Target type must be `partial`. Only one `[FluentConstructor]` per type per factory is allowed |
+| `None` | No create method; constructor called at final step. Target type must be `partial`. Only one `[FluentTarget]` per type per factory is allowed |
 
 ### BuilderMode Enum
 
@@ -888,7 +904,7 @@ Marks a property on a custom step type as storage for a constructor parameter va
 - **Type Safety** - Compile-time enforcement of required parameters
 - **IntelliSense Support** - Full IDE support with method suggestions
 - **Generic Support** - Works with generic classes, type inference, constraints, and type parameter aliasing via `[As]`
-- **Generic Attribute Syntax** - Use `[FluentConstructor<T>]` for type-safe factory references (C# 11+)
+- **Generic Attribute Syntax** - Use `[FluentTarget<T>]` for type-safe factory references (C# 11+)
 - **Records and Primary Constructors** - Supports record types and C# 12+ primary constructors
 - **Required Properties** - `required` properties and `[Required]` properties are auto-discovered and enforced in the fluent chain
 - **Optional Properties** - Opt non-required properties into the chain with `[FluentMethod]`
@@ -897,7 +913,7 @@ Marks a property on a custom step type as storage for a constructor parameter va
 - **Customizable Naming** - Custom method names, prefixes, create verbs, and priorities
 - **Return Type Control** - Create methods can return interfaces or base types
 - **Multiple Method Variants** - Generate multiple methods for a single parameter via templates
-- **Custom Partial Steps** - Use your own types as fluent steps with `CreateMethod.None`
+- **Custom Partial Steps** - Use your own types as fluent steps with `TerminalMethod.None`
 - **Self-Referential Factories** - A type can serve as both factory and construction target
 - **Factory-Level Defaults** - Set defaults on the factory, override per-constructor
 - **Trie-Based Merging** - Shared parameter prefixes across constructors are intelligently merged
@@ -916,21 +932,21 @@ The generator produces diagnostics to help you fix configuration issues:
 | CVJG0004 | Error | All template methods incompatible with parameter type |
 | CVJG0005 | Error | Template method must be static |
 | CVJG0006 | Info | Template superseded by higher priority parameter |
-| CVJG0007 | Error | Invalid CreateVerb (not a valid C# identifier) |
+| CVJG0007 | Error | Invalid TerminalVerb (not a valid C# identifier) |
 | CVJG0008 | Error | Duplicate create method name across constructors |
 | CVJG0009 | Error | FluentConstructor target type missing FluentFactory attribute |
-| CVJG0010 | Error | CreateVerb used with CreateMethod.None |
+| CVJG0010 | Error | TerminalVerb used with TerminalMethod.None |
 | CVJG0011 | Warning | Unsupported parameter modifier (ref/out) |
 | CVJG0012 | Warning | Inaccessible constructor (private/protected) |
 | CVJG0013 | Error | Factory type missing `partial` modifier |
 | CVJG0014 | Warning | Parameter type less accessible than factory |
 | CVJG0015 | Warning | Factory more accessible than target type |
 | CVJG0016 | Error | Ambiguous fluent method chain |
-| CVJG0017 | Warning | Empty CreateVerb with CreateMethod.None (no effect) |
+| CVJG0017 | Warning | Empty TerminalVerb with TerminalMethod.None (no effect) |
 | CVJG0018 | Error | Invalid MethodPrefix (not a valid C# identifier) |
 | CVJG0019 | Error | Target type not assignable to ReturnType |
 | CVJG0020 | Warning | ReturnType same as concrete target type (unnecessary) |
-| CVJG0021 | Error | ReturnType used with CreateMethod.None |
+| CVJG0021 | Error | ReturnType used with TerminalMethod.None |
 | CVJG0022 | Error | Optional parameters cause ambiguous chain |
 | CVJG0023 | Error | Conflicting type constraints produce duplicate method signatures |
 | CVJG0024 | Error | Constructor parameter has no storage in custom step |
@@ -945,9 +961,9 @@ The generator produces diagnostics to help you fix configuration issues:
 | CVJG0033 | Error | Static/instance method name collision |
 | CVJG0035 | Error | FluentStorage property must have a getter |
 | CVJG0036 | Error | Duplicate FluentStorage mapping to same parameter name |
-| CVJG0037 | Error | Multiple FluentConstructors with CreateMethod.None on same type — only one allowed |
+| CVJG0037 | Error | Multiple FluentConstructors with TerminalMethod.None on same type — only one allowed |
 | CVJG0038 | Error | FluentMethod on property without set or init accessor |
-| CVJG0039 | Warning | Required property cannot be used with CreateMethod.None |
+| CVJG0039 | Warning | Required property cannot be used with TerminalMethod.None |
 | CVJG0040 | Error | Property produces fluent method name that clashes with constructor parameter |
 | CVJG0041 | Error | Duplicate fluent property method name conflicts with another property or parameter |
 | CVJG0042 | Info | FluentMethod without explicit name has no effect on constructor parameter |
