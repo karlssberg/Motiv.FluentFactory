@@ -120,19 +120,17 @@ internal static class PropertyStepEnricher
 
             var candidateConstructors = creationMethod.Return.CandidateConstructors;
 
-            // Build the property step chain starting from root
+            // Create the first property step and entry method
             var firstProperty = requiredProperties[0];
             var methodPrefix = "With";
             var propMethodName = GetPropertyMethodName(firstProperty, methodPrefix);
 
-            // Create the first property step
             var firstStep = CreatePropertyStep(
                 rootType, emptyValueStorage, [],
                 ImmutableArray<FieldStorage>.Empty, firstProperty,
                 candidateConstructors, rootType.DeclaredAccessibility, TypeKind.Class,
                 ref nextStepIndex);
 
-            // Wire creation method method → first step
             var firstMethod = new RegularMethod(
                 propMethodName,
                 firstProperty,
@@ -142,55 +140,37 @@ internal static class PropertyStepEnricher
                 emptyValueStorage);
 
             methodsToAdd.Add(firstMethod);
+            newSteps.Add(firstStep);
 
-            // Build remaining property steps
-            var currentStep = firstStep;
-            for (var i = 1; i < requiredProperties.Count; i++)
+            if (requiredProperties.Count == 1)
             {
-                var prop = requiredProperties[i];
-                var nextPropMethodName = GetPropertyMethodName(prop, methodPrefix);
-                var prevPropertyFields = currentStep.PropertyFieldStorage;
+                // Single property: finalize directly
+                firstStep.IsEndStep = true;
+                creationMethod.PropertyInitializers =
+                [
+                    ..requiredProperties.Select(rp =>
+                        (PropertyName: rp.Name, FieldName: rp.Name.ToParameterFieldName()))
+                ];
+                firstStep.FluentMethods = [creationMethod];
 
-                var nextStep = CreatePropertyStep(
-                    rootType, currentStep.ValueStorage, currentStep.KnownConstructorParameters,
-                    prevPropertyFields, prop,
-                    candidateConstructors, rootType.DeclaredAccessibility, TypeKind.Class,
-                    ref nextStepIndex);
-
-                var nextMethod = new RegularMethod(
-                    nextPropMethodName,
-                    prop,
-                    nextStep,
-                    rootType.ContainingNamespace,
-                    [],
-                    currentStep.ValueStorage);
-
-                currentStep.FluentMethods.Add(nextMethod);
-                newSteps.Add(nextStep);
-                currentStep = nextStep;
+                var optionalProperties = GetOptionalFluentMethodProperties(creationMethod);
+                if (optionalProperties.Count > 0)
+                {
+                    AddOptionalPropertyMethodsToStep(
+                        rootType, firstStep, creationMethod, optionalProperties, "With");
+                }
             }
-
-            // Put the creation method on the last property step
-            var isFirstAndOnly = requiredProperties.Count == 1;
-            firstStep.IsEndStep = isFirstAndOnly;
-            currentStep.IsEndStep = true;
-
-            creationMethod.PropertyInitializers =
-            [
-                ..requiredProperties.Select(rp =>
-                    (PropertyName: rp.Name, FieldName: rp.Name.ToParameterFieldName()))
-            ];
-            currentStep.FluentMethods = [creationMethod];
-
-            // Add optional [FluentMethod] property methods to the last step
-            var optionalProperties = GetOptionalFluentMethodProperties(creationMethod);
-            if (optionalProperties.Count > 0)
+            else
             {
-                AddOptionalPropertyMethodsToStep(
-                    rootType, currentStep, creationMethod, optionalProperties, "With");
+                // Multiple properties: delegate remaining chain to shared builder
+                BuildPropertyStepChain(
+                    rootType, creationMethod, requiredProperties,
+                    firstStep, firstStep.ValueStorage, [],
+                    rootType.DeclaredAccessibility, TypeKind.Class,
+                    firstStep.PropertyFieldStorage, candidateConstructors,
+                    newSteps, ref nextStepIndex,
+                    startIndex: 1);
             }
-
-            newSteps.Insert(newSteps.Count - (requiredProperties.Count - 1), firstStep);
         }
 
         if (methodsToRemove.Count == 0)
@@ -355,13 +335,14 @@ internal static class PropertyStepEnricher
         ImmutableArray<FieldStorage> propertyFieldStorage,
         ImmutableArray<IMethodSymbol> candidateConstructors,
         List<IFluentStep> newSteps,
-        ref int nextStepIndex)
+        ref int nextStepIndex,
+        int startIndex = 0)
     {
         var methodPrefix = "With";
         var currentStep = ownerStep;
         var currentValueStorage = valueStorage;
 
-        for (var i = 0; i < requiredProperties.Count; i++)
+        for (var i = startIndex; i < requiredProperties.Count; i++)
         {
             var prop = requiredProperties[i];
             var isLast = i == requiredProperties.Count - 1;
