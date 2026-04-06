@@ -50,7 +50,7 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredDiamond{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T> CreateColoredDiamond()
+        public global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T> ToColoredDiamond()
         {
             return new global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T>(this._diamond__parameter, this._color__parameter);
         }
@@ -61,7 +61,7 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredCircle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.ShapeExtensionMethods.ColoredCircle<T> ConvertToColoredCircle()
+        public global::Converj.Example.ShapeExtensionMethods.ColoredCircle<T> ToColoredCircle()
         {
             return new global::Converj.Example.ShapeExtensionMethods.ColoredCircle<T>(this._diamond__parameter, this._color__parameter);
         }

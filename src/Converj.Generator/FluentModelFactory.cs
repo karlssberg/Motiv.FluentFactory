@@ -31,16 +31,18 @@ internal class FluentModelFactory(Compilation compilation)
             var location = instanceMethod.AttributeData.ApplicationSyntaxReference?.GetSyntax().GetLocation()
                            ?? Location.None;
             _diagnostics.Add(Diagnostic.Create(
-                Diagnostics.FluentDiagnostics.InstanceMethodTarget,
+                FluentDiagnostics.InstanceMethodTarget,
                 location,
                 instanceMethod.Constructor.Name));
         }
+
+        ValidateThisAttributeUsage(fluentTargetContexts);
+
         fluentTargetContexts = [
             ..fluentTargetContexts
                 .Where(c => !c.IsInstanceMethodTarget)
         ];
 
-        ValidateThisAttributeUsage(fluentTargetContexts);
         ValidateRootForExtensionTargets(rootType, fluentTargetContexts);
 
         var (validContexts, unsupportedModifierDiagnostics) =
@@ -134,6 +136,11 @@ internal class FluentModelFactory(Compilation compilation)
             PropagateThreadedParametersToSteps(gatewaySteps);
         }
 
+        if (receiverParameter is not null && !gatewaySteps.IsEmpty)
+        {
+            PropagateReceiverToSteps(gatewaySteps, receiverParameter);
+        }
+
         fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
         fluentBuilderSteps = [..fluentBuilderSteps, ..gatewaySteps];
 
@@ -161,6 +168,9 @@ internal class FluentModelFactory(Compilation compilation)
         {
             if (!_threadedParameters.IsEmpty)
                 PropagateThreadedParametersToSteps(propertySteps);
+
+            if (receiverParameter is not null)
+                PropagateReceiverToSteps(propertySteps, receiverParameter);
 
             fluentBuilderSteps = [..fluentBuilderSteps, ..propertySteps];
         }
@@ -1096,7 +1106,7 @@ internal class FluentModelFactory(Compilation compilation)
                     .FirstOrDefault(l => l is not null) ?? Location.None;
 
                 _diagnostics.Add(Diagnostic.Create(
-                    Diagnostics.FluentDiagnostics.AmbiguousEntryMethod,
+                    FluentDiagnostics.AmbiguousEntryMethod,
                     location,
                     collision.Key,
                     string.Join(", ", collidingTypes.Select(t => $"'{t}'"))));
@@ -1417,7 +1427,7 @@ internal class FluentModelFactory(Compilation compilation)
             }
         }
 
-        return ([..gatewayMethods], [..steps.OfType<IFluentStep>()]);
+        return ([..gatewayMethods], [..steps]);
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(

@@ -8,7 +8,7 @@ using Converj.Generator.Diagnostics;
 namespace Converj.Generator.ConstructorAnalysis;
 
 [DebuggerDisplay("{ToDisplayString()}}")]
-internal record FluentTargetContext
+internal class FluentTargetContext
 {
     public FluentTargetContext(
         IMethodSymbol constructor,
@@ -33,11 +33,9 @@ internal record FluentTargetContext
         Accessibility = rootSymbol.DeclaredAccessibility;
         RootType = rootSymbol;
 
-        // Detect method targets (non-constructor IMethodSymbol)
         IsStaticMethodTarget = constructor.MethodKind == MethodKind.Ordinary && constructor.IsStatic;
         IsInstanceMethodTarget = constructor.MethodKind == MethodKind.Ordinary && !constructor.IsStatic;
 
-        // Detect extension receiver: [This] attribute or C# 'this' modifier on first parameter
         ReceiverParameter = DetectReceiverParameter(constructor);
 
         // For static methods, default terminal verb to the method name and builder to FixedName

@@ -304,20 +304,12 @@ internal static class RootTypeDeclaration
         method = MergeReceiverTypeParameters(method, receiverParameter);
 
         // Prepend receiver identifier to the step constructor arguments
-        var returnStatement = method.Body?.Statements.OfType<ReturnStatementSyntax>().FirstOrDefault();
-        if (returnStatement?.Expression is ObjectCreationExpressionSyntax creation)
+        return RewriteReturnCreationArguments(method, creation =>
         {
             var receiverArg = Argument(IdentifierName(receiverParameter.Name.ToCamelCase()));
             var existingArgs = creation.ArgumentList?.Arguments ?? SeparatedList<ArgumentSyntax>();
-            var newCreation = creation.WithArgumentList(
-                ArgumentList(SeparatedList(
-                    new[] { receiverArg }.Concat(existingArgs))));
-            var newReturn = returnStatement.WithExpression(newCreation);
-            var newBody = method.Body!.WithStatements(SingletonList<StatementSyntax>(newReturn));
-            method = method.WithBody(newBody);
-        }
-
-        return method;
+            return new[] { receiverArg }.Concat(existingArgs);
+        });
     }
 
     /// <summary>
