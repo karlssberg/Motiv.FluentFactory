@@ -276,45 +276,61 @@ internal class FluentModelFactory(Compilation compilation)
             .Select(v => v.Context.MethodPrefix)
             .FirstOrDefault() ?? "With";
 
-        var creationMethods =
-            from value in node.EndValues
-            let preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Constructor)
-                ? new HashSet<string>()
-                : _bindingResolver.GetPreSatisfiedParameterNames(value.Constructor)
-            let receiverCount = value.ReceiverParameter is not null ? 1 : 0
-            where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount
-            where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count - receiverCount
-            where value.TerminalMethod != TerminalMethodKind.None
-            let verb = value.Context.TerminalVerb ?? "Create"
-            let methodName = value.TerminalMethod == TerminalMethodKind.FixedName
-                ? verb
-                : $"{verb}{value.Constructor.ContainingType.ToCreateMethodSuffix()}"
-            let keyParamFieldNames = new HashSet<string>(
-                node.Key.Select(k => k.SourceName.ToParameterFieldName()))
-            let optionalParamFields = value.OptionalParameters
-                .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
-                .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)))
-            let hasStep = node.Key.Length > 0
-            let threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
-            let receiverField = value.ReceiverParameter is { } receiver
-                ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
-                : ImmutableArray<FluentMethodParameter>.Empty
-            let allParameterFields = hasStep
-                ? receiverField.AddRange(threadedParamFields).AddRange(node.Key).AddRange(optionalParamFields)
-                : receiverField.AddRange(threadedParamFields).AddRange(node.Key)
-            let mergedValueSources = _bindingResolver.MergeThreadedValueSources(value.Constructor, valueSources, preSatisfiedNames)
-            select new CreationMethod(
-                rootType.ContainingNamespace,
-                value,
-                allParameterFields,
-                mergedValueSources,
-                methodName);
-
-        foreach (var createMethod in creationMethods)
+        foreach (var value in node.EndValues)
         {
-            _unreachableConstructorAnalyzer.AddReachableMethod(createMethod);
-            yield return createMethod;
+            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Constructor)
+                ? new HashSet<string>()
+                : _bindingResolver.GetPreSatisfiedParameterNames(value.Constructor);
+            var receiverCount = value.ReceiverParameter is not null ? 1 : 0;
+
+            if (node.Key.Length < value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount) continue;
+            if (node.Key.Length > value.Constructor.Parameters.Length - preSatisfiedNames.Count - receiverCount) continue;
+            if (value.TerminalMethod == TerminalMethodKind.None) continue;
+
+            var keyParamFieldNames = new HashSet<string>(
+                node.Key.Select(k => k.SourceName.ToParameterFieldName()));
+            var optionalParamFields = value.OptionalParameters
+                .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
+                .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
+
+            var threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Constructor, preSatisfiedNames);
+            var receiverField = value.ReceiverParameter is { } receiver
+                ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
+                : ImmutableArray<FluentMethodParameter>.Empty;
+
+            var hasStep = node.Key.Length > 0;
+            ImmutableArray<FluentMethodParameter> allParameterFields = hasStep
+                ? [..receiverField, ..threadedParamFields, ..node.Key, ..optionalParamFields]
+                : [..receiverField, ..threadedParamFields, ..node.Key];
+
+            var creationMethod = BuildCreationMethod(
+                rootType.ContainingNamespace, value, preSatisfiedNames, allParameterFields, valueSources);
+
+            _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
+            yield return creationMethod;
         }
+    }
+
+    /// <summary>
+    /// Builds a <see cref="CreationMethod"/> for a constructor metadata entry, resolving the terminal method name
+    /// and merging threaded parameter value sources.
+    /// </summary>
+    private CreationMethod BuildCreationMethod(
+        INamespaceSymbol rootNamespace,
+        ConstructorMetadata metadata,
+        HashSet<string> preSatisfiedNames,
+        ImmutableArray<FluentMethodParameter> allParameterFields,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources)
+    {
+        var verb = metadata.Context.TerminalVerb ?? "Create";
+        var methodName = metadata.TerminalMethod == TerminalMethodKind.FixedName
+            ? verb
+            : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
+
+        var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
+            metadata.Constructor, valueSources, preSatisfiedNames);
+
+        return new CreationMethod(rootNamespace, metadata, allParameterFields, mergedValueSources, methodName);
     }
 
     /// <summary>
@@ -639,27 +655,16 @@ internal class FluentModelFactory(Compilation compilation)
             {
                 if (metadata.TerminalMethod == TerminalMethodKind.None) continue;
 
-                var verb = metadata.Context.TerminalVerb ?? "Create";
-                var createMethodName = metadata.TerminalMethod == TerminalMethodKind.FixedName
-                    ? verb
-                    : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
-
                 var preSatisfiedNames = _bindingResolver.IsSelfReferencing(metadata.Constructor)
                     ? new HashSet<string>()
                     : _bindingResolver.GetPreSatisfiedParameterNames(metadata.Constructor);
                 var threadedParamFields = _bindingResolver.GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
                 var optionalParamFields = allOptionalParams
                     .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
-                var allParamFields = threadedParamFields.AddRange(optionalParamFields);
-                var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
-                    metadata.Constructor, valueStorages, preSatisfiedNames);
+                ImmutableArray<FluentMethodParameter> allParamFields = [..threadedParamFields, ..optionalParamFields];
 
-                var creationMethod = new CreationMethod(
-                    rootType.ContainingNamespace,
-                    metadata,
-                    allParamFields,
-                    mergedValueSources,
-                    createMethodName);
+                var creationMethod = BuildCreationMethod(
+                    rootType.ContainingNamespace, metadata, preSatisfiedNames, allParamFields, valueStorages);
 
                 _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
                 step.FluentMethods.Add(creationMethod);
