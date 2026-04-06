@@ -28,3 +28,4 @@ Line3D<double> line3D = Line.X(10d).Y(20d).Z(30d);
 Animal dog = Animal.CreateDog();
 Animal cat = Animal.CreateCat();
 Animal monster = Animal.WithEyeCount(3).CreateMonster();
+Animal bird = Animal.WithLegs(2).WithBirdThings(wings: 2, name: "flappy").CreateBird();
