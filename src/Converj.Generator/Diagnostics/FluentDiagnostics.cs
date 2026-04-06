@@ -528,4 +528,53 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when [This] is applied to a parameter other than the first.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ThisAttributeNotOnFirstParameter = new(
+        id: "CVJG0046",
+        title: "[This] must be on the first parameter",
+        messageFormat:
+        "[This] can only be applied to the first parameter, but was applied to '{0}'",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when [This] is applied to a parameter of an instance method.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ThisAttributeOnInstanceMethod = new(
+        id: "CVJG0047",
+        title: "[This] is not supported on instance methods",
+        messageFormat:
+        "[This] is not supported on instance method '{0}'",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Info diagnostic when [This] is applied to the first parameter of an extension method,
+    /// where it is redundant because the 'this' modifier already implies extension behavior.
+    /// </summary>
+    public static readonly DiagnosticDescriptor ThisAttributeTautologous = new(
+        id: "CVJG0048",
+        title: "[This] is redundant on extension method parameter",
+        messageFormat:
+        "[This] is redundant on extension method parameter '{0}'; the 'this' modifier already implies extension behavior",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Info,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when a FluentRoot is not a static partial class but has extension method targets.
+    /// </summary>
+    public static readonly DiagnosticDescriptor RootMustBeStaticForExtensionTargets = new(
+        id: "CVJG0049",
+        title: "FluentRoot must be static for extension method targets",
+        messageFormat:
+        "FluentRoot '{0}' must be a static partial class when used with extension method targets",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

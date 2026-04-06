@@ -40,6 +40,9 @@ internal class FluentModelFactory(Compilation compilation)
                 .Where(c => !c.IsInstanceMethodTarget)
         ];
 
+        ValidateThisAttributeUsage(fluentTargetContexts);
+        ValidateRootForExtensionTargets(rootType, fluentTargetContexts);
+
         var (validContexts, unsupportedModifierDiagnostics) =
             FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
 
@@ -856,6 +859,81 @@ internal class FluentModelFactory(Compilation compilation)
                 {
                     step.ValueStorage.Add(binding.TargetParameter,
                         FieldStorage.FromParameter(binding.TargetParameter, _rootType.ContainingNamespace));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Validates the root type is a static partial class when used with extension method targets.
+    /// </summary>
+    private void ValidateRootForExtensionTargets(
+        INamedTypeSymbol rootType,
+        ImmutableArray<FluentTargetContext> contexts)
+    {
+        if (rootType.IsStatic)
+            return;
+
+        if (!contexts.Any(c => c.HasReceiver))
+            return;
+
+        var location = rootType.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax().GetLocation()
+                       ?? Location.None;
+
+        _diagnostics.Add(Diagnostic.Create(
+            FluentDiagnostics.RootMustBeStaticForExtensionTargets,
+            location,
+            rootType.Name));
+    }
+
+    /// <summary>
+    /// Validates [This] attribute usage and emits diagnostics for invalid placements.
+    /// </summary>
+    private void ValidateThisAttributeUsage(ImmutableArray<FluentTargetContext> contexts)
+    {
+        foreach (var context in contexts)
+        {
+            var method = context.Constructor;
+
+            foreach (var param in method.Parameters)
+            {
+                var thisAttr = param.GetAttributes()
+                    .FirstOrDefault(a => a.AttributeClass?.ToDisplayString() == TypeName.ThisAttribute);
+
+                if (thisAttr is null)
+                    continue;
+
+                var location = thisAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation()
+                               ?? param.Locations.FirstOrDefault()
+                               ?? Location.None;
+
+                // [This] on non-first parameter
+                if (!SymbolEqualityComparer.Default.Equals(param, method.Parameters[0]))
+                {
+                    _diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.ThisAttributeNotOnFirstParameter,
+                        location,
+                        param.Name));
+                    continue;
+                }
+
+                // [This] on instance method
+                if (context.IsInstanceMethodTarget)
+                {
+                    _diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.ThisAttributeOnInstanceMethod,
+                        location,
+                        method.Name));
+                    continue;
+                }
+
+                // [This] on extension method first param (tautologous)
+                if (method.IsExtensionMethod)
+                {
+                    _diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.ThisAttributeTautologous,
+                        location,
+                        param.Name));
                 }
             }
         }
