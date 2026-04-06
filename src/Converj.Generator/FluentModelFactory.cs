@@ -36,27 +36,27 @@ internal class FluentModelFactory(Compilation compilation)
                 instanceMethod.Constructor.Name));
         }
 
-        ValidateThisAttributeUsage(fluentTargetContexts);
+        _diagnostics.AddRange(TargetContextFilter.ValidateThisAttributeUsage(fluentTargetContexts));
 
         fluentTargetContexts = [
             ..fluentTargetContexts
                 .Where(c => !c.IsInstanceMethodTarget)
         ];
 
-        ValidateRootForExtensionTargets(rootType, fluentTargetContexts);
+        _diagnostics.AddRange(TargetContextFilter.ValidateRootForExtensionTargets(rootType, fluentTargetContexts));
 
         var (validContexts, unsupportedModifierDiagnostics) =
-            FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
+            TargetContextFilter.FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
 
         _diagnostics.AddRange(unsupportedModifierDiagnostics);
 
         var (accessibleContexts, inaccessibleConstructorDiagnostics) =
-            FilterInaccessibleConstructors(validContexts);
+            TargetContextFilter.FilterInaccessibleConstructors(validContexts);
 
         _diagnostics.AddRange(inaccessibleConstructorDiagnostics);
         validContexts = accessibleContexts;
 
-        validContexts = FilterErrorTypeConstructors(validContexts);
+        validContexts = TargetContextFilter.FilterErrorTypeConstructors(validContexts);
 
         if (validContexts.IsEmpty)
             return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
@@ -874,80 +874,6 @@ internal class FluentModelFactory(Compilation compilation)
         }
     }
 
-    /// <summary>
-    /// Validates the root type is a static partial class when used with extension method targets.
-    /// </summary>
-    private void ValidateRootForExtensionTargets(
-        INamedTypeSymbol rootType,
-        ImmutableArray<FluentTargetContext> contexts)
-    {
-        if (rootType.IsStatic)
-            return;
-
-        if (!contexts.Any(c => c.HasReceiver))
-            return;
-
-        var location = rootType.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax().GetLocation()
-                       ?? Location.None;
-
-        _diagnostics.Add(Diagnostic.Create(
-            FluentDiagnostics.RootMustBeStaticForExtensionTargets,
-            location,
-            rootType.Name));
-    }
-
-    /// <summary>
-    /// Validates [This] attribute usage and emits diagnostics for invalid placements.
-    /// </summary>
-    private void ValidateThisAttributeUsage(ImmutableArray<FluentTargetContext> contexts)
-    {
-        foreach (var context in contexts)
-        {
-            var method = context.Constructor;
-
-            foreach (var param in method.Parameters)
-            {
-                var thisAttr = param.GetAttributes()
-                    .FirstOrDefault(a => a.AttributeClass?.ToDisplayString() == TypeName.ThisAttribute);
-
-                if (thisAttr is null)
-                    continue;
-
-                var location = thisAttr.ApplicationSyntaxReference?.GetSyntax().GetLocation()
-                               ?? param.Locations.FirstOrDefault()
-                               ?? Location.None;
-
-                // [This] on non-first parameter
-                if (!SymbolEqualityComparer.Default.Equals(param, method.Parameters[0]))
-                {
-                    _diagnostics.Add(Diagnostic.Create(
-                        FluentDiagnostics.ThisAttributeNotOnFirstParameter,
-                        location,
-                        param.Name));
-                    continue;
-                }
-
-                // [This] on instance method
-                if (context.IsInstanceMethodTarget)
-                {
-                    _diagnostics.Add(Diagnostic.Create(
-                        FluentDiagnostics.ThisAttributeOnInstanceMethod,
-                        location,
-                        method.Name));
-                    continue;
-                }
-
-                // [This] on extension method first param (tautologous)
-                if (method.IsExtensionMethod)
-                {
-                    _diagnostics.Add(Diagnostic.Create(
-                        FluentDiagnostics.ThisAttributeTautologous,
-                        location,
-                        param.Name));
-                }
-            }
-        }
-    }
 
     /// <summary>
     /// Propagates the extension receiver parameter to all steps in the chain.
@@ -1447,84 +1373,4 @@ internal class FluentModelFactory(Compilation compilation)
         ];
     }
 
-    private static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
-        FilterInaccessibleConstructors(
-            ImmutableArray<FluentTargetContext> fluentTargetContexts)
-    {
-        var diagnostics = new List<Diagnostic>();
-        var validContexts = ImmutableArray.CreateBuilder<FluentTargetContext>(fluentTargetContexts.Length);
-
-        foreach (var context in fluentTargetContexts)
-        {
-            var accessibility = context.Constructor.DeclaredAccessibility;
-            var isInaccessible = accessibility is
-                Accessibility.Private or
-                Accessibility.Protected or
-                Accessibility.ProtectedAndInternal;
-
-            if (!isInaccessible)
-            {
-                validContexts.Add(context);
-                continue;
-            }
-
-            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
-            diagnostics.Add(Diagnostic.Create(
-                FluentDiagnostics.InaccessibleConstructor,
-                location,
-                context.Constructor.ToDisplayString(),
-                accessibility.ToString()));
-        }
-
-        return (validContexts.ToImmutable(), diagnostics);
-    }
-
-    private static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
-        FilterUnsupportedParameterModifierConstructors(
-            ImmutableArray<FluentTargetContext> fluentTargetContexts)
-    {
-        var diagnostics = new List<Diagnostic>();
-        var validContexts = ImmutableArray.CreateBuilder<FluentTargetContext>(fluentTargetContexts.Length);
-
-        foreach (var context in fluentTargetContexts)
-        {
-            var unsupportedParameter = context.Constructor.Parameters
-                .FirstOrDefault(p => p.RefKind is RefKind.Ref or RefKind.Out or RefKind.RefReadOnlyParameter);
-
-            if (unsupportedParameter is null)
-            {
-                validContexts.Add(context);
-                continue;
-            }
-
-            var modifierText = unsupportedParameter.RefKind switch
-            {
-                RefKind.Ref => "ref",
-                RefKind.Out => "out",
-                RefKind.RefReadOnlyParameter => "ref readonly",
-                _ => unsupportedParameter.RefKind.ToString().ToLowerInvariant()
-            };
-
-            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
-            diagnostics.Add(Diagnostic.Create(
-                FluentDiagnostics.UnsupportedParameterModifier,
-                location,
-                context.Constructor.ToDisplayString(),
-                unsupportedParameter.Name,
-                modifierText));
-        }
-
-        return (validContexts.ToImmutable(), diagnostics);
-    }
-
-    private static ImmutableArray<FluentTargetContext> FilterErrorTypeConstructors(
-        ImmutableArray<FluentTargetContext> fluentTargetContexts)
-    {
-        return
-        [
-            ..fluentTargetContexts
-                .Where(ctx => ctx.Constructor.Parameters
-                    .All(p => p.Type.TypeKind != TypeKind.Error))
-        ];
-    }
 }
