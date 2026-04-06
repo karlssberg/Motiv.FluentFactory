@@ -57,6 +57,24 @@ Generated code uses structs with `[MethodImpl(AggressiveInlining)]` for zero-ove
 
 `[FluentTarget]` can be applied to static methods on any class. The static method's parameters feed into the root's trie like constructor parameters, but the terminal step calls the static method instead of `new T(...)`. Default terminal name is the method name, default builder mode is `FixedName`.
 
+### Extension Method Targets
+
+Extension methods (with `this` modifier) and methods/constructors with `[This]` on the first parameter generate fluent chains that start as extension methods on the receiver type:
+
+```csharp
+// Auto-detected from 'this' modifier:
+[FluentTarget(typeof(Root))]
+public static string Pad(this string input, int width) => ...;
+// Usage: "hello".WithWidth(80).Pad()
+
+// Explicit via [This] attribute:
+[FluentTarget(typeof(Root))]
+public static int Parse([This] string input, int radix) => ...;
+// Usage: "42".WithRadix(16).Parse()
+```
+
+The receiver is extracted from the parameter list before trie building and threaded through all step structs as a field. The entry method on the root class has a `this` modifier. Terminal invocations use static call syntax (`Type.Method(receiver, args)`) to avoid namespace import requirements. The root must be a `static partial class`.
+
 ## Test Patterns
 
 Tests use `CSharpSourceGeneratorVerifier<FluentFactoryGenerator>` (defined in the test project), which wraps Roslyn's `CSharpSourceGeneratorTest`. Each test:
