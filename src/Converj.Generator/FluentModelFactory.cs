@@ -14,7 +14,7 @@ internal class FluentModelFactory(Compilation compilation)
 
     private FluentMethodSelector _methodSelector = null!;
     private FluentStepBuilder _stepBuilder = null!;
-    private ImmutableArray<FluentParameterBinding> _threadedParameters = [];
+    private ParameterBindingResolver _bindingResolver = null!;
     private INamedTypeSymbol _rootType = null!;
 
     public FluentFactoryCompilationUnit CreateFluentFactoryCompilationUnit(
@@ -68,9 +68,10 @@ internal class FluentModelFactory(Compilation compilation)
 
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
         _rootType = rootType;
+        _bindingResolver = new ParameterBindingResolver(compilation, rootType, _diagnostics);
 
         var fluentParameterMembers = FluentParameterAnalyzer.Analyze(rootType, _diagnostics);
-        _threadedParameters = CreateThreadedParameterBindings(rootType, fluentParameterMembers, fluentTargetContexts);
+        _bindingResolver.ResolveBindings(fluentParameterMembers, fluentTargetContexts);
 
         var usings = GetUsingStatements(fluentTargetContexts);
 
@@ -113,9 +114,9 @@ internal class FluentModelFactory(Compilation compilation)
             })
             .ToImmutableArray();
 
-        if (!_threadedParameters.IsEmpty)
+        if (!_bindingResolver.ThreadedParameters.IsEmpty)
         {
-            PropagateThreadedParametersToSteps(fluentBuilderSteps);
+            _bindingResolver.PropagateThreadedParametersToSteps(fluentBuilderSteps);
         }
 
         // Propagate extension receiver to all steps in the chain
@@ -124,21 +125,21 @@ internal class FluentModelFactory(Compilation compilation)
             .FirstOrDefault(r => r is not null);
         if (receiverParameter is not null)
         {
-            PropagateReceiverToSteps(fluentBuilderSteps, receiverParameter);
+            ParameterBindingResolver.PropagateReceiverToSteps(fluentBuilderSteps, receiverParameter);
         }
 
         // Handle multi-param all-optional constructors via post-processing
         var (gatewayMethods, gatewaySteps) = CreateAllOptionalStepsAndGatewayMethods(
             rootType, stepTrie.Root, fluentBuilderSteps.Length);
 
-        if (!_threadedParameters.IsEmpty && !gatewaySteps.IsEmpty)
+        if (!_bindingResolver.ThreadedParameters.IsEmpty && !gatewaySteps.IsEmpty)
         {
-            PropagateThreadedParametersToSteps(gatewaySteps);
+            _bindingResolver.PropagateThreadedParametersToSteps(gatewaySteps);
         }
 
         if (receiverParameter is not null && !gatewaySteps.IsEmpty)
         {
-            PropagateReceiverToSteps(gatewaySteps, receiverParameter);
+            ParameterBindingResolver.PropagateReceiverToSteps(gatewaySteps, receiverParameter);
         }
 
         fluentRootMethods = [..fluentRootMethods, ..gatewayMethods];
@@ -153,9 +154,9 @@ internal class FluentModelFactory(Compilation compilation)
             var (typeFirstEntryMethods, typeFirstSteps) = CreateTypeFirstChains(
                 rootType, typeFirstContexts, fluentBuilderSteps.Length);
 
-            if (!_threadedParameters.IsEmpty && !typeFirstSteps.IsEmpty)
+            if (!_bindingResolver.ThreadedParameters.IsEmpty && !typeFirstSteps.IsEmpty)
             {
-                PropagateThreadedParametersToSteps(typeFirstSteps);
+                _bindingResolver.PropagateThreadedParametersToSteps(typeFirstSteps);
             }
 
             fluentRootMethods = [..fluentRootMethods, ..typeFirstEntryMethods];
@@ -166,11 +167,11 @@ internal class FluentModelFactory(Compilation compilation)
         var (propertySteps, updatedRootMethods) = PropertyStepEnricher.InsertRequiredPropertySteps(rootType, fluentRootMethods, fluentBuilderSteps);
         if (propertySteps.Length > 0)
         {
-            if (!_threadedParameters.IsEmpty)
-                PropagateThreadedParametersToSteps(propertySteps);
+            if (!_bindingResolver.ThreadedParameters.IsEmpty)
+                _bindingResolver.PropagateThreadedParametersToSteps(propertySteps);
 
             if (receiverParameter is not null)
-                PropagateReceiverToSteps(propertySteps, receiverParameter);
+                ParameterBindingResolver.PropagateReceiverToSteps(propertySteps, receiverParameter);
 
             fluentBuilderSteps = [..fluentBuilderSteps, ..propertySteps];
         }
@@ -184,11 +185,11 @@ internal class FluentModelFactory(Compilation compilation)
             FluentMethods = fluentRootMethods,
             FluentSteps = fluentBuilderSteps,
             Usings = usings,
-            IsStatic = sampleConstructorContext.IsStatic && _threadedParameters.IsEmpty,
+            IsStatic = sampleConstructorContext.IsStatic && _bindingResolver.ThreadedParameters.IsEmpty,
             TypeKind = sampleConstructorContext.TypeKind,
             Accessibility = sampleConstructorContext.Accessibility,
             IsRecord = sampleConstructorContext.IsRecord,
-            ThreadedParameters = _threadedParameters,
+            ThreadedParameters = _bindingResolver.ThreadedParameters,
             Diagnostics = _diagnostics
         };
     }
@@ -274,9 +275,9 @@ internal class FluentModelFactory(Compilation compilation)
 
         var creationMethods =
             from value in node.EndValues
-            let preSatisfiedNames = IsSelfReferencing(value.Constructor, _rootType)
+            let preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Constructor)
                 ? new HashSet<string>()
-                : GetPreSatisfiedParameterNames(value.Constructor)
+                : _bindingResolver.GetPreSatisfiedParameterNames(value.Constructor)
             let receiverCount = value.ReceiverParameter is not null ? 1 : 0
             where node.Key.Length >= value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount
             where node.Key.Length <= value.Constructor.Parameters.Length - preSatisfiedNames.Count - receiverCount
@@ -291,14 +292,14 @@ internal class FluentModelFactory(Compilation compilation)
                 .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
                 .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)))
             let hasStep = node.Key.Length > 0
-            let threadedParamFields = GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
+            let threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Constructor, preSatisfiedNames)
             let receiverField = value.ReceiverParameter is { } receiver
                 ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
                 : ImmutableArray<FluentMethodParameter>.Empty
             let allParameterFields = hasStep
                 ? receiverField.AddRange(threadedParamFields).AddRange(node.Key).AddRange(optionalParamFields)
                 : receiverField.AddRange(threadedParamFields).AddRange(node.Key)
-            let mergedValueSources = MergeThreadedValueSources(value.Constructor, valueSources, preSatisfiedNames)
+            let mergedValueSources = _bindingResolver.MergeThreadedValueSources(value.Constructor, valueSources, preSatisfiedNames)
             select new CreationMethod(
                 rootType.ContainingNamespace,
                 value,
@@ -312,220 +313,6 @@ internal class FluentModelFactory(Compilation compilation)
             yield return createMethod;
         }
     }
-
-    /// <summary>
-    /// Gets FluentMethodParameter entries for threaded parameters of a constructor,
-    /// ordered by their position in the target constructor.
-    /// </summary>
-    private ImmutableArray<FluentMethodParameter> GetThreadedParameterFields(
-        IMethodSymbol constructor,
-        HashSet<string> preSatisfiedNames)
-    {
-        if (preSatisfiedNames.Count == 0)
-            return [];
-
-        return
-        [
-            ..constructor.Parameters
-                .Where(p => preSatisfiedNames.Contains(p.Name))
-                .Select(p => FluentMethodParameter.FromParameter(p, p.Name))
-        ];
-    }
-
-    /// <summary>
-    /// Merges threaded parameter storage into value sources, ordered by the target constructor's parameter positions.
-    /// This ensures the final constructor call has all arguments in the correct order.
-    /// </summary>
-    private OrderedDictionary<IParameterSymbol, IFluentValueStorage> MergeThreadedValueSources(
-        IMethodSymbol constructor,
-        OrderedDictionary<IParameterSymbol, IFluentValueStorage> stepValueSources,
-        HashSet<string> preSatisfiedNames)
-    {
-        if (preSatisfiedNames.Count == 0)
-            return stepValueSources;
-
-        // Build a new OrderedDictionary in the target constructor's parameter order
-        var merged = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>();
-
-        foreach (var ctorParam in constructor.Parameters)
-        {
-            if (preSatisfiedNames.Contains(ctorParam.Name))
-            {
-                merged.Add(ctorParam, FieldStorage.FromParameter(ctorParam, _rootType.ContainingNamespace));
-            }
-            else
-            {
-                // Step-acquired param — find it in the existing value sources
-                var existingEntry = stepValueSources
-                    .FirstOrDefault(kvp => kvp.Key.Name == ctorParam.Name);
-                if (existingEntry.Value is not null)
-                {
-                    merged.Add(existingEntry.Key, existingEntry.Value);
-                }
-            }
-        }
-
-        return merged;
-    }
-
-    private static bool IsSelfReferencing(IMethodSymbol constructor, INamedTypeSymbol rootType) =>
-        SymbolEqualityComparer.Default.Equals(
-            constructor.ContainingType.OriginalDefinition,
-            rootType.OriginalDefinition);
-
-    /// <summary>
-    /// Checks type compatibility between a factory member type and a target constructor parameter type.
-    /// Handles type parameters from different generic types by comparing ordinal positions,
-    /// since they will be unified at instantiation time via the open generic type reference.
-    /// </summary>
-    private static bool AreTypesCompatible(Compilation compilation, ITypeSymbol sourceType, ITypeSymbol targetType)
-    {
-        if (compilation.HasImplicitConversion(sourceType, targetType))
-            return true;
-
-        // Type parameters from different generic types (e.g., T from Container<T> vs T from Widget<T>)
-        // are different symbols but will be the same type at instantiation since they share
-        // the same ordinal position via the open generic type reference.
-        if (sourceType is ITypeParameterSymbol sourceTypeParam &&
-            targetType is ITypeParameterSymbol targetTypeParam)
-        {
-            return sourceTypeParam.Ordinal == targetTypeParam.Ordinal;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Sets ThreadedParameters on all steps and adds threaded param field storage to each step's ValueStorage.
-    /// </summary>
-    private void PropagateThreadedParametersToSteps(ImmutableArray<IFluentStep> steps)
-    {
-        foreach (var step in steps)
-        {
-            step.ThreadedParameters = _threadedParameters;
-
-            foreach (var binding in _threadedParameters)
-            {
-                if (!step.ValueStorage.ContainsKey(binding.TargetParameter))
-                {
-                    step.ValueStorage.Add(binding.TargetParameter,
-                        FieldStorage.FromParameter(binding.TargetParameter, _rootType.ContainingNamespace));
-                }
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// Propagates the extension receiver parameter to all steps in the chain.
-    /// Prepends it to KnownConstructorParameters and adds field storage.
-    /// </summary>
-    private static void PropagateReceiverToSteps(ImmutableArray<IFluentStep> steps, IParameterSymbol receiverParameter)
-    {
-        foreach (var step in steps)
-        {
-            step.ReceiverParameter = receiverParameter;
-
-            // Prepend receiver to known parameters so it gets a field and constructor parameter
-            if (step is RegularFluentStep regularStep)
-            {
-                regularStep.KnownConstructorParameters = new ParameterSequence(
-                    [receiverParameter, ..regularStep.KnownConstructorParameters]);
-            }
-
-            if (!step.ValueStorage.ContainsKey(receiverParameter))
-            {
-                step.ValueStorage.Insert(0, receiverParameter,
-                    FieldStorage.FromParameter(receiverParameter, step.Namespace));
-            }
-        }
-    }
-
-    /// <summary>
-    /// Creates bindings between [FluentParameter] members and target constructor parameters.
-    /// </summary>
-    private ImmutableArray<FluentParameterBinding> CreateThreadedParameterBindings(
-        INamedTypeSymbol rootType,
-        ImmutableArray<FluentParameterMember> fluentParameterMembers,
-        ImmutableArray<FluentTargetContext> fluentTargetContexts)
-    {
-        if (fluentParameterMembers.IsEmpty)
-            return [];
-
-        var bindings = ImmutableArray.CreateBuilder<FluentParameterBinding>();
-
-        var allTargetParams = fluentTargetContexts
-            .Where(ctx => !IsSelfReferencing(ctx.Constructor, rootType))
-            .SelectMany(ctx => ctx.Constructor.Parameters)
-            .ToList();
-
-        foreach (var member in fluentParameterMembers)
-        {
-            var matchingParams = allTargetParams
-                .Where(p => string.Equals(p.Name, member.TargetParameterName, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            if (matchingParams.Count == 0)
-            {
-                if (!member.IsImplicit)
-                {
-                    _diagnostics.Add(Diagnostic.Create(
-                        FluentDiagnostics.FluentParameterNoMatch,
-                        member.Location,
-                        member.MemberIdentifierName,
-                        member.TargetParameterName));
-                }
-
-                continue;
-            }
-
-            // Check type assignability for all matches
-            var allAssignable = true;
-            foreach (var targetParam in matchingParams)
-            {
-                if (!AreTypesCompatible(compilation, member.Type, targetParam.Type))
-                {
-                    _diagnostics.Add(Diagnostic.Create(
-                        FluentDiagnostics.FluentParameterTypeMismatch,
-                        member.Location,
-                        member.MemberIdentifierName,
-                        member.Type.ToDisplayString(),
-                        targetParam.Name,
-                        targetParam.Type.ToDisplayString()));
-                    allAssignable = false;
-                }
-            }
-
-            if (!allAssignable) continue;
-
-            // Create bindings for each matching parameter (deduped by constructor)
-            var addedConstructors = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
-            foreach (var targetParam in matchingParams)
-            {
-                var constructor = (IMethodSymbol)targetParam.ContainingSymbol;
-                if (addedConstructors.Add(constructor))
-                {
-                    bindings.Add(new FluentParameterBinding(member, targetParam));
-                }
-            }
-        }
-
-        return bindings.ToImmutable();
-    }
-
-    /// <summary>
-    /// Gets the set of pre-satisfied parameter names for a given constructor based on threaded bindings.
-    /// Matches by parameter name against all bindings (constructor identity is validated during binding creation).
-    /// </summary>
-    private HashSet<string> GetPreSatisfiedParameterNames(IMethodSymbol constructor)
-    {
-        var constructorParamNames = new HashSet<string>(constructor.Parameters.Select(p => p.Name));
-        return new HashSet<string>(
-            _threadedParameters
-                .Where(b => constructorParamNames.Contains(b.TargetParameter.Name))
-                .Select(b => b.TargetParameter.Name));
-    }
-
 
     /// <summary>
     /// Creates type-first builder chains by grouping constructors by target type,
@@ -674,7 +461,7 @@ internal class FluentModelFactory(Compilation compilation)
                 .FirstOrDefault(r => r is not null);
             if (groupReceiver is not null)
             {
-                PropagateReceiverToSteps(
+                ParameterBindingResolver.PropagateReceiverToSteps(
                     [rootStep, ..descendantSteps],
                     groupReceiver);
             }
@@ -704,9 +491,9 @@ internal class FluentModelFactory(Compilation compilation)
         {
             var methodPrefix = targetContext.MethodPrefix ?? "With";
 
-            var preSatisfiedNames = IsSelfReferencing(targetContext.Constructor, _rootType)
+            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(targetContext.Constructor)
                 ? []
-                : GetPreSatisfiedParameterNames(targetContext.Constructor);
+                : _bindingResolver.GetPreSatisfiedParameterNames(targetContext.Constructor);
 
             var requiredParameters = targetContext.Constructor.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
@@ -782,9 +569,9 @@ internal class FluentModelFactory(Compilation compilation)
         var allOptionalConstructors = rootNode.EndValues
             .Where(v =>
             {
-                var preSatisfiedCount = IsSelfReferencing(v.Constructor, _rootType)
+                var preSatisfiedCount = _bindingResolver.IsSelfReferencing(v.Constructor)
                     ? 0
-                    : GetPreSatisfiedParameterNames(v.Constructor).Count;
+                    : _bindingResolver.GetPreSatisfiedParameterNames(v.Constructor).Count;
                 return v.RequiredParameterCount - preSatisfiedCount <= 0
                     && v.OptionalParameters.Length > 1;
             })
@@ -857,14 +644,14 @@ internal class FluentModelFactory(Compilation compilation)
                     ? verb
                     : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
 
-                var preSatisfiedNames = IsSelfReferencing(metadata.Constructor, _rootType)
+                var preSatisfiedNames = _bindingResolver.IsSelfReferencing(metadata.Constructor)
                     ? new HashSet<string>()
-                    : GetPreSatisfiedParameterNames(metadata.Constructor);
-                var threadedParamFields = GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
+                    : _bindingResolver.GetPreSatisfiedParameterNames(metadata.Constructor);
+                var threadedParamFields = _bindingResolver.GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
                 var optionalParamFields = allOptionalParams
                     .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
                 var allParamFields = threadedParamFields.AddRange(optionalParamFields);
-                var mergedValueSources = MergeThreadedValueSources(
+                var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
                     metadata.Constructor, valueStorages, preSatisfiedNames);
 
                 var creationMethod = new CreationMethod(
