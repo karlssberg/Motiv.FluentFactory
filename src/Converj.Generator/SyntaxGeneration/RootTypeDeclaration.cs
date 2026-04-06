@@ -123,49 +123,82 @@ internal static class RootTypeDeclaration
         var effectiveToLocalMap = BuildEffectiveToLocalMapping(file.RootType);
 
         return file.FluentMethods
-            .Select<IFluentMethod, (MethodDeclarationSyntax Syntax, bool IsInstance)>(method =>
-            {
-                var isInstance = IsInstanceMethod(method, file);
-                var syntax = (method, isInstance) switch
-                {
-                    ({ Return: TargetTypeReturn }, _) => FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
-                    (OptionalGatewayMethod gateway, _) => OptionalGatewayMethodDeclaration.Create(gateway),
-                    (MultiMethod multiMethod, _) => FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
-                    _ => FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
-                };
+            .Select(method => BuildRootMethodSyntax(method, file))
+            .Select(pair => ApplyModifiersAndTypeRemapping(pair, effectiveToLocalMap));
+    }
 
-                if (isInstance)
-                {
-                    syntax = method.Return switch
-                    {
-                        IFluentStep { ThreadedParameters.IsEmpty: false } nextStep =>
-                            RewriteRootMethodForThreadedParameters(syntax, nextStep),
-                        TargetTypeReturn =>
-                            RewriteRootMethodForDirectCreation(syntax, file.ThreadedParameters),
-                        _ => syntax
-                    };
-                }
+    private static (MethodDeclarationSyntax Syntax, bool IsInstance) BuildRootMethodSyntax(
+        IFluentMethod method,
+        FluentFactoryCompilationUnit file)
+    {
+        var isInstance = IsInstanceMethod(method, file);
 
-                // Rewrite extension method entry: add 'this' parameter and prepend receiver argument
-                if (method.Return is IFluentStep { ReceiverParameter: not null } receiverStep)
-                {
-                    syntax = RewriteRootMethodForExtensionReceiver(syntax, receiverStep.ReceiverParameter);
-                }
+        var syntax = method switch
+        {
+            { Return: TargetTypeReturn } =>
+                FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
+            
+            OptionalGatewayMethod gateway =>
+                OptionalGatewayMethodDeclaration.Create(gateway),
+            
+            MultiMethod multiMethod =>
+                FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
+            
+            _ =>
+                FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
+        };
 
-                return (syntax, isInstance);
-            })
-            .Select(pair =>
-            {
-                var result = pair.Syntax
-                    .WithModifiers(
-                        TokenList(GetSyntaxTokens(pair.IsInstance)));
+        syntax = ApplyInstanceRewrite(syntax, method, isInstance, file);
+        syntax = ApplyExtensionReceiverRewrite(syntax, method);
 
-                // Remap effective type parameter names to local names for root types with [As] aliases
-                if (effectiveToLocalMap.Count > 0)
-                    result = (MethodDeclarationSyntax)new TypeParameterNameRewriter(effectiveToLocalMap).Visit(result);
+        return (syntax, isInstance);
+    }
 
-                return result;
-            });
+    private static MethodDeclarationSyntax ApplyInstanceRewrite(
+        MethodDeclarationSyntax syntax,
+        IFluentMethod method,
+        bool isInstance,
+        FluentFactoryCompilationUnit file)
+    {
+        if (!isInstance) return syntax;
+
+        return method.Return switch
+        {
+            IFluentStep { ThreadedParameters.IsEmpty: false } nextStep =>
+                RewriteRootMethodForThreadedParameters(syntax, nextStep),
+            TargetTypeReturn =>
+                RewriteRootMethodForDirectCreation(syntax, file.ThreadedParameters),
+            _ => syntax
+        };
+    }
+
+    private static MethodDeclarationSyntax ApplyExtensionReceiverRewrite(
+        MethodDeclarationSyntax syntax,
+        IFluentMethod method)
+    {
+        var receiverParameter = method switch
+        {
+            { Return: IFluentStep { ReceiverParameter: not null } step } => step.ReceiverParameter,
+            CreationMethod { ReceiverParameter: not null } creation => creation.ReceiverParameter,
+            _ => null
+        };
+
+        return receiverParameter is not null
+            ? RewriteRootMethodForExtensionReceiver(syntax, receiverParameter)
+            : syntax;
+    }
+
+    private static MethodDeclarationSyntax ApplyModifiersAndTypeRemapping(
+        (MethodDeclarationSyntax Syntax, bool IsInstance) pair,
+        Dictionary<string, string> effectiveToLocalMap)
+    {
+        var result = pair.Syntax
+            .WithModifiers(TokenList(GetSyntaxTokens(pair.IsInstance)));
+
+        if (effectiveToLocalMap.Count > 0)
+            result = (MethodDeclarationSyntax)new TypeParameterNameRewriter(effectiveToLocalMap).Visit(result);
+
+        return result;
     }
 
     /// <summary>
@@ -249,8 +282,9 @@ internal static class RootTypeDeclaration
     }
 
     /// <summary>
-    /// Rewrites a root method to be an extension method: prepends a 'this' parameter
-    /// and adds the receiver as the first argument to the step constructor.
+    /// Rewrites a root method to be an extension method: prepends a 'this' parameter,
+    /// adds the receiver as the first argument to the step constructor, and merges
+    /// any generic type parameters from the receiver type into the method declaration.
     /// </summary>
     private static MethodDeclarationSyntax RewriteRootMethodForExtensionReceiver(
         MethodDeclarationSyntax method,
@@ -266,6 +300,9 @@ internal static class RootTypeDeclaration
             ParameterList(SeparatedList(
                 new[] { receiverParam }.Concat(existingParams))));
 
+        // Merge receiver type parameters into the method declaration
+        method = MergeReceiverTypeParameters(method, receiverParameter);
+
         // Prepend receiver identifier to the step constructor arguments
         var returnStatement = method.Body?.Statements.OfType<ReturnStatementSyntax>().FirstOrDefault();
         if (returnStatement?.Expression is ObjectCreationExpressionSyntax creation)
@@ -278,6 +315,54 @@ internal static class RootTypeDeclaration
             var newReturn = returnStatement.WithExpression(newCreation);
             var newBody = method.Body!.WithStatements(SingletonList<StatementSyntax>(newReturn));
             method = method.WithBody(newBody);
+        }
+
+        return method;
+    }
+
+    /// <summary>
+    /// Merges generic type parameters from the receiver type into the method's type parameter list
+    /// and constraint clauses, skipping any that are already declared on the method.
+    /// </summary>
+    private static MethodDeclarationSyntax MergeReceiverTypeParameters(
+        MethodDeclarationSyntax method,
+        IParameterSymbol receiverParameter)
+    {
+        var receiverTypeParams = receiverParameter.Type.GetGenericTypeParameters().ToImmutableArray();
+        if (receiverTypeParams.IsEmpty)
+            return method;
+
+        var existingNames = new HashSet<string>(
+            method.TypeParameterList?.Parameters.Select(p => p.Identifier.Text) ?? []);
+
+        var newTypeParams = receiverTypeParams
+            .Where(tp => !existingNames.Contains(tp.GetEffectiveName()))
+            .ToImmutableArray();
+
+        if (newTypeParams.IsEmpty)
+            return method;
+
+        var existingSyntaxes = method.TypeParameterList?.Parameters ?? SeparatedList<TypeParameterSyntax>();
+        var mergedSyntaxes = existingSyntaxes
+            .Concat(newTypeParams.Select(tp => tp.ToTypeParameterSyntax()));
+
+        method = method.WithTypeParameterList(
+            TypeParameterList(SeparatedList(mergedSyntaxes)));
+
+        // Build constraints for all type parameters (existing + new)
+        var allTypeParamSymbols = receiverTypeParams;
+        var constraintClauses = TypeParameterConstraintBuilder.Create(allTypeParamSymbols);
+
+        if (constraintClauses.Length > 0)
+        {
+            var existingConstraints = method.ConstraintClauses;
+            var existingConstraintNames = new HashSet<string>(
+                existingConstraints.Select(c => c.Name.Identifier.Text));
+
+            var newConstraints = constraintClauses
+                .Where(c => !existingConstraintNames.Contains(c.Name.Identifier.Text));
+
+            method = method.WithConstraintClauses(List(existingConstraints.Concat(newConstraints)));
         }
 
         return method;

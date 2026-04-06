@@ -21,6 +21,7 @@ internal class CreationMethod : IFluentMethod
         AvailableParameterFields = availableParameterFields;
         ValueSources = valueSources;
         IsStaticMethodTarget = constructorMetadata.IsStaticMethodTarget;
+        ReceiverParameter = constructorMetadata.ReceiverParameter;
         Name = createMethodName ?? "Create";
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
@@ -34,6 +35,11 @@ internal class CreationMethod : IFluentMethod
     /// Whether this creation method targets a static method instead of a constructor.
     /// </summary>
     public bool IsStaticMethodTarget { get; }
+
+    /// <summary>
+    /// The extension receiver parameter, if this target uses extension method syntax.
+    /// </summary>
+    public IParameterSymbol? ReceiverParameter { get; }
 
     public string Name { get; }
 

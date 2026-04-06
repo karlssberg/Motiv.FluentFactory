@@ -156,20 +156,16 @@ internal record FluentTargetContext
 
     private static IParameterSymbol? DetectReceiverParameter(IMethodSymbol method)
     {
-        if (method.Parameters.IsEmpty)
-            return null;
-
-        var firstParam = method.Parameters[0];
-
-        // C# 'this' modifier on first parameter (extension method)
-        if (method.IsExtensionMethod)
-            return firstParam;
-
-        // [This] attribute on first parameter
-        if (firstParam.GetAttributes().Any(a =>
-                a.AttributeClass?.ToDisplayString() == TypeName.ThisAttribute))
-            return firstParam;
-
-        return null;
+        return method switch
+        {
+            { Parameters.Length: > 0, IsExtensionMethod: true } => 
+                method.Parameters[0],
+            
+            { Parameters.Length: > 0 } when method.Parameters[0].HasAttribute(TypeName.ThisAttribute) =>
+                method.Parameters[0],
+            
+            _ => 
+                null
+        };
     }
 }
