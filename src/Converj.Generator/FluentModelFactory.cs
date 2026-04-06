@@ -1190,6 +1190,17 @@ internal class FluentModelFactory(Compilation compilation)
             allEntryMethods.Add(entryMethod);
             allSteps.Add(rootStep);
             allSteps.AddRange(descendantSteps);
+
+            // Propagate extension receiver to all type-first steps in this group
+            var groupReceiver = contexts
+                .Select(c => c.ReceiverParameter)
+                .FirstOrDefault(r => r is not null);
+            if (groupReceiver is not null)
+            {
+                PropagateReceiverToSteps(
+                    [rootStep, ..descendantSteps],
+                    groupReceiver);
+            }
         }
 
         return ([..allEntryMethods], [..allSteps]);

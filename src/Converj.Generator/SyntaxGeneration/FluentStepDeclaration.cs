@@ -122,16 +122,23 @@ internal static class FluentStepDeclaration
 
     private static IReadOnlyList<ITypeParameterSymbol> GetConstraintTypeParameters(RegularFluentStep step)
     {
-        var targetTypeParameters = new List<ITypeParameterSymbol>();
+        var targetGenericTypeParameters = new List<ITypeParameterSymbol>();
 
-        // Get type parameters from all candidate constructors
-        foreach (var constructor in step.CandidateConstructors)
+        // Get type parameters from all candidate constructors' containing types
+        var genericTargetTypes = step.CandidateConstructors
+            .Select(constructor => constructor.ContainingType)
+            .Where(targetType => targetType.IsGenericType);
+        
+        foreach (var genericTargetType in genericTargetTypes)
         {
-            var targetType = constructor.ContainingType;
-            if (targetType.IsGenericType)
-            {
-                targetTypeParameters.AddRange(targetType.OriginalDefinition.TypeParameters);
-            }
+            targetGenericTypeParameters.AddRange(genericTargetType.OriginalDefinition.TypeParameters);
+        }
+
+        // Get type parameters from the receiver type's original definition
+        // (for extension method targets where generics come from the receiver, not the target type)
+        if (step.ReceiverParameter?.Type is INamedTypeSymbol { IsGenericType: true } receiverType)
+        {
+            targetGenericTypeParameters.AddRange(receiverType.OriginalDefinition.TypeParameters);
         }
 
         // Get the generic type arguments that are actually used in this step
@@ -142,7 +149,7 @@ internal static class FluentStepDeclaration
 
         // Only return type parameters that are actually used in this step,
         // matching by effective name to correctly handle [As] aliases
-        return targetTypeParameters
+        return targetGenericTypeParameters
             .Where(tp => usedGenericArguments.Any(arg => arg.GetEffectiveName() == tp.GetEffectiveName()))
             .DistinctBy(tp => tp.GetEffectiveName())
             .ToArray();

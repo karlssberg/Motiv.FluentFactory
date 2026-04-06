@@ -6,6 +6,7 @@ namespace Converj.Example
     internal static partial class ShapeExtensions
     {
         /// <summary>
+        ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredCircle{T}"/>
         ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredDiamond{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -16,16 +17,20 @@ namespace Converj.Example
         }
 
         /// <summary>
+        /// Calls static method Converj.Example.Circle&lt;T&gt; Converj.Example.ShapeExtensionMethods.ConvertToCircle&lt;T&gt;(Converj.Example.ShapeExtensionMethods.ColoredDiamond&lt;T&gt; coloredDiamond) where T : System.Numerics.INumber&lt;T&gt;.
+        ///
         ///     <seealso cref="Converj.Example.ShapeExtensionMethods"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public static global::Converj.Example.Step_ShapeExtensionMethods_1__Converj_Example_ShapeExtensions CreateCircle()
+        public static global::Converj.Example.Circle<T> ConvertToCircle<T>(this global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T> coloredDiamond)
+            where T : global::System.Numerics.INumber<T>
         {
-            return new global::Converj.Example.Step_ShapeExtensionMethods_1__Converj_Example_ShapeExtensions();
+            return global::Converj.Example.ShapeExtensionMethods.ConvertToCircle(coloredDiamond);
         }
     }
 
     /// <summary>
+    ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredCircle{T}"/>
     ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredDiamond{T}"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
@@ -49,27 +54,16 @@ namespace Converj.Example
         {
             return new global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T>(this._diamond__parameter, this._color__parameter);
         }
-    }
-
-    /// <summary>
-    ///     <seealso cref="Converj.Example.ShapeExtensionMethods"/>
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_ShapeExtensionMethods_1__Converj_Example_ShapeExtensions
-    {
-        public Step_ShapeExtensionMethods_1__Converj_Example_ShapeExtensions()
-        {
-        }
 
         /// <summary>
-        /// Calls static method Converj.Example.Circle&lt;T&gt; Converj.Example.ShapeExtensionMethods.ConvertToCircle&lt;T&gt;(Converj.Example.ShapeExtensionMethods.ColoredDiamond&lt;T&gt; coloredDiamond) where T : System.Numerics.INumber&lt;T&gt;.
+        /// Creates a new instance using constructor Converj.Example.ShapeExtensionMethods.ColoredCircle&lt;T&gt;.ColoredCircle(Converj.Example.Diamond&lt;T&gt; Diamond, System.Drawing.Color Color).
         ///
-        ///     <seealso cref="Converj.Example.ShapeExtensionMethods"/>
+        ///     <seealso cref="Converj.Example.ShapeExtensionMethods.ColoredCircle{T}"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Circle<T> ConvertToCircle()
+        public global::Converj.Example.ShapeExtensionMethods.ColoredCircle<T> ConvertToColoredCircle()
         {
-            return global::Converj.Example.ShapeExtensionMethods.ConvertToCircle(this._coloredDiamond__parameter);
+            return new global::Converj.Example.ShapeExtensionMethods.ColoredCircle<T>(this._diamond__parameter, this._color__parameter);
         }
     }
 }
