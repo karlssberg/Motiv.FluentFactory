@@ -38,7 +38,7 @@ Rectangle<int> rectangle = Shape.WithWidth(10).WithHeight(20).CreateRectangle();
 Cube<int>           cube = Shape.WithWidth(10).WithHeight(20).WithDepth(30).CreateCube();
 ```
 
-Supports generics, records, primary constructors, required properties, type-first builder chains, custom method names, multiple overloads, return-type covariance, generic type parameter aliasing, and more.
+Supports generics, records, primary constructors, required properties, type-first builder chains, static method targets, extension methods, custom method names, multiple overloads, return-type covariance, generic type parameter aliasing, named tuple unpacking, and more.
 
 
 ## Installation
@@ -147,7 +147,7 @@ var product = ProductFactory
 
 ### Naming Create Methods
 
-By default, the create method name includes the target type name (Dynamic mode): `CreateCar()`, `CreateAddress()`, etc. This automatically disambiguates when a factory serves multiple types.
+By default, the create method name includes the target type name (DynamicSuffix mode): `CreateCar()`, `CreateAddress()`, etc. This automatically disambiguates when a factory serves multiple types.
 
 Customize the create verb using the `TerminalVerb` parameter:
 
@@ -157,7 +157,7 @@ public static partial class VehicleFactory;
 
 public class Car
 {
-    [FluentTarget(typeof(VehicleFactory), TerminalMethod = TerminalMethod.Fixed, TerminalVerb = "BuildCar")]
+    [FluentTarget(typeof(VehicleFactory), TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "BuildCar")]
     public Car(string make, string model)
     {
         Make = make;
@@ -428,7 +428,7 @@ var user = UserFactory
 
 ### Generic Attribute Syntax (C# 11+)
 
-Instead of passing `typeof(...)`, you can use the generic `FluentConstructor<T>` syntax:
+Instead of passing `typeof(...)`, you can use the generic `FluentTarget<T>` syntax:
 
 ```csharp
 [FluentRoot]
@@ -453,7 +453,7 @@ var user = UserFactory.WithName("Alice").WithEmail("alice@example.com").CreateUs
 ```
 Language constraints mean that generic attributes will only work with non-static and/or closed-generic types.
 
-### FluentConstructor on Types
+### FluentTarget on Types
 
 `[FluentTarget]` can be applied directly to classes, structs, and records (not just constructors). This is especially useful with records that use positional parameters:
 
@@ -470,6 +470,65 @@ public partial record Line2D([FluentMethod("X")] int X, [FluentMethod("Y")] int 
 [FluentTarget(typeof(Line), TerminalMethod = TerminalMethod.None)]
 public partial record Line3D([FluentMethod("X")] int X, [FluentMethod("Y")] int Y, [FluentMethod("Z")] int Z);
 ```
+
+### Static Method Targets
+
+`[FluentTarget]` can be applied to static methods on any class. The method's parameters feed into the root's trie like constructor parameters, but the terminal step calls the static method instead of `new T(...)`:
+
+```csharp
+[FluentRoot]
+public partial class Vehicle;
+
+[FluentTarget<Vehicle>]
+public static string DispatchVehicle(
+    [FluentMethod("WithCar")] Car? car = null,
+    [FluentMethod("WithTrain")] Train? train = null)
+{
+    return (car, train) switch
+    {
+        (not null, _) => $"Dispatched car: {car}",
+        (_, not null) => $"Dispatched train: {train}",
+        _ => "No vehicle to dispatch"
+    };
+}
+
+// Usage:
+string result = Vehicle
+    .WithCar(myCar)
+    .DispatchVehicle();
+```
+
+The default terminal name is the method name itself, and the default terminal mode is `FixedName`.
+
+### Extension Methods
+
+Extension methods generate fluent chains that start as extension methods on the receiver type. There are two ways to mark a parameter as the extension receiver:
+
+**Auto-detected from `this` modifier:**
+```csharp
+[FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
+public static partial class StringExtensions;
+
+[FluentTarget(typeof(StringExtensions), TerminalVerb = "Pad")]
+public static string PadString(this string input, int width) => input.PadRight(width);
+
+// Usage:
+string padded = "hello".WithWidth(80).Pad();
+```
+
+**Explicit via `[This]` attribute (for constructors or non-extension static methods):**
+```csharp
+[FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
+public static partial class ShapeExtensions;
+
+[FluentTarget(typeof(ShapeExtensions), TerminalVerb = "ToColoredDiamond")]
+public record ColoredDiamond<T>([This] Diamond<T> Diamond, Color Color) where T : INumber<T>;
+
+// Usage - starts from the receiver type:
+var coloredDiamond = diamond.WithColor(Color.Red).ToColoredDiamond();
+```
+
+The receiver parameter is extracted from the parameter list before trie building and threaded through all step structs. The root must be a `static partial class` when used with extension method targets.
 
 ### Advanced: Custom Partial Types as Fluent Steps
 
@@ -566,7 +625,7 @@ Use `[FluentParameter]` or record primary constructor parameters on the factory 
 ```csharp
 public interface IDependency;
 
-[FluentRoot(TerminalVerb = "Build", TerminalMethod = TerminalMethod.Fixed)]
+[FluentRoot(TerminalVerb = "Build", TerminalMethod = TerminalMethod.FixedName)]
 public partial record ServiceFactory(IDependency Dependency);
 
 [FluentTarget<ServiceFactory>]
@@ -585,7 +644,7 @@ Record primary constructor parameters are auto-threaded when they match target c
 A type can be both the factory and a constructor target. This is useful when you want the fluent API to start from the type itself:
 
 ```csharp
-[FluentRoot(TerminalMethod = TerminalMethod.Fixed)]
+[FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
 [FluentTarget(typeof(Square<>))]
 public partial record Square<T>(T Width) where T : INumber<T>;
 
@@ -712,24 +771,26 @@ var person = Factory
     .CreatePerson();
 ```
 
-### Advanced: Type-First Builder Mode
+### Advanced: Type-First Entry Methods
 
-By default, Converj uses parameter-first chains where consumers discover available types as they progress through shared parameter steps. Type-first mode inverts this — consumers select the target type up front, then fill in only that type's parameters:
+By default, Converj uses parameter-first chains where consumers discover available types as they progress through shared parameter steps. Type-first entry methods invert this — consumers select the target type up front via a parameterless entry method, then fill in only that type's parameters:
 
 ```csharp
-[FluentRoot(BuilderMode = BuilderMode.TypeFirst)]
+[FluentRoot]
 public static partial class Factory;
 
+[FluentTarget(typeof(Factory))]
+[FluentEntryMethod("BuildDog")]
 public class Dog
 {
-    [FluentTarget(typeof(Factory))]
     public Dog(string name) { Name = name; }
     public string Name { get; set; }
 }
 
+[FluentTarget(typeof(Factory))]
+[FluentEntryMethod("BuildCat")]
 public class Cat
 {
-    [FluentTarget(typeof(Factory))]
     public Cat(string name, int lives) { Name = name; Lives = lives; }
     public string Name { get; set; }
     public int Lives { get; set; }
@@ -740,32 +801,7 @@ Dog dog = Factory.BuildDog().WithName("Rex").Create();
 Cat cat = Factory.BuildCat().WithName("Whiskers").WithLives(9).Create();
 ```
 
-The entry method verb defaults to `"Build"` but can be customized with `TypeFirstVerb`:
-
-```csharp
-[FluentRoot(BuilderMode = BuilderMode.TypeFirst, TypeFirstVerb = "Make")]
-public static partial class Factory;
-
-// Usage:
-Dog dog = Factory.MakeDog().WithName("Rex").Create();
-```
-
-Both `BuilderMode` and `TypeFirstVerb` can be overridden per-constructor:
-
-```csharp
-[FluentRoot]
-public static partial class Factory;
-
-public class Dog
-{
-    // Only this constructor uses type-first mode
-    [FluentTarget(typeof(Factory), BuilderMode = BuilderMode.TypeFirst)]
-    public Dog(string name) { Name = name; }
-    public string Name { get; set; }
-}
-```
-
-**Note:** Type-first constructors are excluded from parameter-first trie merging. Each type-first constructor gets its own isolated chain.
+The `[FluentEntryMethod]` attribute takes the full method identifier as its constructor parameter (e.g., `"BuildDog"`). It is a companion attribute applied alongside `[FluentTarget]`. Targets with `[FluentEntryMethod]` are excluded from parameter-first trie merging and get their own isolated chain.
 
 ### Advanced: Partial Parameter Overlap
 
@@ -789,7 +825,7 @@ Set defaults on `[FluentRoot]` that apply to all constructors. Individual `[Flue
 
 ```csharp
 [FluentRoot(
-    TerminalMethod = TerminalMethod.Dynamic,
+    TerminalMethod = TerminalMethod.DynamicSuffix,
     TerminalVerb = "Build",
     MethodPrefix = "With",
     ReturnType = typeof(IShape))]
@@ -819,30 +855,36 @@ public class Square : IShape
 ### Attributes
 
 #### `[FluentRoot]`
-Marks a static partial type as a fluent factory. The type must be `partial`.
+Marks a partial type as a fluent factory root. The type must be `partial`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `TerminalMethod` | `TerminalMethod` | `Dynamic` | Controls create method generation for all constructors |
-| `TerminalVerb` | `string?` | `"Create"` | Default verb for Create method names |
+| `TerminalMethod` | `TerminalMethod` | `DynamicSuffix` | Controls create method generation for all targets |
+| `TerminalVerb` | `string?` | `"Create"` | Default verb for create method names |
 | `MethodPrefix` | `string?` | `"With"` | Default prefix for fluent method names |
 | `ReturnType` | `Type?` | _none_ | Default return type for creation methods |
 | `AllowPartialParameterOverlap` | `bool` | `false` | Allow `[FluentParameter]` to match only a subset of target constructors |
-| `BuilderMode` | `BuilderMode` | `ParameterFirst` | Controls builder chain structure for all constructors |
-| `TypeFirstVerb` | `string?` | `"Build"` | Verb for type-first entry method names (e.g., `BuildDog()`) |
 
-#### `[FluentTarget(Type rootType)]` / `[FluentTarget<TFluentFactory>]`
-Marks a constructor, class, or struct to generate fluent methods for. Can be applied multiple times (`AllowMultiple = true`). The generic form `FluentConstructor<T>` is available for C# 11+ projects as a type-safe alternative to `typeof(...)`.
+#### `[FluentTarget(Type rootType)]` / `[FluentTarget<TFluentRoot>]`
+Marks a constructor, class, struct, or static method as a target for fluent builder generation. Can be applied multiple times (`AllowMultiple = true`). The generic form `FluentTarget<T>` is available for C# 11+ projects as a type-safe alternative to `typeof(...)`.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `RootType` | `Type` | _(required)_ | The factory type to generate methods in |
-| `TerminalMethod` | `TerminalMethod` | _inherits_ | Overrides factory-level setting |
-| `TerminalVerb` | `string?` | _inherits_ | Overrides factory-level setting |
-| `MethodPrefix` | `string?` | _inherits_ | Overrides factory-level setting |
-| `ReturnType` | `Type?` | _inherits_ | Overrides factory-level setting |
-| `BuilderMode` | `BuilderMode` | _inherits_ | Overrides factory-level setting |
-| `TypeFirstVerb` | `string?` | _inherits_ | Overrides factory-level setting |
+| `RootType` | `Type` | _(required)_ | The root type to generate fluent methods on |
+| `TerminalMethod` | `TerminalMethod` | _inherits_ | Overrides root-level setting |
+| `TerminalVerb` | `string?` | _inherits_ | Overrides root-level setting |
+| `MethodPrefix` | `string?` | _inherits_ | Overrides root-level setting |
+| `ReturnType` | `Type?` | _inherits_ | Overrides root-level setting |
+
+#### `[FluentEntryMethod(string name)]`
+Companion attribute applied alongside `[FluentTarget]` to enable type-first mode. Generates a parameterless entry method that narrows the chain to a specific target type. Targets with this attribute are excluded from parameter-first trie merging.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Name` | `string` | _(required)_ | The full method identifier for the entry method (e.g., `"BuildDog"`) |
+
+#### `[This]`
+Marks the first parameter of a constructor or static method as the extension receiver. The generated fluent chain starts as an extension method on this parameter's type. On actual C# extension methods (with the `this` modifier), this attribute is redundant.
 
 #### `[As(string name)]`
 Aliases a generic type parameter name for matching across multiple constructors. Applied to generic type parameters.
@@ -873,7 +915,7 @@ Marks a factory field, property, or record primary constructor parameter as a va
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `TargetParameterName` | `string?` | _member name_ | Name of the target constructor parameter to bind to |
+| `ParameterName` | `string?` | _member name_ | Name of the target constructor parameter to bind to |
 
 Record primary constructor parameters on factories are auto-threaded without needing an explicit `[FluentParameter]` attribute.
 
@@ -888,35 +930,31 @@ Marks a property on a custom step type as storage for a constructor parameter va
 
 | Value | Description |
 |-------|-------------|
-| `Dynamic` | _(default)_ Appends target type name to verb (e.g., `CreateUser()`) |
-| `Fixed` | Uses verb as-is (e.g., `Create()` or `Build()`) |
-| `None` | No create method; constructor called at final step. Target type must be `partial`. Only one `[FluentTarget]` per type per factory is allowed |
-
-### BuilderMode Enum
-
-| Value | Description |
-|-------|-------------|
-| `ParameterFirst` | _(default)_ Consumers build parameters in sequence and discover available types as they progress (e.g., `Factory.WithName("Rex").CreateDog()`) |
-| `TypeFirst` | Consumers select the target type up front, then fill in that type's parameters (e.g., `Factory.BuildDog().WithName("Rex").Create()`) |
+| `DynamicSuffix` | _(default)_ Appends target type name to verb (e.g., `CreateUser()`) |
+| `FixedName` | Uses verb as-is (e.g., `Create()` or `Build()`) |
+| `None` | No create method; target invoked at final step. Target type must be `partial`. Only one `[FluentTarget]` per type per root is allowed |
 
 ## Key Features
 
 - **Type Safety** - Compile-time enforcement of required parameters
 - **IntelliSense Support** - Full IDE support with method suggestions
 - **Generic Support** - Works with generic classes, type inference, constraints, and type parameter aliasing via `[As]`
-- **Generic Attribute Syntax** - Use `[FluentTarget<T>]` for type-safe factory references (C# 11+)
+- **Generic Attribute Syntax** - Use `[FluentTarget<T>]` for type-safe root references (C# 11+)
 - **Records and Primary Constructors** - Supports record types and C# 12+ primary constructors
+- **Static Method Targets** - Apply `[FluentTarget]` to static methods to generate fluent chains that call the method
+- **Extension Methods** - Generate fluent chains as extension methods via `[This]` or the `this` modifier
 - **Required Properties** - `required` properties and `[Required]` properties are auto-discovered and enforced in the fluent chain
 - **Optional Properties** - Opt non-required properties into the chain with `[FluentMethod]`
-- **Type-First Builder Mode** - Choose the target type up front with `BuilderMode.TypeFirst` (e.g., `Factory.BuildDog().WithName("Rex").Create()`)
+- **Type-First Entry Methods** - Select the target type up front with `[FluentEntryMethod]` (e.g., `Factory.BuildDog().WithName("Rex").Create()`)
+- **Named Tuple Unpacking** - Tuple parameters with named elements are unpacked into individual fluent method parameters
 - **Optional Parameters** - Parameters with defaults become optional setter methods
 - **Customizable Naming** - Custom method names, prefixes, create verbs, and priorities
 - **Return Type Control** - Create methods can return interfaces or base types
 - **Multiple Method Variants** - Generate multiple methods for a single parameter via templates
 - **Custom Partial Steps** - Use your own types as fluent steps with `TerminalMethod.None`
 - **Self-Referential Factories** - A type can serve as both factory and construction target
-- **Factory-Level Defaults** - Set defaults on the factory, override per-constructor
-- **Trie-Based Merging** - Shared parameter prefixes across constructors are intelligently merged
+- **Factory-Level Defaults** - Set defaults on the root, override per-target
+- **Trie-Based Merging** - Shared parameter prefixes across targets are intelligently merged
 - **Performance** - Uses readonly structs, `in` parameters, and `[MethodImpl(AggressiveInlining)]` for zero overhead
 - **Zero Dependencies** - Only attributes are included in your output assembly
 
@@ -933,14 +971,14 @@ The generator produces diagnostics to help you fix configuration issues:
 | CVJG0005 | Error | Template method must be static |
 | CVJG0006 | Info | Template superseded by higher priority parameter |
 | CVJG0007 | Error | Invalid TerminalVerb (not a valid C# identifier) |
-| CVJG0008 | Error | Duplicate create method name across constructors |
-| CVJG0009 | Error | FluentConstructor target type missing FluentFactory attribute |
+| CVJG0008 | Error | Duplicate terminal method name across targets |
+| CVJG0009 | Error | FluentTarget root type missing FluentRoot attribute |
 | CVJG0010 | Error | TerminalVerb used with TerminalMethod.None |
 | CVJG0011 | Warning | Unsupported parameter modifier (ref/out) |
 | CVJG0012 | Warning | Inaccessible constructor (private/protected) |
-| CVJG0013 | Error | Factory type missing `partial` modifier |
-| CVJG0014 | Warning | Parameter type less accessible than factory |
-| CVJG0015 | Warning | Factory more accessible than target type |
+| CVJG0013 | Error | Root type missing `partial` modifier |
+| CVJG0014 | Warning | Parameter type less accessible than root |
+| CVJG0015 | Warning | Root more accessible than target type |
 | CVJG0016 | Error | Ambiguous fluent method chain |
 | CVJG0017 | Warning | Empty TerminalVerb with TerminalMethod.None (no effect) |
 | CVJG0018 | Error | Invalid MethodPrefix (not a valid C# identifier) |
@@ -950,28 +988,34 @@ The generator produces diagnostics to help you fix configuration issues:
 | CVJG0022 | Error | Optional parameters cause ambiguous chain |
 | CVJG0023 | Error | Conflicting type constraints produce duplicate method signatures |
 | CVJG0024 | Error | Constructor parameter has no storage in custom step |
-| CVJG0025 | Error | Custom step type missing `partial` modifier |
-| CVJG0026 | Warning | FluentMethod on custom step parameter (no effect) |
-| CVJG0027 | Warning | Parameter modifier on custom step parameter (unsupported) |
-| CVJG0028 | Error | Duplicate custom step parameter name |
-| CVJG0029 | Error | Custom step parameter type mismatch |
-| CVJG0030 | Error | FluentParameter has no matching target constructor parameter |
-| CVJG0031 | Error | FluentParameter type not compatible with target parameter |
-| CVJG0032 | Error | Duplicate FluentParameter for same target name |
+| CVJG0025 | Warning | FluentParameter on type without FluentRoot |
+| CVJG0026 | Warning | FluentParameter on static factory type |
+| CVJG0027 | Error | FluentParameter property has no getter |
+| CVJG0028 | Error | Duplicate FluentParameter mapping to same target name |
+| CVJG0029 | Error | FluentParameter type mismatch with target parameter |
+| CVJG0030 | Warning | FluentParameter has no matching target constructor parameter |
+| CVJG0031 | Error | FluentParameter partial overlap (set AllowPartialParameterOverlap) |
+| CVJG0032 | Info | FluentParameter overrides FluentMethod on target parameter |
 | CVJG0033 | Error | Static/instance method name collision |
 | CVJG0035 | Error | FluentStorage property must have a getter |
 | CVJG0036 | Error | Duplicate FluentStorage mapping to same parameter name |
-| CVJG0037 | Error | Multiple FluentConstructors with TerminalMethod.None on same type — only one allowed |
+| CVJG0037 | Error | Multiple FluentTargets with TerminalMethod.None on same type |
 | CVJG0038 | Error | FluentMethod on property without set or init accessor |
 | CVJG0039 | Warning | Required property cannot be used with TerminalMethod.None |
 | CVJG0040 | Error | Property produces fluent method name that clashes with constructor parameter |
 | CVJG0041 | Error | Duplicate fluent property method name conflicts with another property or parameter |
 | CVJG0042 | Info | FluentMethod without explicit name has no effect on constructor parameter |
-| CVJG0043 | Error | Ambiguous type-first entry method between multiple types |
+| CVJG0043 | Error | Ambiguous entry method between multiple types |
+| CVJG0044 | Warning | FluentTarget on instance method (must be static) |
+| CVJG0045 | Warning | Tuple parameter has unnamed elements |
+| CVJG0046 | Error | [This] must be on the first parameter |
+| CVJG0047 | Error | [This] not supported on instance methods |
+| CVJG0048 | Info | [This] redundant on extension method parameter |
+| CVJG0049 | Error | FluentRoot must be static for extension method targets |
 
 ## Contributing
 
-This project is generated using the Converj. Contributions are welcome!
+Contributions are welcome!
 
 ## License
 
