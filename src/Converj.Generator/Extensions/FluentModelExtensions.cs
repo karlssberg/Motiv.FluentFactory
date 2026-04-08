@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Extensions;
 
 /// <summary>
 /// Extension methods for fluent model domain operations including method display,

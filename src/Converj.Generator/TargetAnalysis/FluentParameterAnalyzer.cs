@@ -1,9 +1,10 @@
 using System.Collections.Immutable;
+using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Converj.Generator.Diagnostics;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
 /// Analyzes a factory root type for fields, properties, and primary constructor parameters

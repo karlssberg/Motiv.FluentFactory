@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Extensions;
 
 /// <summary>
 /// Shared utilities for working with primary constructors and their parameter storage.

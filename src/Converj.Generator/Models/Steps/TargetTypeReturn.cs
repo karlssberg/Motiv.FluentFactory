@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Models.Steps;
@@ -20,7 +21,7 @@ internal class TargetTypeReturn(
 
     public ImmutableArray<IMethodSymbol> CandidateConstructors => candidateConstructors;
 
-    public IMethodSymbol Constructor => targetTypeConstructor;
+    public IMethodSymbol Constructor { get; set; } = targetTypeConstructor;
 
     /// <summary>
     /// Whether this return targets a static method invocation instead of object creation.
@@ -32,14 +33,14 @@ internal class TargetTypeReturn(
 
     public string IdentifierDisplayString(
         IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) =>
-        ConstructAndDisplay(staticMethodReturnType ?? targetTypeConstructor.ContainingType, genericTypeArgumentMap);
+        ConstructAndDisplay(staticMethodReturnType ?? Constructor.ContainingType, genericTypeArgumentMap);
 
     /// <summary>
     /// Returns the identifier display string with type parameter names remapped
     /// to match the local scope of an existing partial type.
     /// </summary>
     public string IdentifierDisplayString(IDictionary<string, string> effectiveToLocalNameMap) =>
-        ConstructAndDisplay(targetTypeConstructor.ContainingType, effectiveToLocalNameMap);
+        ConstructAndDisplay(Constructor.ContainingType, effectiveToLocalNameMap);
 
     /// <summary>
     /// Returns the display string for the method return type, using the override if set.
@@ -53,7 +54,7 @@ internal class TargetTypeReturn(
     /// Returns the display string for the method return type, applying generic type argument mappings.
     /// </summary>
     public string ReturnTypeDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) =>
-        ConstructAndDisplay(returnTypeOverride ?? targetTypeConstructor.ContainingType, genericTypeArgumentMap);
+        ConstructAndDisplay(returnTypeOverride ?? Constructor.ContainingType, genericTypeArgumentMap);
 
     /// <summary>
     /// Returns the display string for the method return type, remapping type parameter names
@@ -61,7 +62,7 @@ internal class TargetTypeReturn(
     /// </summary>
     public string ReturnTypeDisplayString(IDictionary<string, string> effectiveToLocalNameMap)
     {
-        var type = returnTypeOverride ?? targetTypeConstructor.ContainingType;
+        var type = returnTypeOverride ?? Constructor.ContainingType;
         return ConstructAndDisplay(type, effectiveToLocalNameMap);
     }
 
@@ -97,6 +98,6 @@ internal class TargetTypeReturn(
         return constructedType.ToGlobalDisplayString();
     }
 
-    public INamespaceSymbol Namespace => targetTypeConstructor.ContainingNamespace;
+    public INamespaceSymbol Namespace => Constructor.ContainingNamespace;
     public ParameterSequence KnownConstructorParameters { get; } = knownConstructorParameters;
 }

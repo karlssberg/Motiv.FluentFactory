@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Converj.Generator.Extensions;
+using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
-using Converj.Generator.ConstructorAnalysis;
 
 namespace Converj.Generator.Models.Steps;
 

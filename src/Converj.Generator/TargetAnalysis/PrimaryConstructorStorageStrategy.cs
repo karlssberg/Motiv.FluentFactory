@@ -1,7 +1,8 @@
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
 /// Detects storage for primary constructor parameters by analyzing direct parameter access

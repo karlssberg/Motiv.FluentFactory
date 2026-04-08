@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Xml.Linq;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Models.Methods;

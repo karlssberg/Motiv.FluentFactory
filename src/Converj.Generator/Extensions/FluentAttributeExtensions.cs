@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
+using Converj.Generator.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Converj.Generator.Diagnostics;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Extensions;
 
 /// <summary>
 /// Extension methods for reading and interpreting fluent attribute configuration

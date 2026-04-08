@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
 /// Represents a field or property on a factory type marked with [FluentParameter],

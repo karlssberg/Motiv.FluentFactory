@@ -5,7 +5,26 @@ namespace Converj.Generator.Diagnostics;
 internal class UnreachableConstructorAnalyzer
 {
     private readonly List<IMethodSymbol> _allFluentConstructors = [];
-    private readonly HashSet<IMethodSymbol> _reachedFluentConstructors = [];
+    private readonly HashSet<IMethodSymbol> _reachedFluentConstructors =
+        new(SymbolEqualityComparer.Default);
+
+    /// <summary>
+    /// Directly marks a constructor as reachable, used when reconciliation
+    /// updates a TargetTypeReturn's Constructor after initial processing.
+    /// </summary>
+    public void AddReachableConstructor(IMethodSymbol constructor)
+    {
+        _reachedFluentConstructors.Add(constructor);
+    }
+
+    /// <summary>
+    /// Removes a constructor from the reachable set, used when reconciliation
+    /// replaces an incorrectly-reached constructor with the correct one.
+    /// </summary>
+    public void RemoveReachableConstructor(IMethodSymbol constructor)
+    {
+        _reachedFluentConstructors.Remove(constructor);
+    }
 
     public void AddReachableMethod(IFluentMethod method)
     {

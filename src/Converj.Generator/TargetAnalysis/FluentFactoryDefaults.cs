@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
 /// Holds root-level default values for TerminalMethod, TerminalVerb, MethodPrefix, and ReturnType,

@@ -2,8 +2,9 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Converj.Generator.ConstructorAnalysis;
 using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
+using Converj.Generator.TargetAnalysis;
 
 namespace Converj.Generator;
 

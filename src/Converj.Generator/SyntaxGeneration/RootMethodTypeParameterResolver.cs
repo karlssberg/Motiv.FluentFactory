@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Converj.Generator.SyntaxGeneration.Helpers;

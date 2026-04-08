@@ -35,7 +35,6 @@ namespace Converj.Example
 
         /// <summary>
         ///     <seealso cref="Converj.Example.Burrito"/>
-        ///     <seealso cref="Converj.Example.BurritoBowl"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Converj.Example.Step_1__Converj_Example_Meal WithTortilla(in string tortilla)
@@ -44,27 +43,35 @@ namespace Converj.Example
         }
 
         /// <summary>
+        ///     <seealso cref="Converj.Example.BurritoBowl"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_4__Converj_Example_Meal WithRice(in string rice)
+        {
+            return new global::Converj.Example.Step_4__Converj_Example_Meal(this._cheese__parameter, rice);
+        }
+
+        /// <summary>
         ///     <seealso cref="Converj.Example.GrilledCheese"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_4__Converj_Example_Meal WithBread(in string bread)
+        public global::Converj.Example.Step_6__Converj_Example_Meal WithBread(in string bread)
         {
-            return new global::Converj.Example.Step_4__Converj_Example_Meal(this._cheese__parameter, bread);
+            return new global::Converj.Example.Step_6__Converj_Example_Meal(this._cheese__parameter, bread);
         }
 
         /// <summary>
         ///     <seealso cref="Converj.Example.Cheeseburger"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_5__Converj_Example_Meal WithPatty(in string patty)
+        public global::Converj.Example.Step_7__Converj_Example_Meal WithPatty(in string patty)
         {
-            return new global::Converj.Example.Step_5__Converj_Example_Meal(this._cheese__parameter, patty);
+            return new global::Converj.Example.Step_7__Converj_Example_Meal(this._cheese__parameter, patty);
         }
     }
 
     /// <summary>
     ///     <seealso cref="Converj.Example.Burrito"/>
-    ///     <seealso cref="Converj.Example.BurritoBowl"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_1__Converj_Example_Meal
@@ -79,50 +86,67 @@ namespace Converj.Example
 
         /// <summary>
         ///     <seealso cref="Converj.Example.Burrito"/>
-        ///     <seealso cref="Converj.Example.BurritoBowl"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_2__Converj_Example_Meal WithSalsa(in string salsa)
+        public global::Converj.Example.Step_2__Converj_Example_Meal WithRice(in string rice)
         {
-            return new global::Converj.Example.Step_2__Converj_Example_Meal(this._cheese__parameter, this._tortilla__parameter, salsa);
+            return new global::Converj.Example.Step_2__Converj_Example_Meal(this._cheese__parameter, this._tortilla__parameter, rice);
         }
     }
 
     /// <summary>
     ///     <seealso cref="Converj.Example.Burrito"/>
-    ///     <seealso cref="Converj.Example.BurritoBowl"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
     internal readonly struct Step_2__Converj_Example_Meal
     {
         private readonly string _cheese__parameter;
         private readonly string _tortilla__parameter;
-        private readonly string _salsa__parameter;
-        internal Step_2__Converj_Example_Meal(in string cheese, in string tortilla, in string salsa)
+        private readonly string _rice__parameter;
+        internal Step_2__Converj_Example_Meal(in string cheese, in string tortilla, in string rice)
         {
             this._cheese__parameter = cheese;
             this._tortilla__parameter = tortilla;
+            this._rice__parameter = rice;
+        }
+
+        /// <summary>
+        ///     <seealso cref="Converj.Example.Burrito"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_3__Converj_Example_Meal WithSalsa(in string salsa)
+        {
+            return new global::Converj.Example.Step_3__Converj_Example_Meal(this._cheese__parameter, this._tortilla__parameter, this._rice__parameter, salsa);
+        }
+    }
+
+    /// <summary>
+    ///     <seealso cref="Converj.Example.Burrito"/>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
+    internal readonly struct Step_3__Converj_Example_Meal
+    {
+        private readonly string _cheese__parameter;
+        private readonly string _tortilla__parameter;
+        private readonly string _rice__parameter;
+        private readonly string _salsa__parameter;
+        internal Step_3__Converj_Example_Meal(in string cheese, in string tortilla, in string rice, in string salsa)
+        {
+            this._cheese__parameter = cheese;
+            this._tortilla__parameter = tortilla;
+            this._rice__parameter = rice;
             this._salsa__parameter = salsa;
         }
 
         /// <summary>
-        ///     <seealso cref="Converj.Example.BurritoBowl"/>
-        /// </summary>
-        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_3__Converj_Example_Meal WithRice(in string rice)
-        {
-            return new global::Converj.Example.Step_3__Converj_Example_Meal(this._cheese__parameter, this._tortilla__parameter, this._salsa__parameter, rice);
-        }
-
-        /// <summary>
-        /// Creates a new instance using constructor Converj.Example.Burrito.Burrito(string Cheese, string Tortilla, string Salsa).
+        /// Creates a new instance using constructor Converj.Example.Burrito.Burrito(string Cheese, string Tortilla, string Rice, string Salsa).
         ///
         ///     <seealso cref="Converj.Example.Burrito"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Meal CreateBurrito()
+        public global::Converj.Example.Meal MakeBurrito()
         {
-            return new global::Converj.Example.Burrito(this._cheese__parameter, this._tortilla__parameter, this._salsa__parameter);
+            return new global::Converj.Example.Burrito(this._cheese__parameter, this._tortilla__parameter, this._rice__parameter, this._salsa__parameter);
         }
     }
 
@@ -130,29 +154,51 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.BurritoBowl"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_3__Converj_Example_Meal
+    internal readonly struct Step_4__Converj_Example_Meal
     {
         private readonly string _cheese__parameter;
-        private readonly string _tortilla__parameter;
-        private readonly string _salsa__parameter;
         private readonly string _rice__parameter;
-        internal Step_3__Converj_Example_Meal(in string cheese, in string tortilla, in string salsa, in string rice)
+        internal Step_4__Converj_Example_Meal(in string cheese, in string rice)
         {
             this._cheese__parameter = cheese;
-            this._tortilla__parameter = tortilla;
-            this._salsa__parameter = salsa;
             this._rice__parameter = rice;
         }
 
         /// <summary>
-        /// Creates a new instance using constructor Converj.Example.BurritoBowl.BurritoBowl(string Cheese, string Tortilla, string Salsa, string Rice).
+        ///     <seealso cref="Converj.Example.BurritoBowl"/>
+        /// </summary>
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Step_5__Converj_Example_Meal WithSalsa(in string salsa)
+        {
+            return new global::Converj.Example.Step_5__Converj_Example_Meal(this._cheese__parameter, this._rice__parameter, salsa);
+        }
+    }
+
+    /// <summary>
+    ///     <seealso cref="Converj.Example.BurritoBowl"/>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
+    internal readonly struct Step_5__Converj_Example_Meal
+    {
+        private readonly string _cheese__parameter;
+        private readonly string _rice__parameter;
+        private readonly string _salsa__parameter;
+        internal Step_5__Converj_Example_Meal(in string cheese, in string rice, in string salsa)
+        {
+            this._cheese__parameter = cheese;
+            this._rice__parameter = rice;
+            this._salsa__parameter = salsa;
+        }
+
+        /// <summary>
+        /// Creates a new instance using constructor Converj.Example.BurritoBowl.BurritoBowl(string Cheese, string Rice, string Salsa).
         ///
         ///     <seealso cref="Converj.Example.BurritoBowl"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Meal CreateBurritoBowl()
+        public global::Converj.Example.Meal MakeBurritoBowl()
         {
-            return new global::Converj.Example.BurritoBowl(this._cheese__parameter, this._tortilla__parameter, this._salsa__parameter, this._rice__parameter);
+            return new global::Converj.Example.BurritoBowl(this._cheese__parameter, this._rice__parameter, this._salsa__parameter);
         }
     }
 
@@ -160,11 +206,11 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.GrilledCheese"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_4__Converj_Example_Meal
+    internal readonly struct Step_6__Converj_Example_Meal
     {
         private readonly string _cheese__parameter;
         private readonly string _bread__parameter;
-        internal Step_4__Converj_Example_Meal(in string cheese, in string bread)
+        internal Step_6__Converj_Example_Meal(in string cheese, in string bread)
         {
             this._cheese__parameter = cheese;
             this._bread__parameter = bread;
@@ -176,7 +222,7 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.GrilledCheese"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Meal CreateGrilledCheese()
+        public global::Converj.Example.Meal MakeGrilledCheese()
         {
             return new global::Converj.Example.GrilledCheese(this._cheese__parameter, this._bread__parameter);
         }
@@ -186,11 +232,11 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Cheeseburger"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_5__Converj_Example_Meal
+    internal readonly struct Step_7__Converj_Example_Meal
     {
         private readonly string _cheese__parameter;
         private readonly string _patty__parameter;
-        internal Step_5__Converj_Example_Meal(in string cheese, in string patty)
+        internal Step_7__Converj_Example_Meal(in string cheese, in string patty)
         {
             this._cheese__parameter = cheese;
             this._patty__parameter = patty;
@@ -200,9 +246,9 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.Cheeseburger"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Step_6__Converj_Example_Meal WithBun(in string bun)
+        public global::Converj.Example.Step_8__Converj_Example_Meal WithBun(in string bun)
         {
-            return new global::Converj.Example.Step_6__Converj_Example_Meal(this._cheese__parameter, this._patty__parameter, bun);
+            return new global::Converj.Example.Step_8__Converj_Example_Meal(this._cheese__parameter, this._patty__parameter, bun);
         }
     }
 
@@ -210,12 +256,12 @@ namespace Converj.Example
     ///     <seealso cref="Converj.Example.Cheeseburger"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_6__Converj_Example_Meal
+    internal readonly struct Step_8__Converj_Example_Meal
     {
         private readonly string _cheese__parameter;
         private readonly string _patty__parameter;
         private readonly string _bun__parameter;
-        internal Step_6__Converj_Example_Meal(in string cheese, in string patty, in string bun)
+        internal Step_8__Converj_Example_Meal(in string cheese, in string patty, in string bun)
         {
             this._cheese__parameter = cheese;
             this._patty__parameter = patty;
@@ -228,7 +274,7 @@ namespace Converj.Example
         ///     <seealso cref="Converj.Example.Cheeseburger"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.Meal CreateCheeseburger()
+        public global::Converj.Example.Meal MakeCheeseburger()
         {
             return new global::Converj.Example.Cheeseburger(this._cheese__parameter, this._patty__parameter, this._bun__parameter);
         }

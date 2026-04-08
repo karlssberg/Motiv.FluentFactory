@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
-using Converj.Generator.ConstructorAnalysis;
 using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
 using Converj.Generator.ModelBuilding;
+using Converj.Generator.TargetAnalysis;
 
 namespace Converj.Generator;
 

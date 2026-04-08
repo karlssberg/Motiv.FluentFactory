@@ -1,7 +1,8 @@
-using Microsoft.CodeAnalysis;
 using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
+using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
 /// Analyzes a target type for fields and properties marked with [FluentStorage],

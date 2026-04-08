@@ -1,8 +1,8 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
+using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
-using Converj.Generator.ConstructorAnalysis;
-using FluentPropertyMember = Converj.Generator.ConstructorAnalysis.FluentPropertyMember;
+using FluentPropertyMember = Converj.Generator.TargetAnalysis.FluentPropertyMember;
 
 namespace Converj.Generator;
 

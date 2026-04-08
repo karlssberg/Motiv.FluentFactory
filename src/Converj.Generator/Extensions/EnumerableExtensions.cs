@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace Converj.Generator;
+namespace Converj.Generator.Extensions;
 
 internal static class EnumerableExtensions
 {

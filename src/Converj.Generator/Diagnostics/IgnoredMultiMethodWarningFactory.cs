@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Diagnostics;

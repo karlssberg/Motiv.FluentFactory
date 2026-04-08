@@ -1,5 +1,5 @@
+using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
-using Converj.Generator.ConstructorAnalysis;
 
 namespace Converj.Generator.Models.Parameters;
 

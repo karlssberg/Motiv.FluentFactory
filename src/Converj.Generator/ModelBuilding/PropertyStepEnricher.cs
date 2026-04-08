@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
-using Converj.Generator.ConstructorAnalysis;
 
 namespace Converj.Generator.ModelBuilding;
 

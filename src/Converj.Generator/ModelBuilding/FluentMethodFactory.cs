@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
 using Converj.Generator.SyntaxGeneration.Helpers;
 
 namespace Converj.Generator.ModelBuilding;
@@ -55,7 +56,7 @@ internal class FluentMethodFactory(
 
             if (ShouldCreateRegularMethod(parameter))
             {
-                foreach (var method in CreateRegularMethods(fluentParameterInstances, methodReturn, rootType, node, valueStorages))
+                foreach (var method in CreateRegularMethods(parameter, fluentParameterInstances, methodReturn, rootType, node, valueStorages))
                     yield return method;
             }
         }
@@ -106,6 +107,7 @@ internal class FluentMethodFactory(
     }
 
     private static IEnumerable<IFluentMethod> CreateRegularMethods(
+        FluentMethodParameter triggeringParameter,
         ICollection<FluentMethodParameter> fluentParameterInstances,
         IFluentReturn methodReturn,
         INamedTypeSymbol rootType,
@@ -116,9 +118,9 @@ internal class FluentMethodFactory(
         return fluentParameter.Names.Select(name =>
             new RegularMethod(
                 name,
-                fluentParameter.ParameterSymbol!,
-                methodReturn, 
-                rootType.ContainingNamespace, 
+                triggeringParameter.ParameterSymbol!,
+                methodReturn,
+                rootType.ContainingNamespace,
                 node.Key,
                 valueStorages,
                 sourceFluentParameter: fluentParameter is TupleFluentMethodParameter ? fluentParameter : null));

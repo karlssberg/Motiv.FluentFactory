@@ -57,6 +57,7 @@ internal class FluentMethodSelector(
 
         foreach (var (selectedMethod, ignoredMethods) in selectedAndIgnoredMethods)
         {
+            ReconcileTargetTypeReturnConstructor(selectedMethod);
             unreachableConstructorAnalyzer.AddReachableMethod(selectedMethod);
             diagnostics.AddRange(
                 [
@@ -95,6 +96,36 @@ internal class FluentMethodSelector(
                     ]);
             })
     ];
+
+    /// <summary>
+    /// After method selection, updates the TargetTypeReturn's Constructor to match
+    /// the selected method's source constructor. MergeConstructorMetadata may have stored
+    /// a different constructor due to merge ordering, so this reconciliation ensures the
+    /// generated code constructs the correct type and reachability tracking is accurate.
+    /// Walks through step chains to reach the leaf TargetTypeReturn when the immediate
+    /// Return is a step.
+    /// </summary>
+    private void ReconcileTargetTypeReturnConstructor(IFluentMethod selectedMethod)
+    {
+        if (selectedMethod.SourceParameter?.ContainingSymbol is not IMethodSymbol selectedConstructor) return;
+
+        var current = selectedMethod.Return;
+        while (current is IFluentStep step)
+        {
+            var nextMethod = step.FluentMethods.FirstOrDefault(m => m is not CreationMethod and not OptionalFluentMethod);
+            if (nextMethod is null) break;
+            current = nextMethod.Return;
+        }
+
+        if (current is TargetTypeReturn targetTypeReturn
+            && targetTypeReturn.CandidateConstructors.Contains(selectedConstructor, SymbolEqualityComparer.Default)
+            && !SymbolEqualityComparer.Default.Equals(targetTypeReturn.Constructor, selectedConstructor))
+        {
+            unreachableConstructorAnalyzer.RemoveReachableConstructor(targetTypeReturn.Constructor);
+            targetTypeReturn.Constructor = selectedConstructor;
+            unreachableConstructorAnalyzer.AddReachableConstructor(selectedConstructor);
+        }
+    }
 
     private record SelectedFluentMethod(IFluentMethod SelectedMethod, ImmutableArray<IFluentMethod> IgnoredMethods)
     {

@@ -1,11 +1,12 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
+using Converj.Generator.Diagnostics;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Converj.Generator.Diagnostics;
 
-namespace Converj.Generator.ConstructorAnalysis;
+namespace Converj.Generator.TargetAnalysis;
 
 [DebuggerDisplay("{ToDisplayString()}}")]
 internal class FluentTargetContext
