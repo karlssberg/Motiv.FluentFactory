@@ -1,61 +1,72 @@
-# Requirements: Motiv.FluentFactory
+# Requirements: Converj v2.1
 
-**Defined:** 2026-03-12
+**Defined:** 2026-04-11
 **Core Value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
+**Milestone:** v2.1 — Naming Alignment Refactor
 
-## v1.3 Requirements
+This milestone is a **pure rename refactor**. No feature additions, no behavior changes, no generated output changes, no public API changes. Every existing test must pass after every phase.
 
-Requirements for edge case stress testing milestone. Each maps to roadmap phases.
+## v2.1 Requirements
 
-### Type System
+### Internal Type Renames
 
-- [x] **TYPE-01**: Generator handles nullable reference type annotations on parameters
-- [x] **TYPE-02**: Generator handles `ref`, `out`, and `ref readonly` parameter modifiers
-- [x] **TYPE-03**: Generator handles arrays of generic types (e.g., `T[]`, `List<T>[]`)
-- [x] **TYPE-04**: Generator handles partially open generic types (e.g., `Dictionary<string, T>`)
-- [x] **TYPE-05**: Generator handles deeply nested generics (3+ levels, e.g., `Func<List<KeyValuePair<T, U>>, bool>`)
+- [ ] **NAME-01**: `FluentFactoryGenerator` is renamed to `FluentRootGenerator` (the top-level `IIncrementalGenerator`)
+- [ ] **NAME-02**: `FluentFactoryCompilationUnit` is renamed to `FluentRootCompilationUnit`
+- [ ] **NAME-03**: `FluentFactoryMetadata`, `FluentFactoryMetadataReader`, and `FluentFactoryDefaults` are renamed under Root vocabulary (e.g., `FluentRootMetadata`, `FluentRootMetadataReader`, `FluentRootDefaults`)
+- [ ] **NAME-04**: `FluentFactoryMethodDeclaration` and `FluentRootFactoryMethodDeclaration` are renamed to reflect their actual responsibilities (executor reads code to pick accurate Root/Step/Target/Entry terminology, documents the chosen vocabulary)
+- [ ] **NAME-05**: `FluentModelFactory` is renamed to `FluentModelBuilder`
+- [ ] **NAME-06**: `FluentMethodFactory` is renamed to `FluentMethodBuilder`
+- [ ] **NAME-07**: `IgnoredMultiMethodWarningFactory` is renamed to `IgnoredMultiMethodWarningBuilder`
 
-### Constructor Variations
+### Source File Renames
 
-- [x] **CTOR-01**: Generator handles constructors with 5+ parameters
-- [x] **CTOR-02**: Generator handles records with explicit constructors alongside positional parameters
-- [x] **CTOR-03**: Generator handles constructor chaining (`this(...)` calls)
-- [x] **CTOR-04**: Generator handles named arguments in constructor chaining
-- [x] **CTOR-05**: Generator handles records mixing positional and explicit members
+- [ ] **FILE-01**: Every source file whose type was renamed in NAME-01..07 is moved via `git mv` to match the new type name (preserves blame/history)
+- [ ] **FILE-02**: No `.cs` file in `src/Converj.Generator/` carries `FluentFactory`, `FluentConstructor`, or `BuilderMethod` in its path
 
-### Parameter Comparison
+### Diagnostic Alignment
 
-- [x] **COMP-01**: Generator correctly distinguishes same-named types from different namespaces
-- [x] **COMP-02**: Generator handles overlapping FluentMethod names across parameters
-- [x] **COMP-03**: Generator maintains hash code contract consistency for parameter equality
-- [x] **COMP-04**: Generator handles Trie key collisions from ambiguous parameter sequences
+- [ ] **DIAG-01**: The diagnostic `Category` string on every descriptor (currently `"FluentFactory"`) is updated to `"Converj"` across all 47 descriptors in `src/Converj.Generator/Diagnostics/FluentDiagnostics.cs`
+- [ ] **DIAG-02**: User-facing diagnostic titles and message formats no longer contain the word "Factory" when the intent is to refer to the fluent root (e.g., "Factory type missing partial modifier" → "FluentRoot type missing partial modifier"). Titles referring to C# constructors or the GoF pattern stay untouched
+- [ ] **DIAG-03**: Every entry in `src/Converj.Generator/AnalyzerReleases.Unshipped.md` is updated to use the new `Category` string for consistency with the descriptors
+- [ ] **DIAG-04**: No `MFFG`, `FluentFactory` (as category), or `FluentConstructor` string literals remain in diagnostic-producing code
 
-### Diagnostics
+### Test Fixture Renames
 
-- [x] **DIAG-01**: Generator reports diagnostic for malformed attribute usage
-- [x] **DIAG-02**: Generator reports diagnostic for invalid generic constraint combinations
-- [x] **DIAG-03**: Generator gracefully handles user code with compilation errors
+- [ ] **TEST-01**: `EmptyFactoryTests` is renamed to `EmptyRootTests` (class name + file name via `git mv`)
+- [ ] **TEST-02**: `NestedFactoryTests` is renamed to `NestedRootTests` (class name + file name)
+- [ ] **TEST-03**: `NestedFactoryRuntimeTests` in `src/Converj.Tests/` is renamed to `NestedRootRuntimeTests` (class name + file name)
+- [ ] **TEST-04**: Test-local sample helper types that use legacy vocabulary (e.g., a local `class Factory { ... }` inside a test file) are renamed to Root/Target-aligned names
+- [ ] **TEST-05**: No test class or test file name in `src/Converj.Generator.Tests/` or `src/Converj.Tests/` contains `Factory` or `FluentConstructor` unless the word refers to a C# constructor or a GoF pattern that was retained
 
-### Scope & Accessibility
+### Documentation Alignment
 
-- [x] **SCOPE-01**: Generator reports diagnostic for private/protected constructors marked `[FluentConstructor]`
-- [x] **SCOPE-02**: Generator reports diagnostic for inaccessible parameter types in public factory
-- [x] **SCOPE-03**: Generator reports diagnostic for missing `partial` modifier on factory root type
-- [x] **SCOPE-04**: Generator reports diagnostic for accessibility mismatch (e.g., public factory for internal type)
-- [x] **SCOPE-05**: Generator handles nested private classes as factory targets
+- [ ] **DOC-01**: `CLAUDE.md` line 11 (the header comment referencing `FluentConstructor attribute`) is updated to reference `[FluentTarget]`; any other stale vocabulary in `CLAUDE.md` is aligned
+- [ ] **DOC-02**: `src/Converj.Generator/CLAUDE.md` and `src/Converj.Generator.Tests/CLAUDE.md` (if they exist) are audited for stale vocabulary
+- [ ] **DOC-03**: A final repo-wide grep confirms no residual `FluentFactory`, `FluentConstructor`, `BuilderMethod`, `InitialVerb`, `MFFG`, or `Motiv.FluentFactory` references remain in active source, tests, or docs (excluding `.planning/MILESTONES.md` archive and `.planning/v1.*-*.md` historical artifacts)
+
+### Behavior Preservation
+
+- [ ] **BEHAV-01**: `dotnet build` succeeds with zero warnings at every phase boundary
+- [ ] **BEHAV-02**: `dotnet test` passes every existing test at every phase boundary (no new failing tests, no skipped tests, no modified assertions)
+- [ ] **BEHAV-03**: Every rename uses compiler-assisted refactoring (IDE rename or equivalent find-replace plus compile verification) rather than blind text replace
+- [ ] **BEHAV-04**: `git mv` is used for every file relocation to preserve file history
 
 ## Future Requirements
 
-None — this is a focused testing milestone.
+None — this is a focused naming alignment milestone. Any newly discovered naming drift encountered during execution gets captured as a follow-up milestone, not rolled in.
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Bug fixes for discovered issues | This milestone identifies; fixes are a separate milestone |
-| Performance/benchmark testing | Different concern, not edge case correctness |
-| Test refactoring | Existing tests work; refactoring is separate |
-| Fuzzing/property-based testing | Fixed edge case tests chosen as approach |
+| Public attribute API changes | Already shipped in v2.0; changing them again would break consumers |
+| Namespace restructuring | Separate concern; this milestone only touches type/file/test/diagnostic vocabulary |
+| Bug fixes for v1.3 tech debt | Documented separately in `v1.3-MILESTONE-AUDIT.md`; separate milestone |
+| Behavior changes to any diagnostic | Titles/messages may be edited for vocabulary only; severity, ID, and triggering conditions are fixed |
+| Generated output format changes | Consumers depend on current output; any change is a breaking release |
+| Test assertion changes | Only fixture/class/file names change; assertions remain identical |
+| Feature additions | Pure refactor milestone |
+| Performance optimization | Out of scope |
 
 ## Traceability
 
@@ -63,34 +74,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TYPE-01 | Phase 11 | Tests written (11-01) |
-| TYPE-02 | Phase 11 | Complete |
-| TYPE-03 | Phase 11 | Tests written (11-01) |
-| TYPE-04 | Phase 11 | Tests written (11-01) |
-| TYPE-05 | Phase 11 | Tests written (11-01) |
-| CTOR-01 | Phase 12 | Complete |
-| CTOR-02 | Phase 12 | Complete |
-| CTOR-03 | Phase 12 | Complete |
-| CTOR-04 | Phase 12 | Complete |
-| CTOR-05 | Phase 12 | Complete |
-| COMP-01 | Phase 13 | Complete |
-| COMP-02 | Phase 13 | Complete |
-| COMP-03 | Phase 13 | Complete |
-| COMP-04 | Phase 13 | Complete |
-| DIAG-01 | Phase 14 | Complete |
-| DIAG-02 | Phase 14 | Complete |
-| DIAG-03 | Phase 14 | Complete |
-| SCOPE-01 | Phase 15 | Complete |
-| SCOPE-02 | Phase 15 | Complete |
-| SCOPE-03 | Phase 15 | Complete |
-| SCOPE-04 | Phase 15 | Complete |
-| SCOPE-05 | Phase 15 | Complete |
+| NAME-01 | TBD | Pending |
+| NAME-02 | TBD | Pending |
+| NAME-03 | TBD | Pending |
+| NAME-04 | TBD | Pending |
+| NAME-05 | TBD | Pending |
+| NAME-06 | TBD | Pending |
+| NAME-07 | TBD | Pending |
+| FILE-01 | TBD | Pending |
+| FILE-02 | TBD | Pending |
+| DIAG-01 | TBD | Pending |
+| DIAG-02 | TBD | Pending |
+| DIAG-03 | TBD | Pending |
+| DIAG-04 | TBD | Pending |
+| TEST-01 | TBD | Pending |
+| TEST-02 | TBD | Pending |
+| TEST-03 | TBD | Pending |
+| TEST-04 | TBD | Pending |
+| TEST-05 | TBD | Pending |
+| DOC-01 | TBD | Pending |
+| DOC-02 | TBD | Pending |
+| DOC-03 | TBD | Pending |
+| BEHAV-01 | TBD | Pending |
+| BEHAV-02 | TBD | Pending |
+| BEHAV-03 | TBD | Pending |
+| BEHAV-04 | TBD | Pending |
 
 **Coverage:**
-- v1.3 requirements: 22 total
-- Mapped to phases: 22
-- Unmapped: 0 ✓
+- v2.1 requirements: 25 total
+- Mapped to phases: 0 (pending roadmap)
+- Unmapped: 25 (roadmap will fill)
 
 ---
-*Requirements defined: 2026-03-12*
-*Last updated: 2026-03-12 after roadmap creation*
+*Requirements defined: 2026-04-11*
+*Last updated: 2026-04-11 after initial definition*
