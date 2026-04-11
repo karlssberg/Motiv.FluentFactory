@@ -74,37 +74,46 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NAME-01 | TBD | Pending |
-| NAME-02 | TBD | Pending |
-| NAME-03 | TBD | Pending |
-| NAME-04 | TBD | Pending |
-| NAME-05 | TBD | Pending |
-| NAME-06 | TBD | Pending |
-| NAME-07 | TBD | Pending |
-| FILE-01 | TBD | Pending |
-| FILE-02 | TBD | Pending |
-| DIAG-01 | TBD | Pending |
-| DIAG-02 | TBD | Pending |
-| DIAG-03 | TBD | Pending |
-| DIAG-04 | TBD | Pending |
-| TEST-01 | TBD | Pending |
-| TEST-02 | TBD | Pending |
-| TEST-03 | TBD | Pending |
-| TEST-04 | TBD | Pending |
-| TEST-05 | TBD | Pending |
-| DOC-01 | TBD | Pending |
-| DOC-02 | TBD | Pending |
-| DOC-03 | TBD | Pending |
-| BEHAV-01 | TBD | Pending |
-| BEHAV-02 | TBD | Pending |
-| BEHAV-03 | TBD | Pending |
-| BEHAV-04 | TBD | Pending |
+| NAME-01 | Phase 17 | Pending |
+| NAME-02 | Phase 17 | Pending |
+| NAME-03 | Phase 17 | Pending |
+| NAME-04 | Phase 17 | Pending |
+| NAME-05 | Phase 18 | Pending |
+| NAME-06 | Phase 18 | Pending |
+| NAME-07 | Phase 18 | Pending |
+| FILE-01 | Phase 17 | Pending |
+| FILE-02 | Phase 20 | Pending |
+| DIAG-01 | Phase 16 | Pending |
+| DIAG-02 | Phase 16 | Pending |
+| DIAG-03 | Phase 16 | Pending |
+| DIAG-04 | Phase 16 | Pending |
+| TEST-01 | Phase 19 | Pending |
+| TEST-02 | Phase 19 | Pending |
+| TEST-03 | Phase 19 | Pending |
+| TEST-04 | Phase 19 | Pending |
+| TEST-05 | Phase 19 | Pending |
+| DOC-01 | Phase 20 | Pending |
+| DOC-02 | Phase 20 | Pending |
+| DOC-03 | Phase 20 | Pending |
+| BEHAV-01 | Phase 20 | Pending |
+| BEHAV-02 | Phase 20 | Pending |
+| BEHAV-03 | Phase 20 | Pending |
+| BEHAV-04 | Phase 20 | Pending |
 
 **Coverage:**
 - v2.1 requirements: 25 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 25 (roadmap will fill)
+- Mapped to phases: 25 (100%)
+- Unmapped: 0
+
+**Phase distribution:**
+- Phase 16 (Diagnostic Alignment): 4 requirements (DIAG-01..04)
+- Phase 17 (Core Generator Type Renames): 5 requirements (NAME-01..04, FILE-01)
+- Phase 18 (Builder Pattern Renames): 3 requirements (NAME-05..07)
+- Phase 19 (Test Fixture Alignment): 5 requirements (TEST-01..05)
+- Phase 20 (Documentation Cleanup & Final Verification): 8 requirements (DOC-01..03, FILE-02, BEHAV-01..04)
+
+**Note on BEHAV-01..04:** These are cross-cutting behavior-preservation requirements. They are formally owned by Phase 20 (final verification) but every phase's success criteria include a build/test green gate, so each phase enforces them in practice. FILE-01 is similarly cross-cutting across Phases 17 and 18; it is formally assigned to Phase 17 (where file moves begin) and Phase 18 inherits the same discipline. FILE-02 (residual verification) lives in Phase 20.
 
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-11 after initial definition*
+*Last updated: 2026-04-11 after roadmap creation (traceability filled)*
