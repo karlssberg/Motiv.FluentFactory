@@ -4,8 +4,8 @@ namespace Converj.Generator.Diagnostics;
 
 internal class UnreachableConstructorAnalyzer
 {
-    private readonly List<IMethodSymbol> _allFluentConstructors = [];
-    private readonly HashSet<IMethodSymbol> _reachedFluentConstructors =
+    private readonly List<IMethodSymbol> _allTargetConstructors = [];
+    private readonly HashSet<IMethodSymbol> _reachedTargetConstructors =
         new(SymbolEqualityComparer.Default);
 
     /// <summary>
@@ -14,7 +14,7 @@ internal class UnreachableConstructorAnalyzer
     /// </summary>
     public void AddReachableConstructor(IMethodSymbol constructor)
     {
-        _reachedFluentConstructors.Add(constructor);
+        _reachedTargetConstructors.Add(constructor);
     }
 
     /// <summary>
@@ -23,7 +23,7 @@ internal class UnreachableConstructorAnalyzer
     /// </summary>
     public void RemoveReachableConstructor(IMethodSymbol constructor)
     {
-        _reachedFluentConstructors.Remove(constructor);
+        _reachedTargetConstructors.Remove(constructor);
     }
 
     public void AddReachableMethod(IFluentMethod method)
@@ -31,17 +31,17 @@ internal class UnreachableConstructorAnalyzer
         switch (method.Return)
         {
             case TargetTypeReturn targetTypeReturn:
-                _reachedFluentConstructors.Add(targetTypeReturn.Constructor);
+                _reachedTargetConstructors.Add(targetTypeReturn.Constructor);
                 break;
             case ExistingTypeFluentStep existingTypeFluentStep:
-                _reachedFluentConstructors.Add(existingTypeFluentStep.ConstructorContext.Constructor);
+                _reachedTargetConstructors.Add(existingTypeFluentStep.ConstructorContext.Constructor);
                 break;
         }
     }
 
-    public void AddAllFluentConstructors(IEnumerable<IMethodSymbol> fluentConstructors)
+    public void AddAllTargetConstructors(IEnumerable<IMethodSymbol> targetConstructors)
     {
-        _allFluentConstructors.AddRange(fluentConstructors);
+        _allTargetConstructors.AddRange(targetConstructors);
     }
 
     /// <summary>
@@ -49,12 +49,12 @@ internal class UnreachableConstructorAnalyzer
     /// Only meaningful after all method selection is complete.
     /// </summary>
     public bool IsReachable(IMethodSymbol target)
-        => _reachedFluentConstructors.Contains(target);
+        => _reachedTargetConstructors.Contains(target);
 
     public void Clear()
     {
-        _reachedFluentConstructors.Clear();
-        _allFluentConstructors.Clear();
+        _reachedTargetConstructors.Clear();
+        _allTargetConstructors.Clear();
     }
 
     public IEnumerable<Diagnostic> GetUnreachableConstructorsDiagnostics()
@@ -69,7 +69,7 @@ internal class UnreachableConstructorAnalyzer
 
     private IEnumerable<IMethodSymbol> GetUnreachableConstructors()
     {
-        return _allFluentConstructors
-            .Where(constructor => !_reachedFluentConstructors.Contains(constructor));
+        return _allTargetConstructors
+            .Where(constructor => !_reachedTargetConstructors.Contains(constructor));
     }
 }

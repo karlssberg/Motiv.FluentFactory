@@ -64,7 +64,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         fluentTargetContexts = validContexts;
 
-        _unreachableConstructorAnalyzer.AddAllFluentConstructors(fluentTargetContexts.Select(context => context.Constructor));
+        _unreachableConstructorAnalyzer.AddAllTargetConstructors(fluentTargetContexts.Select(context => context.Constructor));
         _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
 
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
