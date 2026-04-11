@@ -26,7 +26,7 @@ internal class CreationMethod : IFluentMethod
         Name = createMethodName ?? "Create";
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
-            [..constructorMetadata.CandidateConstructors],
+            [..constructorMetadata.CandidateTargets],
             new ParameterSequence(availableParameterFields),
             constructorMetadata.ReturnType,
             IsStaticMethodTarget ? constructorMetadata.Constructor.ReturnType as INamedTypeSymbol : null);
@@ -52,12 +52,12 @@ internal class CreationMethod : IFluentMethod
     {
         get
         {
-            var constructorNames = Return.CandidateConstructors
+            var constructorNames = Return.CandidateTargets
                 .Select(ctor => ctor.ToFullDisplayString().Replace("<", "&lt;").Replace(">", "&gt;"));
 
             if (IsStaticMethodTarget)
             {
-                return Return.CandidateConstructors switch
+                return Return.CandidateTargets switch
                 {
                     { Length: 1 } =>
                         $"""
@@ -68,7 +68,7 @@ internal class CreationMethod : IFluentMethod
                 };
             }
 
-            return Return.CandidateConstructors switch
+            return Return.CandidateTargets switch
             {
                 { Length: 1 } =>
                     $"""

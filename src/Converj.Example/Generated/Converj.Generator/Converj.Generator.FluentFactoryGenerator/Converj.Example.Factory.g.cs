@@ -3,12 +3,11 @@
 namespace Converj.Example
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    public partial class Factory
+    internal partial class Factory
     {
         /// <summary>
         ///     <seealso cref="Converj.Example.First"/>
         ///     <seealso cref="Converj.Example.SecondA"/>
-        ///     <seealso cref="Converj.Example.SecondB"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static global::Converj.Example.First Build(in int value1)
@@ -18,11 +17,10 @@ namespace Converj.Example
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    public partial record First
+    internal partial record First
     {
         /// <summary>
         ///     <seealso cref="Converj.Example.SecondA"/>
-        ///     <seealso cref="Converj.Example.SecondB"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Converj.Example.Step_1__Converj_Example_Factory Value2(in int value2)
@@ -32,7 +30,6 @@ namespace Converj.Example
 
         /// <summary>
         ///     <seealso cref="Converj.Example.SecondA"/>
-        ///     <seealso cref="Converj.Example.SecondB"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Converj.Example.Step_1__Converj_Example_Factory Value2(in global::System.Func<int> value2)
@@ -43,10 +40,9 @@ namespace Converj.Example
 
     /// <summary>
     ///     <seealso cref="Converj.Example.SecondA"/>
-    ///     <seealso cref="Converj.Example.SecondB"/>
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    public readonly struct Step_1__Converj_Example_Factory
+    internal readonly struct Step_1__Converj_Example_Factory
     {
         private readonly int _value1__parameter;
         private readonly int _value2__parameter;
@@ -58,12 +54,11 @@ namespace Converj.Example
 
         /// <summary>
         ///     <seealso cref="Converj.Example.SecondA"/>
-        ///     <seealso cref="Converj.Example.SecondB"/>
         /// </summary>
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        public global::Converj.Example.SecondB Value3(in int value3)
+        public global::Converj.Example.SecondA Value3(in int value3)
         {
-            return new global::Converj.Example.SecondB(this._value1__parameter, this._value2__parameter, value3);
+            return new global::Converj.Example.SecondA(this._value1__parameter, this._value2__parameter, value3);
         }
     }
 }

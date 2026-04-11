@@ -87,10 +87,10 @@ internal class FluentStepBuilder(
                         KnownConstructorParameters = knownConstructorParameters,
                         FluentMethods = new List<IFluentMethod>(fluentMethods),
                         ValueStorage = storage,
-                        CandidateConstructors =
+                        CandidateTargets =
                         [
                             ..node.Values
-                                .SelectMany(value => value.CandidateConstructors)
+                                .SelectMany(value => value.CandidateTargets)
                                 .Distinct<IMethodSymbol>(SymbolEqualityComparer.Default)
                         ]
                     },
@@ -101,7 +101,7 @@ internal class FluentStepBuilder(
                             new RegularFluentStep(
                                 rootType,
                                 node.Values
-                                    .SelectMany(metadata => metadata.CandidateConstructors)
+                                    .SelectMany(metadata => metadata.CandidateTargets)
                                     .Distinct(SymbolEqualityComparer.Default)
                                     .OfType<IMethodSymbol>())
                             {
@@ -164,7 +164,7 @@ internal class FluentStepBuilder(
     {
         if (step is not ExistingTypeFluentStep) return;
 
-        var containingTypeDisplay = step.CandidateConstructors.First().ContainingType.ToDisplayString();
+        var containingTypeDisplay = step.CandidateTargets.First().ContainingType.ToDisplayString();
 
         foreach (var storage in valueStorages)
         {

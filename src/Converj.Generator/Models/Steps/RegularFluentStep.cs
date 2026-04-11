@@ -76,7 +76,9 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public INamedTypeSymbol RootType { get; } = rootType;
 
-    public ImmutableArray<IMethodSymbol> CandidateConstructors => [..candidateConstructors];
+    public ImmutableArray<IMethodSymbol> CandidateTargets => [..candidateConstructors];
+
+    public ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; } = [];
 
     public string IdentifierDisplayString()
     {

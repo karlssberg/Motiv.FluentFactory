@@ -48,7 +48,7 @@ internal static class FluentStepMethodDeclaration
         }
 
         // Add constructor type information
-        lines.AddRange(FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors).Cast<object?>());
+        lines.AddRange(FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets()).Cast<object?>());
 
         return lines;
     }

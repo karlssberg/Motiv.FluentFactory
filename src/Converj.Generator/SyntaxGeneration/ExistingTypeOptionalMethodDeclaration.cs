@@ -36,7 +36,7 @@ internal static class ExistingTypeOptionalMethodDeclaration
                     .WithArgumentList(ArgumentList(SeparatedList(arguments)))));
 
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
-            [..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(step.CandidateConstructors)]);
+            [..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(step.GetAvailableTargets())]);
 
         return MethodDeclaration(returnTypeName, Identifier(method.Name))
             .WithAttributeLists(

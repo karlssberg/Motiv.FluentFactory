@@ -46,5 +46,5 @@ internal class TypeFirstEntryMethod(
     /// <summary>
     /// The candidate constructors reachable from this type-first entry point.
     /// </summary>
-    public ImmutableArray<IMethodSymbol> CandidateConstructors { get; } = candidateConstructors;
+    public ImmutableArray<IMethodSymbol> CandidateTargets { get; } = candidateConstructors;
 }

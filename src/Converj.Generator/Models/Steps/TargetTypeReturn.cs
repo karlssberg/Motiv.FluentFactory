@@ -19,7 +19,9 @@ internal class TargetTypeReturn(
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; set; } = new();
 
-    public ImmutableArray<IMethodSymbol> CandidateConstructors => candidateConstructors;
+    public ImmutableArray<IMethodSymbol> CandidateTargets => candidateConstructors;
+
+    public ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; } = [];
 
     public IMethodSymbol Constructor { get; set; } = targetTypeConstructor;
 

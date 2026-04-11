@@ -37,7 +37,7 @@ internal class FluentMethodFactory(
         {
             null => new TargetTypeReturn(
                 constructorMetadata.Constructor,
-                [..constructorMetadata.CandidateConstructors],
+                [..constructorMetadata.CandidateTargets],
                 new ParameterSequence(node.Key)),
             _ => nextStep
         };
@@ -150,10 +150,10 @@ internal class FluentMethodFactory(
     {
         return constructorMetadataList.Skip(1).Aggregate(constructorMetadataList.First().Clone(), (merged, metadata) =>
         {
-            var mergeableConstructors = metadata.CandidateConstructors
-                .Except<IMethodSymbol>(merged.CandidateConstructors, SymbolEqualityComparer.Default);
+            var mergeableConstructors = metadata.CandidateTargets
+                .Except<IMethodSymbol>(merged.CandidateTargets, SymbolEqualityComparer.Default);
 
-            merged.CandidateConstructors.AddRange(mergeableConstructors);
+            merged.CandidateTargets.AddRange(mergeableConstructors);
             if (metadata.TerminalMethod == TerminalMethodKind.None)
                 merged.TerminalMethod = TerminalMethodKind.None;
             if (metadata.Constructor.Parameters.Length - 1 != node.Key.Length)

@@ -11,7 +11,7 @@ internal class ConstructorMetadata(FluentTargetContext targetContext)
 {
     public IMethodSymbol Constructor { get; set; } = targetContext.Constructor;
 
-    public IList<IMethodSymbol> CandidateConstructors { get; } = [targetContext.Constructor];
+    public IList<IMethodSymbol> CandidateTargets { get; } = [targetContext.Constructor];
 
     public TerminalMethodKind TerminalMethod { get; set; } = targetContext.TerminalMethod;
 

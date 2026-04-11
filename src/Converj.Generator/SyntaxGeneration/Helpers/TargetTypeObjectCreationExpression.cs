@@ -54,8 +54,8 @@ internal static class TargetTypeObjectCreationExpression
         IEnumerable<ArgumentSyntax> fieldArguments,
         IEnumerable<ArgumentSyntax> methodArguments)
     {
-        var containingType = method.Return.CandidateConstructors[0].ContainingType.ToGlobalDisplayString();
-        var methodName = method.Return.CandidateConstructors[0].Name;
+        var containingType = method.Return.CandidateTargets[0].ContainingType.ToGlobalDisplayString();
+        var methodName = method.Return.CandidateTargets[0].Name;
 
         var memberAccess = MemberAccessExpression(
             SyntaxKind.SimpleMemberAccessExpression,

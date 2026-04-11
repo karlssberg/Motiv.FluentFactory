@@ -100,7 +100,7 @@ internal static class FluentStepDeclaration
         // Create XML documentation for the struct
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
             [
-                ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(step.CandidateConstructors)
+                ..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(step.GetAvailableTargets())
             ]);
 
         // Get type parameters for constraints - use target type parameters for non-generic root types
@@ -126,7 +126,7 @@ internal static class FluentStepDeclaration
         var targetGenericTypeParameters = new List<ITypeParameterSymbol>();
 
         // Get type parameters from all candidate constructors' containing types
-        var genericTargetTypes = step.CandidateConstructors
+        var genericTargetTypes = step.CandidateTargets
             .Select(constructor => constructor.ContainingType)
             .Where(targetType => targetType.IsGenericType);
         

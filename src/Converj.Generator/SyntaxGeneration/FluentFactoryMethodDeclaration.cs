@@ -73,7 +73,7 @@ internal static class FluentFactoryMethodDeclaration
             FluentMethodSummaryDocXml.Create(
             [
                 method.DocumentationSummary,
-                ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+                ..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets())
             ]));
     }
 

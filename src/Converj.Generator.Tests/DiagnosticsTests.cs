@@ -369,7 +369,6 @@ public class DiagnosticsTests
                     /// <summary>
                     ///     <seealso cref="Test.ExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                     ///     <seealso cref="Test.ExplanationWithNameExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
-                    ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Step_0__Test_Spec<TModel, TPredicateResult> WithExpression<TModel, TPredicateResult>(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, TPredicateResult>> expression)
@@ -381,7 +380,6 @@ public class DiagnosticsTests
                 /// <summary>
                 ///     <seealso cref="Test.ExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 ///     <seealso cref="Test.ExplanationWithNameExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
-                ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Spec<TModel, TPredicateResult>
@@ -394,7 +392,6 @@ public class DiagnosticsTests
 
                     /// <summary>
                     ///     <seealso cref="Test.ExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
-                    ///     <seealso cref="Test.MultiAssertionExplanationExpressionTreePropositionFactory{TModel, TPredicateResult}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.ExplanationExpressionTreePropositionFactory<TModel, TPredicateResult> WhenTrue(in global::System.Func<TModel, string> whenTrue)
@@ -1472,7 +1469,6 @@ public class DiagnosticsTests
                     /// <summary>
                     ///     <seealso cref="Test.First"/>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.First Build(in int value1)
@@ -1486,7 +1482,6 @@ public class DiagnosticsTests
                 {
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Step_1__Test_Factory Value2(in int value2)
@@ -1497,7 +1492,6 @@ public class DiagnosticsTests
 
                 /// <summary>
                 ///     <seealso cref="Test.SecondA"/>
-                ///     <seealso cref="Test.SecondB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
@@ -1512,7 +1506,6 @@ public class DiagnosticsTests
 
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.SecondA Value3(in int value3)
@@ -1607,7 +1600,6 @@ public class DiagnosticsTests
                     /// <summary>
                     ///     <seealso cref="Test.First"/>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.First Build(in int value1)
@@ -1621,7 +1613,6 @@ public class DiagnosticsTests
                 {
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Step_1__Test_Factory Value2(in int value2)
@@ -1632,7 +1623,6 @@ public class DiagnosticsTests
 
                 /// <summary>
                 ///     <seealso cref="Test.SecondA"/>
-                ///     <seealso cref="Test.SecondB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Factory
@@ -1647,7 +1637,6 @@ public class DiagnosticsTests
 
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
-                    ///     <seealso cref="Test.SecondB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.SecondA Value3(in int value3)
@@ -1700,6 +1689,7 @@ public class DiagnosticsTests
     {
         const string code =
             """
+            using System;
             using Converj.Attributes;
 
             namespace Test;
@@ -1763,14 +1753,14 @@ public class DiagnosticsTests
                     {
                         return new global::Test.Step_1__Test_Factory(this.value1, value2);
                     }
-                    
+
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory Value2(in Func<int> value2)
+                    public global::Test.Step_1__Test_Factory Value2(in global::System.Func<int> value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.value1, Test.MultipleMethods.Value2(value2()));
+                        return new global::Test.Step_1__Test_Factory(this.value1, global::Test.MultipleMethods.Value2(value2));
                     }
                 }
 
@@ -1809,19 +1799,19 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult
                         .CompilerError(UnreachableConstructor.Id)
-                        .WithSpan(SourceFile, 19, 23, 19, 30)
+                        .WithSpan(SourceFile, 20, 23, 20, 30)
                         .WithArguments("SecondB.SecondB(int value1, int value2, int value3)"),
                     DiagnosticResult
                         .CompilerWarning(ContainsSupersededFluentMethodTemplate.Id)
-                        .WithSpan(SourceFile, 21, 28, 21, 51)
-                        .WithSpan(SourceFile, 15, 33, 15, 39)
+                        .WithSpan(SourceFile, 22, 28, 22, 51)
+                        .WithSpan(SourceFile, 16, 33, 16, 39)
                         .WithArguments(
                             "Test.MultipleMethods.Value2(int value2)",
                             "int value2",
                             "Test.SecondB.SecondB(int value1, int value2, int value3)",
                             "the parameter 'int value2' in the constructor 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
-                        .WithSpan(SourceFile, 27, 23, 27, 29)
+                        .WithSpan(SourceFile, 28, 23, 28, 29)
                         .WithArguments(
                             "int Test.MultipleMethods.Value2(int value2)",
                             "int value2",

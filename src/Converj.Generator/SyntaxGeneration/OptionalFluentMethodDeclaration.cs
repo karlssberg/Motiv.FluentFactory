@@ -89,7 +89,7 @@ internal static class OptionalFluentMethodDeclaration
         BlockSyntax body)
     {
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
-            [..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(step.CandidateConstructors)]);
+            [..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(step.GetAvailableTargets())]);
 
         return MethodDeclaration(returnTypeName, Identifier(method.Name))
             .WithAttributeLists(

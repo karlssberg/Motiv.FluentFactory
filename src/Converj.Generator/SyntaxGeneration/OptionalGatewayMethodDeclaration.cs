@@ -32,7 +32,7 @@ internal static class OptionalGatewayMethodDeclaration
                         ArgumentList(SingletonSeparatedList(namedArgument)))));
 
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
-            [..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)]);
+            [..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets())]);
 
         return MethodDeclaration(returnTypeName, Identifier(method.Name))
             .WithAttributeLists(

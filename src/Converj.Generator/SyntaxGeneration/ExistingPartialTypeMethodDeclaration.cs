@@ -82,7 +82,7 @@ internal static class ExistingPartialTypeMethodDeclaration
             FluentMethodSummaryDocXml.Create(
                 [
                     method.DocumentationSummary,
-                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+                    ..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets())
                 ]));
 
         if (!method.TypeParameters.Any())

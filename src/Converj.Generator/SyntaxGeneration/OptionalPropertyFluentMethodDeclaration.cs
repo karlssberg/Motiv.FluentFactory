@@ -32,7 +32,7 @@ internal static class OptionalPropertyFluentMethodDeclaration
             ReturnStatement(ThisExpression()));
 
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
-            [..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(step.CandidateConstructors)]);
+            [..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(step.GetAvailableTargets())]);
 
         return MethodDeclaration(returnTypeName, Identifier(method.Name))
             .WithAttributeLists(

@@ -177,13 +177,9 @@ public class CreateMethodNoneOptionalTests
             }
         }.RunAsync();
     }
-
-    /// <summary>
-    /// Variant: TerminalMethod.None where ALL parameters are optional (zero required).
-    /// The target type itself is the step, with no required parameters to create steps for.
-    /// </summary>
+    
     [Fact]
-    internal async Task Should_handle_all_optional_parameters_on_create_method_none_constructor()
+    internal async Task Should_raise_diagnostic_all_optional_parameters_with_terminal_method_none_and_external_fluent_root()
     {
         const string code =
             """
@@ -219,7 +215,6 @@ public class CreateMethodNoneOptionalTests
                 public static partial class Factory
                 {
                     /// <summary>
-                    ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Step_0__Test_Factory WithHost(in string host)
@@ -228,7 +223,6 @@ public class CreateMethodNoneOptionalTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Step_0__Test_Factory WithPort(in int port)
@@ -238,7 +232,6 @@ public class CreateMethodNoneOptionalTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Config"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Factory
@@ -252,7 +245,6 @@ public class CreateMethodNoneOptionalTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Step_0__Test_Factory WithHost(in string host)
@@ -261,7 +253,6 @@ public class CreateMethodNoneOptionalTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Step_0__Test_Factory WithPort(in int port)

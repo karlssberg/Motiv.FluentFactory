@@ -27,5 +27,18 @@ internal interface IFluentReturn
 
     OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; }
 
-    ImmutableArray<IMethodSymbol> CandidateConstructors { get; }
+    /// <summary>
+    /// The full set of target methods (constructors or static factory methods) that the
+    /// trie associated with this return node during merge. Construction-phase code uses this
+    /// to reason about all possible paths; syntax generation should prefer the filtered view
+    /// via the GetAvailableTargets extension method.
+    /// </summary>
+    ImmutableArray<IMethodSymbol> CandidateTargets { get; }
+
+    /// <summary>
+    /// The subset of <see cref="CandidateTargets"/> that have been determined unreachable
+    /// (e.g., superseded by a competing method during selection). Populated as a post-processing
+    /// step once method selection is complete, so seealso/doc generation can exclude them.
+    /// </summary>
+    ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; }
 }

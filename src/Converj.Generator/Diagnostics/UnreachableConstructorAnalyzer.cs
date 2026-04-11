@@ -44,6 +44,13 @@ internal class UnreachableConstructorAnalyzer
         _allFluentConstructors.AddRange(fluentConstructors);
     }
 
+    /// <summary>
+    /// Returns true if the given target method has been marked reachable during method selection.
+    /// Only meaningful after all method selection is complete.
+    /// </summary>
+    public bool IsReachable(IMethodSymbol target)
+        => _reachedFluentConstructors.Contains(target);
+
     public void Clear()
     {
         _reachedFluentConstructors.Clear();

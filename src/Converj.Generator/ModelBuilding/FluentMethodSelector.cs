@@ -53,7 +53,9 @@ internal class FluentMethodSelector(
             .SelectMany(pair => pair.IgnoredMethods)
             .ToImmutableHashSet();
 
-        var ignoredMultiMethodWarningFactory = new IgnoredMultiMethodWarningFactory(allIgnoredMethods);
+        var ignoredMultiMethodWarningFactory = new IgnoredMultiMethodWarningFactory(
+            allIgnoredMethods,
+            unreachableConstructorAnalyzer);
 
         foreach (var (selectedMethod, ignoredMethods) in selectedAndIgnoredMethods)
         {
@@ -103,28 +105,47 @@ internal class FluentMethodSelector(
     /// a different constructor due to merge ordering, so this reconciliation ensures the
     /// generated code constructs the correct type and reachability tracking is accurate.
     /// Walks through step chains to reach the leaf TargetTypeReturn when the immediate
-    /// Return is a step.
+    /// Return is a step, but only for RegularMethod selections: an upstream RegularMethod
+    /// winning its signature group is an authoritative source-constructor signal that
+    /// should propagate downstream. A MultiMethod selected at an upstream level is merely
+    /// the sole remaining candidate for that signature and must not overwrite the
+    /// reconciliation already performed at the terminal step, or a sibling MultiMethod from
+    /// a different source constructor would clobber a correct downstream write.
     /// </summary>
     private void ReconcileTargetTypeReturnConstructor(IFluentMethod selectedMethod)
     {
         if (selectedMethod.SourceParameter?.ContainingSymbol is not IMethodSymbol selectedConstructor) return;
 
+        var targetTypeReturn = ResolveTargetTypeReturn(selectedMethod);
+        if (targetTypeReturn is null) return;
+
+        if (!targetTypeReturn.CandidateTargets.Contains(selectedConstructor, SymbolEqualityComparer.Default)) return;
+
+        if (SymbolEqualityComparer.Default.Equals(targetTypeReturn.Constructor, selectedConstructor)) return;
+
+        unreachableConstructorAnalyzer.RemoveReachableConstructor(targetTypeReturn.Constructor);
+        targetTypeReturn.Constructor = selectedConstructor;
+        unreachableConstructorAnalyzer.AddReachableConstructor(selectedConstructor);
+    }
+
+    private static TargetTypeReturn? ResolveTargetTypeReturn(IFluentMethod selectedMethod)
+    {
+        if (selectedMethod.Return is TargetTypeReturn directReturn)
+            return directReturn;
+
+        // Only RegularMethods may walk through intermediate steps. See the reconciler doc
+        // comment for why MultiMethods must not.
+        if (selectedMethod is not RegularMethod) return null;
+
         var current = selectedMethod.Return;
         while (current is IFluentStep step)
         {
             var nextMethod = step.FluentMethods.FirstOrDefault(m => m is not CreationMethod and not OptionalFluentMethod);
-            if (nextMethod is null) break;
+            if (nextMethod is null) return null;
             current = nextMethod.Return;
         }
 
-        if (current is TargetTypeReturn targetTypeReturn
-            && targetTypeReturn.CandidateConstructors.Contains(selectedConstructor, SymbolEqualityComparer.Default)
-            && !SymbolEqualityComparer.Default.Equals(targetTypeReturn.Constructor, selectedConstructor))
-        {
-            unreachableConstructorAnalyzer.RemoveReachableConstructor(targetTypeReturn.Constructor);
-            targetTypeReturn.Constructor = selectedConstructor;
-            unreachableConstructorAnalyzer.AddReachableConstructor(selectedConstructor);
-        }
+        return current as TargetTypeReturn;
     }
 
     private record SelectedFluentMethod(IFluentMethod SelectedMethod, ImmutableArray<IFluentMethod> IgnoredMethods)

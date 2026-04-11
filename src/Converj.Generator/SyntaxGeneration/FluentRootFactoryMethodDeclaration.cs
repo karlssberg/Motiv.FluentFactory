@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Converj.Generator.Extensions;
 using Converj.Generator.Models.Parameters;
 using Converj.Generator.SyntaxGeneration.Helpers;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -30,7 +31,7 @@ internal static class FluentRootFactoryMethodDeclaration
                 FluentMethodSummaryDocXml.Create(
                 [
                     method.DocumentationSummary,
-                    ..FluentMethodSummaryDocXml.GenerateCandidateConstructorTypeSeeAlsoLinks(method.Return.CandidateConstructors)
+                    ..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets())
                 ]));
     }
 

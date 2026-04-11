@@ -65,15 +65,15 @@ internal static class FluentModelExtensions
         var reachableConstructors = (selectedMethod, ignoredMethod) switch
         {
             (_, MultiMethod multiMethod) when multiMethod.SiblingMultiMethods.IsSubsetOf(allIgnoredMultiMethods) =>
-                selectedMethod.Return.CandidateConstructors,
+                selectedMethod.Return.CandidateTargets,
             (_, MultiMethod multiMethod) =>
-                [..selectedMethod.Return.CandidateConstructors, ..multiMethod.Return.CandidateConstructors],
+                [..selectedMethod.Return.CandidateTargets, ..multiMethod.Return.CandidateTargets],
             ({ Return: TargetTypeReturn targetTypeReturn }, _) =>
                 [targetTypeReturn.Constructor],
-            _ => selectedMethod.Return.CandidateConstructors
+            _ => selectedMethod.Return.CandidateTargets
         };
 
-        return ignoredMethod.Return.CandidateConstructors
+        return ignoredMethod.Return.CandidateTargets
             .Except<IMethodSymbol>(reachableConstructors, SymbolEqualityComparer.Default);
     }
 

@@ -65,13 +65,14 @@ internal static class FluentMethodSummaryDocXml
     }
 
     /// <summary>
-    /// Generates seealso XML documentation links for the containing types of candidate constructors.
+    /// Generates seealso XML documentation links for the containing types of candidate targets
+    /// (constructors or static factory methods).
     /// </summary>
-    public static IEnumerable<SyntaxTrivia> GenerateCandidateConstructorTypeSeeAlsoLinks(
-        IEnumerable<IMethodSymbol> candidateConstructors)
+    public static IEnumerable<SyntaxTrivia> GenerateCandidateTargetTypeSeeAlsoLinks(
+        IEnumerable<IMethodSymbol> candidateTargets)
     {
-        return candidateConstructors
-            .Select(ctor => ctor.ContainingType)
+        return candidateTargets
+            .Select(target => target.ContainingType)
             .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
             .OrderBy(type => type.Name)
             .Select(CreateSeeAlsoLink);

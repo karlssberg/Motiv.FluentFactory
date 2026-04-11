@@ -48,7 +48,9 @@ internal class ExistingTypeFluentStep(
     /// </summary>
     public IParameterSymbol? ReceiverParameter { get; set; }
 
-    public ImmutableArray<IMethodSymbol> CandidateConstructors { get; set; }
+    public ImmutableArray<IMethodSymbol> CandidateTargets { get; set; }
+
+    public ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; } = [];
     
     public FluentTargetContext ConstructorContext => constructorMetadata.Context;
 

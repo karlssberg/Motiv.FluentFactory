@@ -5,7 +5,8 @@ using Microsoft.CodeAnalysis;
 namespace Converj.Generator.Diagnostics;
 
 internal class IgnoredMultiMethodWarningFactory(
-    ImmutableHashSet<IFluentMethod> allIgnoredMethods)
+    ImmutableHashSet<IFluentMethod> allIgnoredMethods,
+    UnreachableConstructorAnalyzer unreachableConstructorAnalyzer)
 {
 
     private readonly ImmutableHashSet<IMethodSymbol> _allIgnoredMultiMethods = allIgnoredMethods
@@ -38,7 +39,9 @@ internal class IgnoredMultiMethodWarningFactory(
 
         foreach (var ignoredMethod in ignoredMultiMethods)
         {
-            if (selectedMethod is RegularMethod && HasActiveSiblingTemplates(ignoredMethod))
+            if (selectedMethod is RegularMethod
+                && HasActiveSiblingTemplates(ignoredMethod)
+                && IsSourceConstructorReachable(ignoredMethod))
                 continue;
 
             var ctorDisplayString = ignoredMethod.ToDisplayString();
@@ -71,6 +74,15 @@ internal class IgnoredMultiMethodWarningFactory(
 
         bool HasActiveSiblingTemplates(MultiMethod ignoredMethod) =>
             !ignoredMethod.SiblingMultiMethods.IsSubsetOf(_allIgnoredMultiMethods);
+
+        // An "active sibling" only keeps the ignored method's source constructor reachable
+        // if the source constructor is still in the reachable set after selection/reconciliation.
+        // When sibling templates chain into a shared step whose terminal reconciles to a different
+        // target (e.g., Value2(Func<int>) from SecondB that flows into a step whose Value3 builds
+        // SecondA), the sibling is superficially "active" but contributes nothing to reachability.
+        bool IsSourceConstructorReachable(MultiMethod ignoredMethod) =>
+            ignoredMethod.SourceParameter.ContainingSymbol is IMethodSymbol sourceConstructor
+            && unreachableConstructorAnalyzer.IsReachable(sourceConstructor);
 
         bool DoIgnoredMethodsCollectivelyCauseUnreachableConstructors() =>
             ignoredMultiMethods

@@ -178,6 +178,8 @@ internal class FluentModelFactory(Compilation compilation)
         }
         fluentRootMethods = updatedRootMethods;
 
+        MarkUnavailableTargets(fluentRootMethods, fluentBuilderSteps);
+
         _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
         var sampleConstructorContext = fluentTargetContexts.First();
 
@@ -623,7 +625,7 @@ internal class FluentModelFactory(Compilation compilation)
 
             // Create the shared step
             var candidateCtors = constructors
-                .SelectMany(c => c.CandidateConstructors)
+                .SelectMany(c => c.CandidateTargets)
                 .Distinct<IMethodSymbol>(SymbolEqualityComparer.Default);
 
             var step = new RegularFluentStep(rootType, candidateCtors)
@@ -688,6 +690,48 @@ internal class FluentModelFactory(Compilation compilation)
         }
 
         return ([..gatewayMethods], [..steps]);
+    }
+
+    /// <summary>
+    /// Populates <see cref="IFluentReturn.UnavailableTargets"/> on every step and terminal return
+    /// in the graph, after method selection is complete. The unavailable set is the subset of
+    /// candidate targets that the <see cref="UnreachableConstructorAnalyzer"/> did not mark as reached.
+    /// </summary>
+    private void MarkUnavailableTargets(
+        ImmutableArray<IFluentMethod> rootMethods,
+        ImmutableArray<IFluentStep> steps)
+    {
+        foreach (var step in steps)
+            step.UnavailableTargets = ComputeUnavailable(step.CandidateTargets);
+
+        MarkReturnsFromMethods(rootMethods);
+        return;
+
+        void MarkReturnsFromMethods(IEnumerable<IFluentMethod> methods)
+        {
+            // Exclude methods that return the step they live on (optional setters),
+            // which would otherwise produce an infinite recursion.
+            var forwardMethods = methods
+                .Where(m => m is not OptionalFluentMethod and not OptionalPropertyFluentMethod);
+
+            foreach (var method in forwardMethods)
+            {
+                switch (method.Return)
+                {
+                    case TargetTypeReturn targetTypeReturn:
+                        targetTypeReturn.UnavailableTargets = ComputeUnavailable(targetTypeReturn.CandidateTargets);
+                        break;
+                    case IFluentStep step:
+                        // The step's own UnavailableTargets was set in the outer loop;
+                        // here we recurse to reach nested TargetTypeReturns.
+                        MarkReturnsFromMethods(step.FluentMethods);
+                        break;
+                }
+            }
+        }
+
+        ImmutableArray<IMethodSymbol> ComputeUnavailable(ImmutableArray<IMethodSymbol> candidates) =>
+            [..candidates.Where(target => !_unreachableConstructorAnalyzer.IsReachable(target))];
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(

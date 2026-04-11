@@ -33,7 +33,7 @@ internal static class PropertyStepEnricher
                 step.KnownConstructorParameters, step.Accessibility,
                 step is RegularFluentStep rfs ? rfs.TypeKind : TypeKind.Class,
                 step is RegularFluentStep rfs2 ? rfs2.PropertyFieldStorage : ImmutableArray<FieldStorage>.Empty,
-                step.CandidateConstructors,
+                step.CandidateTargets,
                 newSteps, ref nextStepIndex);
         }
 
@@ -118,7 +118,7 @@ internal static class PropertyStepEnricher
             foreach (var kvp in creationMethod.ValueSources)
                 emptyValueStorage.Add(kvp.Key, kvp.Value);
 
-            var candidateConstructors = creationMethod.Return.CandidateConstructors;
+            var candidateConstructors = creationMethod.Return.CandidateTargets;
 
             // Create the first property step and entry method
             var firstProperty = requiredProperties[0];
@@ -189,7 +189,7 @@ internal static class PropertyStepEnricher
     /// </summary>
     private static List<IPropertySymbol> GetRequiredPropertiesForCreationMethod(CreationMethod creationMethod)
     {
-        var constructor = creationMethod.Return.CandidateConstructors.FirstOrDefault();
+        var constructor = creationMethod.Return.CandidateTargets.FirstOrDefault();
         if (constructor is null) return [];
 
         var targetType = constructor.ContainingType;
@@ -209,7 +209,7 @@ internal static class PropertyStepEnricher
     /// </summary>
     private static List<IPropertySymbol> GetOptionalFluentMethodProperties(CreationMethod creationMethod)
     {
-        var constructor = creationMethod.Return.CandidateConstructors.FirstOrDefault();
+        var constructor = creationMethod.Return.CandidateTargets.FirstOrDefault();
         if (constructor is null) return [];
 
         var targetType = constructor.ContainingType;
