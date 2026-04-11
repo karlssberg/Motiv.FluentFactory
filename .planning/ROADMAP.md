@@ -150,7 +150,7 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 14. Diagnostic Edge Cases | v1.3 | 2/2 | Complete | 2026-03-14 |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 2/2 | Complete | 2026-03-14 |
 | — v2.0 organic work — | v2.0 | — | Complete | 2026-04-11 |
-| 16. Diagnostic Alignment | v2.1 | 0/3 | Planned | - |
+| 16. Diagnostic Alignment | 2/3 | In Progress|  | - |
 | 17. Core Generator Type Renames | v2.1 | 0/? | Not started | - |
 | 18. Builder Pattern Renames | v2.1 | 0/? | Not started | - |
 | 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |

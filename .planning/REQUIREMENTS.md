@@ -25,10 +25,10 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 ### Diagnostic Alignment
 
-- [ ] **DIAG-01**: The diagnostic `Category` string on every descriptor (currently `"FluentFactory"`) is updated to `"Converj"` across all 47 descriptors in `src/Converj.Generator/Diagnostics/FluentDiagnostics.cs`
-- [ ] **DIAG-02**: User-facing diagnostic titles and message formats no longer contain the word "Factory" when the intent is to refer to the fluent root (e.g., "Factory type missing partial modifier" → "FluentRoot type missing partial modifier"). Titles referring to C# constructors or the GoF pattern stay untouched
+- [x] **DIAG-01**: The diagnostic `Category` string on every descriptor (currently `"FluentFactory"`) is updated to `"Converj"` across all 47 descriptors in `src/Converj.Generator/Diagnostics/FluentDiagnostics.cs`
+- [x] **DIAG-02**: User-facing diagnostic titles and message formats no longer contain the word "Factory" when the intent is to refer to the fluent root (e.g., "Factory type missing partial modifier" → "FluentRoot type missing partial modifier"). Titles referring to C# constructors or the GoF pattern stay untouched
 - [ ] **DIAG-03**: Every entry in `src/Converj.Generator/AnalyzerReleases.Unshipped.md` is updated to use the new `Category` string for consistency with the descriptors
-- [ ] **DIAG-04**: No `MFFG`, `FluentFactory` (as category), or `FluentConstructor` string literals remain in diagnostic-producing code
+- [x] **DIAG-04**: No `MFFG`, `FluentFactory` (as category), or `FluentConstructor` string literals remain in diagnostic-producing code
 
 ### Test Fixture Renames
 
@@ -83,10 +83,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAME-07 | Phase 18 | Pending |
 | FILE-01 | Phase 17 | Pending |
 | FILE-02 | Phase 20 | Pending |
-| DIAG-01 | Phase 16 | Pending |
-| DIAG-02 | Phase 16 | Pending |
+| DIAG-01 | Phase 16 | Complete |
+| DIAG-02 | Phase 16 | Complete |
 | DIAG-03 | Phase 16 | Pending |
-| DIAG-04 | Phase 16 | Pending |
+| DIAG-04 | Phase 16 | Complete |
 | TEST-01 | Phase 19 | Pending |
 | TEST-02 | Phase 19 | Pending |
 | TEST-03 | Phase 19 | Pending |
