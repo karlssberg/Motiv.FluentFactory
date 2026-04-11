@@ -77,7 +77,10 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. `src/Converj.Generator/AnalyzerReleases.Unshipped.md` reflects the new category string and is internally consistent with the descriptors
   4. `git grep -n "MFFG\|\"FluentFactory\"\|FluentConstructor" -- src/Converj.Generator/Diagnostics/` returns zero hits
   5. `dotnet build` succeeds with zero warnings and `dotnet test` passes all existing tests (no assertion changes required for pure category/title edits)
-**Plans**: TBD
+**Plans** (3 plans in 2 waves):
+  - [ ] 16-01-PLAN.md (wave 1) — Audit all 47 descriptors in FluentDiagnostics.cs: Category constant, titles, messages, XML docs, descriptor variable identifiers, CVJG0031 [FluentFactory] defect fix
+  - [ ] 16-02-PLAN.md (wave 1) — Rename drift identifiers in UnreachableConstructorAnalyzer.cs (_allFluentConstructors → _allTargetConstructors) and inspect sibling diagnostic files for residual drift
+  - [ ] 16-03-PLAN.md (wave 2, depends on 16-01 + 16-02) — Complete AnalyzerReleases.Unshipped.md to 47 rows with Converj category, run phase-level DIAG-04 grep gate
 
 ### Phase 17: Core Generator Type Renames
 **Goal**: The top-level generator types that still carry `FluentFactory*` vocabulary are renamed to `FluentRoot*` equivalents, and their source files are `git mv`'d to match; build and tests remain green
@@ -147,7 +150,7 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 14. Diagnostic Edge Cases | v1.3 | 2/2 | Complete | 2026-03-14 |
 | 15. Scope and Accessibility Diagnostics | v1.3 | 2/2 | Complete | 2026-03-14 |
 | — v2.0 organic work — | v2.0 | — | Complete | 2026-04-11 |
-| 16. Diagnostic Alignment | v2.1 | 0/? | Not started | - |
+| 16. Diagnostic Alignment | v2.1 | 0/3 | Planned | - |
 | 17. Core Generator Type Renames | v2.1 | 0/? | Not started | - |
 | 18. Builder Pattern Renames | v2.1 | 0/? | Not started | - |
 | 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |
