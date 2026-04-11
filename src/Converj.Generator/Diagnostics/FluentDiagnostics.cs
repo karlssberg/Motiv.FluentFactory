@@ -3,11 +3,11 @@ using Microsoft.CodeAnalysis;
 namespace Converj.Generator.Diagnostics;
 
 /// <summary>
-/// Diagnostic descriptors for the fluent factory source generator.
+/// Diagnostic descriptors for the Converj source generator.
 /// </summary>
 public static class FluentDiagnostics
 {
-    private const string Category = "FluentFactory";
+    private const string Category = "Converj";
 
     /// <summary>
     /// Diagnostic for unreachable fluent constructor.
@@ -131,7 +131,7 @@ public static class FluentDiagnostics
     public static readonly DiagnosticDescriptor UnsupportedParameterModifier = new(
         id: "CVJG0011",
         title: "Unsupported parameter modifier",
-        messageFormat: "Constructor '{0}' has parameter '{1}' with unsupported modifier '{2}'. Fluent factory generation requires value-type parameters. This constructor will be skipped.",
+        messageFormat: "Constructor '{0}' has parameter '{1}' with unsupported modifier '{2}'. The Converj generator requires value-type parameters. This constructor will be skipped.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -142,40 +142,40 @@ public static class FluentDiagnostics
     public static readonly DiagnosticDescriptor InaccessibleConstructor = new(
         id: "CVJG0012",
         title: "Inaccessible constructor",
-        messageFormat: "Constructor '{0}' has '{1}' accessibility and cannot be used by the fluent factory. Only public and internal constructors are supported.",
+        messageFormat: "Constructor '{0}' has '{1}' accessibility and cannot be used by the Converj generator. Only public and internal constructors are supported.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for factory root types missing the partial modifier.
+    /// Diagnostic for FluentRoot types missing the partial modifier.
     /// </summary>
     public static readonly DiagnosticDescriptor MissingPartialModifier = new(
         id: "CVJG0013",
-        title: "Factory type missing partial modifier",
-        messageFormat: "Factory type '{0}' must be declared as partial to receive generated fluent methods",
+        title: "FluentRoot type missing partial modifier",
+        messageFormat: "FluentRoot type '{0}' must be declared as partial to receive generated fluent methods",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for constructor parameter types less accessible than the factory type.
+    /// Diagnostic for constructor parameter types less accessible than the FluentRoot type.
     /// </summary>
     public static readonly DiagnosticDescriptor InaccessibleParameterType = new(
         id: "CVJG0014",
-        title: "Inaccessible parameter type in fluent factory",
-        messageFormat: "Parameter '{0}' of type '{1}' in constructor '{2}' is less accessible than the factory type '{3}' and the generated fluent method will expose an inaccessible type",
+        title: "Inaccessible parameter type in FluentRoot",
+        messageFormat: "Parameter '{0}' of type '{1}' in constructor '{2}' is less accessible than the FluentRoot type '{3}' and the generated fluent method will expose an inaccessible type",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for factory accessibility exceeding target type accessibility.
+    /// Diagnostic for FluentRoot accessibility exceeding target type accessibility.
     /// </summary>
     public static readonly DiagnosticDescriptor AccessibilityMismatch = new(
         id: "CVJG0015",
-        title: "Factory accessibility exceeds target type",
-        messageFormat: "Factory '{0}' is {1} but target type '{2}' is {3} and the generated factory may expose an inaccessible type",
+        title: "FluentRoot accessibility exceeds target type",
+        messageFormat: "FluentRoot '{0}' is {1} but target type '{2}' is {3} and the generated FluentRoot may expose an inaccessible type",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -297,13 +297,13 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for [FluentParameter] applied to a member of a static factory type.
+    /// Diagnostic for [FluentParameter] applied to a member of a static FluentRoot type.
     /// </summary>
-    public static readonly DiagnosticDescriptor FluentParameterOnStaticFactory = new(
+    public static readonly DiagnosticDescriptor FluentParameterOnStaticRoot = new(
         id: "CVJG0026",
-        title: "FluentParameter on static factory type",
+        title: "FluentParameter on static FluentRoot type",
         messageFormat:
-        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' is static. Fluent parameter threading requires a non-static factory type.",
+        "Member '{0}' is marked with [FluentParameter] but containing type '{1}' is static. Fluent parameter threading requires a non-static FluentRoot type.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
@@ -364,7 +364,7 @@ public static class FluentDiagnostics
         id: "CVJG0031",
         title: "FluentParameter partial overlap",
         messageFormat:
-        "Member '{0}' with [FluentParameter(\"{1}\")] matches only some target constructors. Set AllowPartialParameterOverlap = true on [FluentFactory] to allow this.",
+        "Member '{0}' with [FluentParameter(\"{1}\")] matches only some target constructors. Set AllowPartialParameterOverlap = true on [FluentRoot] to allow this.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
