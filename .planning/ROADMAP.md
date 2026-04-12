@@ -154,7 +154,7 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 15. Scope and Accessibility Diagnostics | v1.3 | 2/2 | Complete | 2026-03-14 |
 | — v2.0 organic work — | v2.0 | — | Complete | 2026-04-11 |
 | 16. Diagnostic Alignment | 3/3 | Complete    | 2026-04-12 | - |
-| 17. Core Generator Type Renames | v2.1 | 0/3 | Not started | - |
+| 17. Core Generator Type Renames | 1/3 | In Progress|  | - |
 | 18. Builder Pattern Renames | v2.1 | 0/? | Not started | - |
 | 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 0/? | Not started | - |

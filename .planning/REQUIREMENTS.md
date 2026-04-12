@@ -10,8 +10,8 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 ### Internal Type Renames
 
-- [ ] **NAME-01**: `FluentFactoryGenerator` is renamed to `FluentRootGenerator` (the top-level `IIncrementalGenerator`)
-- [ ] **NAME-02**: `FluentFactoryCompilationUnit` is renamed to `FluentRootCompilationUnit`
+- [x] **NAME-01**: `FluentFactoryGenerator` is renamed to `FluentRootGenerator` (the top-level `IIncrementalGenerator`)
+- [x] **NAME-02**: `FluentFactoryCompilationUnit` is renamed to `FluentRootCompilationUnit`
 - [ ] **NAME-03**: `FluentFactoryMetadata`, `FluentFactoryMetadataReader`, and `FluentFactoryDefaults` are renamed under Root vocabulary (e.g., `FluentRootMetadata`, `FluentRootMetadataReader`, `FluentRootDefaults`)
 - [ ] **NAME-04**: `FluentFactoryMethodDeclaration` and `FluentRootFactoryMethodDeclaration` are renamed to reflect their actual responsibilities (executor reads code to pick accurate Root/Step/Target/Entry terminology, documents the chosen vocabulary)
 - [ ] **NAME-05**: `FluentModelFactory` is renamed to `FluentModelBuilder`
@@ -20,7 +20,7 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 ### Source File Renames
 
-- [ ] **FILE-01**: Every source file whose type was renamed in NAME-01..07 is moved via `git mv` to match the new type name (preserves blame/history)
+- [x] **FILE-01**: Every source file whose type was renamed in NAME-01..07 is moved via `git mv` to match the new type name (preserves blame/history)
 - [ ] **FILE-02**: No `.cs` file in `src/Converj.Generator/` carries `FluentFactory`, `FluentConstructor`, or `BuilderMethod` in its path
 
 ### Diagnostic Alignment
@@ -74,14 +74,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NAME-01 | Phase 17 | Pending |
-| NAME-02 | Phase 17 | Pending |
+| NAME-01 | Phase 17 | Complete |
+| NAME-02 | Phase 17 | Complete |
 | NAME-03 | Phase 17 | Pending |
 | NAME-04 | Phase 17 | Pending |
 | NAME-05 | Phase 18 | Pending |
 | NAME-06 | Phase 18 | Pending |
 | NAME-07 | Phase 18 | Pending |
-| FILE-01 | Phase 17 | Pending |
+| FILE-01 | Phase 17 | Complete |
 | FILE-02 | Phase 20 | Pending |
 | DIAG-01 | Phase 16 | Complete |
 | DIAG-02 | Phase 16 | Complete |

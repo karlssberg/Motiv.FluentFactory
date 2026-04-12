@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
-stopped_at: Completed 16-03-PLAN.md (Phase 16 closed)
-last_updated: "2026-04-12T00:06:24.463Z"
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-04-12T01:10:40.193Z"
 last_activity: 2026-04-12 — Plan 16-03 executed (AnalyzerReleases.Unshipped.md rewritten to 48 rows, Phase 16 DIAG-04 gate green, all 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
 ---
 
 # Project State
@@ -48,6 +48,7 @@ Recent decisions affecting current work:
 - [Phase 16-01]: Rule 3 scope expansion — updated AnalyzerReleases.Unshipped.md Category column (18 entries) to unblock RS2001 when flipping the Category constant. Full 47-row rewrite remains plan 16-03's responsibility.
 - [Phase 16-01]: All 46 non-renamed descriptor identifiers audited for fluent-root-sense "Factory" drift; only FluentParameterOnStaticFactory (CVJG0026) required rename. Remaining descriptors refer to C# language concepts (constructor, parameter) or Fluent* attribute family and were left untouched per vocabulary policy.
 - [Phase 16-diagnostic-alignment]: Plan 16-03: Actual descriptor count is 48, not the plan's stated 47 — FluentDiagnostics.cs contains CVJG0001..CVJG0049 minus CVJG0034. Reconciled Unshipped.md to 48 rows per source of truth.
+- [Phase 17-core-generator-type-renames]: FluentModelFactory.CreateFluentFactoryCompilationUnit method name intentionally preserved — Phase 18 owns FluentModelFactory rename, method names follow then to avoid conflicts
 
 ### Pending Todos
 
@@ -59,6 +60,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T00:01:35.366Z
-Stopped at: Completed 16-03-PLAN.md (Phase 16 closed)
+Last session: 2026-04-12T01:10:40.191Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None
