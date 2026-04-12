@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
-status: Phase 16 in progress (plan 16-01 complete; plan 16-02 complete; plan 16-03 pending)
-stopped_at: Completed 16-01-PLAN.md
-last_updated: "2026-04-12T00:54:00Z"
-last_activity: 2026-04-12 — Plan 16-01 executed (FluentDiagnostics.cs vocabulary alignment, CVJG0031 defect fixed)
+status: Phase 16 complete; ready for Phase 17
+stopped_at: Completed 16-03-PLAN.md (Phase 16 closed)
+last_updated: "2026-04-12T00:01:35.368Z"
+last_activity: 2026-04-12 — Plan 16-03 executed (AnalyzerReleases.Unshipped.md rewritten to 48 rows, Phase 16 DIAG-04 gate green)
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-04-11)
 
 ## Current Position
 
-Phase: 16-diagnostic-alignment
-Plan: 16-01 complete; 16-02 complete; 16-03 pending
-Status: Phase 16 in progress
-Last activity: 2026-04-12 — Plan 16-01 executed (FluentDiagnostics.cs vocabulary alignment, CVJG0031 defect fixed inline)
+Phase: 16-diagnostic-alignment (COMPLETE)
+Plan: 16-01 complete; 16-02 complete; 16-03 complete
+Status: Phase 16 complete — ready to start Phase 17
+Last activity: 2026-04-12 — Plan 16-03 executed (AnalyzerReleases.Unshipped.md rewritten to 48 rows, Phase 16 DIAG-04 gate green, all 415 tests passing)
 
 ## Accumulated Context
 
@@ -47,6 +47,7 @@ Recent decisions affecting current work:
 - [Phase 16-diagnostic-alignment]: Plan 16-02: Target vocabulary (not Fluent-) chosen for renamed fields, matching v2.0 public FluentTarget attribute
 - [Phase 16-01]: Rule 3 scope expansion — updated AnalyzerReleases.Unshipped.md Category column (18 entries) to unblock RS2001 when flipping the Category constant. Full 47-row rewrite remains plan 16-03's responsibility.
 - [Phase 16-01]: All 46 non-renamed descriptor identifiers audited for fluent-root-sense "Factory" drift; only FluentParameterOnStaticFactory (CVJG0026) required rename. Remaining descriptors refer to C# language concepts (constructor, parameter) or Fluent* attribute family and were left untouched per vocabulary policy.
+- [Phase 16-diagnostic-alignment]: Plan 16-03: Actual descriptor count is 48, not the plan's stated 47 — FluentDiagnostics.cs contains CVJG0001..CVJG0049 minus CVJG0034. Reconciled Unshipped.md to 48 rows per source of truth.
 
 ### Pending Todos
 
@@ -58,6 +59,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T00:54:00Z
-Stopped at: Completed 16-01-PLAN.md (FluentDiagnostics vocabulary alignment)
-Resume file: .planning/phases/16-diagnostic-alignment/16-03-PLAN.md
+Last session: 2026-04-12T00:01:35.366Z
+Stopped at: Completed 16-03-PLAN.md (Phase 16 closed)
+Resume file: None
