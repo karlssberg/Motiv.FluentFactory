@@ -13,7 +13,7 @@ internal class FluentMethodSelector(
     DiagnosticList diagnostics,
     UnreachableConstructorAnalyzer unreachableConstructorAnalyzer)
 {
-    private readonly FluentMethodFactory _methodFactory = new(compilation, diagnostics);
+    private readonly FluentMethodBuilder _methodFactory = new(compilation, diagnostics);
 
     /// <summary>
     /// Converts a trie node's children into fluent methods by creating candidate methods
@@ -53,7 +53,7 @@ internal class FluentMethodSelector(
             .SelectMany(pair => pair.IgnoredMethods)
             .ToImmutableHashSet();
 
-        var ignoredMultiMethodWarningFactory = new IgnoredMultiMethodWarningFactory(
+        var ignoredMultiMethodWarningBuilder = new IgnoredMultiMethodWarningBuilder(
             allIgnoredMethods,
             unreachableConstructorAnalyzer);
 
@@ -63,7 +63,7 @@ internal class FluentMethodSelector(
             unreachableConstructorAnalyzer.AddReachableMethod(selectedMethod);
             diagnostics.AddRange(
                 [
-                    ..ignoredMultiMethodWarningFactory
+                    ..ignoredMultiMethodWarningBuilder
                         .Create(
                             selectedMethod,
                             [

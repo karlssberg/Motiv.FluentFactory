@@ -87,7 +87,7 @@ public class FluentRootGenerator : IIncrementalGenerator
                     .SelectMany(builderContexts => builderContexts)
                     .GroupBy(builderContext => builderContext.RootType, SymbolEqualityComparer.Default)
                     .Select(fluentApiConstructors =>
-                        new FluentModelFactory(compilation)
+                        new FluentModelBuilder(compilation)
                             .CreateFluentFactoryCompilationUnit(
                                 (INamedTypeSymbol)fluentApiConstructors.Key!,
                                 [..FluentTargetContextFactory.DeDuplicateFluentTargets(fluentApiConstructors)]));

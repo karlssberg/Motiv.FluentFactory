@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Diagnostics;
 
-internal class IgnoredMultiMethodWarningFactory(
+internal class IgnoredMultiMethodWarningBuilder(
     ImmutableHashSet<IFluentMethod> allIgnoredMethods,
     UnreachableConstructorAnalyzer unreachableConstructorAnalyzer)
 {

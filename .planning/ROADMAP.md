@@ -108,7 +108,8 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. `IgnoredMultiMethodWarningFactory` is renamed to `IgnoredMultiMethodWarningBuilder` and its file is `git mv`'d to match
   4. `git grep -n "FluentModelFactory\|FluentMethodFactory\|IgnoredMultiMethodWarningFactory" -- src/Converj.Generator/` returns zero hits
   5. `dotnet build` succeeds with zero warnings and `dotnet test` passes all existing tests
-**Plans**: TBD
+**Plans** (1 plan in 1 wave):
+  - [ ] 18-01-PLAN.md (wave 1) — Rename FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory to *Builder and rename three deferred FluentFactory* method identifiers from Phase 17 (NAME-05, NAME-06, NAME-07)
 
 ### Phase 19: Test Fixture Alignment
 **Goal**: Test classes, test source files, and test-local sample helper types stop using legacy `*Factory*` vocabulary for anything that refers to the fluent root

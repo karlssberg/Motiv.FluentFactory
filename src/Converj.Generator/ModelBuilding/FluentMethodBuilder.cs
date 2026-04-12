@@ -7,10 +7,10 @@ using Converj.Generator.SyntaxGeneration.Helpers;
 namespace Converj.Generator.ModelBuilding;
 
 /// <summary>
-/// Creates fluent method instances (RegularMethod and MultiMethod) from
+/// Builds fluent method instances (RegularMethod and MultiMethod) from
 /// trie node data, handling multi-method template resolution and validation.
 /// </summary>
-internal class FluentMethodFactory(
+internal class FluentMethodBuilder(
     Compilation compilation,
     DiagnosticList diagnostics)
 {

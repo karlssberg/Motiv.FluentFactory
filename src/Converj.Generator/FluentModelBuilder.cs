@@ -7,7 +7,7 @@ using Converj.Generator.TargetAnalysis;
 
 namespace Converj.Generator;
 
-internal class FluentModelFactory(Compilation compilation)
+internal class FluentModelBuilder(Compilation compilation)
 {
     private readonly DiagnosticList _diagnostics = [];
     private readonly OrderedDictionary<ParameterSequence, RegularFluentStep> _regularFluentSteps = new();
