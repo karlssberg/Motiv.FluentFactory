@@ -21,7 +21,7 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 ### Source File Renames
 
 - [x] **FILE-01**: Every source file whose type was renamed in NAME-01..07 is moved via `git mv` to match the new type name (preserves blame/history)
-- [ ] **FILE-02**: No `.cs` file in `src/Converj.Generator/` carries `FluentFactory`, `FluentConstructor`, or `BuilderMethod` in its path
+- [x] **FILE-02**: No `.cs` file in `src/Converj.Generator/` carries `FluentFactory`, `FluentConstructor`, or `BuilderMethod` in its path
 
 ### Diagnostic Alignment
 
@@ -40,9 +40,9 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 ### Documentation Alignment
 
-- [ ] **DOC-01**: `CLAUDE.md` line 11 (the header comment referencing `FluentConstructor attribute`) is updated to reference `[FluentTarget]`; any other stale vocabulary in `CLAUDE.md` is aligned
-- [ ] **DOC-02**: `src/Converj.Generator/CLAUDE.md` and `src/Converj.Generator.Tests/CLAUDE.md` (if they exist) are audited for stale vocabulary
-- [ ] **DOC-03**: A final repo-wide grep confirms no residual `FluentFactory`, `FluentConstructor`, `BuilderMethod`, `InitialVerb`, `MFFG`, or `Motiv.FluentFactory` references remain in active source, tests, or docs (excluding `.planning/MILESTONES.md` archive and `.planning/v1.*-*.md` historical artifacts)
+- [x] **DOC-01**: `CLAUDE.md` line 11 (the header comment referencing `FluentConstructor attribute`) is updated to reference `[FluentTarget]`; any other stale vocabulary in `CLAUDE.md` is aligned
+- [x] **DOC-02**: `src/Converj.Generator/CLAUDE.md` and `src/Converj.Generator.Tests/CLAUDE.md` (if they exist) are audited for stale vocabulary
+- [x] **DOC-03**: A final repo-wide grep confirms no residual `FluentFactory`, `FluentConstructor`, `BuilderMethod`, `InitialVerb`, `MFFG`, or `Motiv.FluentFactory` references remain in active source, tests, or docs (excluding `.planning/MILESTONES.md` archive and `.planning/v1.*-*.md` historical artifacts)
 
 ### Behavior Preservation
 
@@ -82,7 +82,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAME-06 | Phase 18 | Complete |
 | NAME-07 | Phase 18 | Complete |
 | FILE-01 | Phase 17 | Complete |
-| FILE-02 | Phase 20 | Pending |
+| FILE-02 | Phase 20 | Complete |
 | DIAG-01 | Phase 16 | Complete |
 | DIAG-02 | Phase 16 | Complete |
 | DIAG-03 | Phase 16 | Complete |
@@ -92,9 +92,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-03 | Phase 19 | Complete |
 | TEST-04 | Phase 19 | Complete |
 | TEST-05 | Phase 19 | Complete |
-| DOC-01 | Phase 20 | Pending |
-| DOC-02 | Phase 20 | Pending |
-| DOC-03 | Phase 20 | Pending |
+| DOC-01 | Phase 20 | Complete |
+| DOC-02 | Phase 20 | Complete |
+| DOC-03 | Phase 20 | Complete |
 | BEHAV-01 | Phase 20 | Pending |
 | BEHAV-02 | Phase 20 | Pending |
 | BEHAV-03 | Phase 20 | Pending |

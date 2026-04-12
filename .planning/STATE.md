@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
-stopped_at: Completed 19-03-PLAN.md
-last_updated: "2026-04-12T18:50:36.240Z"
+stopped_at: Completed 20-01-PLAN.md
+last_updated: "2026-04-12T19:02:12.473Z"
 last_activity: 2026-04-12 — Plan 19-03 executed (TEST-05 grep gate passed, 4 residual comment vocabulary fixes, GoF PropositionFactory* exclusions documented, 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 12
+  completed_plans: 11
 ---
 
 # Project State
@@ -58,6 +58,8 @@ Recent decisions affecting current work:
 - [Phase 18-01]: Phase 17 deferred method renames (CreateFluentFactoryCompilationUnit, GetFluentFactoryMetadata, GetFluentFactoryDefaults) fully discharged using FluentRoot* vocabulary
 - [Phase 19-02]: Terminal method names preserved unchanged — derived from TARGET type name, not root name; renaming root *Factory to *Builder does not affect terminal method identifiers
 - [Phase 19-03]: GoF PropositionFactory* types in test string literals are intentional retentions — eight types confirmed as GoF design pattern, not legacy fluent root vocabulary
+- [Phase 20-documentation-cleanup-final-verification]: DOC-02 satisfied by absence: no sub-project CLAUDE.md files at src/Converj.Generator/CLAUDE.md or src/Converj.Generator.Tests/CLAUDE.md
+- [Phase 20-documentation-cleanup-final-verification]: FluentConstructorParameter diagnostic key renamed to FluentTargetParameter (internal ImmutableDictionary key, no external consumers)
 
 ### Pending Todos
 
@@ -69,6 +71,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T18:46:19.879Z
-Stopped at: Completed 19-03-PLAN.md
+Last session: 2026-04-12T19:02:12.470Z
+Stopped at: Completed 20-01-PLAN.md
 Resume file: None
