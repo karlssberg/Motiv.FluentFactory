@@ -59,48 +59,40 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - ✓ Named tuple unpacking in fluent methods — v2.0
 - ✓ Additional diagnostics: conflicting constraints, ambiguous chains, empty CreateVerb, `[This]` validation, missing storage — v2.0
 
-## Current Milestone: v2.1 Naming Alignment Refactor
-
-**Goal:** Align internal codebase vocabulary (type names, file names, test fixtures, diagnostic IDs) with the public `FluentRoot`/`FluentTarget` API shipped in v2.0.
-
-**Target features:**
-- Rename internal types carrying legacy `FluentFactory*` / `FluentConstructor*` vocabulary to `FluentRoot*` / `FluentTarget*`
-- Rename source files to match renamed types
-- Rename test fixture classes and sample types from old `*Factory*` terminology
-- Rename diagnostic IDs from `MFFG` prefix to a Converj-aligned prefix
-- Preserve all public API (no breaking changes to attribute names)
-- All existing tests continue to pass after rename
+**v2.1 — Naming Alignment Refactor**
+- ✓ Internal type names aligned to Root/Target vocabulary (7 type renames) — v2.1
+- ✓ Source file names aligned to renamed types via `git mv` — v2.1
+- ✓ All 48 diagnostic descriptors aligned to `Category = "Converj"` — v2.1
+- ✓ Test fixture and sample type names aligned (3 test class renames, bulk `Factory` → `Builder` in fixtures) — v2.1
+- ✓ Documentation vocabulary aligned, repo-wide grep clean — v2.1
+- ✓ 415 tests passing, zero behavior changes, full git history preserved — v2.1
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Internal type names aligned to Root/Target vocabulary
-- [ ] Source file names aligned to renamed types
-- [ ] Test fixture and sample type names aligned
-- [ ] Diagnostic IDs aligned to Converj prefix
+(No active milestone — planning next)
 
 ### Out of Scope
 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
-- Bug fixes for v1.3 tech debt — separate milestone; this one is pure renaming
-- Feature additions — naming-only refactor, no behavior changes
-- Generated output format changes — consumers would break
-- Public attribute rename — already done in v2.0
-- Namespace `Converj.*` restructuring — only internal type/file renames
-- Test logic changes — only test class/fixture renames, not assertions
+- Namespace `Converj.*` restructuring — only internal type/file renames were done in v2.1
+- Bug fixes for v1.3 tech debt (9 intentionally failing tests) — separate milestone
+- Generated output format changes — consumers depend on current output
 
 ## Context
 
 - Source generator using IIncrementalGenerator (Roslyn incremental pipeline)
 - Code generation builds Roslyn syntax trees via SyntaxFactory
 - Generated output is `.g.cs` files added to compilation
-- Existing tests use `CSharpSourceGeneratorVerifier` with expected output comparison
+- 415 tests: 362 generator tests + 53 runtime tests, all passing
 - Package published as `Converj` on NuGet, version 2.0.0
+- 46,689 LOC C# across 5 projects
 - Generator project uses screaming architecture: domain types at root, implementation in subdirectories (`ConstructorAnalysis/`, `ModelBuilding/`, `SyntaxGeneration/`, `TargetAnalysis/`, `Extensions/`)
 - All source files ~150 lines or less with single responsibilities
-- Public attribute surface is stable as of v2.0 — internal vocabulary is the drift
+- Internal vocabulary fully aligned to public `FluentRoot`/`FluentTarget` API as of v2.1
+- 9 intentionally failing tests from v1.3 documenting known generator shortcomings (type system edge cases)
 
 ## Constraints
 
@@ -120,7 +112,7 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 | Thin orchestrator pattern for syntax generation | Method declarations delegate to focused helpers | ✓ Good |
 | Shared `TypeParameterConstraintBuilder` | Single source of truth for constraint generation | ✓ Good |
 | Rename `[FluentFactory]`→`[FluentRoot]`, `[FluentConstructor]`→`[FluentTarget]` | Generalizes beyond constructors to static/extension methods | ✓ Good |
-| Keep internal rename as a dedicated milestone | Separation from feature work reduces risk and isolates rename churn in git history | — Pending |
+| Keep internal rename as a dedicated milestone | Separation from feature work reduces risk and isolates rename churn in git history | ✓ Good |
 
 ---
-*Last updated: 2026-04-11 after v2.1 milestone start*
+*Last updated: 2026-04-12 after v2.1 milestone*

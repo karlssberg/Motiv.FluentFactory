@@ -1,4 +1,37 @@
 # Milestones
+## v2.1 — Naming Alignment Refactor
+
+**Shipped:** 2026-04-12
+**Phases:** 16-20 (5 phases, 12 plans)
+**Commits:** 44
+**Files modified:** 137 (+5,665 / -3,050 lines)
+**Timeline:** 2 days (2026-04-11 → 2026-04-12)
+**LOC:** 46,689 C#
+
+### What Shipped
+
+Pure rename refactor aligning internal codebase vocabulary with the public `FluentRoot`/`FluentTarget` API shipped in v2.0. No feature additions, no behavior changes, no generated output changes. All 415 tests passing at every phase boundary.
+
+**Key accomplishments:**
+- Aligned all 48 diagnostic descriptors to `Category = "Converj"` and FluentRoot vocabulary; fixed CVJG0031 `[FluentFactory]` defect inline
+- Rewrote AnalyzerReleases.Unshipped.md from 18 to 48 rows synchronized with FluentDiagnostics.cs
+- Renamed core generator types: `FluentFactoryGenerator` → `FluentRootGenerator`, `FluentFactoryCompilationUnit` → `FluentRootCompilationUnit`, metadata trio → `FluentRoot*`
+- Renamed `FluentFactoryMethodDeclaration` → `StepTerminalMethodDeclaration`, `FluentRootFactoryMethodDeclaration` → `RootTerminalMethodDeclaration`
+- Renamed internal GoF helpers: `FluentModelFactory` → `FluentModelBuilder`, `FluentMethodFactory` → `FluentMethodBuilder`, `IgnoredMultiMethodWarningFactory` → `IgnoredMultiMethodWarningBuilder`
+- Renamed test fixtures: `EmptyFactoryTests` → `EmptyRootTests`, `NestedFactoryTests` → `NestedRootTests`, `NestedFactoryRuntimeTests` → `NestedRootRuntimeTests`; all `class Factory` sample types → `class Builder`
+- Final verification: zero residual legacy vocabulary in active source/tests/docs, all `git mv` history preserved
+
+### Requirements: 25/25 Complete
+
+- NAME-01..07: All internal type renames complete
+- FILE-01..02: All source file renames via `git mv`, zero legacy file paths
+- DIAG-01..04: All diagnostic vocabulary aligned
+- TEST-01..05: All test fixture renames complete
+- DOC-01..03: Documentation aligned, repo-wide grep clean
+- BEHAV-01..04: Build green, tests green, compiler-assisted renames, git history preserved
+
+---
+
 
 ## v2.0 — Converj Rename + Feature Expansion
 
