@@ -8,10 +8,16 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Converj.Generator.SyntaxGeneration;
 
-internal static class FluentRootFactoryMethodDeclaration
+/// <summary>
+/// Emits the terminal (creation) method directly on the root type. Used when the
+/// fluent chain can construct the target in a single call from the root, with no
+/// step struct intermediates. The method takes its arguments via the parameter list
+/// rather than reading fields, because the root has no per-call value storage.
+/// </summary>
+internal static class RootTerminalMethodDeclaration
 {
     /// <summary>
-    /// Creates a method declaration syntax for a root factory method.
+    /// Creates a method declaration syntax for a terminal method emitted directly on the root type (the inline construction case where no step struct intermediates are needed).
     /// </summary>
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,

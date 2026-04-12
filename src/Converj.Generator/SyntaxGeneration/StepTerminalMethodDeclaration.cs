@@ -8,7 +8,13 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Converj.Generator.SyntaxGeneration;
 
-internal static class FluentFactoryMethodDeclaration
+/// <summary>
+/// Emits the terminal (creation) method on a step struct. The method reads its
+/// constructor argument values from <c>this.{field}</c> accessors on the surrounding
+/// step struct and returns either a <c>new T(...)</c> object-creation expression or
+/// a static-method invocation, depending on the target kind.
+/// </summary>
+internal static class StepTerminalMethodDeclaration
 {
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,
