@@ -7,18 +7,18 @@ namespace Converj.Generator.Tests;
 /// Tests for <c>[FluentRoot]</c> applied to types nested inside other types.
 /// The generator must wrap the generated partial class inside the containing type hierarchy.
 /// </summary>
-public class NestedFactoryTests
+public class NestedRootTests
 {
     private const string SourceFile = "Source.cs";
 
     /// <summary>
     /// Verifies that when a <c>[FluentRoot]</c> is declared as a nested type inside another class,
     /// the generated partial class is correctly wrapped inside the containing type declaration.
-    /// Without this fix, the generator emits <c>partial class Factory</c> at namespace level,
-    /// which creates a new unrelated type instead of extending the nested factory.
+    /// Without this fix, the generator emits <c>partial class Builder</c> at namespace level,
+    /// which creates a new unrelated type instead of extending the nested root.
     /// </summary>
     [Fact]
-    internal async Task Should_wrap_generated_factory_in_containing_type_when_factory_is_nested()
+    internal async Task Should_wrap_generated_root_in_containing_type_when_root_is_nested()
     {
         const string code =
             """
@@ -82,11 +82,11 @@ public class NestedFactoryTests
     }
 
     /// <summary>
-    /// Verifies that deeply nested factory types (multiple levels of nesting) are correctly
+    /// Verifies that deeply nested root types (multiple levels of nesting) are correctly
     /// wrapped in the full containing type hierarchy.
     /// </summary>
     [Fact]
-    internal async Task Should_wrap_generated_factory_in_deeply_nested_containing_types()
+    internal async Task Should_wrap_generated_root_in_deeply_nested_containing_types()
     {
         const string code =
             """

@@ -7,10 +7,10 @@ namespace Converj.Generator.Tests;
 /// Issue #19: A [FluentRoot] with no [FluentTarget] attributes anywhere.
 /// The generator should gracefully produce nothing without crashing.
 /// </summary>
-public class EmptyFactoryTests
+public class EmptyRootTests
 {
     [Fact]
-    internal async Task Should_not_crash_when_factory_has_no_constructors()
+    internal async Task Should_not_crash_when_root_has_no_targets()
     {
         const string code =
             """
@@ -20,7 +20,7 @@ public class EmptyFactoryTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
             """;
 
         await new VerifyCS.Test
