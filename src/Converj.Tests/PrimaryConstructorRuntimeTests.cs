@@ -6,9 +6,9 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal partial class PrimaryCtorFactory;
+internal partial class PrimaryCtorBuilder;
 
-[FluentTarget<PrimaryCtorFactory>]
+[FluentTarget<PrimaryCtorBuilder>]
 internal class PrimaryCtorTarget(int value, string name)
 {
     public int Value { get; } = value;
@@ -22,7 +22,7 @@ public class PrimaryConstructorRuntimeTests
     [Fact]
     public void Primary_constructor_target_should_receive_threaded_values()
     {
-        var result = PrimaryCtorFactory.WithValue(7).WithName("primary").CreatePrimaryCtorTarget();
+        var result = PrimaryCtorBuilder.WithValue(7).WithName("primary").CreatePrimaryCtorTarget();
 
         result.Value.ShouldBe(7);
         result.Name.ShouldBe("primary");

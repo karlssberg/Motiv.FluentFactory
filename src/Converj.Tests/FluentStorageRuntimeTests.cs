@@ -9,16 +9,16 @@ namespace Converj.Tests;
 // StorageStepA has ctor (x, y, z) with Z stored via [FluentStorage].
 // Target takes (x, y, z) — the generated Create reads all values from the step.
 [FluentRoot]
-internal partial class StorageFactory;
+internal partial class StorageBuilder;
 
-[FluentTarget<StorageFactory>(TerminalMethod = TerminalMethod.None)]
+[FluentTarget<StorageBuilder>(TerminalMethod = TerminalMethod.None)]
 internal partial record StorageStepA(int X, int Y, string Z)
 {
     [FluentStorage]
     public string Z { get; init; } = Z;
 }
 
-[FluentTarget<StorageFactory>]
+[FluentTarget<StorageBuilder>]
 internal class StorageTargetA
 {
     public int X { get; }
@@ -35,16 +35,16 @@ internal class StorageTargetA
 
 // Scenario 2: [FluentStorage] with explicit parameter name mapping.
 [FluentRoot]
-internal partial class ExplicitStorageFactory;
+internal partial class ExplicitStorageBuilder;
 
-[FluentTarget<ExplicitStorageFactory>(TerminalMethod = TerminalMethod.None)]
+[FluentTarget<ExplicitStorageBuilder>(TerminalMethod = TerminalMethod.None)]
 internal partial record ExplicitStepA(int Id, string Label)
 {
     [FluentStorage("label")]
     public string MappedLabel { get; init; } = Label;
 }
 
-[FluentTarget<ExplicitStorageFactory>]
+[FluentTarget<ExplicitStorageBuilder>]
 internal class ExplicitTargetA
 {
     public int Id { get; }
@@ -59,12 +59,12 @@ internal class ExplicitTargetA
 
 // Scenario 3: Step with a nullable parameter threaded to target.
 [FluentRoot]
-internal partial class NullableStorageFactory;
+internal partial class NullableStorageBuilder;
 
-[FluentTarget<NullableStorageFactory>(TerminalMethod = TerminalMethod.None)]
+[FluentTarget<NullableStorageBuilder>(TerminalMethod = TerminalMethod.None)]
 internal partial record NullableStepA(int A, int B, string? Tag);
 
-[FluentTarget<NullableStorageFactory>]
+[FluentTarget<NullableStorageBuilder>]
 internal class NullableTargetA
 {
     public int A { get; }
@@ -81,11 +81,11 @@ internal class NullableTargetA
 
 // Scenario 4: Single constructor step with TerminalMethod.None.
 [FluentRoot(TerminalMethod = TerminalMethod.None)]
-internal partial class TwoCtorStepFactory;
+internal partial class TwoCtorStepBuilder;
 
 internal partial class TwoCtorStep
 {
-    [FluentTarget<TwoCtorStepFactory>]
+    [FluentTarget<TwoCtorStepBuilder>]
     public TwoCtorStep(int a, int b, double c)
     {
         A = a;
@@ -105,7 +105,7 @@ public class FluentStorageRuntimeTests
     [Fact]
     public void FluentStorage_property_should_thread_value_to_final_target()
     {
-        var result = StorageFactory
+        var result = StorageBuilder
             .WithX(10)
             .WithY(20)
             .WithZ("hello")
@@ -119,7 +119,7 @@ public class FluentStorageRuntimeTests
     [Fact]
     public void Explicit_parameter_name_should_thread_value_via_mapped_member()
     {
-        var result = ExplicitStorageFactory
+        var result = ExplicitStorageBuilder
             .WithId(42)
             .WithLabel("test")
             .CreateExplicitTargetA();
@@ -131,7 +131,7 @@ public class FluentStorageRuntimeTests
     [Fact]
     public void Nullable_parameter_with_value_should_thread_through_step()
     {
-        var result = NullableStorageFactory
+        var result = NullableStorageBuilder
             .WithA(1)
             .WithB(2)
             .WithTag("tagged")
@@ -145,7 +145,7 @@ public class FluentStorageRuntimeTests
     [Fact]
     public void Nullable_parameter_with_null_should_thread_null_to_target()
     {
-        var result = NullableStorageFactory
+        var result = NullableStorageBuilder
             .WithA(1)
             .WithB(2)
             .WithTag(null)
@@ -159,7 +159,7 @@ public class FluentStorageRuntimeTests
     [Fact]
     public void Single_ctor_step_should_thread_all_params()
     {
-        var result = TwoCtorStepFactory
+        var result = TwoCtorStepBuilder
             .WithA(1)
             .WithB(5)
             .WithC(3.14);

@@ -6,18 +6,18 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal partial class RecordFactory;
+internal partial class RecordBuilder;
 
-[FluentTarget<RecordFactory>]
+[FluentTarget<RecordBuilder>]
 internal record PositionalRecord(int X, int Y);
 
-[FluentTarget<RecordFactory>]
+[FluentTarget<RecordBuilder>]
 internal record struct PositionalRecordStruct(int X, int Y);
 
 [FluentRoot]
-internal partial class ClassFactory;
+internal partial class ClassBuilder;
 
-[FluentTarget<ClassFactory>]
+[FluentTarget<ClassBuilder>]
 internal class ClassTarget
 {
     public int Value { get; }
@@ -37,7 +37,7 @@ public class RecordVariationRuntimeTests
     [Fact]
     public void Record_target_should_receive_threaded_values()
     {
-        var result = RecordFactory.WithX(3).WithY(4).CreatePositionalRecord();
+        var result = RecordBuilder.WithX(3).WithY(4).CreatePositionalRecord();
 
         result.X.ShouldBe(3);
         result.Y.ShouldBe(4);
@@ -46,7 +46,7 @@ public class RecordVariationRuntimeTests
     [Fact]
     public void Record_struct_target_should_receive_threaded_values()
     {
-        var result = RecordFactory.WithX(5).WithY(6).CreatePositionalRecordStruct();
+        var result = RecordBuilder.WithX(5).WithY(6).CreatePositionalRecordStruct();
 
         result.X.ShouldBe(5);
         result.Y.ShouldBe(6);
@@ -55,7 +55,7 @@ public class RecordVariationRuntimeTests
     [Fact]
     public void Class_target_should_receive_threaded_values()
     {
-        var result = ClassFactory.WithValue(10).WithName("test").CreateClassTarget();
+        var result = ClassBuilder.WithValue(10).WithName("test").CreateClassTarget();
 
         result.Value.ShouldBe(10);
         result.Name.ShouldBe("test");

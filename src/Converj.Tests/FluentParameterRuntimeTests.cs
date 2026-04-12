@@ -10,43 +10,43 @@ internal interface IService;
 internal record TestService(string Id) : IService;
 
 [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
-internal partial record ServiceFactoryForTest(IService Service);
+internal partial record ServiceBuilderForTest(IService Service);
 
-[FluentTarget<ServiceFactoryForTest>]
+[FluentTarget<ServiceBuilderForTest>]
 internal record ServiceConsumer(IService Service, string Name);
 
 [FluentRoot]
-internal partial class FieldParameterFactory
+internal partial class FieldParameterBuilder
 {
     [FluentParameter]
     private readonly int _scale;
 
-    public FieldParameterFactory(int scale)
+    public FieldParameterBuilder(int scale)
     {
         _scale = scale;
     }
 }
 
-[FluentTarget<FieldParameterFactory>]
+[FluentTarget<FieldParameterBuilder>]
 internal record ScaledItem(int Scale, string Label);
 
 [FluentRoot]
-internal partial class PropertyParameterFactory
+internal partial class PropertyParameterBuilder
 {
     [FluentParameter]
     public string Prefix { get; }
 
-    public PropertyParameterFactory(string prefix)
+    public PropertyParameterBuilder(string prefix)
     {
         Prefix = prefix;
     }
 }
 
-[FluentTarget<PropertyParameterFactory>]
+[FluentTarget<PropertyParameterBuilder>]
 internal record PrefixedItem(string Prefix, int Order);
 
 [FluentRoot]
-internal partial class MultiFluentParamFactory
+internal partial class MultiFluentParamBuilder
 {
     [FluentParameter]
     public int X { get; }
@@ -54,14 +54,14 @@ internal partial class MultiFluentParamFactory
     [FluentParameter]
     public int Y { get; }
 
-    public MultiFluentParamFactory(int x, int y)
+    public MultiFluentParamBuilder(int x, int y)
     {
         X = x;
         Y = y;
     }
 }
 
-[FluentTarget<MultiFluentParamFactory>]
+[FluentTarget<MultiFluentParamBuilder>]
 internal record CoordinateItem(int X, int Y, string Label);
 
 #endregion
@@ -72,9 +72,9 @@ public class FluentParameterRuntimeTests
     public void Record_primary_constructor_parameter_should_be_threaded()
     {
         IService service = new TestService("svc-1");
-        var factory = new ServiceFactoryForTest(service);
+        var builder = new ServiceBuilderForTest(service);
 
-        var result = factory.WithName("consumer-1").Create();
+        var result = builder.WithName("consumer-1").Create();
 
         result.Service.ShouldBeSameAs(service);
         result.Name.ShouldBe("consumer-1");
@@ -83,9 +83,9 @@ public class FluentParameterRuntimeTests
     [Fact]
     public void Field_fluent_parameter_should_be_threaded()
     {
-        var factory = new FieldParameterFactory(5);
+        var builder = new FieldParameterBuilder(5);
 
-        var result = factory.WithLabel("item").CreateScaledItem();
+        var result = builder.WithLabel("item").CreateScaledItem();
 
         result.Scale.ShouldBe(5);
         result.Label.ShouldBe("item");
@@ -94,9 +94,9 @@ public class FluentParameterRuntimeTests
     [Fact]
     public void Property_fluent_parameter_should_be_threaded()
     {
-        var factory = new PropertyParameterFactory("pre");
+        var builder = new PropertyParameterBuilder("pre");
 
-        var result = factory.WithOrder(3).CreatePrefixedItem();
+        var result = builder.WithOrder(3).CreatePrefixedItem();
 
         result.Prefix.ShouldBe("pre");
         result.Order.ShouldBe(3);
@@ -105,9 +105,9 @@ public class FluentParameterRuntimeTests
     [Fact]
     public void Multiple_fluent_parameters_should_all_be_threaded()
     {
-        var factory = new MultiFluentParamFactory(10, 20);
+        var builder = new MultiFluentParamBuilder(10, 20);
 
-        var result = factory.WithLabel("origin").CreateCoordinateItem();
+        var result = builder.WithLabel("origin").CreateCoordinateItem();
 
         result.X.ShouldBe(10);
         result.Y.ShouldBe(20);
@@ -115,13 +115,13 @@ public class FluentParameterRuntimeTests
     }
 
     [Fact]
-    public void Different_factory_instances_should_thread_different_values()
+    public void Different_builder_instances_should_thread_different_values()
     {
-        var factory1 = new ServiceFactoryForTest(new TestService("svc-1"));
-        var factory2 = new ServiceFactoryForTest(new TestService("svc-2"));
+        var builder1 = new ServiceBuilderForTest(new TestService("svc-1"));
+        var builder2 = new ServiceBuilderForTest(new TestService("svc-2"));
 
-        var result1 = factory1.WithName("a").Create();
-        var result2 = factory2.WithName("b").Create();
+        var result1 = builder1.WithName("a").Create();
+        var result2 = builder2.WithName("b").Create();
 
         ((TestService)result1.Service).Id.ShouldBe("svc-1");
         ((TestService)result2.Service).Id.ShouldBe("svc-2");

@@ -6,9 +6,9 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal partial class ChainingFactory;
+internal partial class ChainingBuilder;
 
-[FluentTarget<ChainingFactory>]
+[FluentTarget<ChainingBuilder>]
 internal class ChainingTarget
 {
     public int X { get; }
@@ -34,7 +34,7 @@ public class ConstructorChainingRuntimeTests
     [Fact]
     public void Chained_constructor_should_thread_values_correctly()
     {
-        var result = ChainingFactory.WithX(1).WithY(2).CreateChainingTarget();
+        var result = ChainingBuilder.WithX(1).WithY(2).CreateChainingTarget();
 
         result.X.ShouldBe(1);
         result.Y.ShouldBe(2);

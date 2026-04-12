@@ -6,9 +6,9 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal partial class LargeParamFactory;
+internal partial class LargeParamBuilder;
 
-[FluentTarget<LargeParamFactory>]
+[FluentTarget<LargeParamBuilder>]
 internal record LargeTarget(
     int P1, int P2, int P3, int P4, int P5,
     int P6, int P7, int P8);
@@ -20,7 +20,7 @@ public class LargeParameterCountRuntimeTests
     [Fact]
     public void Eight_parameters_should_all_thread_correctly()
     {
-        var result = LargeParamFactory
+        var result = LargeParamBuilder
             .WithP1(1).WithP2(2).WithP3(3).WithP4(4)
             .WithP5(5).WithP6(6).WithP7(7).WithP8(8)
             .CreateLargeTarget();

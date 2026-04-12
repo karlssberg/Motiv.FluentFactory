@@ -6,12 +6,12 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal static partial class ArrayFactory;
+internal static partial class ArrayBuilder;
 
-[FluentTarget(typeof(ArrayFactory))]
+[FluentTarget(typeof(ArrayBuilder))]
 internal record ArrayTarget(int[] Items);
 
-[FluentTarget(typeof(ArrayFactory))]
+[FluentTarget(typeof(ArrayBuilder))]
 internal record StringArrayTarget(string[] Names);
 
 #endregion
@@ -23,7 +23,7 @@ public class GenericArrayRuntimeTests
     {
         var items = new[] { 1, 2, 3 };
 
-        var result = ArrayFactory.WithItems(items).CreateArrayTarget();
+        var result = ArrayBuilder.WithItems(items).CreateArrayTarget();
 
         result.Items.ShouldBe(items);
     }
@@ -33,7 +33,7 @@ public class GenericArrayRuntimeTests
     {
         var names = new[] { "a", "b", "c" };
 
-        var result = ArrayFactory.WithNames(names).CreateStringArrayTarget();
+        var result = ArrayBuilder.WithNames(names).CreateStringArrayTarget();
 
         result.Names.ShouldBe(names);
     }

@@ -6,12 +6,12 @@ namespace Converj.Tests;
 #region Test types
 
 [FluentRoot]
-internal static partial class NestedGenericFactory;
+internal static partial class NestedGenericBuilder;
 
-[FluentTarget(typeof(NestedGenericFactory))]
+[FluentTarget(typeof(NestedGenericBuilder))]
 internal record ListTarget<T>(List<T> Items);
 
-[FluentTarget(typeof(NestedGenericFactory))]
+[FluentTarget(typeof(NestedGenericBuilder))]
 internal record DeepNestedTarget<T>(List<List<T>> DeepItems);
 
 #endregion
@@ -23,7 +23,7 @@ public class NestedGenericRuntimeTests
     {
         var items = new List<int> { 1, 2, 3 };
 
-        var result = NestedGenericFactory.WithItems(items).CreateListTarget();
+        var result = NestedGenericBuilder.WithItems(items).CreateListTarget();
 
         result.Items.ShouldBe(items);
     }
@@ -33,7 +33,7 @@ public class NestedGenericRuntimeTests
     {
         var deep = new List<List<string>> { new() { "a", "b" }, new() { "c" } };
 
-        var result = NestedGenericFactory.WithDeepItems(deep).CreateDeepNestedTarget();
+        var result = NestedGenericBuilder.WithDeepItems(deep).CreateDeepNestedTarget();
 
         result.DeepItems.ShouldBe(deep);
     }
