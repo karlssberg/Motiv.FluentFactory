@@ -136,7 +136,10 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. A repo-wide `git grep -n "FluentFactory\|FluentConstructor\|BuilderMethod\|InitialVerb\|MFFG\|Motiv\.FluentFactory"` (scoped to active source, tests, and docs, excluding `.planning/MILESTONES.md` and `.planning/v1.*-*.md` historical artifacts) returns zero hits
   4. No `.cs` file path under `src/Converj.Generator/` contains `FluentFactory`, `FluentConstructor`, or `BuilderMethod` — verifiable via `git ls-files 'src/Converj.Generator/**/*.cs'` piped through grep
   5. Milestone-level behavior preservation is verified: final `dotnet build` succeeds with zero warnings, final `dotnet test` passes every existing test, `git log --follow` shows preserved history across the renamed files (evidence that `git mv` was used, not blind delete+create), and every rename in phases 16-19 was performed via compiler-assisted rename (IDE/roslyn) rather than blind text replace
-**Plans**: TBD
+**Plans** (2 plans in 2 waves):
+Plans:
+- [ ] 20-01-PLAN.md — Update CLAUDE.md vocabulary, fix 3 source comment residuals, run DOC-03/FILE-02 grep gates
+- [ ] 20-02-PLAN.md — Final build/test verification and git history audit for BEHAV-01..04
 
 ## Progress
 
@@ -161,4 +164,4 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 17. Core Generator Type Renames | 3/3 | Complete    | 2026-04-12 | - |
 | 18. Builder Pattern Renames | 1/1 | Complete    | 2026-04-12 | - |
 | 19. Test Fixture Alignment | 3/3 | Complete    | 2026-04-12 | - |
-| 20. Documentation Cleanup & Final Verification | v2.1 | 0/? | Not started | - |
+| 20. Documentation Cleanup & Final Verification | v2.1 | 0/2 | Not started | - |
