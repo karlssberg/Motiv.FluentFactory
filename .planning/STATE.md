@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
-status: Phase 16 complete; ready for Phase 17
+status: completed
 stopped_at: Completed 16-03-PLAN.md (Phase 16 closed)
-last_updated: "2026-04-12T00:01:35.368Z"
-last_activity: 2026-04-12 — Plan 16-03 executed (AnalyzerReleases.Unshipped.md rewritten to 48 rows, Phase 16 DIAG-04 gate green)
+last_updated: "2026-04-12T00:06:24.463Z"
+last_activity: 2026-04-12 — Plan 16-03 executed (AnalyzerReleases.Unshipped.md rewritten to 48 rows, Phase 16 DIAG-04 gate green, all 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 1
