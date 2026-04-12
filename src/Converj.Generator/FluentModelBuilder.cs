@@ -18,7 +18,7 @@ internal class FluentModelBuilder(Compilation compilation)
     private ParameterBindingResolver _bindingResolver = null!;
     private INamedTypeSymbol _rootType = null!;
 
-    public FluentRootCompilationUnit CreateFluentFactoryCompilationUnit(
+    public FluentRootCompilationUnit CreateFluentRootCompilationUnit(
         INamedTypeSymbol rootType,
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {

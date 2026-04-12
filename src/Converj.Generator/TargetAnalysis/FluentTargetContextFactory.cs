@@ -30,7 +30,7 @@ internal static class FluentTargetContextFactory
 
         return
         [
-            ..FluentRootMetadataReader.GetFluentFactoryMetadata(symbol)
+            ..FluentRootMetadataReader.GetFluentRootMetadata(symbol)
                 .Select(metadata =>
                 {
                     var attributePresent = metadata.AttributePresent;
@@ -38,7 +38,7 @@ internal static class FluentTargetContextFactory
                     if (!attributePresent || string.IsNullOrWhiteSpace(rootTypeFullName))
                         return [];
 
-                    var defaults = FluentRootMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
+                    var defaults = FluentRootMetadataReader.GetFluentRootDefaults(metadata.RootTypeSymbol);
                     metadata.TerminalMethod ??= defaults.TerminalMethod;
                     metadata.TerminalVerb ??= defaults.TerminalVerb;
                     metadata.MethodPrefix ??= defaults.MethodPrefix;

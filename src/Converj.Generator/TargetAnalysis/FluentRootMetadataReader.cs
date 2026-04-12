@@ -20,7 +20,7 @@ internal static class FluentRootMetadataReader
     /// </summary>
     /// <param name="symbol">The symbol to extract metadata from.</param>
     /// <returns>An enumerable of fluent root metadata for each attribute found.</returns>
-    public static IEnumerable<FluentRootMetadata> GetFluentFactoryMetadata(ISymbol symbol)
+    public static IEnumerable<FluentRootMetadata> GetFluentRootMetadata(ISymbol symbol)
     {
         return symbol.GetAttributes()
             .Where(IsFluentTargetAttribute)
@@ -94,7 +94,7 @@ internal static class FluentRootMetadataReader
     /// </summary>
     /// <param name="rootType">The root type symbol that has the [FluentRoot] attribute.</param>
     /// <returns>Root defaults with nullable values (null = not explicitly set).</returns>
-    public static FluentRootDefaults GetFluentFactoryDefaults(INamedTypeSymbol rootType)
+    public static FluentRootDefaults GetFluentRootDefaults(INamedTypeSymbol rootType)
     {
         var attribute = rootType.GetAttributes(TypeName.FluentRootAttribute).FirstOrDefault();
 
