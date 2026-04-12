@@ -12,7 +12,7 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 - [x] **NAME-01**: `FluentFactoryGenerator` is renamed to `FluentRootGenerator` (the top-level `IIncrementalGenerator`)
 - [x] **NAME-02**: `FluentFactoryCompilationUnit` is renamed to `FluentRootCompilationUnit`
-- [ ] **NAME-03**: `FluentFactoryMetadata`, `FluentFactoryMetadataReader`, and `FluentFactoryDefaults` are renamed under Root vocabulary (e.g., `FluentRootMetadata`, `FluentRootMetadataReader`, `FluentRootDefaults`)
+- [x] **NAME-03**: `FluentFactoryMetadata`, `FluentFactoryMetadataReader`, and `FluentFactoryDefaults` are renamed under Root vocabulary (e.g., `FluentRootMetadata`, `FluentRootMetadataReader`, `FluentRootDefaults`)
 - [ ] **NAME-04**: `FluentFactoryMethodDeclaration` and `FluentRootFactoryMethodDeclaration` are renamed to reflect their actual responsibilities (executor reads code to pick accurate Root/Step/Target/Entry terminology, documents the chosen vocabulary)
 - [ ] **NAME-05**: `FluentModelFactory` is renamed to `FluentModelBuilder`
 - [ ] **NAME-06**: `FluentMethodFactory` is renamed to `FluentMethodBuilder`
@@ -76,7 +76,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | NAME-01 | Phase 17 | Complete |
 | NAME-02 | Phase 17 | Complete |
-| NAME-03 | Phase 17 | Pending |
+| NAME-03 | Phase 17 | Complete |
 | NAME-04 | Phase 17 | Pending |
 | NAME-05 | Phase 18 | Pending |
 | NAME-06 | Phase 18 | Pending |
