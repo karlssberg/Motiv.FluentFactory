@@ -14,7 +14,7 @@ internal static class GeneratedCodeAttributeSyntax
     /// </summary>
     public static AttributeListSyntax Create()
     {
-        var version = typeof(FluentFactoryGenerator).Assembly.GetName().Version?.ToString() ?? "0.0.0";
+        var version = typeof(FluentRootGenerator).Assembly.GetName().Version?.ToString() ?? "0.0.0";
 
         var attribute = Attribute(
             ParseName("global::System.CodeDom.Compiler.GeneratedCode"),

@@ -9,7 +9,7 @@ namespace Converj.Generator.SyntaxGeneration;
 internal static class CompilationUnit
 {
     public static SyntaxNode CreateCompilationUnit(
-        FluentFactoryCompilationUnit file)
+        FluentRootCompilationUnit file)
     {
         var members = GetMembers(file);
 
@@ -17,7 +17,7 @@ internal static class CompilationUnit
             .WithMembers(List(members));
     }
 
-    private static IEnumerable<MemberDeclarationSyntax> GetMembers(FluentFactoryCompilationUnit file)
+    private static IEnumerable<MemberDeclarationSyntax> GetMembers(FluentRootCompilationUnit file)
     {
         var rootTypeDeclaration = RootTypeDeclaration.Create(file);
         var rootType = WrapInContainingTypes(rootTypeDeclaration, file.RootType);
@@ -150,7 +150,7 @@ internal static class CompilationUnit
         return declaration;
     }
 
-    private static bool DoFluentStepsShareTheRootNamespace(FluentFactoryCompilationUnit file)
+    private static bool DoFluentStepsShareTheRootNamespace(FluentRootCompilationUnit file)
     {
         var rootNamespace = file.RootType.ContainingNamespace;
         return

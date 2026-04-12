@@ -10,7 +10,7 @@ namespace Converj.Generator.SyntaxGeneration;
 
 internal static class RootTypeDeclaration
 {
-    public static TypeDeclarationSyntax Create(FluentFactoryCompilationUnit file)
+    public static TypeDeclarationSyntax Create(FluentRootCompilationUnit file)
     {
         var rootMethodDeclarations = GetRootMethodDeclarations(file);
 
@@ -65,7 +65,7 @@ internal static class RootTypeDeclaration
     /// parameters that have no explicit storage.
     /// </summary>
     private static IEnumerable<MemberDeclarationSyntax> GetGeneratedFluentParameterFields(
-        FluentFactoryCompilationUnit file)
+        FluentRootCompilationUnit file)
     {
         return file.ThreadedParameters
             .Where(b => b.FactoryMember.RequiresGeneratedField)
@@ -106,7 +106,7 @@ internal static class RootTypeDeclaration
         return List(constraintClauses);
     }
 
-    private static IEnumerable<SyntaxToken> GetRootTypeModifiers(FluentFactoryCompilationUnit file)
+    private static IEnumerable<SyntaxToken> GetRootTypeModifiers(FluentRootCompilationUnit file)
     {
         foreach (var syntaxKind in file.Accessibility.AccessibilityToSyntaxKind())
         {
@@ -119,7 +119,7 @@ internal static class RootTypeDeclaration
         yield return Token(SyntaxKind.PartialKeyword);
     }
 
-    private static IEnumerable<MethodDeclarationSyntax> GetRootMethodDeclarations(FluentFactoryCompilationUnit file)
+    private static IEnumerable<MethodDeclarationSyntax> GetRootMethodDeclarations(FluentRootCompilationUnit file)
     {
         var effectiveToLocalMap = BuildEffectiveToLocalMapping(file.RootType);
 
@@ -130,7 +130,7 @@ internal static class RootTypeDeclaration
 
     private static (MethodDeclarationSyntax Syntax, bool IsInstance) BuildRootMethodSyntax(
         IFluentMethod method,
-        FluentFactoryCompilationUnit file)
+        FluentRootCompilationUnit file)
     {
         var isInstance = IsInstanceMethod(method, file);
 
@@ -159,7 +159,7 @@ internal static class RootTypeDeclaration
         MethodDeclarationSyntax syntax,
         IFluentMethod method,
         bool isInstance,
-        FluentFactoryCompilationUnit file)
+        FluentRootCompilationUnit file)
     {
         if (!isInstance) return syntax;
 
@@ -206,7 +206,7 @@ internal static class RootTypeDeclaration
     /// Determines whether a root method should be an instance method (uses threaded parameters)
     /// or a static method.
     /// </summary>
-    private static bool IsInstanceMethod(IFluentMethod method, FluentFactoryCompilationUnit file)
+    private static bool IsInstanceMethod(IFluentMethod method, FluentRootCompilationUnit file)
     {
         if (file.ThreadedParameters.IsEmpty) return false;
 

@@ -18,7 +18,7 @@ internal class FluentModelFactory(Compilation compilation)
     private ParameterBindingResolver _bindingResolver = null!;
     private INamedTypeSymbol _rootType = null!;
 
-    public FluentFactoryCompilationUnit CreateFluentFactoryCompilationUnit(
+    public FluentRootCompilationUnit CreateFluentFactoryCompilationUnit(
         INamedTypeSymbol rootType,
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
@@ -60,7 +60,7 @@ internal class FluentModelFactory(Compilation compilation)
         validContexts = TargetContextFilter.FilterErrorTypeConstructors(validContexts);
 
         if (validContexts.IsEmpty)
-            return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics };
+            return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics };
 
         fluentTargetContexts = validContexts;
 
@@ -84,7 +84,7 @@ internal class FluentModelFactory(Compilation compilation)
 
         if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
         {
-            return new FluentFactoryCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
+            return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
         }
 
         // Split constructors: type-first ones are excluded from the parameter-first trie
@@ -183,7 +183,7 @@ internal class FluentModelFactory(Compilation compilation)
         _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
         var sampleConstructorContext = fluentTargetContexts.First();
 
-        return new FluentFactoryCompilationUnit(rootType)
+        return new FluentRootCompilationUnit(rootType)
         {
             FluentMethods = fluentRootMethods,
             FluentSteps = fluentBuilderSteps,
