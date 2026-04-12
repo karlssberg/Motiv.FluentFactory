@@ -137,7 +137,7 @@ internal static class RootTypeDeclaration
         var syntax = method switch
         {
             { Return: TargetTypeReturn } =>
-                FluentRootFactoryMethodDeclaration.Create(method, file.RootType),
+                RootTerminalMethodDeclaration.Create(method, file.RootType),
             
             OptionalGatewayMethod gateway =>
                 OptionalGatewayMethodDeclaration.Create(gateway),

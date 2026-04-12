@@ -24,7 +24,7 @@ internal static class FluentStepDeclaration
             .Select<IFluentMethod, MethodDeclarationSyntax>(method =>
                 method switch
                 {
-                    CreationMethod createMethod => FluentFactoryMethodDeclaration.Create(createMethod, step),
+                    CreationMethod createMethod => StepTerminalMethodDeclaration.Create(createMethod, step),
                     MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters, ambientTypeParameters, isStepContext: true),
                     OptionalFluentMethod optionalMethod => OptionalFluentMethodDeclaration.Create(optionalMethod, step),
                     OptionalPropertyFluentMethod optionalPropertyMethod => OptionalPropertyFluentMethodDeclaration.Create(optionalPropertyMethod, step),
