@@ -14,9 +14,9 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 - [x] **NAME-02**: `FluentFactoryCompilationUnit` is renamed to `FluentRootCompilationUnit`
 - [x] **NAME-03**: `FluentFactoryMetadata`, `FluentFactoryMetadataReader`, and `FluentFactoryDefaults` are renamed under Root vocabulary (e.g., `FluentRootMetadata`, `FluentRootMetadataReader`, `FluentRootDefaults`)
 - [x] **NAME-04**: `FluentFactoryMethodDeclaration` and `FluentRootFactoryMethodDeclaration` are renamed to reflect their actual responsibilities (executor reads code to pick accurate Root/Step/Target/Entry terminology, documents the chosen vocabulary)
-- [ ] **NAME-05**: `FluentModelFactory` is renamed to `FluentModelBuilder`
-- [ ] **NAME-06**: `FluentMethodFactory` is renamed to `FluentMethodBuilder`
-- [ ] **NAME-07**: `IgnoredMultiMethodWarningFactory` is renamed to `IgnoredMultiMethodWarningBuilder`
+- [x] **NAME-05**: `FluentModelFactory` is renamed to `FluentModelBuilder`
+- [x] **NAME-06**: `FluentMethodFactory` is renamed to `FluentMethodBuilder`
+- [x] **NAME-07**: `IgnoredMultiMethodWarningFactory` is renamed to `IgnoredMultiMethodWarningBuilder`
 
 ### Source File Renames
 
@@ -78,9 +78,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAME-02 | Phase 17 | Complete |
 | NAME-03 | Phase 17 | Complete |
 | NAME-04 | Phase 17 | Complete |
-| NAME-05 | Phase 18 | Pending |
-| NAME-06 | Phase 18 | Pending |
-| NAME-07 | Phase 18 | Pending |
+| NAME-05 | Phase 18 | Complete |
+| NAME-06 | Phase 18 | Complete |
+| NAME-07 | Phase 18 | Complete |
 | FILE-01 | Phase 17 | Complete |
 | FILE-02 | Phase 20 | Pending |
 | DIAG-01 | Phase 16 | Complete |
