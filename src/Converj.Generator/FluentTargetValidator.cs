@@ -108,7 +108,7 @@ internal static class FluentTargetValidatorExtensions
 
     private static IEnumerable<Diagnostic> ValidateRootTypeAttributes(ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        // Check if the target type has the FluentFactory attribute
+        // Check if the target type has the FluentRoot attribute
         var constructorContexts = fluentTargetContexts
             .Where(context => !context.RootType.HasAttribute(TypeName.FluentRootAttribute));
 

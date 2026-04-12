@@ -88,7 +88,7 @@ internal static class FluentAttributeExtensions
                             method.Locations,
                             ImmutableDictionary.Create<string, string?>()
                                 .Add("FluentMethodTemplate", method.ToFullDisplayString())
-                                .Add("FluentConstructorParameter", parameterSymbol.ToFullDisplayString()),
+                                .Add("FluentTargetParameter", parameterSymbol.ToFullDisplayString()),
                             method.ToFullDisplayString(),
                             parameterSymbol.ToFullDisplayString())
                     ]);

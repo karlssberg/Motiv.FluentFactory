@@ -46,7 +46,7 @@ internal static class ExistingPartialTypeStepDeclaration
                 ..methodDeclarationSyntaxes,
             ]));
 
-        if (!HasOwnFactoryDeclaration(representative))
+        if (!HasOwnRootDeclaration(representative))
             typeDeclaration = typeDeclaration.WithAttributeLists(
                 SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()));
 
@@ -77,10 +77,10 @@ internal static class ExistingPartialTypeStepDeclaration
     }
 
     /// <summary>
-    /// Checks whether the existing type has a [FluentFactory] attribute, indicating it has
+    /// Checks whether the existing type has a [FluentRoot] attribute, indicating it has
     /// its own generated file that already emits [GeneratedCode] on its partial declaration.
     /// </summary>
-    private static bool HasOwnFactoryDeclaration(ExistingTypeFluentStep step)
+    private static bool HasOwnRootDeclaration(ExistingTypeFluentStep step)
     {
         return step.ConstructorContext.Constructor.ContainingType
             .GetAttributes(TypeName.FluentRootAttribute)

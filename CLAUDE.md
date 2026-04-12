@@ -29,7 +29,7 @@ Global settings in `Directory.Build.props`: C# latest, nullable enabled, warning
 
 ## Generator Architecture
 
-The generator follows a 4-step incremental pipeline in `FluentFactoryGenerator.cs`:
+The generator follows a 4-step incremental pipeline in `FluentRootGenerator.cs`:
 
 1. **Syntax Filtering** — Find `[FluentTarget]` on types, constructors, and methods via `ForAttributeWithMetadataName`
 2. **Target Analysis** (`ConstructorAnalysis/`) — Extract metadata from Roslyn symbols: storage strategies (field, property, primary constructor, record), parameters, root metadata
@@ -37,7 +37,7 @@ The generator follows a 4-step incremental pipeline in `FluentFactoryGenerator.c
 4. **Syntax Generation** (`SyntaxGeneration/`) — Emit Roslyn syntax trees producing `{Namespace}.{RootName}.g.cs` files
 
 Key domain types at the generator root level:
-- `FluentFactoryCompilationUnit` — Top-level output unit per root
+- `FluentRootCompilationUnit` — Top-level output unit per root
 - `IFluentMethod` / `IFluentReturn` — Polymorphic method-to-return chain
 - `IFluentStep` — Builder step abstraction (regular struct steps vs existing partial types)
 - `IFluentValueStorage` — Strategy for how parameters are stored (field, property, primary constructor, null)
@@ -77,14 +77,14 @@ The receiver is extracted from the parameter list before trie building and threa
 
 ## Test Patterns
 
-Tests use `CSharpSourceGeneratorVerifier<FluentFactoryGenerator>` (defined in the test project), which wraps Roslyn's `CSharpSourceGeneratorTest`. Each test:
+Tests use `CSharpSourceGeneratorVerifier<FluentRootGenerator>` (defined in the test project), which wraps Roslyn's `CSharpSourceGeneratorTest`. Each test:
 
 1. Defines input C# source as a raw string literal (`"""..."""`)
 2. Defines expected generated output as a raw string literal
 3. Adds both to a `VerifyCS.Test` instance and calls `RunAsync()`
 
 ```csharp
-using VerifyCS = Converj.Generator.Tests.CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
+using VerifyCS = Converj.Generator.Tests.CSharpSourceGeneratorVerifier<FluentRootGenerator>;
 
 [Fact]
 internal async Task Should_generate_when_...()
@@ -94,7 +94,7 @@ internal async Task Should_generate_when_...()
 
     var test = new VerifyCS.Test
     {
-        TestState = { Sources = { code }, GeneratedSources = { (typeof(FluentFactoryGenerator), "FileName.g.cs", expected) } }
+        TestState = { Sources = { code }, GeneratedSources = { (typeof(FluentRootGenerator), "FileName.g.cs", expected) } }
     };
     await test.RunAsync();
 }
