@@ -63,7 +63,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
 - [x] **Phase 17: Core Generator Type Renames** - Rename the top-level `FluentFactory*` generator types (Generator, CompilationUnit, Metadata, MethodDeclaration) to `FluentRoot*` vocabulary and `git mv` their files (completed 2026-04-12)
 - [x] **Phase 18: Builder Pattern Renames** - Rename internal GoF factory helpers (`FluentModelFactory`, `FluentMethodFactory`, `IgnoredMultiMethodWarningFactory`) to `*Builder` and `git mv` their files (completed 2026-04-12)
 - [x] **Phase 19: Test Fixture Alignment** - Rename test classes, test files, and in-test sample types carrying legacy `*Factory*` vocabulary (completed 2026-04-12)
-- [ ] **Phase 20: Documentation Cleanup & Final Verification** - Align `CLAUDE.md` files, perform final repo-wide grep, confirm no residual vocabulary remains, and formally verify behavior preservation across the milestone
+- [x] **Phase 20: Documentation Cleanup & Final Verification** - Align `CLAUDE.md` files, perform final repo-wide grep, confirm no residual vocabulary remains, and formally verify behavior preservation across the milestone (completed 2026-04-12)
 
 ## Phase Details
 
@@ -164,4 +164,4 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 17. Core Generator Type Renames | 3/3 | Complete    | 2026-04-12 | - |
 | 18. Builder Pattern Renames | 1/1 | Complete    | 2026-04-12 | - |
 | 19. Test Fixture Alignment | 3/3 | Complete    | 2026-04-12 | - |
-| 20. Documentation Cleanup & Final Verification | 1/2 | In Progress|  | - |
+| 20. Documentation Cleanup & Final Verification | 2/2 | Complete   | 2026-04-12 | - |

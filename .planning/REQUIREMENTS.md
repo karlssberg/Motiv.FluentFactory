@@ -46,10 +46,10 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 
 ### Behavior Preservation
 
-- [ ] **BEHAV-01**: `dotnet build` succeeds with zero warnings at every phase boundary
-- [ ] **BEHAV-02**: `dotnet test` passes every existing test at every phase boundary (no new failing tests, no skipped tests, no modified assertions)
-- [ ] **BEHAV-03**: Every rename uses compiler-assisted refactoring (IDE rename or equivalent find-replace plus compile verification) rather than blind text replace
-- [ ] **BEHAV-04**: `git mv` is used for every file relocation to preserve file history
+- [x] **BEHAV-01**: `dotnet build` succeeds with zero warnings at every phase boundary
+- [x] **BEHAV-02**: `dotnet test` passes every existing test at every phase boundary (no new failing tests, no skipped tests, no modified assertions)
+- [x] **BEHAV-03**: Every rename uses compiler-assisted refactoring (IDE rename or equivalent find-replace plus compile verification) rather than blind text replace
+- [x] **BEHAV-04**: `git mv` is used for every file relocation to preserve file history
 
 ## Future Requirements
 
@@ -95,10 +95,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DOC-01 | Phase 20 | Complete |
 | DOC-02 | Phase 20 | Complete |
 | DOC-03 | Phase 20 | Complete |
-| BEHAV-01 | Phase 20 | Pending |
-| BEHAV-02 | Phase 20 | Pending |
-| BEHAV-03 | Phase 20 | Pending |
-| BEHAV-04 | Phase 20 | Pending |
+| BEHAV-01 | Phase 20 | Complete |
+| BEHAV-02 | Phase 20 | Complete |
+| BEHAV-03 | Phase 20 | Complete |
+| BEHAV-04 | Phase 20 | Complete |
 
 **Coverage:**
 - v2.1 requirements: 25 total
