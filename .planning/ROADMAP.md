@@ -95,7 +95,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   6. `dotnet build` succeeds with zero warnings and `dotnet test` passes all existing tests
 **Plans** (3 plans in 3 waves):
   - [ ] 17-01-PLAN.md (wave 1) — Rename FluentFactoryGenerator → FluentRootGenerator and FluentFactoryCompilationUnit → FluentRootCompilationUnit; git mv files; update internal call sites in 4 generator files plus ~50 test-file references to typeof(FluentFactoryGenerator) / CSharpSourceGeneratorVerifier<FluentFactoryGenerator> (NAME-01, NAME-02)
-  - [ ] 17-02-PLAN.md (wave 2, depends on 17-01) — Rename FluentFactoryMetadata / FluentFactoryMetadataReader / FluentFactoryDefaults → FluentRoot* trio; git mv files; update FluentTargetValidator + TargetAnalysis consumers; preserve method names GetFluentFactoryMetadata / GetFluentFactoryDefaults (deferred to Phase 18 mechanical pass) (NAME-03)
+  - [x] 17-02-PLAN.md (wave 2, depends on 17-01) — Rename FluentFactoryMetadata / FluentFactoryMetadataReader / FluentFactoryDefaults → FluentRoot* trio; git mv files; update FluentTargetValidator + TargetAnalysis consumers; preserve method names GetFluentFactoryMetadata / GetFluentFactoryDefaults (deferred to Phase 18 mechanical pass) (NAME-03) (completed 2026-04-12)
   - [x] 17-03-PLAN.md (wave 3, depends on 17-01 + 17-02) — Rename FluentFactoryMethodDeclaration → StepTerminalMethodDeclaration and FluentRootFactoryMethodDeclaration → RootTerminalMethodDeclaration (locked NAME-04 mapping based on call-site responsibility analysis); update two switch-arm call sites in FluentStepDeclaration.cs and RootTypeDeclaration.cs; run final Phase 17 zero-hit grep gate (NAME-04, FILE-01) (completed 2026-04-12)
 
 ### Phase 18: Builder Pattern Renames
@@ -156,7 +156,7 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | — v2.0 organic work — | v2.0 | — | Complete | 2026-04-11 |
 | 16. Diagnostic Alignment | 3/3 | Complete    | 2026-04-12 | - |
 | 17. Core Generator Type Renames | 3/3 | Complete    | 2026-04-12 | - |
-| 18. Builder Pattern Renames | 1/1 | Complete   | 2026-04-12 | - |
+| 18. Builder Pattern Renames | 1/1 | Complete    | 2026-04-12 | - |
 | 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 0/? | Not started | - |
 </content>
