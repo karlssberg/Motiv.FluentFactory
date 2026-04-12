@@ -15,7 +15,7 @@ public class MalformedAttributeTests
     /// <summary>
     /// Exercises CVJG0010 on a primary constructor record — combining the NoCreateMethod/CreateVerb conflict
     /// with record primary-constructor syntax. This is a distinct scenario from the explicit-constructor case
-    /// already covered in FluentFactoryGeneratorBugDiscoveryTests.
+    /// already covered in BugDiscoveryTests.
     /// </summary>
     [Fact]
     internal async Task Should_error_when_create_method_name_and_no_create_method_conflict_on_primary_constructor_record()
@@ -76,7 +76,7 @@ public class MalformedAttributeTests
         // CVJG0009 fires on the typeof(NonRootType) argument expression
         // CVJG0007 fires on the TerminalVerb = "123invalid" named argument
         // DESIRED: both CVJG0009 and CVJG0007 fire. If only CVJG0009 fires, this test will fail,
-        // documenting that validation short-circuits after the missing-FluentFactory error.
+        // documenting that validation short-circuits after the missing-FluentRoot error.
         await new VerifyCS.Test
         {
             TestState = { Sources = { (SourceFile, source) } },

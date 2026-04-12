@@ -597,7 +597,7 @@ public class BugDiscoveryTests
     [Fact]
     internal async Task Should_error_when_fluent_root_attribute_on_non_target_type()
     {
-        // Tests what happens when FluentFactory is missing on referenced type
+        // Tests what happens when FluentRoot is missing on referenced type
         const string fluentRootType = "typeof(MyTarget)";
 
         var source =
@@ -609,7 +609,7 @@ public class BugDiscoveryTests
                 // Missing [FluentRoot] attribute
                 public partial class MyTarget;
 
-                [FluentTarget({{fluentRootType}})] // References type without FluentFactory
+                [FluentTarget({{fluentRootType}})] // References type without FluentRoot
                 public partial record InvalidTarget(int Value);
             }
             """;
