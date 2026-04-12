@@ -4,8 +4,8 @@ milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
 stopped_at: Completed 19-03-PLAN.md
-last_updated: "2026-04-12T18:46:19.882Z"
-last_activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
+last_updated: "2026-04-12T18:50:36.240Z"
+last_activity: 2026-04-12 — Plan 19-03 executed (TEST-05 grep gate passed, 4 residual comment vocabulary fixes, GoF PropositionFactory* exclusions documented, 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 4
