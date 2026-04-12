@@ -1,5 +1,5 @@
 namespace Converj.Generator.Tests;
-using VerifyCS = CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
+using VerifyCS = CSharpSourceGeneratorVerifier<FluentRootGenerator>;
 
 public class NamespaceTests
 {
@@ -141,7 +141,7 @@ public class NamespaceTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -265,7 +265,7 @@ public class NamespaceTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

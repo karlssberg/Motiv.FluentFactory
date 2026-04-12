@@ -1,5 +1,5 @@
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -75,7 +75,7 @@ public class NestedFactoryTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Outer.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Outer.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -149,7 +149,7 @@ public class NestedFactoryTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Level1.Level2.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Level1.Level2.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

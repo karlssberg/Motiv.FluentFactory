@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -187,7 +187,7 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(InaccessibleParameterType.Id)
@@ -278,7 +278,7 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(AccessibilityMismatch.Id)
@@ -367,7 +367,7 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected) }
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) }
             }
         }.RunAsync();
     }
@@ -462,7 +462,7 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentFactoryGenerator), "Test.OuterFactory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.OuterFactory.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(AccessibilityMismatch.Id)

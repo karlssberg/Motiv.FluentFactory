@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis.Testing;
 using static Microsoft.CodeAnalysis.DiagnosticSeverity;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -76,7 +76,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyClass.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyClass.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -209,7 +209,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -349,7 +349,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyFactory.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyFactory.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -462,7 +462,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -651,7 +651,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -880,7 +880,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1063,8 +1063,8 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expectedFactory),
-                    (typeof(FluentFactoryGenerator), "Test.MyBuildTarget.g.cs", expectedMyBuildTarget)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expectedFactory),
+                    (typeof(FluentRootGenerator), "Test.MyBuildTarget.g.cs", expectedMyBuildTarget)
                 }
             }
         }.RunAsync();
@@ -1211,7 +1211,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1400,7 +1400,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1626,7 +1626,7 @@ public class MergeTests
                 Sources = { (SourceFile,code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Spec.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -1836,7 +1836,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -2056,7 +2056,7 @@ public class MergeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -136,7 +136,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -373,7 +373,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -486,7 +486,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

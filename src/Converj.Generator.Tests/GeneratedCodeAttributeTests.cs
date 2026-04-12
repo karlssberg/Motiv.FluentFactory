@@ -1,5 +1,5 @@
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -81,7 +81,7 @@ public class GeneratedCodeAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -90,7 +90,7 @@ public class GeneratedCodeAttributeTests
     [Fact]
     internal void Should_have_non_empty_well_formed_version_string()
     {
-        var version = typeof(FluentFactoryGenerator).Assembly.GetName().Version?.ToString();
+        var version = typeof(FluentRootGenerator).Assembly.GetName().Version?.ToString();
         Assert.NotNull(version);
         Assert.NotEmpty(version);
         Assert.Matches(@"^\d+\.\d+\.\d+(\.\d+)?$", version);

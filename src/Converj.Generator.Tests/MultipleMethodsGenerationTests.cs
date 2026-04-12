@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 
 namespace Converj.Generator.Tests;
-using VerifyCS = CSharpSourceGeneratorVerifier<FluentFactoryGenerator>;
+using VerifyCS = CSharpSourceGeneratorVerifier<FluentRootGenerator>;
 
 public class MultipleMethodsGenerationTests
 {
@@ -112,7 +112,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -249,7 +249,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -417,7 +417,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -597,7 +597,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 },
                 // CVJG0002/CVJG0006 suppressed: WithFunction template has active sibling WithDefaultValue
             }
@@ -788,7 +788,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -898,7 +898,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1089,7 +1089,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1254,7 +1254,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1361,7 +1361,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1466,7 +1466,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1606,7 +1606,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -1755,7 +1755,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1821,7 +1821,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { ("Source.cs", code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1975,7 +1975,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -2118,7 +2118,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -2309,7 +2309,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

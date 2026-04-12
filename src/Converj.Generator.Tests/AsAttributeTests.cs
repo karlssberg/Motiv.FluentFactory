@@ -1,5 +1,5 @@
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -81,7 +81,7 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -166,7 +166,7 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Line.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Line.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -311,8 +311,8 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Square____.g.cs", squareExpected),
-                    (typeof(FluentFactoryGenerator), "Test.Rectangle____.g.cs", rectangleExpected)
+                    (typeof(FluentRootGenerator), "Test.Square____.g.cs", squareExpected),
+                    (typeof(FluentRootGenerator), "Test.Rectangle____.g.cs", rectangleExpected)
                 }
             }
         }.RunAsync();
@@ -470,7 +470,7 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -609,8 +609,8 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Square____.g.cs", squareExpected),
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", factoryExpected)
+                    (typeof(FluentRootGenerator), "Test.Square____.g.cs", squareExpected),
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", factoryExpected)
                 }
             }
         }.RunAsync();

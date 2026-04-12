@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis.Testing;
 using static Microsoft.CodeAnalysis.DiagnosticSeverity;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -148,7 +148,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -297,7 +297,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -428,7 +428,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                (typeof(FluentFactoryGenerator), "Test.Spec.g.cs", expected)
+                (typeof(FluentRootGenerator), "Test.Spec.g.cs", expected)
             }
             }
         }.RunAsync();
@@ -503,7 +503,7 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Shape.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Shape.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -736,7 +736,7 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -852,12 +852,12 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CS0111")
-                        .WithSpan("Converj.Generator\\Converj.Generator.FluentFactoryGenerator\\MyNamespace.Factory.g.cs", 49, 44, 49, 57)
+                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\MyNamespace.Factory.g.cs", 49, 44, 49, 57)
                         .WithArguments("CreateMyClass", "MyNamespace.Step_0__MyNamespace_Factory"),
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1416,7 +1416,7 @@ public class DiagnosticsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1547,7 +1547,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1678,7 +1678,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1821,7 +1821,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

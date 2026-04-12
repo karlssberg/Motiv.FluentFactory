@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -62,7 +62,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -165,7 +165,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -244,7 +244,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -329,7 +329,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -442,7 +442,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -585,7 +585,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -664,7 +664,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -743,7 +743,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -872,7 +872,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1001,7 +1001,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1186,7 +1186,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1265,7 +1265,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1444,7 +1444,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1623,7 +1623,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1802,7 +1802,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1939,7 +1939,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -2120,7 +2120,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             },
             // CVJG0002/CVJG0006 suppressed: Value1(Func) template has active sibling templates
@@ -2276,7 +2276,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -2433,7 +2433,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 },
                 // CVJG0002/CVJG0006 suppressed: Value(string) template has active sibling Value(Func<T>) template
             }
@@ -2498,7 +2498,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -107,7 +107,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -322,7 +322,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -508,7 +508,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -687,7 +687,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -785,7 +785,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Shape.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Shape.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -960,7 +960,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "TestFactory.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "TestFactory.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1153,7 +1153,7 @@ public class MergeDissimilarStepsTests
                 // CVJG0002/CVJG0006 suppressed: WithValueB(string) template has active sibling templates
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "TestFactory.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "TestFactory.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1251,7 +1251,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Shape.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Shape.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1395,7 +1395,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Spec.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Spec.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1513,7 +1513,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1599,7 +1599,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

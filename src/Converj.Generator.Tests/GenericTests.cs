@@ -1,5 +1,5 @@
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -82,7 +82,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -193,7 +193,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -334,7 +334,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -507,7 +507,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -590,7 +590,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -699,7 +699,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -786,7 +786,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -871,7 +871,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -994,7 +994,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

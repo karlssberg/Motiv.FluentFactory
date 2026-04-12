@@ -1,5 +1,5 @@
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -109,7 +109,7 @@ public class NamespaceConflictTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "ConflictTest.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "ConflictTest.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -194,7 +194,7 @@ public class NamespaceConflictTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "ConflictTest.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "ConflictTest.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

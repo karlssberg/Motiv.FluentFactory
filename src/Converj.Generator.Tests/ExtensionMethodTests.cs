@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -108,7 +108,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.StringExt.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.StringExt.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -189,7 +189,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Parsers.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Parsers.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -340,7 +340,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.ShapeExtensions.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.ShapeExtensions.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -400,7 +400,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Extensions.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Extensions.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -522,7 +522,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.WrapperFactory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.WrapperFactory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -629,7 +629,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.ShapeExtensions.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.ShapeExtensions.g.cs", expected)
                 }
             }
         }.RunAsync();

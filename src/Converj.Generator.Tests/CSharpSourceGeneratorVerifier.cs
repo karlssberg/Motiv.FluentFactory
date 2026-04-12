@@ -21,12 +21,12 @@ internal static class CSharpSourceGeneratorVerifier<TSourceGenerator>
         private const string VersionPlaceholder = "$$VERSION$$";
         
         private readonly string _actualVersion =
-            typeof(FluentFactoryGenerator).Assembly.GetName().Version?.ToString() ?? "0.0.0";
+            typeof(FluentRootGenerator).Assembly.GetName().Version?.ToString() ?? "0.0.0";
         
         internal Test()
         {
             // Reference the generator assembly (for any shared types if needed)
-            TestState.AdditionalReferences.Add(typeof(FluentFactoryGenerator).Assembly);
+            TestState.AdditionalReferences.Add(typeof(FluentRootGenerator).Assembly);
             // Reference the attributes assembly so test code can resolve attribute types
             TestState.AdditionalReferences.Add(typeof(Attributes.FluentTargetAttribute).Assembly);
 

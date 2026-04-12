@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -120,7 +120,7 @@ public class RequiredPropertyDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CS9035")
-                        .WithSpan("Converj.Generator\\Converj.Generator.FluentFactoryGenerator\\Test.Factory.g.cs", 14, 24, 14, 43)
+                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\Test.Factory.g.cs", 14, 24, 14, 43)
                         .WithArguments("Test.Person.Email"),
                     DiagnosticResult.CompilerWarning(FluentMethodPropertyWithBuilderNone.Id)
                         .WithSpan(SourceFile, 14, 28, 14, 33)
@@ -128,7 +128,7 @@ public class RequiredPropertyDiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -212,7 +212,7 @@ public class RequiredPropertyDiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

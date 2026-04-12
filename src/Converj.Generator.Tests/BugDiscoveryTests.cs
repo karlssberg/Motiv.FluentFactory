@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.Testing;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -148,7 +148,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -271,7 +271,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -388,7 +388,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -588,7 +588,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -707,7 +707,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -788,7 +788,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.MyTarget.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.MyTarget.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -873,7 +873,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

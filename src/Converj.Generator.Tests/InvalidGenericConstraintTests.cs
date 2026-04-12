@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.Testing;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -98,7 +98,7 @@ public class InvalidGenericConstraintTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -199,7 +199,7 @@ public class InvalidGenericConstraintTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
                 }
             }
         }.RunAsync();

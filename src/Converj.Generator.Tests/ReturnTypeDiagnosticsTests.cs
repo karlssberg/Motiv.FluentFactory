@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis.Testing;
 using static Microsoft.CodeAnalysis.DiagnosticSeverity;
 using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
-    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentFactoryGenerator>;
+    Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
 namespace Converj.Generator.Tests;
 
@@ -174,7 +174,7 @@ public class ReturnTypeDiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -348,7 +348,7 @@ public class ReturnTypeDiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentFactoryGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
