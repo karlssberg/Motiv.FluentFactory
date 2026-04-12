@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator;
 
-internal record FluentFactoryCompilationUnit(INamedTypeSymbol RootType)
+internal record FluentRootCompilationUnit(INamedTypeSymbol RootType)
 {
     public string Namespace { get; set; } = RootType.ContainingNamespace.ToDisplayString();
 

@@ -8,10 +8,10 @@ using Converj.Generator.TargetAnalysis;
 namespace Converj.Generator;
 
 /// <summary>
-/// Source generator for creating fluent factories based on constructors marked with the FluentConstructor attribute.
+/// Source generator that emits fluent root builder APIs from constructors, methods, and types annotated with [FluentTarget].
 /// </summary>
 [Generator(LanguageNames.CSharp)]
-public class FluentFactoryGenerator : IIncrementalGenerator
+public class FluentRootGenerator : IIncrementalGenerator
 {
     /// <summary>
     /// Initializes the source generator by setting up the incremental generation pipeline.
@@ -101,7 +101,7 @@ public class FluentFactoryGenerator : IIncrementalGenerator
     /// <summary>
     /// Combines non-generic and generic pipeline results, removing duplicates where the same
     /// syntax node was discovered by both pipelines (e.g., a type with both generic and non-generic
-    /// FluentConstructor attributes).
+    /// [FluentTarget] attributes).
     /// </summary>
     private static ImmutableArray<(SyntaxNode syntax, string filePath)> DeduplicateBySyntaxNode(
         ImmutableArray<(SyntaxNode syntax, string filePath)> left,
@@ -127,13 +127,13 @@ public class FluentFactoryGenerator : IIncrementalGenerator
     }
 
     /// <summary>
-    /// Executes the source generation for a single fluent factory compilation unit.
+    /// Executes the source generation for a single fluent root compilation unit.
     /// </summary>
     /// <param name="context">The source production context.</param>
-    /// <param name="builder">The compilation unit containing the fluent factory to generate.</param>
+    /// <param name="builder">The compilation unit containing the fluent root to generate.</param>
     private static void Execute(
         SourceProductionContext context,
-        FluentFactoryCompilationUnit builder)
+        FluentRootCompilationUnit builder)
     {
         context.CancellationToken.ThrowIfCancellationRequested();
 
