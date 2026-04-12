@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
-stopped_at: Completed 19-02-PLAN.md
-last_updated: "2026-04-12T18:40:30.359Z"
+stopped_at: Completed 19-03-PLAN.md
+last_updated: "2026-04-12T18:46:19.882Z"
 last_activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 10
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-04-11)
 
 ## Current Position
 
-Phase: 18-builder-pattern-renames (COMPLETE)
-Plan: 18-01 complete
-Status: 1 of 1 plans complete in Phase 18 — Phase 18 CLOSED
-Last activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
+Phase: 19-test-fixture-alignment (COMPLETE)
+Plan: 19-03 complete
+Status: 3 of 3 plans complete in Phase 19 — Phase 19 CLOSED
+Last activity: 2026-04-12 — Plan 19-03 executed (TEST-05 grep gate passed, 4 residual comment vocabulary fixes, GoF PropositionFactory* exclusions documented, 415 tests passing)
 
 ## Accumulated Context
 
@@ -57,6 +57,7 @@ Recent decisions affecting current work:
 - [Phase 18-01]: Builder suffix replaces Factory suffix for internal helper types to eliminate GoF/public-API naming ambiguity
 - [Phase 18-01]: Phase 17 deferred method renames (CreateFluentFactoryCompilationUnit, GetFluentFactoryMetadata, GetFluentFactoryDefaults) fully discharged using FluentRoot* vocabulary
 - [Phase 19-02]: Terminal method names preserved unchanged — derived from TARGET type name, not root name; renaming root *Factory to *Builder does not affect terminal method identifiers
+- [Phase 19-03]: GoF PropositionFactory* types in test string literals are intentional retentions — eight types confirmed as GoF design pattern, not legacy fluent root vocabulary
 
 ### Pending Todos
 
@@ -68,6 +69,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T18:40:30.357Z
-Stopped at: Completed 19-02-PLAN.md
+Last session: 2026-04-12T18:46:19.879Z
+Stopped at: Completed 19-03-PLAN.md
 Resume file: None

@@ -36,7 +36,7 @@ This milestone is a **pure rename refactor**. No feature additions, no behavior 
 - [ ] **TEST-02**: `NestedFactoryTests` is renamed to `NestedRootTests` (class name + file name)
 - [x] **TEST-03**: `NestedFactoryRuntimeTests` in `src/Converj.Tests/` is renamed to `NestedRootRuntimeTests` (class name + file name)
 - [x] **TEST-04**: Test-local sample helper types that use legacy vocabulary (e.g., a local `class Factory { ... }` inside a test file) are renamed to Root/Target-aligned names
-- [ ] **TEST-05**: No test class or test file name in `src/Converj.Generator.Tests/` or `src/Converj.Tests/` contains `Factory` or `FluentConstructor` unless the word refers to a C# constructor or a GoF pattern that was retained
+- [x] **TEST-05**: No test class or test file name in `src/Converj.Generator.Tests/` or `src/Converj.Tests/` contains `Factory` or `FluentConstructor` unless the word refers to a C# constructor or a GoF pattern that was retained
 
 ### Documentation Alignment
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-02 | Phase 19 | Pending |
 | TEST-03 | Phase 19 | Complete |
 | TEST-04 | Phase 19 | Complete |
-| TEST-05 | Phase 19 | Pending |
+| TEST-05 | Phase 19 | Complete |
 | DOC-01 | Phase 20 | Pending |
 | DOC-02 | Phase 20 | Pending |
 | DOC-03 | Phase 20 | Pending |
