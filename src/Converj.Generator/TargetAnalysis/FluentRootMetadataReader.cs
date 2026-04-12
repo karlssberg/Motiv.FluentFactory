@@ -5,10 +5,9 @@ using Microsoft.CodeAnalysis;
 namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
-/// Extracts fluent factory metadata from symbol attributes and converts
-/// attribute arguments to generator option flags.
+/// Extracts fluent root metadata from symbol attributes and converts attribute arguments to generator option flags.
 /// </summary>
-internal static class FluentFactoryMetadataReader
+internal static class FluentRootMetadataReader
 {
     private const string BuilderKey = "TerminalMethod";
     private const string TerminalVerbKey = "TerminalVerb";
@@ -17,11 +16,11 @@ internal static class FluentFactoryMetadataReader
     private const string AllowPartialParameterOverlapKey = "AllowPartialParameterOverlap";
 
     /// <summary>
-    /// Extracts fluent factory metadata from a symbol's FluentTarget attributes.
+    /// Extracts fluent root metadata from a symbol's FluentTarget attributes.
     /// </summary>
     /// <param name="symbol">The symbol to extract metadata from.</param>
-    /// <returns>An enumerable of fluent factory metadata for each attribute found.</returns>
-    public static IEnumerable<FluentFactoryMetadata> GetFluentFactoryMetadata(ISymbol symbol)
+    /// <returns>An enumerable of fluent root metadata for each attribute found.</returns>
+    public static IEnumerable<FluentRootMetadata> GetFluentFactoryMetadata(ISymbol symbol)
     {
         return symbol.GetAttributes()
             .Where(IsFluentTargetAttribute)
@@ -29,11 +28,11 @@ internal static class FluentFactoryMetadataReader
             {
                 var typeSymbol = ExtractRootTypeSymbol(attribute);
                 if (typeSymbol is null)
-                    return FluentFactoryMetadata.Invalid;
+                    return FluentRootMetadata.Invalid;
 
                 var args = ReadNamedArguments(attribute.NamedArguments);
 
-                return new FluentFactoryMetadata(typeSymbol)
+                return new FluentRootMetadata(typeSymbol)
                 {
                     TerminalMethod = args.TerminalMethod,
                     RootTypeFullName = typeSymbol.ToDisplayString(),
@@ -95,16 +94,16 @@ internal static class FluentFactoryMetadataReader
     /// </summary>
     /// <param name="rootType">The root type symbol that has the [FluentRoot] attribute.</param>
     /// <returns>Root defaults with nullable values (null = not explicitly set).</returns>
-    public static FluentFactoryDefaults GetFluentFactoryDefaults(INamedTypeSymbol rootType)
+    public static FluentRootDefaults GetFluentFactoryDefaults(INamedTypeSymbol rootType)
     {
         var attribute = rootType.GetAttributes(TypeName.FluentRootAttribute).FirstOrDefault();
 
         if (attribute is null)
-            return new FluentFactoryDefaults(null, null, null, null);
+            return new FluentRootDefaults(null, null, null, null);
 
         var args = ReadNamedArguments(attribute.NamedArguments);
 
-        return new FluentFactoryDefaults(
+        return new FluentRootDefaults(
             args.TerminalMethod, args.TerminalVerb, args.MethodPrefix, args.ReturnType, args.AllowPartialParameterOverlap);
     }
 

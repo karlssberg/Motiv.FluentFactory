@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 namespace Converj.Generator;
 
 [ExcludeFromCodeCoverage]
-internal record FluentFactoryMetadata(INamedTypeSymbol RootTypeSymbol)
+internal record FluentRootMetadata(INamedTypeSymbol RootTypeSymbol)
 {
     public bool AttributePresent => AttributeData is not null;
     public INamedTypeSymbol RootTypeSymbol { get; } = RootTypeSymbol;
@@ -17,7 +17,7 @@ internal record FluentFactoryMetadata(INamedTypeSymbol RootTypeSymbol)
     public bool HasEntryMethod { get; set; }
     public string? EntryMethodName { get; set; }
 
-    public static FluentFactoryMetadata Invalid => new(default(INamedTypeSymbol)!);
+    public static FluentRootMetadata Invalid => new(default(INamedTypeSymbol)!);
 
     public void Deconstruct(out bool attributePresent, out string rootTypeFullName, out TerminalMethodKind? terminalMethod)
     {
