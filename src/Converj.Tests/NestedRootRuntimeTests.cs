@@ -8,20 +8,20 @@ namespace Converj.Tests;
 internal partial class Outer
 {
     [FluentRoot]
-    internal partial class NestedFactory;
+    internal partial class NestedBuilder;
 
-    [FluentTarget<NestedFactory>]
+    [FluentTarget<NestedBuilder>]
     internal record NestedTarget(int Value, string Name);
 }
 
 #endregion
 
-public class NestedFactoryRuntimeTests
+public class NestedRootRuntimeTests
 {
     [Fact]
-    public void Nested_factory_should_thread_values_to_target()
+    public void Nested_builder_should_thread_values_to_target()
     {
-        var result = Outer.NestedFactory.WithValue(99).WithName("nested").CreateOuter_NestedTarget();
+        var result = Outer.NestedBuilder.WithValue(99).WithName("nested").CreateOuter_NestedTarget();
 
         result.Value.ShouldBe(99);
         result.Name.ShouldBe("nested");
