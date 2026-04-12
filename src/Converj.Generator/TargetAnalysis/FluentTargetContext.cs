@@ -15,7 +15,7 @@ internal class FluentTargetContext
         IMethodSymbol constructor,
         AttributeData attributeData,
         INamedTypeSymbol rootSymbol,
-        FluentFactoryMetadata metadata,
+        FluentRootMetadata metadata,
         bool isAttributedUsedOnContainingType,
         SemanticModel semanticModel)
     {

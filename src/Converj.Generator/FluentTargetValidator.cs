@@ -71,7 +71,7 @@ internal static class FluentTargetValidatorExtensions
             if (factoryAttribute is null)
                 continue;
 
-            var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
+            var defaults = FluentRootMetadataReader.GetFluentFactoryDefaults(rootType);
             var location = GetAttributeLocation(factoryAttribute);
 
             switch (defaults)
@@ -635,7 +635,7 @@ internal static class FluentTargetValidatorExtensions
 
         foreach (var rootType in rootTypes)
         {
-            var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(rootType);
+            var defaults = FluentRootMetadataReader.GetFluentFactoryDefaults(rootType);
             if (defaults.ReturnType is null || defaults.TerminalMethod == TerminalMethodKind.None)
                 continue;
 

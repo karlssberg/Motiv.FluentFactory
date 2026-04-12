@@ -30,7 +30,7 @@ internal static class FluentTargetContextFactory
 
         return
         [
-            ..FluentFactoryMetadataReader.GetFluentFactoryMetadata(symbol)
+            ..FluentRootMetadataReader.GetFluentFactoryMetadata(symbol)
                 .Select(metadata =>
                 {
                     var attributePresent = metadata.AttributePresent;
@@ -38,7 +38,7 @@ internal static class FluentTargetContextFactory
                     if (!attributePresent || string.IsNullOrWhiteSpace(rootTypeFullName))
                         return [];
 
-                    var defaults = FluentFactoryMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
+                    var defaults = FluentRootMetadataReader.GetFluentFactoryDefaults(metadata.RootTypeSymbol);
                     metadata.TerminalMethod ??= defaults.TerminalMethod;
                     metadata.TerminalVerb ??= defaults.TerminalVerb;
                     metadata.MethodPrefix ??= defaults.MethodPrefix;
@@ -46,7 +46,7 @@ internal static class FluentTargetContextFactory
 
                     // Check for [FluentEntryMethod] on the symbol
                     var (hasEntryMethod, entryMethodName) =
-                        FluentFactoryMetadataReader.ReadFluentEntryMethodAttribute(symbol);
+                        FluentRootMetadataReader.ReadFluentEntryMethodAttribute(symbol);
                     metadata.HasEntryMethod = hasEntryMethod;
                     metadata.EntryMethodName = entryMethodName;
 
@@ -74,7 +74,7 @@ internal static class FluentTargetContextFactory
         ImmutableArray<FluentTargetContext> CreateContainingTypeFluentTargetContexts(
             INamedTypeSymbol type,
             INamedTypeSymbol alreadyDeclaredRootType,
-            FluentFactoryMetadata metadata)
+            FluentRootMetadata metadata)
         {
             return
             [
