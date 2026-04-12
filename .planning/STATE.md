@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
-status: completed
-stopped_at: Completed 17-02-PLAN.md
-last_updated: "2026-04-12T01:13:37Z"
-last_activity: 2026-04-12 — Plan 17-02 executed (FluentFactoryMetadata/Reader/Defaults renamed to FluentRoot* via git mv, 415 tests passing)
+status: in_progress
+stopped_at: Completed 17-03-PLAN.md
+last_updated: "2026-04-12T01:40:00Z"
+last_activity: 2026-04-12 — Plan 17-03 executed (FluentFactoryMethodDeclaration/FluentRootFactoryMethodDeclaration renamed to StepTerminalMethodDeclaration/RootTerminalMethodDeclaration, Phase 17 complete, 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-04-11)
 
 ## Current Position
 
-Phase: 17-core-generator-type-renames (IN PROGRESS)
-Plan: 17-01 complete; 17-02 complete
-Status: 2 of 3 plans complete in Phase 17
-Last activity: 2026-04-12 — Plan 17-02 executed (FluentFactoryMetadata/Reader/Defaults renamed to FluentRoot* via git mv, all 415 tests passing)
+Phase: 17-core-generator-type-renames (COMPLETE)
+Plan: 17-01 complete; 17-02 complete; 17-03 complete
+Status: 3 of 3 plans complete in Phase 17 — Phase 17 CLOSED
+Last activity: 2026-04-12 — Plan 17-03 executed (FluentFactoryMethodDeclaration/FluentRootFactoryMethodDeclaration renamed to StepTerminalMethodDeclaration/RootTerminalMethodDeclaration, Phase 17 complete, 415 tests passing)
 
 ## Accumulated Context
 
@@ -50,6 +50,10 @@ Recent decisions affecting current work:
 - [Phase 16-diagnostic-alignment]: Plan 16-03: Actual descriptor count is 48, not the plan's stated 47 — FluentDiagnostics.cs contains CVJG0001..CVJG0049 minus CVJG0034. Reconciled Unshipped.md to 48 rows per source of truth.
 - [Phase 17-core-generator-type-renames]: FluentModelFactory.CreateFluentFactoryCompilationUnit method name intentionally preserved — Phase 18 owns FluentModelFactory rename, method names follow then to avoid conflicts
 - [Phase 17-02]: GetFluentFactoryMetadata and GetFluentFactoryDefaults method identifiers on FluentRootMetadataReader intentionally preserved — method-name renames deferred to Phase 18 alongside CreateFluentFactoryCompilationUnit cleanup
+- [Phase 17-03]: FluentFactoryMethodDeclaration renamed to StepTerminalMethodDeclaration (Step prefix mirrors FluentStepMethodDeclaration sibling, Terminal qualifier distinguishes terminal from transition methods)
+- [Phase 17-03]: FluentRootFactoryMethodDeclaration renamed to RootTerminalMethodDeclaration (Root prefix mirrors RootTypeDeclaration, symmetric with StepTerminalMethodDeclaration)
+- [Phase 17-03]: Phase 17 zero-hit gate uses word-boundary regex refinement to exclude deferred method-name substrings; Phase 18 obligation to run plain ROADMAP alternation after method renames complete
+- [Phase 17]: COMPLETE — all five requirements NAME-01..04, FILE-01 satisfied; zero legacy FluentFactory* type names in src/Converj.Generator/
 
 ### Pending Todos
 
@@ -61,6 +65,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T01:10:40.191Z
-Stopped at: Completed 17-01-PLAN.md
+Last session: 2026-04-12T01:35:00Z
+Stopped at: Completed 17-03-PLAN.md
 Resume file: None
