@@ -20,11 +20,11 @@ public class NullableTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string? value)
                 {
                     Value = value;
@@ -41,7 +41,7 @@ public class NullableTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -62,7 +62,7 @@ public class NullableTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -84,11 +84,11 @@ public class NullableTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string? name, int count, List<string?> items)
                 {
                     Name = name;
@@ -109,15 +109,15 @@ public class NullableTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string? name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string? name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -125,10 +125,10 @@ public class NullableTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string? _name__parameter;
-                    internal Step_0__Test_Factory(in string? name)
+                    internal Step_0__Test_Builder(in string? name)
                     {
                         this._name__parameter = name;
                     }
@@ -137,9 +137,9 @@ public class NullableTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithCount(in int count)
+                    public global::Test.Step_1__Test_Builder WithCount(in int count)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, count);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, count);
                     }
                 }
 
@@ -147,11 +147,11 @@ public class NullableTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string? _name__parameter;
                     private readonly int _count__parameter;
-                    internal Step_1__Test_Factory(in string? name, in int count)
+                    internal Step_1__Test_Builder(in string? name, in int count)
                     {
                         this._name__parameter = name;
                         this._count__parameter = count;
@@ -176,7 +176,7 @@ public class NullableTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -197,11 +197,11 @@ public class NullableTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T> where T : class
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T? value)
                 {
                     Value = value;
@@ -218,7 +218,7 @@ public class NullableTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -240,7 +240,7 @@ public class NullableTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

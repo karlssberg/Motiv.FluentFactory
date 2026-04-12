@@ -15,11 +15,11 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -37,15 +37,15 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue<T>(in T value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithValue<T>(in T value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(value);
                     }
                 }
 
@@ -53,10 +53,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T value)
+                    internal Step_0__Test_Namespace_Builder(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -82,7 +82,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -98,11 +98,11 @@ public class GenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -124,15 +124,15 @@ public class GenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -140,10 +140,10 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -152,9 +152,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -162,11 +162,11 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -193,7 +193,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -209,11 +209,11 @@ public class GenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -239,15 +239,15 @@ public class GenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -255,10 +255,10 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -267,9 +267,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -277,11 +277,11 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -291,9 +291,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory<T1, T2, T3> WithValue3<T3>(in T3 value3)
+                    public global::Test.Step_2__Test_Builder<T1, T2, T3> WithValue3<T3>(in T3 value3)
                     {
-                        return new global::Test.Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Builder<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -301,12 +301,12 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Builder<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
                     private readonly T3 _value3__parameter;
-                    internal Step_2__Test_Factory(in T1 value1, in T2 value2, in T3 value3)
+                    internal Step_2__Test_Builder(in T1 value1, in T2 value2, in T3 value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -334,7 +334,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -350,11 +350,11 @@ public class GenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2,
@@ -384,15 +384,15 @@ public class GenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -400,10 +400,10 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -412,9 +412,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -422,11 +422,11 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -436,9 +436,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory<T1, T2, T3> WithValue3<T3>(in T3 value3)
+                    public global::Test.Step_2__Test_Builder<T1, T2, T3> WithValue3<T3>(in T3 value3)
                     {
-                        return new global::Test.Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Builder<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -446,12 +446,12 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Builder<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
                     private readonly T3 _value3__parameter;
-                    internal Step_2__Test_Factory(in T1 value1, in T2 value2, in T3 value3)
+                    internal Step_2__Test_Builder(in T1 value1, in T2 value2, in T3 value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -462,9 +462,9 @@ public class GenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory<T1, T2, T3, T4> WithValue4<T4>(in T4 value4)
+                    public global::Test.Step_3__Test_Builder<T1, T2, T3, T4> WithValue4<T4>(in T4 value4)
                     {
-                        return new global::Test.Step_3__Test_Factory<T1, T2, T3, T4>(this._value1__parameter, this._value2__parameter, this._value3__parameter, value4);
+                        return new global::Test.Step_3__Test_Builder<T1, T2, T3, T4>(this._value1__parameter, this._value2__parameter, this._value3__parameter, value4);
                     }
                 }
 
@@ -472,13 +472,13 @@ public class GenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory<T1, T2, T3, T4>
+                public readonly struct Step_3__Test_Builder<T1, T2, T3, T4>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
                     private readonly T3 _value3__parameter;
                     private readonly T4 _value4__parameter;
-                    internal Step_3__Test_Factory(in T1 value1, in T2 value2, in T3 value3, in T4 value4)
+                    internal Step_3__Test_Builder(in T1 value1, in T2 value2, in T3 value3, in T4 value4)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -507,14 +507,14 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_generate_a_generic_root_fluent_factory_type_when_the_original_is_generic()
+    internal async Task Should_generate_a_generic_root_type_when_the_original_is_generic()
     {
         const string code =
             """
@@ -523,11 +523,11 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory<T>;
+                public partial class Builder<T>;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentTarget(typeof(Factory<>))]
+                    [FluentTarget(typeof(Builder<>))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -545,15 +545,15 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory<T>
+                public partial class Builder<T>
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory____<T> WithValue(in T value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder____<T> WithValue(in T value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory____<T>(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder____<T>(value);
                     }
                 }
 
@@ -561,10 +561,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory____<T>
+                public readonly struct Step_0__Test_Namespace_Builder____<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Namespace_Factory____(in T value)
+                    internal Step_0__Test_Namespace_Builder____(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -590,14 +590,14 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder____.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_generate_a_generic_root_fluent_factory_type_when_the_original_is_generic_and_multiple_steps_exist()
+    internal async Task Should_generate_a_generic_root_type_when_the_original_is_generic_and_multiple_steps_exist()
     {
         const string code =
             """
@@ -606,11 +606,11 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory<T>;
+                public partial class Builder<T>;
 
                 public class MyBuildTarget<T, TAlt>
                 {
-                    [FluentTarget(typeof(Factory<>))]
+                    [FluentTarget(typeof(Builder<>))]
                     public MyBuildTarget(T value1, TAlt value2)
                     {
                         Value1 = value1;
@@ -630,15 +630,15 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory<T>
+                public partial class Builder<T>
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory____<T> WithValue1(in T value1)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder____<T> WithValue1(in T value1)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory____<T>(value1);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder____<T>(value1);
                     }
                 }
 
@@ -646,10 +646,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory____<T>
+                public readonly struct Step_0__Test_Namespace_Builder____<T>
                 {
                     private readonly T _value1__parameter;
-                    internal Step_0__Test_Namespace_Factory____(in T value1)
+                    internal Step_0__Test_Namespace_Builder____(in T value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -658,9 +658,9 @@ public class GenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory____<T, TAlt> WithValue2<TAlt>(in TAlt value2)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder____<T, TAlt> WithValue2<TAlt>(in TAlt value2)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory____<T, TAlt>(this._value1__parameter, value2);
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder____<T, TAlt>(this._value1__parameter, value2);
                     }
                 }
 
@@ -668,11 +668,11 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory____<T, TAlt>
+                public readonly struct Step_1__Test_Namespace_Builder____<T, TAlt>
                 {
                     private readonly T _value1__parameter;
                     private readonly TAlt _value2__parameter;
-                    internal Step_1__Test_Namespace_Factory____(in T value1, in TAlt value2)
+                    internal Step_1__Test_Namespace_Builder____(in T value1, in TAlt value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -699,14 +699,14 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder____.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_generate_a_generic_root_fluent_factory_type_with_constraints_when_the_original_has_constraints()
+    internal async Task Should_generate_a_generic_root_type_with_constraints_when_the_original_has_constraints()
     {
         const string code =
             """
@@ -716,13 +716,13 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory<T> where T : struct, IComparable<T>
+                public partial class Builder<T> where T : struct, IComparable<T>
                 {
                 }
 
                 public class MyBuildTarget<T> where T : struct, IComparable<T>
                 {
-                    [FluentTarget(typeof(Factory<>))]
+                    [FluentTarget(typeof(Builder<>))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -740,16 +740,16 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory<T>
+                public partial class Builder<T>
                     where T : struct, global::System.IComparable<T>
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory____<T> WithValue(in T value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder____<T> WithValue(in T value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory____<T>(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder____<T>(value);
                     }
                 }
 
@@ -757,10 +757,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory____<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Builder____<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Namespace_Factory____(in T value)
+                    internal Step_0__Test_Namespace_Builder____(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -786,14 +786,14 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory____.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder____.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_generate_a_generic_target_types_with_constraints_when_the_root_fluent_factory_type_is_non_generic()
+    internal async Task Should_generate_a_generic_target_types_with_constraints_when_the_root_type_is_non_generic()
     {
         const string code =
             """
@@ -803,11 +803,11 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory;
+                public partial class Builder;
 
                 public class MyBuildTarget<T> where T : struct, IComparable<T>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(T value)
                     {
                         Value = value;
@@ -825,16 +825,16 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue<T>(in T value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithValue<T>(in T value)
                         where T : struct, global::System.IComparable<T>
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(value);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(value);
                     }
                 }
 
@@ -842,10 +842,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T value)
+                    internal Step_0__Test_Namespace_Builder(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -871,14 +871,14 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_generate_a_generic_target_types_with_constraints_when_the_root_fluent_factory_type_is_non_generic_and_there_are_multiple_fluent_constructor_parameters()
+    internal async Task Should_generate_a_generic_target_types_with_constraints_when_the_root_type_is_non_generic_and_there_are_multiple_fluent_constructor_parameters()
     {
         const string code =
             """
@@ -888,13 +888,13 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory;
+                public partial class Builder;
 
                 public class MyBuildTarget<T, TAlt>
                     where T : struct, IComparable<T>
                     where TAlt : class, new()
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(T value1, TAlt value2)
                     {
                         Value1 = value1;
@@ -923,16 +923,16 @@ public class GenericTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue1<T>(in T value1)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithValue1<T>(in T value1)
                         where T : struct, global::System.IComparable<T>
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(value1);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(value1);
                     }
                 }
 
@@ -940,10 +940,10 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T> where T : struct, global::System.IComparable<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T> where T : struct, global::System.IComparable<T>
                 {
                     private readonly T _value1__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T value1)
+                    internal Step_0__Test_Namespace_Builder(in T value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -952,10 +952,10 @@ public class GenericTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T, TAlt> WithValue2<TAlt>(in TAlt value2)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T, TAlt> WithValue2<TAlt>(in TAlt value2)
                         where TAlt : class, new()
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T, TAlt>(this._value1__parameter, value2);
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T, TAlt>(this._value1__parameter, value2);
                     }
                 }
 
@@ -963,11 +963,11 @@ public class GenericTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T, TAlt}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
+                public readonly struct Step_1__Test_Namespace_Builder<T, TAlt> where T : struct, global::System.IComparable<T> where TAlt : class, new()
                 {
                     private readonly T _value1__parameter;
                     private readonly TAlt _value2__parameter;
-                    internal Step_1__Test_Namespace_Factory(in T value1, in TAlt value2)
+                    internal Step_1__Test_Namespace_Builder(in T value1, in TAlt value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -994,7 +994,7 @@ public class GenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

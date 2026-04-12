@@ -24,11 +24,11 @@ public class RecordVariationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public record MyBuildTarget(string Name, int Age)
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int age, string email) : this(name, age)
                 {
                     Email = email;
@@ -45,15 +45,15 @@ public class RecordVariationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -61,10 +61,10 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -73,9 +73,9 @@ public class RecordVariationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithAge(in int age)
+                    public global::Test.Step_1__Test_Builder WithAge(in int age)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, age);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, age);
                     }
                 }
 
@@ -83,11 +83,11 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
-                    internal Step_1__Test_Factory(in string name, in int age)
+                    internal Step_1__Test_Builder(in string name, in int age)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -112,7 +112,7 @@ public class RecordVariationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -134,11 +134,11 @@ public class RecordVariationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public record MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string value)
                 {
                     Id = id;
@@ -157,15 +157,15 @@ public class RecordVariationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithId(in int id)
+                    public static global::Test.Step_0__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_0__Test_Factory(id);
+                        return new global::Test.Step_0__Test_Builder(id);
                     }
                 }
 
@@ -173,10 +173,10 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _id__parameter;
-                    internal Step_0__Test_Factory(in int id)
+                    internal Step_0__Test_Builder(in int id)
                     {
                         this._id__parameter = id;
                     }
@@ -200,7 +200,7 @@ public class RecordVariationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -223,11 +223,11 @@ public class RecordVariationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public record MyBuildTarget(string Name)
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int priority, bool isEnabled) : this(name)
                 {
                     Priority = priority;
@@ -246,15 +246,15 @@ public class RecordVariationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -262,10 +262,10 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -274,9 +274,9 @@ public class RecordVariationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithPriority(in int priority)
+                    public global::Test.Step_1__Test_Builder WithPriority(in int priority)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, priority);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, priority);
                     }
                 }
 
@@ -284,11 +284,11 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _priority__parameter;
-                    internal Step_1__Test_Factory(in string name, in int priority)
+                    internal Step_1__Test_Builder(in string name, in int priority)
                     {
                         this._name__parameter = name;
                         this._priority__parameter = priority;
@@ -313,7 +313,7 @@ public class RecordVariationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -339,11 +339,11 @@ public class RecordVariationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public record Person(string Name, int Age)
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name, int age, string email) : this(name, age)
                 {
                     Email = email;
@@ -360,15 +360,15 @@ public class RecordVariationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -376,10 +376,10 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -388,9 +388,9 @@ public class RecordVariationTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithAge(in int age)
+                    public global::Test.Step_1__Test_Builder WithAge(in int age)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, age);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, age);
                     }
                 }
 
@@ -398,11 +398,11 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
-                    internal Step_1__Test_Factory(in string name, in int age)
+                    internal Step_1__Test_Builder(in string name, in int age)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -412,9 +412,9 @@ public class RecordVariationTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_2__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._name__parameter, this._age__parameter, email);
+                        return new global::Test.Step_2__Test_Builder(this._name__parameter, this._age__parameter, email);
                     }
                 }
 
@@ -422,12 +422,12 @@ public class RecordVariationTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
                     private readonly string _email__parameter;
-                    internal Step_2__Test_Factory(in string name, in int age, in string email)
+                    internal Step_2__Test_Builder(in string name, in int age, in string email)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -455,7 +455,7 @@ public class RecordVariationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

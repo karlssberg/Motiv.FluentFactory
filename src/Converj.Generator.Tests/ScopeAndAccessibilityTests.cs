@@ -8,7 +8,7 @@ namespace Converj.Generator.Tests;
 /// <summary>
 /// Tests for constructor scope and accessibility edge cases.
 /// Private or protected constructors with [FluentTarget] cannot be called from generated code.
-/// Factory root types missing the partial modifier cannot receive generated methods.
+/// Builder root types missing the partial modifier cannot receive generated methods.
 /// </summary>
 public class ScopeAndAccessibilityTests
 {
@@ -20,7 +20,7 @@ public class ScopeAndAccessibilityTests
     /// warning and skip generation for that constructor.
     /// </summary>
     [Fact]
-    internal async Task Should_emit_diagnostic_when_FluentConstructor_applied_to_private_constructor()
+    internal async Task Should_emit_diagnostic_when_FluentTarget_applied_to_private_constructor()
     {
         const string code =
             """
@@ -29,11 +29,11 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 private MyTarget(int value)
                 {
                     Value = value;
@@ -64,7 +64,7 @@ public class ScopeAndAccessibilityTests
     /// warning and skip generation for that constructor.
     /// </summary>
     [Fact]
-    internal async Task Should_emit_diagnostic_when_FluentConstructor_applied_to_protected_constructor()
+    internal async Task Should_emit_diagnostic_when_FluentTarget_applied_to_protected_constructor()
     {
         const string code =
             """
@@ -73,11 +73,11 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 protected MyTarget(int value)
                 {
                     Value = value;
@@ -117,7 +117,7 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             internal class InternalParam
             {
@@ -126,7 +126,7 @@ public class ScopeAndAccessibilityTests
 
             public class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyTarget(InternalParam param)
                 {
                     Param = param;
@@ -143,15 +143,15 @@ public class ScopeAndAccessibilityTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithParam(in global::Test.InternalParam param)
+                    public static global::Test.Step_0__Test_Builder WithParam(in global::Test.InternalParam param)
                     {
-                        return new global::Test.Step_0__Test_Factory(param);
+                        return new global::Test.Step_0__Test_Builder(param);
                     }
                 }
 
@@ -159,10 +159,10 @@ public class ScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly global::Test.InternalParam _param__parameter;
-                    internal Step_0__Test_Factory(in global::Test.InternalParam param)
+                    internal Step_0__Test_Builder(in global::Test.InternalParam param)
                     {
                         this._param__parameter = param;
                     }
@@ -187,12 +187,12 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(InaccessibleParameterType.Id)
                         .WithSpan(SourceFile, 16, 35, 16, 40)
-                        .WithArguments("param", "Test.InternalParam", "Test.MyTarget.MyTarget(Test.InternalParam)", "Test.Factory")
+                        .WithArguments("param", "Test.InternalParam", "Test.MyTarget.MyTarget(Test.InternalParam)", "Test.Builder")
                 }
             }
         }.RunAsync();
@@ -204,7 +204,7 @@ public class ScopeAndAccessibilityTests
     /// The generator should emit CVJG0015 warning.
     /// </summary>
     [Fact]
-    internal async Task Should_emit_diagnostic_when_public_factory_wraps_internal_target_type()
+    internal async Task Should_emit_diagnostic_when_public_root_wraps_internal_target_type()
     {
         const string code =
             """
@@ -213,11 +213,11 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             internal class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyTarget(int value)
                 {
                     Value = value;
@@ -234,15 +234,15 @@ public class ScopeAndAccessibilityTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -250,10 +250,10 @@ public class ScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -278,12 +278,12 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(AccessibilityMismatch.Id)
                         .WithSpan(SourceFile, 11, 12, 11, 20)
-                        .WithArguments("Test.Factory", "Public", "Test.MyTarget", "Internal")
+                        .WithArguments("Test.Builder", "Public", "Test.MyTarget", "Internal")
                 }
             }
         }.RunAsync();
@@ -303,11 +303,11 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            internal static partial class Factory;
+            internal static partial class Builder;
 
             internal class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyTarget(int value)
                 {
                     Value = value;
@@ -324,15 +324,15 @@ public class ScopeAndAccessibilityTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                internal static partial class Factory
+                internal static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -340,10 +340,10 @@ public class ScopeAndAccessibilityTests
                 ///     <seealso cref="Test.MyTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                internal readonly struct Step_0__Test_Factory
+                internal readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -367,7 +367,7 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected) }
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected) }
             }
         }.RunAsync();
     }
@@ -379,7 +379,7 @@ public class ScopeAndAccessibilityTests
     /// This test documents the generator's behavior for nested private classes as factory targets.
     /// </summary>
     [Fact]
-    internal async Task Should_handle_nested_private_class_as_factory_target()
+    internal async Task Should_handle_nested_private_class_as_root_target()
     {
         const string code =
             """
@@ -388,13 +388,13 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class OuterFactory;
+            public static partial class OuterBuilder;
 
             public class OuterContainer
             {
                 private class NestedTarget
                 {
-                    [FluentTarget(typeof(OuterFactory))]
+                    [FluentTarget(typeof(OuterBuilder))]
                     public NestedTarget(int value)
                     {
                         Value = value;
@@ -415,15 +415,15 @@ public class ScopeAndAccessibilityTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class OuterFactory
+                public static partial class OuterBuilder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_OuterFactory WithValue(in int value)
+                    public static global::Test.Step_0__Test_OuterBuilder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_OuterFactory(value);
+                        return new global::Test.Step_0__Test_OuterBuilder(value);
                     }
                 }
 
@@ -431,10 +431,10 @@ public class ScopeAndAccessibilityTests
                 ///     <seealso cref="Test.OuterContainer.NestedTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_OuterFactory
+                public readonly struct Step_0__Test_OuterBuilder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_OuterFactory(in int value)
+                    internal Step_0__Test_OuterBuilder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -462,12 +462,12 @@ public class ScopeAndAccessibilityTests
             TestState =
             {
                 Sources = { (SourceFile, code) },
-                GeneratedSources = { (typeof(FluentRootGenerator), "Test.OuterFactory.g.cs", expected) },
+                GeneratedSources = { (typeof(FluentRootGenerator), "Test.OuterBuilder.g.cs", expected) },
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerWarning(AccessibilityMismatch.Id)
                         .WithSpan(SourceFile, 13, 16, 13, 28)
-                        .WithArguments("Test.OuterFactory", "Public", "Test.OuterContainer.NestedTarget", "Private")
+                        .WithArguments("Test.OuterBuilder", "Public", "Test.OuterContainer.NestedTarget", "Private")
                 }
             }
         }.RunAsync();
@@ -478,7 +478,7 @@ public class ScopeAndAccessibilityTests
     /// The generator should emit CVJG0013 error and produce no generated source output.
     /// </summary>
     [Fact]
-    internal async Task Should_emit_diagnostic_when_factory_root_type_missing_partial_modifier()
+    internal async Task Should_emit_diagnostic_when_root_type_missing_partial_modifier()
     {
         const string code =
             """
@@ -487,11 +487,11 @@ public class ScopeAndAccessibilityTests
             namespace Test;
 
             [FluentRoot]
-            public static class Factory;
+            public static class Builder;
 
             public class MyTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyTarget(int value)
                 {
                     Value = value;
@@ -511,7 +511,7 @@ public class ScopeAndAccessibilityTests
                 {
                     DiagnosticResult.CompilerError(MissingPartialModifier.Id)
                         .WithSpan(SourceFile, 6, 21, 6, 28)
-                        .WithArguments("Test.Factory")
+                        .WithArguments("Test.Builder")
                 }
             }
         }.RunAsync();

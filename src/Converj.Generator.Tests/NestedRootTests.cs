@@ -29,12 +29,12 @@ public class NestedRootTests
             public partial class Outer
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Outer.Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Outer.Builder), TerminalMethod = TerminalMethod.None)]
                 public Target(string name)
                 {
                     Name = name;
@@ -53,7 +53,7 @@ public class NestedRootTests
                 public partial class Outer
                 {
                     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                    public static partial class Factory
+                    public static partial class Builder
                     {
                         /// <summary>
                         ///     <seealso cref="Test.Target"/>
@@ -75,7 +75,7 @@ public class NestedRootTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Outer.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Outer.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -99,13 +99,13 @@ public class NestedRootTests
                 public partial class Level2
                 {
                     [FluentRoot]
-                    public static partial class Factory;
+                    public static partial class Builder;
                 }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Level1.Level2.Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Level1.Level2.Builder), TerminalMethod = TerminalMethod.None)]
                 public Target(int value)
                 {
                     Value = value;
@@ -126,7 +126,7 @@ public class NestedRootTests
                     public partial class Level2
                     {
                         [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                        public static partial class Factory
+                        public static partial class Builder
                         {
                             /// <summary>
                             ///     <seealso cref="Test.Target"/>
@@ -149,7 +149,7 @@ public class NestedRootTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Level1.Level2.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Level1.Level2.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

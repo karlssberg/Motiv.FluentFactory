@@ -13,7 +13,7 @@ public class TrieKeyCollisionTests
     /// Tests that two constructors with identical parameter type sequences but different parameter names
     /// are NOT merged by the Trie, because <c>FluentMethodParameter</c> equality uses <c>Names.Overlaps</c>
     /// and non-overlapping names with the same type are NOT equal in the Trie.
-    /// Expected: Factory has both <c>WithName</c> and <c>WithLabel</c> as separate entry points,
+    /// Expected: Builder has both <c>WithName</c> and <c>WithLabel</c> as separate entry points,
     /// each leading to its own step chain.
     /// </summary>
     [Fact]
@@ -26,11 +26,11 @@ public class TrieKeyCollisionTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -43,7 +43,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetB(string label, int count)
                 {
                     Label = label;
@@ -62,24 +62,24 @@ public class TrieKeyCollisionTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.TargetA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.TargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_1__Test_Factory WithLabel(in string label)
+                    public static global::Test.Step_1__Test_Builder WithLabel(in string label)
                     {
-                        return new global::Test.Step_1__Test_Factory(label);
+                        return new global::Test.Step_1__Test_Builder(label);
                     }
                 }
 
@@ -87,10 +87,10 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -109,10 +109,10 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _label__parameter;
-                    internal Step_1__Test_Factory(in string label)
+                    internal Step_1__Test_Builder(in string label)
                     {
                         this._label__parameter = label;
                     }
@@ -136,7 +136,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -157,11 +157,11 @@ public class TrieKeyCollisionTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class StructContainer<T> where T : struct
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public StructContainer(T value)
                 {
                     Value = value;
@@ -172,7 +172,7 @@ public class TrieKeyCollisionTests
 
             public class ClassContainer<T> where T : class
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public ClassContainer(T value)
                 {
                     Value = value;
@@ -224,14 +224,14 @@ public class TrieKeyCollisionTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public interface IEngineA;
             public interface IEngineB;
 
             public class CarA<T> where T : IEngineA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public CarA(T engine, int age)
                 {
                     Engine = engine;
@@ -244,7 +244,7 @@ public class TrieKeyCollisionTests
 
             public class CarB<T> where T : IEngineB
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public CarB(T engine)
                 {
                     Engine = engine;
@@ -292,11 +292,11 @@ public class TrieKeyCollisionTests
             public interface IConstraint<T>;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None)]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA<[As("T")]TNum> where TNum : IConstraint<TNum>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public TargetA(TNum value, int extra) { Value = value; Extra = extra; }
                 public TNum Value { get; }
                 public int Extra { get; }
@@ -304,7 +304,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB<T> where T : IConstraint<T>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public TargetB(T value, bool flag) { Value = value; Flag = flag; }
                 public T Value { get; }
                 public bool Flag { get; }
@@ -318,17 +318,17 @@ public class TrieKeyCollisionTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.TargetA{TNum}"/>
                     ///     <seealso cref="Test.TargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithValue<T>(in T value)
+                    public static global::Test.Step_0__Test_Builder<T> WithValue<T>(in T value)
                         where T : global::Test.IConstraint<T>
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(value);
+                        return new global::Test.Step_0__Test_Builder<T>(value);
                     }
                 }
 
@@ -337,10 +337,10 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T> where T : global::Test.IConstraint<T>
+                public readonly struct Step_0__Test_Builder<T> where T : global::Test.IConstraint<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Factory(in T value)
+                    internal Step_0__Test_Builder(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -373,7 +373,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -396,11 +396,11 @@ public class TrieKeyCollisionTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string name, int age)
                 {
                     Name = name;
@@ -413,7 +413,7 @@ public class TrieKeyCollisionTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetB(string name, bool isActive)
                 {
                     Name = name;
@@ -432,16 +432,16 @@ public class TrieKeyCollisionTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.TargetA"/>
                     ///     <seealso cref="Test.TargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -450,10 +450,10 @@ public class TrieKeyCollisionTests
                 ///     <seealso cref="Test.TargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -486,7 +486,7 @@ public class TrieKeyCollisionTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

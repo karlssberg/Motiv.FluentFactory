@@ -19,11 +19,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -40,15 +40,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -56,10 +56,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -85,7 +85,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -101,11 +101,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -122,15 +122,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -138,10 +138,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -167,7 +167,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -183,11 +183,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -204,15 +204,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -220,10 +220,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -249,7 +249,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -265,11 +265,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), TerminalVerb = "Make")]
+                [FluentTarget(typeof(Builder), TerminalVerb = "Make")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -286,15 +286,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -302,10 +302,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -331,7 +331,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -347,11 +347,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.DynamicSuffix, TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.FixedName)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.FixedName)]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -368,15 +368,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -384,10 +384,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -413,14 +413,14 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_preserve_existing_behavior_when_no_factory_defaults_set()
+    internal async Task Should_preserve_existing_behavior_when_no_root_defaults_set()
     {
         const string code =
             """
@@ -429,11 +429,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -450,15 +450,15 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -466,10 +466,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -495,7 +495,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -511,11 +511,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None)]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -532,7 +532,7 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
@@ -553,14 +553,14 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_inherit_factory_defaults_for_multiple_constructors_with_some_overrides()
+    internal async Task Should_inherit_root_defaults_for_multiple_constructors_with_some_overrides()
     {
         const string code =
             """
@@ -569,11 +569,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.FixedName, TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -584,7 +584,7 @@ public class DefaultsTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory), TerminalVerb = "Make")]
+                [FluentTarget(typeof(Builder), TerminalVerb = "Make")]
                 public Beta(string name)
                 {
                     Name = name;
@@ -601,24 +601,24 @@ public class DefaultsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Beta"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_1__Test_Factory WithName(in string name)
+                    public static global::Test.Step_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(name);
+                        return new global::Test.Step_1__Test_Builder(name);
                     }
                 }
 
@@ -626,10 +626,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -650,10 +650,10 @@ public class DefaultsTests
                 ///     <seealso cref="Test.Beta"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in string name)
+                    internal Step_1__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -679,7 +679,7 @@ public class DefaultsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -695,11 +695,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalVerb = "123Bad")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -725,7 +725,7 @@ public class DefaultsTests
     }
 
     [Fact]
-    internal async Task Should_report_CVJG0010_for_factory_level_CreateVerb_with_CreateMethod_None()
+    internal async Task Should_report_CVJG0010_for_root_level_CreateVerb_with_CreateMethod_None()
     {
         const string code =
             """
@@ -734,11 +734,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -773,11 +773,11 @@ public class DefaultsTests
             namespace Test;
 
             [FluentRoot(TerminalVerb = "Build")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), TerminalVerb = "1Bad")]
+                [FluentTarget(typeof(Builder), TerminalVerb = "1Bad")]
                 public Alpha(int value)
                 {
                     Value = value;

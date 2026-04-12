@@ -11,7 +11,7 @@ public class ReturnTypeDiagnosticsTests
     private const string SourceFile = "Source.cs";
 
     [Fact]
-    internal async Task Should_report_error_when_target_type_is_not_assignable_to_factory_return_type()
+    internal async Task Should_report_error_when_target_type_is_not_assignable_to_root_return_type()
     {
         const string code =
             """
@@ -23,11 +23,11 @@ public class ReturnTypeDiagnosticsTests
                 public interface IUnrelated { }
 
                 [FluentRoot(ReturnType = typeof(IUnrelated))]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -66,11 +66,11 @@ public class ReturnTypeDiagnosticsTests
                 public interface IUnrelated { }
 
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory), ReturnType = typeof(IUnrelated))]
+                    [FluentTarget(typeof(Builder), ReturnType = typeof(IUnrelated))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -107,11 +107,11 @@ public class ReturnTypeDiagnosticsTests
             namespace Test
             {
                 [FluentRoot(ReturnType = typeof(MyBuildTarget))]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -129,15 +129,15 @@ public class ReturnTypeDiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -145,10 +145,10 @@ public class ReturnTypeDiagnosticsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -174,7 +174,7 @@ public class ReturnTypeDiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -199,11 +199,11 @@ public class ReturnTypeDiagnosticsTests
                 public interface IMyInterface { }
 
                 [FluentRoot(ReturnType = typeof(IMyInterface), TerminalMethod = TerminalMethod.None)]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class MyBuildTarget : IMyInterface
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -241,11 +241,11 @@ public class ReturnTypeDiagnosticsTests
                 public interface IMyInterface { }
 
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class MyBuildTarget : IMyInterface
                 {
-                    [FluentTarget(typeof(Factory), ReturnType = typeof(IMyInterface), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), ReturnType = typeof(IMyInterface), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -281,11 +281,11 @@ public class ReturnTypeDiagnosticsTests
             namespace Test
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory), ReturnType = typeof(MyBuildTarget))]
+                    [FluentTarget(typeof(Builder), ReturnType = typeof(MyBuildTarget))]
                     public MyBuildTarget(int value)
                     {
                         Value = value;
@@ -303,15 +303,15 @@ public class ReturnTypeDiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -319,10 +319,10 @@ public class ReturnTypeDiagnosticsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -348,7 +348,7 @@ public class ReturnTypeDiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {

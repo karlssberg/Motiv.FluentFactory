@@ -19,11 +19,11 @@ public class GenericArrayTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T[] values)
                 {
                     Values = values;
@@ -40,7 +40,7 @@ public class GenericArrayTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -61,7 +61,7 @@ public class GenericArrayTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -82,11 +82,11 @@ public class GenericArrayTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(List<T>[] values)
                 {
                     Values = values;
@@ -103,7 +103,7 @@ public class GenericArrayTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -124,7 +124,7 @@ public class GenericArrayTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -144,11 +144,11 @@ public class GenericArrayTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T[][] values)
                 {
                     Values = values;
@@ -165,7 +165,7 @@ public class GenericArrayTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -186,7 +186,7 @@ public class GenericArrayTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

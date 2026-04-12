@@ -20,11 +20,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(T value1)
                 {
                     Value1 = value1;
@@ -35,7 +35,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string value1, string value2)
                 {
                     Value1 = value1;
@@ -55,7 +55,7 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -70,9 +70,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue1(in string value1)
+                    public static global::Test.Step_0__Test_Builder WithValue1(in string value1)
                     {
-                        return new global::Test.Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Builder(value1);
                     }
                 }
 
@@ -80,10 +80,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value1__parameter;
-                    internal Step_0__Test_Factory(in string value1)
+                    internal Step_0__Test_Builder(in string value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -107,7 +107,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -124,11 +124,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -144,7 +144,7 @@ public class MergeDissimilarStepsTests
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     String string1,
                     String string2,
@@ -170,24 +170,24 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_2__Test_Factory WithString1(in string string1)
+                    public static global::Test.Step_2__Test_Builder WithString1(in string string1)
                     {
-                        return new global::Test.Step_2__Test_Factory(string1);
+                        return new global::Test.Step_2__Test_Builder(string1);
                     }
                 }
 
@@ -195,10 +195,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -207,9 +207,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -217,11 +217,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -243,10 +243,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly string _string1__parameter;
-                    internal Step_2__Test_Factory(in string string1)
+                    internal Step_2__Test_Builder(in string string1)
                     {
                         this._string1__parameter = string1;
                     }
@@ -255,9 +255,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory WithString2(in string string2)
+                    public global::Test.Step_3__Test_Builder WithString2(in string string2)
                     {
-                        return new global::Test.Step_3__Test_Factory(this._string1__parameter, string2);
+                        return new global::Test.Step_3__Test_Builder(this._string1__parameter, string2);
                     }
                 }
 
@@ -265,11 +265,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Builder
                 {
                     private readonly string _string1__parameter;
                     private readonly string _string2__parameter;
-                    internal Step_3__Test_Factory(in string string1, in string string2)
+                    internal Step_3__Test_Builder(in string string1, in string string2)
                     {
                         this._string1__parameter = string1;
                         this._string2__parameter = string2;
@@ -279,9 +279,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_4__Test_Factory WithString3(in string string3)
+                    public global::Test.Step_4__Test_Builder WithString3(in string string3)
                     {
-                        return new global::Test.Step_4__Test_Factory(this._string1__parameter, this._string2__parameter, string3);
+                        return new global::Test.Step_4__Test_Builder(this._string1__parameter, this._string2__parameter, string3);
                     }
                 }
 
@@ -289,12 +289,12 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_4__Test_Factory
+                public readonly struct Step_4__Test_Builder
                 {
                     private readonly string _string1__parameter;
                     private readonly string _string2__parameter;
                     private readonly string _string3__parameter;
-                    internal Step_4__Test_Factory(in string string1, in string string2, in string string3)
+                    internal Step_4__Test_Builder(in string string1, in string string2, in string string3)
                     {
                         this._string1__parameter = string1;
                         this._string2__parameter = string2;
@@ -322,7 +322,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -339,11 +339,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     String value2,
@@ -354,7 +354,7 @@ public class MergeDissimilarStepsTests
                     Value3 = value3;
                 }
 
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value3)
@@ -378,15 +378,15 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -394,10 +394,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -406,18 +406,18 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1> WithValue2(in string value2)
+                    public global::Test.Step_1__Test_Builder<T1> WithValue2(in string value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1>(this._value1__parameter, value2);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory<T1, T2> WithValue3<T2>(in T2 value3)
+                    public global::Test.Step_3__Test_Builder<T1, T2> WithValue3<T2>(in T2 value3)
                     {
-                        return new global::Test.Step_3__Test_Factory<T1, T2>(this._value1__parameter, value3);
+                        return new global::Test.Step_3__Test_Builder<T1, T2>(this._value1__parameter, value3);
                     }
                 }
 
@@ -425,11 +425,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1>
+                public readonly struct Step_1__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly string _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in string value2)
+                    internal Step_1__Test_Builder(in T1 value1, in string value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -439,9 +439,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory<T1, T2> WithValue3<T2>(in T2 value3)
+                    public global::Test.Step_2__Test_Builder<T1, T2> WithValue3<T2>(in T2 value3)
                     {
-                        return new global::Test.Step_2__Test_Factory<T1, T2>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Builder<T1, T2>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -449,12 +449,12 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T1, T2>
+                public readonly struct Step_2__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly string _value2__parameter;
                     private readonly T2 _value3__parameter;
-                    internal Step_2__Test_Factory(in T1 value1, in string value2, in T2 value3)
+                    internal Step_2__Test_Builder(in T1 value1, in string value2, in T2 value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -477,11 +477,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory<T1, T2>
+                public readonly struct Step_3__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value3__parameter;
-                    internal Step_3__Test_Factory(in T1 value1, in T2 value3)
+                    internal Step_3__Test_Builder(in T1 value1, in T2 value3)
                     {
                         this._value1__parameter = value1;
                         this._value3__parameter = value3;
@@ -508,7 +508,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -525,11 +525,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T1 value1,
                     T2 value2)
@@ -538,7 +538,7 @@ public class MergeDissimilarStepsTests
                     Value2 = value2;
                 }
 
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(
                     T2 value2,
                     T1 value1)
@@ -561,24 +561,24 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_2__Test_Factory<T2> WithValue2<T2>(in T2 value2)
+                    public static global::Test.Step_2__Test_Builder<T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_2__Test_Factory<T2>(value2);
+                        return new global::Test.Step_2__Test_Builder<T2>(value2);
                     }
                 }
 
@@ -586,10 +586,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -598,9 +598,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -608,11 +608,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -634,10 +634,10 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T2>
+                public readonly struct Step_2__Test_Builder<T2>
                 {
                     private readonly T2 _value2__parameter;
-                    internal Step_2__Test_Factory(in T2 value2)
+                    internal Step_2__Test_Builder(in T2 value2)
                     {
                         this._value2__parameter = value2;
                     }
@@ -646,9 +646,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory<T2, T1> WithValue1<T1>(in T1 value1)
+                    public global::Test.Step_3__Test_Builder<T2, T1> WithValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_3__Test_Factory<T2, T1>(this._value2__parameter, value1);
+                        return new global::Test.Step_3__Test_Builder<T2, T1>(this._value2__parameter, value1);
                     }
                 }
 
@@ -656,11 +656,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory<T2, T1>
+                public readonly struct Step_3__Test_Builder<T2, T1>
                 {
                     private readonly T2 _value2__parameter;
                     private readonly T1 _value1__parameter;
-                    internal Step_3__Test_Factory(in T2 value2, in T1 value1)
+                    internal Step_3__Test_Builder(in T2 value2, in T1 value1)
                     {
                         this._value2__parameter = value2;
                         this._value1__parameter = value1;
@@ -687,7 +687,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -799,17 +799,17 @@ public class MergeDissimilarStepsTests
             using System;
             using Converj.Generator;
 
-            namespace TestFactory
+            namespace TestBuilder
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
             }
 
             namespace TestA
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -824,7 +824,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [FluentMethod("WithValueB")]string valueB2,
@@ -847,7 +847,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -866,7 +866,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetD<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetD(
                         [FluentMethod("WithValueA")]T valueD1,
                         [FluentMethod("WithValueB")]string valueD2,
@@ -890,10 +890,10 @@ public class MergeDissimilarStepsTests
             """
             // <auto-generated/>
             #nullable enable
-            namespace TestFactory
+            namespace TestBuilder
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="TestA.MyBuildTargetA{T}"/>
@@ -960,7 +960,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "TestFactory.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "TestBuilder.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -975,17 +975,17 @@ public class MergeDissimilarStepsTests
             using System;
             using Converj.Generator;
 
-            namespace TestFactory
+            namespace TestBuilder
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
             }
 
             namespace TestA
             {
                 public partial class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [FluentMethod("WithValueA")]T valueA1)
                     {
@@ -1000,7 +1000,7 @@ public class MergeDissimilarStepsTests
             {
                 public partial class MyBuildTargetC<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetC(
                         [FluentMethod("WithValueA")]T valueC1,
                         [FluentMethod("WithValueB")]string valueC2)
@@ -1019,7 +1019,7 @@ public class MergeDissimilarStepsTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(TestFactory.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(TestBuilder.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [FluentMethod("WithValueA")]T valueB1,
                         [MultipleFluentMethods(typeof(MultipleMethods))]Func<string> valueB2,
@@ -1086,26 +1086,26 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::TestFactory.Step_1__TestFactory_Factory<T> WithValueB(in global::System.Func<string> multipleMethodValue2)
+                    public global::TestBuilder.Step_1__TestBuilder_Builder<T> WithValueB(in global::System.Func<string> multipleMethodValue2)
                     {
-                        return new global::TestFactory.Step_1__TestFactory_Factory<T>(this.ValueA1, global::TestB.MultipleMethods.WithValueB(multipleMethodValue2));
+                        return new global::TestBuilder.Step_1__TestBuilder_Builder<T>(this.ValueA1, global::TestB.MultipleMethods.WithValueB(multipleMethodValue2));
                     }
 
                     /// <summary>
                     ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::TestFactory.Step_1__TestFactory_Factory<T> WithValueB(in T multipleMethodValue1)
+                    public global::TestBuilder.Step_1__TestBuilder_Builder<T> WithValueB(in T multipleMethodValue1)
                     {
-                        return new global::TestFactory.Step_1__TestFactory_Factory<T>(this.ValueA1, global::TestB.MultipleMethods.WithValueB<T>(multipleMethodValue1));
+                        return new global::TestBuilder.Step_1__TestBuilder_Builder<T>(this.ValueA1, global::TestB.MultipleMethods.WithValueB<T>(multipleMethodValue1));
                     }
                 }
             }
 
-            namespace TestFactory
+            namespace TestBuilder
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="TestA.MyBuildTargetA{T}"/>
@@ -1123,11 +1123,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="TestB.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__TestFactory_Factory<T>
+                public readonly struct Step_1__TestBuilder_Builder<T>
                 {
                     private readonly T _valueB1__parameter;
                     private readonly global::System.Func<string> _valueB2__parameter;
-                    internal Step_1__TestFactory_Factory(in T valueB1, in global::System.Func<string> valueB2)
+                    internal Step_1__TestBuilder_Builder(in T valueB1, in global::System.Func<string> valueB2)
                     {
                         this._valueB1__parameter = valueB1;
                         this._valueB2__parameter = valueB2;
@@ -1153,7 +1153,7 @@ public class MergeDissimilarStepsTests
                 // CVJG0002/CVJG0006 suppressed: WithValueB(string) template has active sibling templates
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "TestFactory.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "TestBuilder.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1418,11 +1418,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;
@@ -1433,7 +1433,7 @@ public class MergeDissimilarStepsTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Beta(string name, int age)
                 {
                     Name = name;
@@ -1452,7 +1452,7 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
@@ -1472,9 +1472,9 @@ public class MergeDissimilarStepsTests
                     ///     <seealso cref="Test.Beta"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithAge(in int age)
+                    public global::Test.Step_1__Test_Builder WithAge(in int age)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.Name, age);
+                        return new global::Test.Step_1__Test_Builder(this.Name, age);
                     }
                 }
 
@@ -1482,11 +1482,11 @@ public class MergeDissimilarStepsTests
                 ///     <seealso cref="Test.Beta"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
-                    internal Step_1__Test_Factory(in string name, in int age)
+                    internal Step_1__Test_Builder(in string name, in int age)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -1513,7 +1513,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1530,11 +1530,11 @@ public class MergeDissimilarStepsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Alpha
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Alpha(string name)
                 {
                     Name = name;
@@ -1545,7 +1545,7 @@ public class MergeDissimilarStepsTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Beta(string name)
                 {
                     Name = name;
@@ -1562,7 +1562,7 @@ public class MergeDissimilarStepsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
@@ -1599,7 +1599,7 @@ public class MergeDissimilarStepsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -16,9 +16,9 @@ public class PrimaryConstructorTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget(int value)
             {
                 public int Value { get; set; } = value;
@@ -32,7 +32,7 @@ public class PrimaryConstructorTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -53,7 +53,7 @@ public class PrimaryConstructorTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -72,9 +72,9 @@ public class PrimaryConstructorTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public record MyBuildTarget(int Number, string text);
             """;
 
@@ -85,15 +85,15 @@ public class PrimaryConstructorTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Builder(number);
                     }
                 }
 
@@ -101,10 +101,10 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Factory(in int number)
+                    internal Step_0__Test_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -128,7 +128,7 @@ public class PrimaryConstructorTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -146,9 +146,9 @@ public class PrimaryConstructorTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public record MyBuildTarget(
                 int Number,
                 string text)
@@ -163,15 +163,15 @@ public class PrimaryConstructorTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Builder(number);
                     }
                 }
 
@@ -179,10 +179,10 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Factory(in int number)
+                    internal Step_0__Test_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -206,7 +206,7 @@ public class PrimaryConstructorTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -223,9 +223,9 @@ public class PrimaryConstructorTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public struct MyBuildTarget(
                 int number,
                 string text,
@@ -246,15 +246,15 @@ public class PrimaryConstructorTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Builder(number);
                     }
                 }
 
@@ -262,10 +262,10 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Factory(in int number)
+                    internal Step_0__Test_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -274,9 +274,9 @@ public class PrimaryConstructorTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithText(in string text)
+                    public global::Test.Step_1__Test_Builder WithText(in string text)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._number__parameter, text);
+                        return new global::Test.Step_1__Test_Builder(this._number__parameter, text);
                     }
                 }
 
@@ -284,11 +284,11 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;
-                    internal Step_1__Test_Factory(in int number, in string text)
+                    internal Step_1__Test_Builder(in int number, in string text)
                     {
                         this._number__parameter = number;
                         this._text__parameter = text;
@@ -313,7 +313,7 @@ public class PrimaryConstructorTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -331,9 +331,9 @@ public class PrimaryConstructorTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public ref struct MyBuildTarget(
                 int number,
                 string text,
@@ -357,15 +357,15 @@ public class PrimaryConstructorTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithNumber(in int number)
+                    public static global::Test.Step_0__Test_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Step_0__Test_Factory(number);
+                        return new global::Test.Step_0__Test_Builder(number);
                     }
                 }
 
@@ -373,10 +373,10 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Factory(in int number)
+                    internal Step_0__Test_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -385,9 +385,9 @@ public class PrimaryConstructorTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithText(in string text)
+                    public global::Test.Step_1__Test_Builder WithText(in string text)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._number__parameter, text);
+                        return new global::Test.Step_1__Test_Builder(this._number__parameter, text);
                     }
                 }
 
@@ -395,11 +395,11 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;
-                    internal Step_1__Test_Factory(in int number, in string text)
+                    internal Step_1__Test_Builder(in int number, in string text)
                     {
                         this._number__parameter = number;
                         this._text__parameter = text;
@@ -409,9 +409,9 @@ public class PrimaryConstructorTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithId(in global::System.Guid id)
+                    public global::Test.Step_2__Test_Builder WithId(in global::System.Guid id)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._number__parameter, this._text__parameter, id);
+                        return new global::Test.Step_2__Test_Builder(this._number__parameter, this._text__parameter, id);
                     }
                 }
 
@@ -419,12 +419,12 @@ public class PrimaryConstructorTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly int _number__parameter;
                     private readonly string _text__parameter;
                     private readonly global::System.Guid _id__parameter;
-                    internal Step_2__Test_Factory(in int number, in string text, in global::System.Guid id)
+                    internal Step_2__Test_Builder(in int number, in string text, in global::System.Guid id)
                     {
                         this._number__parameter = number;
                         this._text__parameter = text;
@@ -450,7 +450,7 @@ public class PrimaryConstructorTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

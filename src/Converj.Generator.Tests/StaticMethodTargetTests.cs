@@ -20,11 +20,11 @@ public class StaticMethodTargetTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Creators
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Result MakeResult(int value) => new Result { Value = value };
             }
 
@@ -61,7 +61,7 @@ public class StaticMethodTargetTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Result
             {
@@ -70,7 +70,7 @@ public class StaticMethodTargetTests
 
             public static class Creators
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public static Result MakeResult(int value) => new Result { Value = value };
             }
             """;
@@ -82,15 +82,15 @@ public class StaticMethodTargetTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Creators"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -98,10 +98,10 @@ public class StaticMethodTargetTests
                 ///     <seealso cref="Test.Creators"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -127,7 +127,7 @@ public class StaticMethodTargetTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

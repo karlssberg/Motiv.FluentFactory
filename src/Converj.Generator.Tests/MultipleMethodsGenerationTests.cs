@@ -20,11 +20,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {
@@ -58,24 +58,24 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue<T>(in T value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithValue<T>(in T value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithValue<T>(value));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithValue<T>(value));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithFunction<T>(in global::System.Func<T> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithFunction<T>(in global::System.Func<T> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function));
                     }
                 }
 
@@ -83,10 +83,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T>
                 {
                     private readonly T _data__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T data)
+                    internal Step_0__Test_Namespace_Builder(in T data)
                     {
                         this._data__parameter = data;
                     }
@@ -112,7 +112,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -129,11 +129,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -148,7 +148,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -185,16 +185,16 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithDefaultValue<T>()
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithDefaultValue<T>()
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
                     }
 
                     /// <summary>
@@ -202,9 +202,9 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithFunction<T>(in global::System.Func<T> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithFunction<T>(in global::System.Func<T> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function));
                     }
                 }
 
@@ -213,10 +213,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T>
                 {
                     private readonly T _data__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T data)
+                    internal Step_0__Test_Namespace_Builder(in T data)
                     {
                         this._data__parameter = data;
                     }
@@ -249,7 +249,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -266,11 +266,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -288,7 +288,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -327,16 +327,16 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory WithNumber(in int number)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory(number);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder(number);
                     }
                 }
 
@@ -345,10 +345,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Namespace_Factory(in int number)
+                    internal Step_0__Test_Namespace_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -358,9 +358,9 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> WithDefaultValue<T>()
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> WithDefaultValue<T>()
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
                     }
 
                     /// <summary>
@@ -368,9 +368,9 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> WithFunction<T>(in global::System.Func<T> function)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> WithFunction<T>(in global::System.Func<T> function)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithFunction<T>(function));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithFunction<T>(function));
                     }
                 }
 
@@ -379,11 +379,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Builder<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
-                    internal Step_1__Test_Namespace_Factory(in int number, in T data)
+                    internal Step_1__Test_Namespace_Builder(in int number, in T data)
                     {
                         this._number__parameter = number;
                         this._data__parameter = data;
@@ -417,7 +417,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -434,11 +434,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         int number,
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
@@ -456,7 +456,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         int number,
                         [FluentMethod("WithFunction")]Func<T> nativeFunction,
@@ -495,16 +495,16 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory WithNumber(in int number)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder WithNumber(in int number)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory(number);
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder(number);
                     }
                 }
 
@@ -513,10 +513,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Namespace_Factory(in int number)
+                    internal Step_0__Test_Namespace_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -525,18 +525,18 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> WithDefaultValue<T>()
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> WithDefaultValue<T>()
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.MethodVariants.WithDefaultValue<T>());
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_2__Test_Namespace_Factory<T> WithFunction<T>(in global::System.Func<T> nativeFunction)
+                    public global::Test.Namespace.Step_2__Test_Namespace_Builder<T> WithFunction<T>(in global::System.Func<T> nativeFunction)
                     {
-                        return new global::Test.Namespace.Step_2__Test_Namespace_Factory<T>(this._number__parameter, nativeFunction);
+                        return new global::Test.Namespace.Step_2__Test_Namespace_Builder<T>(this._number__parameter, nativeFunction);
                     }
                 }
 
@@ -544,11 +544,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Builder<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
-                    internal Step_1__Test_Namespace_Factory(in int number, in T data)
+                    internal Step_1__Test_Namespace_Builder(in int number, in T data)
                     {
                         this._number__parameter = number;
                         this._data__parameter = data;
@@ -568,11 +568,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Namespace_Factory<T>
+                public readonly struct Step_2__Test_Namespace_Builder<T>
                 {
                     private readonly int _number__parameter;
                     private readonly global::System.Func<T> _nativeFunction__parameter;
-                    internal Step_2__Test_Namespace_Factory(in int number, in global::System.Func<T> nativeFunction)
+                    internal Step_2__Test_Namespace_Builder(in int number, in global::System.Func<T> nativeFunction)
                     {
                         this._number__parameter = number;
                         this._nativeFunction__parameter = nativeFunction;
@@ -597,7 +597,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 },
                 // CVJG0002/CVJG0006 suppressed: WithFunction template has active sibling WithDefaultValue
             }
@@ -615,11 +615,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(NumberMethods))]int number,
                         [MultipleFluentMethods(typeof(AsMethods))]T data)
@@ -683,33 +683,33 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory Number()
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder Number()
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory(global::Test.Namespace.NumberMethods.Number());
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder(global::Test.Namespace.NumberMethods.Number());
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory Number(in global::System.Func<int> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder Number(in global::System.Func<int> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory(global::Test.Namespace.NumberMethods.Number(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder(global::Test.Namespace.NumberMethods.Number(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory Number(in global::System.Func<string, int> function, in string value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder Number(in global::System.Func<string, int> function, in string value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory(global::Test.Namespace.NumberMethods.Number(function, value));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder(global::Test.Namespace.NumberMethods.Number(function, value));
                     }
                 }
 
@@ -717,10 +717,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory
+                public readonly struct Step_0__Test_Namespace_Builder
                 {
                     private readonly int _number__parameter;
-                    internal Step_0__Test_Namespace_Factory(in int number)
+                    internal Step_0__Test_Namespace_Builder(in int number)
                     {
                         this._number__parameter = number;
                     }
@@ -729,27 +729,27 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> As<T>()
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> As<T>()
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>());
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>());
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> As<T>(in global::System.Func<T> function)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> As<T>(in global::System.Func<T> function)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>(function));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T> As<T>(in global::System.Func<string, T> function, in string value)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T> As<T>(in global::System.Func<string, T> function, in string value)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>(function, value));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T>(this._number__parameter, global::Test.Namespace.AsMethods.As<T>(function, value));
                     }
                 }
 
@@ -757,11 +757,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTargetA{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T>
+                public readonly struct Step_1__Test_Namespace_Builder<T>
                 {
                     private readonly int _number__parameter;
                     private readonly T _data__parameter;
-                    internal Step_1__Test_Namespace_Factory(in int number, in T data)
+                    internal Step_1__Test_Namespace_Builder(in int number, in T data)
                     {
                         this._number__parameter = number;
                         this._data__parameter = data;
@@ -788,7 +788,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -806,11 +806,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(MethodVariants))]Task<T> data)
                     {
@@ -844,24 +844,24 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithValue<T>(in global::System.Threading.Tasks.Task<T> value)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithValue<T>(in global::System.Threading.Tasks.Task<T> value)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithValue<T>(value));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithValue<T>(value));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T> WithFunction<T>(in global::System.Func<global::System.Threading.Tasks.Task<T>, global::System.Threading.Tasks.Task<T>> function, in global::System.Threading.Tasks.Task<T> defaultTask)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T> WithFunction<T>(in global::System.Func<global::System.Threading.Tasks.Task<T>, global::System.Threading.Tasks.Task<T>> function, in global::System.Threading.Tasks.Task<T> defaultTask)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function, defaultTask));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T>(global::Test.Namespace.MethodVariants.WithFunction<T>(function, defaultTask));
                     }
                 }
 
@@ -869,10 +869,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T>
+                public readonly struct Step_0__Test_Namespace_Builder<T>
                 {
                     private readonly global::System.Threading.Tasks.Task<T> _data__parameter;
-                    internal Step_0__Test_Namespace_Factory(in global::System.Threading.Tasks.Task<T> data)
+                    internal Step_0__Test_Namespace_Builder(in global::System.Threading.Tasks.Task<T> data)
                     {
                         this._data__parameter = data;
                     }
@@ -898,7 +898,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -916,11 +916,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -984,33 +984,33 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1> SetFirst<T1>(in global::System.Func<T1> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1> SetFirst<T1>(in global::System.Func<T1> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1>(global::Test.Namespace.FirstMethods.SetFirst<T1>(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1>(global::Test.Namespace.FirstMethods.SetFirst<T1>(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<int> SetFirst(in global::System.Func<int> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<int> SetFirst(in global::System.Func<int> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<int>(global::Test.Namespace.FirstMethods.SetFirst(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<int>(global::Test.Namespace.FirstMethods.SetFirst(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<string> SetFirst(in global::System.Func<string> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<string> SetFirst(in global::System.Func<string> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<string>(global::Test.Namespace.FirstMethods.SetFirst(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<string>(global::Test.Namespace.FirstMethods.SetFirst(function));
                     }
                 }
 
@@ -1018,10 +1018,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T1>
+                public readonly struct Step_0__Test_Namespace_Builder<T1>
                 {
                     private readonly T1 _first__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T1 first)
+                    internal Step_0__Test_Namespace_Builder(in T1 first)
                     {
                         this._first__parameter = first;
                     }
@@ -1030,27 +1030,27 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2> SetSecond<T2>(in global::System.Func<T2> function)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, T2> SetSecond<T2>(in global::System.Func<T2> function)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond<T2>(function));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, T2>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond<T2>(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, int> SetSecond(in global::System.Func<int> function)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, int> SetSecond(in global::System.Func<int> function)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, int>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond(function));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, int>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string> SetSecond(in global::System.Func<string> function)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, string> SetSecond(in global::System.Func<string> function)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond(function));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, string>(this._first__parameter, global::Test.Namespace.SecondMethods.SetSecond(function));
                     }
                 }
 
@@ -1058,11 +1058,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_1__Test_Namespace_Builder<T1, T2>
                 {
                     private readonly T1 _first__parameter;
                     private readonly T2 _second__parameter;
-                    internal Step_1__Test_Namespace_Factory(in T1 first, in T2 second)
+                    internal Step_1__Test_Namespace_Builder(in T1 first, in T2 second)
                     {
                         this._first__parameter = first;
                         this._second__parameter = second;
@@ -1089,7 +1089,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1107,11 +1107,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(FirstMethods))]T1 first,
                         [MultipleFluentMethods(typeof(SecondMethods))]T2 second)
@@ -1175,33 +1175,33 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1> SetFirst<T1>(in global::System.Func<T1> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1> SetFirst<T1>(in global::System.Func<T1> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1>(global::Test.Namespace.FirstMethods.SetFirst<T1>(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1>(global::Test.Namespace.FirstMethods.SetFirst<T1>(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<int> SetFirst(in global::System.Func<int> function)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<int> SetFirst(in global::System.Func<int> function)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<int>(global::Test.Namespace.FirstMethods.SetFirst(function));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<int>(global::Test.Namespace.FirstMethods.SetFirst(function));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<global::System.Func<TX2, TX1>> SetFirst<TX1, TX2>()
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<global::System.Func<TX2, TX1>> SetFirst<TX1, TX2>()
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<global::System.Func<TX2, TX1>>(global::Test.Namespace.FirstMethods.SetFirst<TX1, TX2>());
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<global::System.Func<TX2, TX1>>(global::Test.Namespace.FirstMethods.SetFirst<TX1, TX2>());
                     }
                 }
 
@@ -1209,10 +1209,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T1>
+                public readonly struct Step_0__Test_Namespace_Builder<T1>
                 {
                     private readonly T1 _first__parameter;
-                    internal Step_0__Test_Namespace_Factory(in T1 first)
+                    internal Step_0__Test_Namespace_Builder(in T1 first)
                     {
                         this._first__parameter = first;
                     }
@@ -1254,7 +1254,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1272,11 +1272,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<KeyValuePair<T1, T2>> first,
                         string second)
@@ -1309,24 +1309,24 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> resultFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, T2> Build<T1, T2>(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> resultFactory)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.Overloads.Build<T1, T2>(resultFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, T2>(global::Test.Namespace.Overloads.Build<T1, T2>(resultFactory));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, string>> resultFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, string> Build<T1>(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, string>> resultFactory)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string>(global::Test.Namespace.Overloads.Build<T1>(resultFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, string>(global::Test.Namespace.Overloads.Build<T1>(resultFactory));
                     }
                 }
 
@@ -1334,10 +1334,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_0__Test_Namespace_Builder<T1, T2>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> _first__parameter;
-                    internal Step_0__Test_Namespace_Factory(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> first)
+                    internal Step_0__Test_Namespace_Builder(in global::System.Func<global::System.Collections.Generic.KeyValuePair<T1, T2>> first)
                     {
                         this._first__parameter = first;
                     }
@@ -1361,7 +1361,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1379,11 +1379,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> first,
                         string second)
@@ -1399,10 +1399,10 @@ public class MultipleMethodsGenerationTests
                 internal static class Overloads
                 {
                     [FluentMethodTemplate]
-                    internal static Func<T1, TAbstraction, T2> Build<T1, T2, TAbstraction>(Func<T1, TAbstraction, T2> firstFactory) => firstFactory;
+                    internal static Func<T1, TAbstraction, T2> Build<T1, T2, TAbstraction>(Func<T1, TAbstraction, T2> firstBuilder) => firstBuilder;
 
                     [FluentMethodTemplate]
-                    internal static Func<T1, TAbstraction, string> Build<T1, TAbstraction>(Func<T1, TAbstraction, string> secondFactory) => secondFactory;
+                    internal static Func<T1, TAbstraction, string> Build<T1, TAbstraction>(Func<T1, TAbstraction, string> secondBuilder) => secondBuilder;
                 }
             }
             """;
@@ -1414,24 +1414,24 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> firstFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> firstBuilder)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, T2>(global::Test.Namespace.Overloads.Build<T1, T2, global::System.Collections.Generic.IEnumerable<int>>(firstFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, T2>(global::Test.Namespace.Overloads.Build<T1, T2, global::System.Collections.Generic.IEnumerable<int>>(firstBuilder));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, string> secondFactory)
+                    public static global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, string> secondBuilder)
                     {
-                        return new global::Test.Namespace.Step_0__Test_Namespace_Factory<T1, string>(global::Test.Namespace.Overloads.Build<T1, global::System.Collections.Generic.IEnumerable<int>>(secondFactory));
+                        return new global::Test.Namespace.Step_0__Test_Namespace_Builder<T1, string>(global::Test.Namespace.Overloads.Build<T1, global::System.Collections.Generic.IEnumerable<int>>(secondBuilder));
                     }
                 }
 
@@ -1439,10 +1439,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_0__Test_Namespace_Builder<T1, T2>
                 {
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _first__parameter;
-                    internal Step_0__Test_Namespace_Factory(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> first)
+                    internal Step_0__Test_Namespace_Builder(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> first)
                     {
                         this._first__parameter = first;
                     }
@@ -1466,7 +1466,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1484,11 +1484,11 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class MyBuildTarget
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         string first)
                     {
@@ -1500,7 +1500,7 @@ public class MultipleMethodsGenerationTests
 
                 public class MyBuildTarget<T1, T2>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTarget(
                         string first,
                         [MultipleFluentMethods(typeof(Overloads))]Func<T1, IEnumerable<int>, T2> second,
@@ -1523,10 +1523,10 @@ public class MultipleMethodsGenerationTests
                     internal static string Build<T>(string ignoreThis) => ignoreThis;
 
                     [FluentMethodTemplate]
-                    internal static Func<T1, TAbstraction, T2> Build<T1, T2, TAbstraction>(Func<T1, TAbstraction, T2> firstFactory) => firstFactory;
+                    internal static Func<T1, TAbstraction, T2> Build<T1, T2, TAbstraction>(Func<T1, TAbstraction, T2> firstBuilder) => firstBuilder;
 
                     [FluentMethodTemplate]
-                    internal static Func<T1, TAbstraction, string> Build<T1, TAbstraction>(Func<T1, TAbstraction, string> secondFactory) => secondFactory;
+                    internal static Func<T1, TAbstraction, string> Build<T1, TAbstraction>(Func<T1, TAbstraction, string> secondBuilder) => secondBuilder;
                 }
             }
             """;
@@ -1538,7 +1538,7 @@ public class MultipleMethodsGenerationTests
             namespace Test.Namespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget"/>
@@ -1558,18 +1558,18 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> firstFactory)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, T2> Build<T1, T2>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> firstBuilder)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, T2>(this.First, global::Test.Namespace.Overloads.Build<T1, T2, global::System.Collections.Generic.IEnumerable<int>>(firstFactory));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, T2>(this.First, global::Test.Namespace.Overloads.Build<T1, T2, global::System.Collections.Generic.IEnumerable<int>>(firstBuilder));
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, string> secondFactory)
+                    public global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, string> Build<T1>(in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, string> secondBuilder)
                     {
-                        return new global::Test.Namespace.Step_1__Test_Namespace_Factory<T1, string>(this.First, global::Test.Namespace.Overloads.Build<T1, global::System.Collections.Generic.IEnumerable<int>>(secondFactory));
+                        return new global::Test.Namespace.Step_1__Test_Namespace_Builder<T1, string>(this.First, global::Test.Namespace.Overloads.Build<T1, global::System.Collections.Generic.IEnumerable<int>>(secondBuilder));
                     }
                 }
 
@@ -1577,11 +1577,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Namespace.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Namespace_Factory<T1, T2>
+                public readonly struct Step_1__Test_Namespace_Builder<T1, T2>
                 {
                     private readonly string _first__parameter;
                     private readonly global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> _second__parameter;
-                    internal Step_1__Test_Namespace_Factory(in string first, in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> second)
+                    internal Step_1__Test_Namespace_Builder(in string first, in global::System.Func<T1, global::System.Collections.Generic.IEnumerable<int>, T2> second)
                     {
                         this._first__parameter = first;
                         this._second__parameter = second;
@@ -1606,7 +1606,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Namespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Namespace.Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -1853,13 +1853,13 @@ public class MultipleMethodsGenerationTests
                 }
 
                 [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
-                public readonly struct ExplanationFactory<TModel>(
+                public readonly struct ExplanationBuilder<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [MultipleFluentMethods(typeof(WhenTrueOverloads))] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
                 [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
-                public readonly struct ExplanationWithNameFactory<TModel>(
+                public readonly struct ExplanationWithNameBuilder<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
@@ -1876,8 +1876,8 @@ public class MultipleMethodsGenerationTests
                 public static partial class Spec
                 {
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Namespace.Step_0__Test_Namespace_Spec<TModel> From<TModel>(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, bool>> predicate)
@@ -1887,8 +1887,8 @@ public class MultipleMethodsGenerationTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
-                ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Spec<TModel>
@@ -1900,7 +1900,7 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Namespace.Step_1__Test_Namespace_Spec<TModel> WhenTrue(in global::System.Func<TModel, string> whenTrue)
@@ -1909,7 +1909,7 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Namespace.Step_2__Test_Namespace_Spec<TModel> WhenTrue(in string trueBecause)
@@ -1919,7 +1919,7 @@ public class MultipleMethodsGenerationTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Spec<TModel>
@@ -1933,17 +1933,17 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.ExplanationFactory<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
+                    public global::Test.Namespace.ExplanationBuilder<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
                     {
-                        return new global::Test.Namespace.ExplanationFactory<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
+                        return new global::Test.Namespace.ExplanationBuilder<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
                     }
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Namespace_Spec<TModel>
@@ -1957,12 +1957,12 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.ExplanationWithNameFactory<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
+                    public global::Test.Namespace.ExplanationWithNameBuilder<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
                     {
-                        return new global::Test.Namespace.ExplanationWithNameFactory<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
+                        return new global::Test.Namespace.ExplanationWithNameBuilder<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
                     }
                 }
             }
@@ -1996,13 +1996,13 @@ public class MultipleMethodsGenerationTests
                 public static partial class Spec;
 
                 [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
-                public readonly struct ExplanationFactory<TModel>(
+                public readonly struct ExplanationBuilder<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] Func<TModel, string> trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
 
                 [FluentTarget(typeof(Spec), TerminalMethod = TerminalMethod.None)]
-                public readonly struct ExplanationWithNameFactory<TModel>(
+                public readonly struct ExplanationWithNameBuilder<TModel>(
                     [FluentMethod("From")] Expression<Func<TModel, bool>> predicate,
                     [FluentMethod("WhenTrue")] string trueBecause,
                     [FluentMethod("WhenFalse")] Func<TModel, string> falseBecause);
@@ -2019,8 +2019,8 @@ public class MultipleMethodsGenerationTests
                 public static partial class Spec
                 {
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public static global::Test.Namespace.Step_0__Test_Namespace_Spec<TModel> From<TModel>(in global::System.Linq.Expressions.Expression<global::System.Func<TModel, bool>> predicate)
@@ -2030,8 +2030,8 @@ public class MultipleMethodsGenerationTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
-                ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_0__Test_Namespace_Spec<TModel>
@@ -2043,7 +2043,7 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Namespace.Step_1__Test_Namespace_Spec<TModel> WhenTrue(in global::System.Func<TModel, string> trueBecause)
@@ -2052,7 +2052,7 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public global::Test.Namespace.Step_2__Test_Namespace_Spec<TModel> WhenTrue(in string trueBecause)
@@ -2062,7 +2062,7 @@ public class MultipleMethodsGenerationTests
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_1__Test_Namespace_Spec<TModel>
@@ -2076,17 +2076,17 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.ExplanationFactory<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
+                    public global::Test.Namespace.ExplanationBuilder<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
                     {
-                        return new global::Test.Namespace.ExplanationFactory<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
+                        return new global::Test.Namespace.ExplanationBuilder<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
                     }
                 }
 
                 /// <summary>
-                ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
                 public readonly struct Step_2__Test_Namespace_Spec<TModel>
@@ -2100,12 +2100,12 @@ public class MultipleMethodsGenerationTests
                     }
 
                     /// <summary>
-                    ///     <seealso cref="Test.Namespace.ExplanationWithNameFactory{TModel}"/>
+                    ///     <seealso cref="Test.Namespace.ExplanationWithNameBuilder{TModel}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Namespace.ExplanationWithNameFactory<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
+                    public global::Test.Namespace.ExplanationWithNameBuilder<TModel> WhenFalse(in global::System.Func<TModel, string> falseBecause)
                     {
-                        return new global::Test.Namespace.ExplanationWithNameFactory<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
+                        return new global::Test.Namespace.ExplanationWithNameBuilder<TModel>(this._predicate__parameter, this._trueBecause__parameter, falseBecause);
                     }
                 }
             }
@@ -2141,7 +2141,7 @@ public class MultipleMethodsGenerationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public static class Converters
             {
@@ -2151,7 +2151,7 @@ public class MultipleMethodsGenerationTests
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value, string label)
                 {
                     Value = value;
@@ -2164,7 +2164,7 @@ public class MultipleMethodsGenerationTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Beta([MultipleFluentMethods(typeof(Converters))] int value, bool flag)
                 {
                     Value = value;
@@ -2183,24 +2183,24 @@ public class MultipleMethodsGenerationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Beta"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_2__Test_Factory FromString(in string s)
+                    public static global::Test.Step_2__Test_Builder FromString(in string s)
                     {
-                        return new global::Test.Step_2__Test_Factory(global::Test.Converters.FromString(s));
+                        return new global::Test.Step_2__Test_Builder(global::Test.Converters.FromString(s));
                     }
                 }
 
@@ -2208,10 +2208,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -2220,9 +2220,9 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithLabel(in string label)
+                    public global::Test.Step_1__Test_Builder WithLabel(in string label)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._value__parameter, label);
+                        return new global::Test.Step_1__Test_Builder(this._value__parameter, label);
                     }
                 }
 
@@ -2230,11 +2230,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _value__parameter;
                     private readonly string _label__parameter;
-                    internal Step_1__Test_Factory(in int value, in string label)
+                    internal Step_1__Test_Builder(in int value, in string label)
                     {
                         this._value__parameter = value;
                         this._label__parameter = label;
@@ -2256,10 +2256,10 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Beta"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_2__Test_Factory(in int value)
+                    internal Step_2__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -2268,9 +2268,9 @@ public class MultipleMethodsGenerationTests
                     ///     <seealso cref="Test.Beta"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory WithFlag(in bool flag)
+                    public global::Test.Step_3__Test_Builder WithFlag(in bool flag)
                     {
-                        return new global::Test.Step_3__Test_Factory(this._value__parameter, flag);
+                        return new global::Test.Step_3__Test_Builder(this._value__parameter, flag);
                     }
                 }
 
@@ -2278,11 +2278,11 @@ public class MultipleMethodsGenerationTests
                 ///     <seealso cref="Test.Beta"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Builder
                 {
                     private readonly int _value__parameter;
                     private readonly bool _flag__parameter;
-                    internal Step_3__Test_Factory(in int value, in bool flag)
+                    internal Step_3__Test_Builder(in int value, in bool flag)
                     {
                         this._value__parameter = value;
                         this._flag__parameter = flag;
@@ -2309,7 +2309,7 @@ public class MultipleMethodsGenerationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

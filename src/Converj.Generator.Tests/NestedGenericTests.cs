@@ -16,11 +16,11 @@ public class NestedGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Func<T, bool> value)
                 {
                     Value = value;
@@ -37,7 +37,7 @@ public class NestedGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -58,7 +58,7 @@ public class NestedGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -76,11 +76,11 @@ public class NestedGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2)
@@ -102,15 +102,15 @@ public class NestedGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -118,10 +118,10 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
-                    internal Step_0__Test_Factory(in global::System.Func<T1, bool> value1)
+                    internal Step_0__Test_Builder(in global::System.Func<T1, bool> value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -145,7 +145,7 @@ public class NestedGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -164,11 +164,11 @@ public class NestedGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]Func<IEnumerable<KeyValuePair<T1, T1>>, bool> value1,
                     [FluentMethod("SetValue2")]Func<IEnumerable<KeyValuePair<T2, T2>>, bool> value2)
@@ -190,15 +190,15 @@ public class NestedGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
+                    public static global::Test.Step_0__Test_Builder<T1> SetValue1<T1>(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -206,10 +206,10 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> _value1__parameter;
-                    internal Step_0__Test_Factory(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
+                    internal Step_0__Test_Builder(in global::System.Func<global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<T1, T1>>, bool> value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -233,7 +233,7 @@ public class NestedGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -252,11 +252,11 @@ public class NestedGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, bool> value1,
                     IEnumerable<T2> value2,
@@ -282,15 +282,15 @@ public class NestedGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
+                    public static global::Test.Step_0__Test_Builder<T1> WithValue1<T1>(in global::System.Func<T1, bool> value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -298,10 +298,10 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
-                    internal Step_0__Test_Factory(in global::System.Func<T1, bool> value1)
+                    internal Step_0__Test_Builder(in global::System.Func<T1, bool> value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -310,9 +310,9 @@ public class NestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2<T2>(in global::System.Collections.Generic.IEnumerable<T2> value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2<T2>(in global::System.Collections.Generic.IEnumerable<T2> value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -320,11 +320,11 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly global::System.Func<T1, bool> _value1__parameter;
                     private readonly global::System.Collections.Generic.IEnumerable<T2> _value2__parameter;
-                    internal Step_1__Test_Factory(in global::System.Func<T1, bool> value1, in global::System.Collections.Generic.IEnumerable<T2> value2)
+                    internal Step_1__Test_Builder(in global::System.Func<T1, bool> value1, in global::System.Collections.Generic.IEnumerable<T2> value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -349,7 +349,7 @@ public class NestedGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -366,11 +366,11 @@ public class NestedGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3, T4, T5, T6>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     Func<T1, T2> value1,
                     Func<T3, T4> value2,
@@ -396,15 +396,15 @@ public class NestedGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::System.Func<T1, T2> value1)
+                    public static global::Test.Step_0__Test_Builder<T1, T2> WithValue1<T1, T2>(in global::System.Func<T1, T2> value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1, T2>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1, T2>(value1);
                     }
                 }
 
@@ -412,10 +412,10 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1, T2>
+                public readonly struct Step_0__Test_Builder<T1, T2>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;
-                    internal Step_0__Test_Factory(in global::System.Func<T1, T2> value1)
+                    internal Step_0__Test_Builder(in global::System.Func<T1, T2> value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -424,9 +424,9 @@ public class NestedGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2, T3, T4> WithValue2<T3, T4>(in global::System.Func<T3, T4> value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2, T3, T4> WithValue2<T3, T4>(in global::System.Func<T3, T4> value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2, T3, T4>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2, T3, T4>(this._value1__parameter, value2);
                     }
                 }
 
@@ -434,11 +434,11 @@ public class NestedGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4, T5, T6}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2, T3, T4>
+                public readonly struct Step_1__Test_Builder<T1, T2, T3, T4>
                 {
                     private readonly global::System.Func<T1, T2> _value1__parameter;
                     private readonly global::System.Func<T3, T4> _value2__parameter;
-                    internal Step_1__Test_Factory(in global::System.Func<T1, T2> value1, in global::System.Func<T3, T4> value2)
+                    internal Step_1__Test_Builder(in global::System.Func<T1, T2> value1, in global::System.Func<T3, T4> value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -463,7 +463,7 @@ public class NestedGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

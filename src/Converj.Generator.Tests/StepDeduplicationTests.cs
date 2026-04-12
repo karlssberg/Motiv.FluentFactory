@@ -6,7 +6,7 @@ namespace Converj.Generator.Tests;
 /// <summary>
 /// Tests for DistinctBy de-duplication behavior when multiple constructors produce steps
 /// with identical KnownConstructorParameters but different creation targets.
-/// Issue #9: The DistinctBy(step => step.KnownConstructorParameters) call in FluentModelFactory
+/// Issue #9: The DistinctBy(step => step.KnownConstructorParameters) call in FluentModelBuilder
 /// may silently discard steps that share parameter sequences but differ in creation methods.
 /// </summary>
 public class StepDeduplicationTests
@@ -26,11 +26,11 @@ public class StepDeduplicationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Dog(string name, int age)
                 {
                     Name = name;
@@ -43,7 +43,7 @@ public class StepDeduplicationTests
 
             public class Cat
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Cat(string name, int age)
                 {
                     Name = name;
@@ -62,16 +62,16 @@ public class StepDeduplicationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Cat"/>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -80,10 +80,10 @@ public class StepDeduplicationTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -93,9 +93,9 @@ public class StepDeduplicationTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithAge(in int age)
+                    public global::Test.Step_1__Test_Builder WithAge(in int age)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, age);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, age);
                     }
                 }
 
@@ -104,11 +104,11 @@ public class StepDeduplicationTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
-                    internal Step_1__Test_Factory(in string name, in int age)
+                    internal Step_1__Test_Builder(in string name, in int age)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -146,7 +146,7 @@ public class StepDeduplicationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -167,11 +167,11 @@ public class StepDeduplicationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(string value)
                 {
                     Value = value;
@@ -182,7 +182,7 @@ public class StepDeduplicationTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Beta(string value)
                 {
                     Value = value;
@@ -193,7 +193,7 @@ public class StepDeduplicationTests
 
             public class Gamma
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Gamma(string value)
                 {
                     Value = value;
@@ -210,7 +210,7 @@ public class StepDeduplicationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
@@ -218,9 +218,9 @@ public class StepDeduplicationTests
                     ///     <seealso cref="Test.Gamma"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in string value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -230,10 +230,10 @@ public class StepDeduplicationTests
                 ///     <seealso cref="Test.Gamma"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value__parameter;
-                    internal Step_0__Test_Factory(in string value)
+                    internal Step_0__Test_Builder(in string value)
                     {
                         this._value__parameter = value;
                     }
@@ -281,7 +281,7 @@ public class StepDeduplicationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

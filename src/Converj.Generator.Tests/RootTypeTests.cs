@@ -15,11 +15,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -36,7 +36,7 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -57,7 +57,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -74,11 +74,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record Factory;
+            public partial record Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -95,7 +95,7 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record Factory
+                public partial record Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -116,7 +116,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -133,11 +133,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial struct Factory;
+            public partial struct Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -154,7 +154,7 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial struct Factory
+                public partial struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -175,7 +175,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -192,11 +192,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in int value)
                 {
                     Value = value;
@@ -213,7 +213,7 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -234,7 +234,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -251,11 +251,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue value)
                 {
                     Value = value;
@@ -277,7 +277,7 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
@@ -298,7 +298,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -315,11 +315,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
             public partial class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3)
                 {
                     Value1 = value1;
@@ -342,15 +342,15 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Builder WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new global::Test.Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Builder(value1);
                     }
                 }
 
@@ -358,10 +358,10 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
-                    internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
+                    internal Step_0__Test_Builder(in global::Test.MyParameterValue value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -370,9 +370,9 @@ public class RootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithValue2(in global::Test.MyParameterValue value2)
+                    public global::Test.Step_1__Test_Builder WithValue2(in global::Test.MyParameterValue value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder(this._value1__parameter, value2);
                     }
                 }
 
@@ -380,11 +380,11 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;
-                    internal Step_1__Test_Factory(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2)
+                    internal Step_1__Test_Builder(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -409,7 +409,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -428,11 +428,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
             public partial class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(in MyParameterValue<T1, T2> value1, in MyParameterValue<T1, T2> value2, MyParameterValue<T1, T2> value3)
                 {
                     Value1 = value1;
@@ -455,15 +455,15 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1, T2> WithValue1<T1, T2>(in global::Test.MyParameterValue<T1, T2> value1)
+                    public static global::Test.Step_0__Test_Builder<T1, T2> WithValue1<T1, T2>(in global::Test.MyParameterValue<T1, T2> value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1, T2>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1, T2>(value1);
                     }
                 }
 
@@ -471,10 +471,10 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1, T2>
+                public readonly struct Step_0__Test_Builder<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
-                    internal Step_0__Test_Factory(in global::Test.MyParameterValue<T1, T2> value1)
+                    internal Step_0__Test_Builder(in global::Test.MyParameterValue<T1, T2> value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -483,9 +483,9 @@ public class RootTypeTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> WithValue2(in global::Test.MyParameterValue<T1, T2> value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> WithValue2(in global::Test.MyParameterValue<T1, T2> value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -493,11 +493,11 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly global::Test.MyParameterValue<T1, T2> _value1__parameter;
                     private readonly global::Test.MyParameterValue<T1, T2> _value2__parameter;
-                    internal Step_1__Test_Factory(in global::Test.MyParameterValue<T1, T2> value1, in global::Test.MyParameterValue<T1, T2> value2)
+                    internal Step_1__Test_Builder(in global::Test.MyParameterValue<T1, T2> value1, in global::Test.MyParameterValue<T1, T2> value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -522,7 +522,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -539,11 +539,11 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
             public partial class MyBuildTargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTargetA(in MyParameterValue value1, in MyParameterValue value2, MyParameterValue value3, MyParameterValue value4)
                 {
                     Value1 = value1;
@@ -560,7 +560,7 @@ public class RootTypeTests
 
             public partial class MyBuildTargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTargetB(in MyParameterValue value1, in MyParameterValue value2)
                 {
                     Value1 = value1;
@@ -581,16 +581,16 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     ///     <seealso cref="Test.MyBuildTargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Builder WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new global::Test.Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Builder(value1);
                     }
                 }
 
@@ -599,10 +599,10 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
-                    internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
+                    internal Step_0__Test_Builder(in global::Test.MyParameterValue value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -625,9 +625,9 @@ public class RootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
+                    public global::Test.Step_2__Test_Builder WithValue3(in global::Test.MyParameterValue value3)
                     {
-                        return new global::Test.Step_2__Test_Factory(this.Value1, this.Value2, value3);
+                        return new global::Test.Step_2__Test_Builder(this.Value1, this.Value2, value3);
                     }
                 }
 
@@ -635,12 +635,12 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;
                     private readonly global::Test.MyParameterValue _value3__parameter;
-                    internal Step_2__Test_Factory(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2, in global::Test.MyParameterValue value3)
+                    internal Step_2__Test_Builder(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2, in global::Test.MyParameterValue value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -666,7 +666,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -682,12 +682,12 @@ public class RootTypeTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory;
+            public partial record struct Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial class MyBuildTargetA(MyParameterValue value1, MyParameterValue value2, MyParameterValue value3, MyParameterValue value4);
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial class MyBuildTargetB(MyParameterValue value1, MyParameterValue value2);
 
             public record MyParameterValue();
@@ -700,16 +700,16 @@ public class RootTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     ///     <seealso cref="Test.MyBuildTargetB"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue1(in global::Test.MyParameterValue value1)
+                    public static global::Test.Step_0__Test_Builder WithValue1(in global::Test.MyParameterValue value1)
                     {
-                        return new global::Test.Step_0__Test_Factory(value1);
+                        return new global::Test.Step_0__Test_Builder(value1);
                     }
                 }
 
@@ -718,10 +718,10 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetB"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
-                    internal Step_0__Test_Factory(in global::Test.MyParameterValue value1)
+                    internal Step_0__Test_Builder(in global::Test.MyParameterValue value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -744,9 +744,9 @@ public class RootTypeTests
                     ///     <seealso cref="Test.MyBuildTargetA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithValue3(in global::Test.MyParameterValue value3)
+                    public global::Test.Step_2__Test_Builder WithValue3(in global::Test.MyParameterValue value3)
                     {
-                        return new global::Test.Step_2__Test_Factory(value1, value2, value3);
+                        return new global::Test.Step_2__Test_Builder(value1, value2, value3);
                     }
                 }
 
@@ -754,12 +754,12 @@ public class RootTypeTests
                 ///     <seealso cref="Test.MyBuildTargetA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly global::Test.MyParameterValue _value1__parameter;
                     private readonly global::Test.MyParameterValue _value2__parameter;
                     private readonly global::Test.MyParameterValue _value3__parameter;
-                    internal Step_2__Test_Factory(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2, in global::Test.MyParameterValue value3)
+                    internal Step_2__Test_Builder(in global::Test.MyParameterValue value1, in global::Test.MyParameterValue value2, in global::Test.MyParameterValue value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -785,7 +785,7 @@ public class RootTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

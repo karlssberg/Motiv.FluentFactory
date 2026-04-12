@@ -21,11 +21,11 @@ public class LargeParameterCountTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int id,
                     string name,
@@ -55,15 +55,15 @@ public class LargeParameterCountTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithId(in int id)
+                    public static global::Test.Step_0__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_0__Test_Factory(id);
+                        return new global::Test.Step_0__Test_Builder(id);
                     }
                 }
 
@@ -71,10 +71,10 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _id__parameter;
-                    internal Step_0__Test_Factory(in int id)
+                    internal Step_0__Test_Builder(in int id)
                     {
                         this._id__parameter = id;
                     }
@@ -83,9 +83,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._id__parameter, name);
+                        return new global::Test.Step_1__Test_Builder(this._id__parameter, name);
                     }
                 }
 
@@ -93,11 +93,11 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in int id, in string name)
+                    internal Step_1__Test_Builder(in int id, in string name)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -107,9 +107,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithIsActive(in bool isActive)
+                    public global::Test.Step_2__Test_Builder WithIsActive(in bool isActive)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._id__parameter, this._name__parameter, isActive);
+                        return new global::Test.Step_2__Test_Builder(this._id__parameter, this._name__parameter, isActive);
                     }
                 }
 
@@ -117,12 +117,12 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
                     private readonly bool _isActive__parameter;
-                    internal Step_2__Test_Factory(in int id, in string name, in bool isActive)
+                    internal Step_2__Test_Builder(in int id, in string name, in bool isActive)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -133,9 +133,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory WithScore(in double score)
+                    public global::Test.Step_3__Test_Builder WithScore(in double score)
                     {
-                        return new global::Test.Step_3__Test_Factory(this._id__parameter, this._name__parameter, this._isActive__parameter, score);
+                        return new global::Test.Step_3__Test_Builder(this._id__parameter, this._name__parameter, this._isActive__parameter, score);
                     }
                 }
 
@@ -143,13 +143,13 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
                     private readonly bool _isActive__parameter;
                     private readonly double _score__parameter;
-                    internal Step_3__Test_Factory(in int id, in string name, in bool isActive, in double score)
+                    internal Step_3__Test_Builder(in int id, in string name, in bool isActive, in double score)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -176,7 +176,7 @@ public class LargeParameterCountTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -198,11 +198,11 @@ public class LargeParameterCountTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     int id,
                     string name,
@@ -241,15 +241,15 @@ public class LargeParameterCountTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithId(in int id)
+                    public static global::Test.Step_0__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_0__Test_Factory(id);
+                        return new global::Test.Step_0__Test_Builder(id);
                     }
                 }
 
@@ -257,10 +257,10 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _id__parameter;
-                    internal Step_0__Test_Factory(in int id)
+                    internal Step_0__Test_Builder(in int id)
                     {
                         this._id__parameter = id;
                     }
@@ -269,9 +269,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._id__parameter, name);
+                        return new global::Test.Step_1__Test_Builder(this._id__parameter, name);
                     }
                 }
 
@@ -279,11 +279,11 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in int id, in string name)
+                    internal Step_1__Test_Builder(in int id, in string name)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -293,9 +293,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithIsActive(in bool isActive)
+                    public global::Test.Step_2__Test_Builder WithIsActive(in bool isActive)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._id__parameter, this._name__parameter, isActive);
+                        return new global::Test.Step_2__Test_Builder(this._id__parameter, this._name__parameter, isActive);
                     }
                 }
 
@@ -303,12 +303,12 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
                     private readonly bool _isActive__parameter;
-                    internal Step_2__Test_Factory(in int id, in string name, in bool isActive)
+                    internal Step_2__Test_Builder(in int id, in string name, in bool isActive)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -319,9 +319,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_3__Test_Factory WithScore(in double score)
+                    public global::Test.Step_3__Test_Builder WithScore(in double score)
                     {
-                        return new global::Test.Step_3__Test_Factory(this._id__parameter, this._name__parameter, this._isActive__parameter, score);
+                        return new global::Test.Step_3__Test_Builder(this._id__parameter, this._name__parameter, this._isActive__parameter, score);
                     }
                 }
 
@@ -329,13 +329,13 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_3__Test_Factory
+                public readonly struct Step_3__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
                     private readonly bool _isActive__parameter;
                     private readonly double _score__parameter;
-                    internal Step_3__Test_Factory(in int id, in string name, in bool isActive, in double score)
+                    internal Step_3__Test_Builder(in int id, in string name, in bool isActive, in double score)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -347,9 +347,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_4__Test_Factory WithPrice(in decimal price)
+                    public global::Test.Step_4__Test_Builder WithPrice(in decimal price)
                     {
-                        return new global::Test.Step_4__Test_Factory(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, price);
+                        return new global::Test.Step_4__Test_Builder(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, price);
                     }
                 }
 
@@ -357,14 +357,14 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_4__Test_Factory
+                public readonly struct Step_4__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
                     private readonly bool _isActive__parameter;
                     private readonly double _score__parameter;
                     private readonly decimal _price__parameter;
-                    internal Step_4__Test_Factory(in int id, in string name, in bool isActive, in double score, in decimal price)
+                    internal Step_4__Test_Builder(in int id, in string name, in bool isActive, in double score, in decimal price)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -377,9 +377,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_5__Test_Factory WithCount(in long count)
+                    public global::Test.Step_5__Test_Builder WithCount(in long count)
                     {
-                        return new global::Test.Step_5__Test_Factory(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, this._price__parameter, count);
+                        return new global::Test.Step_5__Test_Builder(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, this._price__parameter, count);
                     }
                 }
 
@@ -387,7 +387,7 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_5__Test_Factory
+                public readonly struct Step_5__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -395,7 +395,7 @@ public class LargeParameterCountTests
                     private readonly double _score__parameter;
                     private readonly decimal _price__parameter;
                     private readonly long _count__parameter;
-                    internal Step_5__Test_Factory(in int id, in string name, in bool isActive, in double score, in decimal price, in long count)
+                    internal Step_5__Test_Builder(in int id, in string name, in bool isActive, in double score, in decimal price, in long count)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -409,9 +409,9 @@ public class LargeParameterCountTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_6__Test_Factory WithRatio(in float ratio)
+                    public global::Test.Step_6__Test_Builder WithRatio(in float ratio)
                     {
-                        return new global::Test.Step_6__Test_Factory(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, this._price__parameter, this._count__parameter, ratio);
+                        return new global::Test.Step_6__Test_Builder(this._id__parameter, this._name__parameter, this._isActive__parameter, this._score__parameter, this._price__parameter, this._count__parameter, ratio);
                     }
                 }
 
@@ -419,7 +419,7 @@ public class LargeParameterCountTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_6__Test_Factory
+                public readonly struct Step_6__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
@@ -428,7 +428,7 @@ public class LargeParameterCountTests
                     private readonly decimal _price__parameter;
                     private readonly long _count__parameter;
                     private readonly float _ratio__parameter;
-                    internal Step_6__Test_Factory(in int id, in string name, in bool isActive, in double score, in decimal price, in long count, in float ratio)
+                    internal Step_6__Test_Builder(in int id, in string name, in bool isActive, in double score, in decimal price, in long count, in float ratio)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -458,7 +458,7 @@ public class LargeParameterCountTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

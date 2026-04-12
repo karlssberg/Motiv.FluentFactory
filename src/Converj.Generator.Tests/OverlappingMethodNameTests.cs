@@ -22,11 +22,11 @@ public class OverlappingMethodNameTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget([FluentMethod("WithValue")]string text, [FluentMethod("WithValue")]int number)
                 {
                     Text = text;
@@ -45,15 +45,15 @@ public class OverlappingMethodNameTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in string text)
+                    public static global::Test.Step_0__Test_Builder WithValue(in string text)
                     {
-                        return new global::Test.Step_0__Test_Factory(text);
+                        return new global::Test.Step_0__Test_Builder(text);
                     }
                 }
 
@@ -61,10 +61,10 @@ public class OverlappingMethodNameTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _text__parameter;
-                    internal Step_0__Test_Factory(in string text)
+                    internal Step_0__Test_Builder(in string text)
                     {
                         this._text__parameter = text;
                     }
@@ -88,7 +88,7 @@ public class OverlappingMethodNameTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -100,7 +100,7 @@ public class OverlappingMethodNameTests
     /// different types (<c>string</c> vs <c>int</c>), produce valid C# overloaded methods on the factory.
     /// </summary>
     [Fact]
-    internal async Task Given_two_constructors_with_same_FluentMethod_name_but_different_types_Should_generate_overloaded_factory_methods()
+    internal async Task Given_two_constructors_with_same_FluentMethod_name_but_different_types_Should_generate_overloaded_root_methods()
     {
         const string code =
             """
@@ -109,11 +109,11 @@ public class OverlappingMethodNameTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetA([FluentMethod("Create")]string value)
                 {
                     Value = value;
@@ -124,7 +124,7 @@ public class OverlappingMethodNameTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("Create")]int value)
                 {
                     Value = value;
@@ -141,7 +141,7 @@ public class OverlappingMethodNameTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.TargetA"/>
@@ -171,7 +171,7 @@ public class OverlappingMethodNameTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -26,7 +26,7 @@ public class ConstructorChainingTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -35,7 +35,7 @@ public class ConstructorChainingTests
                     Value = value;
                 }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int value, string name) : this(value)
                 {
                     Name = name;
@@ -53,15 +53,15 @@ public class ConstructorChainingTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -69,10 +69,10 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -96,7 +96,7 @@ public class ConstructorChainingTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -117,7 +117,7 @@ public class ConstructorChainingTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -126,7 +126,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id)
                 {
                     Name = name;
@@ -146,15 +146,15 @@ public class ConstructorChainingTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithId(in int id)
+                    public static global::Test.Step_0__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_0__Test_Factory(id);
+                        return new global::Test.Step_0__Test_Builder(id);
                     }
                 }
 
@@ -162,10 +162,10 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _id__parameter;
-                    internal Step_0__Test_Factory(in int id)
+                    internal Step_0__Test_Builder(in int id)
                     {
                         this._id__parameter = id;
                     }
@@ -174,9 +174,9 @@ public class ConstructorChainingTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._id__parameter, name);
+                        return new global::Test.Step_1__Test_Builder(this._id__parameter, name);
                     }
                 }
 
@@ -184,11 +184,11 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in int id, in string name)
+                    internal Step_1__Test_Builder(in int id, in string name)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -213,7 +213,7 @@ public class ConstructorChainingTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -235,7 +235,7 @@ public class ConstructorChainingTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -244,7 +244,7 @@ public class ConstructorChainingTests
                     Id = id;
                 }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(int id, string name, bool active) : this(id: id)
                 {
                     Name = name;
@@ -264,15 +264,15 @@ public class ConstructorChainingTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithId(in int id)
+                    public static global::Test.Step_0__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_0__Test_Factory(id);
+                        return new global::Test.Step_0__Test_Builder(id);
                     }
                 }
 
@@ -280,10 +280,10 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _id__parameter;
-                    internal Step_0__Test_Factory(in int id)
+                    internal Step_0__Test_Builder(in int id)
                     {
                         this._id__parameter = id;
                     }
@@ -292,9 +292,9 @@ public class ConstructorChainingTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._id__parameter, name);
+                        return new global::Test.Step_1__Test_Builder(this._id__parameter, name);
                     }
                 }
 
@@ -302,11 +302,11 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _id__parameter;
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in int id, in string name)
+                    internal Step_1__Test_Builder(in int id, in string name)
                     {
                         this._id__parameter = id;
                         this._name__parameter = name;
@@ -331,7 +331,7 @@ public class ConstructorChainingTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -353,7 +353,7 @@ public class ConstructorChainingTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -363,7 +363,7 @@ public class ConstructorChainingTests
                     Active = active;
                 }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(string name, int id, bool active) : this(active: active, id: id)
                 {
                     Name = name;
@@ -382,15 +382,15 @@ public class ConstructorChainingTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -398,10 +398,10 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -410,9 +410,9 @@ public class ConstructorChainingTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithId(in int id)
+                    public global::Test.Step_1__Test_Builder WithId(in int id)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, id);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, id);
                     }
                 }
 
@@ -420,11 +420,11 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _id__parameter;
-                    internal Step_1__Test_Factory(in string name, in int id)
+                    internal Step_1__Test_Builder(in string name, in int id)
                     {
                         this._name__parameter = name;
                         this._id__parameter = id;
@@ -449,7 +449,7 @@ public class ConstructorChainingTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -477,7 +477,7 @@ public class ConstructorChainingTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Widget
             {
@@ -488,13 +488,13 @@ public class ConstructorChainingTests
                     _name = name;
                 }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Widget(string name, int size) : this(name)
                 {
                     Size = size;
                 }
 
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Widget(string name, int size, bool visible) : this(name, size)
                 {
                     Visible = visible;
@@ -513,15 +513,15 @@ public class ConstructorChainingTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Widget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -529,10 +529,10 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.Widget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -554,9 +554,9 @@ public class ConstructorChainingTests
                     ///     <seealso cref="Test.Widget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithVisible(in bool visible)
+                    public global::Test.Step_2__Test_Builder WithVisible(in bool visible)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._name, this.Size, visible);
+                        return new global::Test.Step_2__Test_Builder(this._name, this.Size, visible);
                     }
                 }
 
@@ -564,12 +564,12 @@ public class ConstructorChainingTests
                 ///     <seealso cref="Test.Widget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _size__parameter;
                     private readonly bool _visible__parameter;
-                    internal Step_2__Test_Factory(in string name, in int size, in bool visible)
+                    internal Step_2__Test_Builder(in string name, in int size, in bool visible)
                     {
                         this._name__parameter = name;
                         this._size__parameter = size;
@@ -597,7 +597,7 @@ public class ConstructorChainingTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

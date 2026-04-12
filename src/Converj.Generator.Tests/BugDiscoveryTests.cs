@@ -310,7 +310,7 @@ public class BugDiscoveryTests
     [Fact]
     internal async Task Should_allow_multiple_fluent_constructor_attributes_with_different_create_method_names()
     {
-        // Tests what happens when multiple FluentConstructor attributes have different CreateVerb values
+        // Tests what happens when multiple FluentTarget attributes have different CreateVerb values
         const string source = """
             using Converj.Generator;
 
@@ -446,7 +446,7 @@ public class BugDiscoveryTests
     public async Task Should_error_when_duplicate_fluent_constructor_attributes_with_identical_parameters(
         string methodName)
     {
-        // Tests what happens with completely identical FluentConstructor attributes
+        // Tests what happens with completely identical FluentTarget attributes
         var createMethodNameArgument =
             $"""
              TerminalVerb = "{methodName}"
@@ -483,7 +483,7 @@ public class BugDiscoveryTests
     [Fact]
     internal async Task Should_allow_duplicates_method_names_located_on_different_decision_paths()
     {
-        // Tests what happens with completely identical FluentConstructor attributes
+        // Tests what happens with completely identical FluentTarget attributes
         const string source =
             """
             using Converj.Generator;
@@ -595,10 +595,10 @@ public class BugDiscoveryTests
     }
 
     [Fact]
-    internal async Task Should_error_when_fluent_factory_attribute_on_non_target_type()
+    internal async Task Should_error_when_fluent_root_attribute_on_non_target_type()
     {
         // Tests what happens when FluentFactory is missing on referenced type
-        const string fluentFactoryRootType = "typeof(MyTarget)";
+        const string fluentRootType = "typeof(MyTarget)";
 
         var source =
           $$"""
@@ -609,7 +609,7 @@ public class BugDiscoveryTests
                 // Missing [FluentRoot] attribute
                 public partial class MyTarget;
 
-                [FluentTarget({{fluentFactoryRootType}})] // References type without FluentFactory
+                [FluentTarget({{fluentRootType}})] // References type without FluentFactory
                 public partial record InvalidTarget(int Value);
             }
             """;
@@ -620,7 +620,7 @@ public class BugDiscoveryTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0009")
-                    .WithSpan("Source.cs", 8, 19, 8, 19 + fluentFactoryRootType.Length)
+                    .WithSpan("Source.cs", 8, 19, 8, 19 + fluentRootType.Length)
                     .WithMessage("FluentTarget references type 'Test.Namespace.MyTarget' which does not have the FluentRoot attribute"),
             }
         }.RunAsync();
@@ -804,11 +804,11 @@ public class BugDiscoveryTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -819,7 +819,7 @@ public class BugDiscoveryTests
 
                 public class Company
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public Company(string name)
                     {
                         Name = name;
@@ -836,7 +836,7 @@ public class BugDiscoveryTests
             namespace MyNamespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="MyNamespace.Company"/>
@@ -873,7 +873,7 @@ public class BugDiscoveryTests
                 Sources = { (SourceFile, source) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

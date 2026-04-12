@@ -26,11 +26,11 @@ public class GatewayMethodStorageTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Settings
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Settings(int width = 100, int height = 200)
                 {
                     Width = width;
@@ -49,7 +49,7 @@ public class GatewayMethodStorageTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// Creates a new instance using constructor Test.Settings.Settings(int width = 100, int height = 200).
@@ -66,18 +66,18 @@ public class GatewayMethodStorageTests
                     ///     <seealso cref="Test.Settings"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithWidth(in int width)
+                    public static global::Test.Step_0__Test_Builder WithWidth(in int width)
                     {
-                        return new global::Test.Step_0__Test_Factory(width: width);
+                        return new global::Test.Step_0__Test_Builder(width: width);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Settings"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithHeight(in int height)
+                    public static global::Test.Step_0__Test_Builder WithHeight(in int height)
                     {
-                        return new global::Test.Step_0__Test_Factory(height: height);
+                        return new global::Test.Step_0__Test_Builder(height: height);
                     }
                 }
 
@@ -85,11 +85,11 @@ public class GatewayMethodStorageTests
                 ///     <seealso cref="Test.Settings"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _width__parameter;
                     private readonly int _height__parameter;
-                    internal Step_0__Test_Factory(in int width = 100, in int height = 200)
+                    internal Step_0__Test_Builder(in int width = 100, in int height = 200)
                     {
                         this._width__parameter = width;
                         this._height__parameter = height;
@@ -99,18 +99,18 @@ public class GatewayMethodStorageTests
                     ///     <seealso cref="Test.Settings"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithWidth(in int width)
+                    public global::Test.Step_0__Test_Builder WithWidth(in int width)
                     {
-                        return new global::Test.Step_0__Test_Factory(width, this._height__parameter);
+                        return new global::Test.Step_0__Test_Builder(width, this._height__parameter);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Settings"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithHeight(in int height)
+                    public global::Test.Step_0__Test_Builder WithHeight(in int height)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._width__parameter, height);
+                        return new global::Test.Step_0__Test_Builder(this._width__parameter, height);
                     }
 
                     /// <summary>
@@ -134,7 +134,7 @@ public class GatewayMethodStorageTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

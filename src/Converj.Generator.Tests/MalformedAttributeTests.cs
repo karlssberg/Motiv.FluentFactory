@@ -5,7 +5,7 @@ using VerifyCS =
 namespace Converj.Generator.Tests;
 
 /// <summary>
-/// Edge case tests for malformed FluentConstructor attribute usage (DIAG-01).
+/// Edge case tests for malformed FluentTarget attribute usage (DIAG-01).
 /// Tests assert DESIRED correct output — failing tests document generator shortcomings.
 /// </summary>
 public class MalformedAttributeTests
@@ -27,14 +27,14 @@ public class MalformedAttributeTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory;
+                public partial class Builder;
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
                 public partial record MyRecord(int Value, string Name);
             }
             """;
 
-        // Line 8: [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
+        // Line 8: [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
         // Attribute starts at col 6 (1-based), ends after closing bracket.
         // The entire attribute span is expected for CVJG0010.
         await new VerifyCS.Test
@@ -50,14 +50,14 @@ public class MalformedAttributeTests
     }
 
     /// <summary>
-    /// Exercises multiple simultaneous validation errors on a single FluentConstructor attribute:
+    /// Exercises multiple simultaneous validation errors on a single FluentTarget attribute:
     /// (1) the target type lacks [FluentRoot] (CVJG0009), and
     /// (2) the CreateVerb is an invalid identifier (CVJG0007).
     /// Tests assert DESIRED behavior where both diagnostics fire independently.
     /// If only one fires, the test documents the validation short-circuit.
     /// </summary>
     [Fact]
-    internal async Task Should_error_for_both_missing_fluent_factory_and_invalid_create_method_name_simultaneously()
+    internal async Task Should_error_for_both_missing_fluent_root_and_invalid_create_method_name_simultaneously()
     {
         const string source =
             """
@@ -66,14 +66,14 @@ public class MalformedAttributeTests
             namespace Test.Namespace
             {
                 // Missing [FluentRoot] attribute on purpose
-                public partial class NonFactoryType;
+                public partial class NonRootType;
 
-                [FluentTarget(typeof(NonFactoryType), TerminalVerb = "123invalid")]
+                [FluentTarget(typeof(NonRootType), TerminalVerb = "123invalid")]
                 public partial record MyRecord(int Value);
             }
             """;
 
-        // CVJG0009 fires on the typeof(NonFactoryType) argument expression
+        // CVJG0009 fires on the typeof(NonRootType) argument expression
         // CVJG0007 fires on the TerminalVerb = "123invalid" named argument
         // DESIRED: both CVJG0009 and CVJG0007 fire. If only CVJG0009 fires, this test will fail,
         // documenting that validation short-circuits after the missing-FluentFactory error.
@@ -83,10 +83,10 @@ public class MalformedAttributeTests
             ExpectedDiagnostics =
             {
                 DiagnosticResult.CompilerError("CVJG0009")
-                    .WithSpan("Source.cs", 8, 19, 8, 41)
-                    .WithMessage("FluentTarget references type 'Test.Namespace.NonFactoryType' which does not have the FluentRoot attribute"),
+                    .WithSpan("Source.cs", 8, 19, 8, 38)
+                    .WithMessage("FluentTarget references type 'Test.Namespace.NonRootType' which does not have the FluentRoot attribute"),
                 DiagnosticResult.CompilerError("CVJG0007")
-                    .WithSpan("Source.cs", 8, 43, 8, 70)
+                    .WithSpan("Source.cs", 8, 40, 8, 67)
                     .WithMessage("TerminalVerb must be a valid identifier"),
             }
         }.RunAsync();
@@ -108,14 +108,14 @@ public class MalformedAttributeTests
             namespace Test.Namespace
             {
                 [FluentRoot]
-                public partial class Factory;
+                public partial class Builder;
 
                 public partial class MyTarget
                 {
-                    [FluentTarget(typeof(Factory), TerminalVerb = "Build")]
+                    [FluentTarget(typeof(Builder), TerminalVerb = "Build")]
                     public MyTarget(int value) { }
 
-                    [FluentTarget(typeof(Factory), TerminalVerb = "Build", TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalVerb = "Build", TerminalMethod = TerminalMethod.None)]
                     public MyTarget(string name) { }
                 }
             }

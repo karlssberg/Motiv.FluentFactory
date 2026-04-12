@@ -6,7 +6,7 @@ namespace Converj.Generator.Tests;
 public class ReturnTypeTests
 {
     [Fact]
-    internal async Task Should_use_factory_level_return_type_as_creation_method_return_type()
+    internal async Task Should_use_root_level_return_type_as_creation_method_return_type()
     {
         const string code =
             """
@@ -21,11 +21,11 @@ public class ReturnTypeTests
             }
 
             [FluentRoot(ReturnType = typeof(IMyInterface))]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget : IMyInterface
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -42,15 +42,15 @@ public class ReturnTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -58,10 +58,10 @@ public class ReturnTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -87,7 +87,7 @@ public class ReturnTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -110,11 +110,11 @@ public class ReturnTypeTests
             }
 
             [FluentRoot(ReturnType = typeof(IBase))]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget : ISpecific
             {
-                [FluentTarget(typeof(Factory), ReturnType = typeof(ISpecific))]
+                [FluentTarget(typeof(Builder), ReturnType = typeof(ISpecific))]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -131,15 +131,15 @@ public class ReturnTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -147,10 +147,10 @@ public class ReturnTypeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -176,7 +176,7 @@ public class ReturnTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -264,7 +264,7 @@ public class ReturnTypeTests
     }
 
     [Fact]
-    internal async Task Should_use_factory_return_type_for_multiple_concrete_types()
+    internal async Task Should_use_root_return_type_for_multiple_concrete_types()
     {
         const string code =
             """
@@ -279,11 +279,11 @@ public class ReturnTypeTests
             }
 
             [FluentRoot(ReturnType = typeof(IAnimal))]
-            public static partial class AnimalFactory;
+            public static partial class AnimalBuilder;
 
             public class Dog : IAnimal
             {
-                [FluentTarget(typeof(AnimalFactory))]
+                [FluentTarget(typeof(AnimalBuilder))]
                 public Dog(string name)
                 {
                     Name = name;
@@ -294,7 +294,7 @@ public class ReturnTypeTests
 
             public class Cat : IAnimal
             {
-                [FluentTarget(typeof(AnimalFactory))]
+                [FluentTarget(typeof(AnimalBuilder))]
                 public Cat(string name)
                 {
                     Name = name;
@@ -311,16 +311,16 @@ public class ReturnTypeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class AnimalFactory
+                public static partial class AnimalBuilder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Cat"/>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_AnimalFactory WithName(in string name)
+                    public static global::Test.Step_0__Test_AnimalBuilder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_AnimalFactory(name);
+                        return new global::Test.Step_0__Test_AnimalBuilder(name);
                     }
                 }
 
@@ -329,10 +329,10 @@ public class ReturnTypeTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_AnimalFactory
+                public readonly struct Step_0__Test_AnimalBuilder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_AnimalFactory(in string name)
+                    internal Step_0__Test_AnimalBuilder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -369,7 +369,7 @@ public class ReturnTypeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.AnimalFactory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.AnimalBuilder.g.cs", expected)
                 }
             }
         }.RunAsync();

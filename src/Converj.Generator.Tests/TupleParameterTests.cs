@@ -18,11 +18,11 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle((int Wheels, string Name) vehicle)
                 {
                     Vehicle1 = vehicle;
@@ -39,15 +39,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithVehicle(in int wheels, in string name)
+                    public static global::Test.Step_0__Test_Builder WithVehicle(in int wheels, in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(wheels, name);
+                        return new global::Test.Step_0__Test_Builder(wheels, name);
                     }
                 }
 
@@ -55,11 +55,11 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -86,7 +86,7 @@ public class TupleParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -103,11 +103,11 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle((int, string) vehicle)
                 {
                     Vehicle1 = vehicle;
@@ -124,15 +124,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithVehicle(in (int, string) vehicle)
+                    public static global::Test.Step_0__Test_Builder WithVehicle(in (int, string) vehicle)
                     {
-                        return new global::Test.Step_0__Test_Factory(vehicle);
+                        return new global::Test.Step_0__Test_Builder(vehicle);
                     }
                 }
 
@@ -140,10 +140,10 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly (int, string) _vehicle__parameter;
-                    internal Step_0__Test_Factory(in (int, string) vehicle)
+                    internal Step_0__Test_Builder(in (int, string) vehicle)
                     {
                         this._vehicle__parameter = vehicle;
                     }
@@ -169,7 +169,7 @@ public class TupleParameterTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -193,11 +193,11 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Vehicle((int Wheels, string Name) spec, bool active)
                 {
                     Spec = spec;
@@ -216,15 +216,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithSpec(in int wheels, in string name)
+                    public static global::Test.Step_0__Test_Builder WithSpec(in int wheels, in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(wheels, name);
+                        return new global::Test.Step_0__Test_Builder(wheels, name);
                     }
                 }
 
@@ -232,11 +232,11 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -261,7 +261,7 @@ public class TupleParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -278,11 +278,11 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle([FluentMethod("SetSpec")] (int Wheels, string Name) spec)
                 {
                     Spec = spec;
@@ -299,15 +299,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory SetSpec(in int wheels, in string name)
+                    public static global::Test.Step_0__Test_Builder SetSpec(in int wheels, in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(wheels, name);
+                        return new global::Test.Step_0__Test_Builder(wheels, name);
                     }
                 }
 
@@ -315,11 +315,11 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -346,7 +346,7 @@ public class TupleParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -363,14 +363,14 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
                 public int Wheels { get; set; }
                 public string Name { get; set; }
 
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public static Vehicle Create((int Wheels, string Name) spec)
                 {
                     return new Vehicle { Wheels = spec.Wheels, Name = spec.Name };
@@ -385,15 +385,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithSpec(in int wheels, in string name)
+                    public static global::Test.Step_0__Test_Builder WithSpec(in int wheels, in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(wheels, name);
+                        return new global::Test.Step_0__Test_Builder(wheels, name);
                     }
                 }
 
@@ -401,11 +401,11 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -432,7 +432,7 @@ public class TupleParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -449,11 +449,11 @@ public class TupleParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Vehicle(string label, (int X, int Y) position)
                 {
                     Label = label;
@@ -472,15 +472,15 @@ public class TupleParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithLabel(in string label)
+                    public static global::Test.Step_0__Test_Builder WithLabel(in string label)
                     {
-                        return new global::Test.Step_0__Test_Factory(label);
+                        return new global::Test.Step_0__Test_Builder(label);
                     }
                 }
 
@@ -488,10 +488,10 @@ public class TupleParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _label__parameter;
-                    internal Step_0__Test_Factory(in string label)
+                    internal Step_0__Test_Builder(in string label)
                     {
                         this._label__parameter = label;
                     }
@@ -515,7 +515,7 @@ public class TupleParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

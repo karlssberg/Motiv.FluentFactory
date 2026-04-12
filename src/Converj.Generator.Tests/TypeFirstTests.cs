@@ -18,11 +18,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
@@ -40,15 +40,15 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Dog_0__Test_Factory BuildDog()
+                    public static global::Test.Step_Dog_0__Test_Builder BuildDog()
                     {
-                        return new global::Test.Step_Dog_0__Test_Factory();
+                        return new global::Test.Step_Dog_0__Test_Builder();
                     }
                 }
 
@@ -56,9 +56,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_0__Test_Factory
+                public readonly struct Step_Dog_0__Test_Builder
                 {
-                    public Step_Dog_0__Test_Factory()
+                    public Step_Dog_0__Test_Builder()
                     {
                     }
 
@@ -66,9 +66,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Dog_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_Dog_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_Dog_1__Test_Factory(name);
+                        return new global::Test.Step_Dog_1__Test_Builder(name);
                     }
                 }
 
@@ -76,10 +76,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_1__Test_Factory
+                public readonly struct Step_Dog_1__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_Dog_1__Test_Factory(in string name)
+                    internal Step_Dog_1__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -105,7 +105,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -122,11 +122,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
@@ -138,7 +138,7 @@ public class TypeFirstTests
 
             public class Cat
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildCat")]
                 public Cat(int lives)
                 {
@@ -156,24 +156,24 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Dog_0__Test_Factory BuildDog()
+                    public static global::Test.Step_Dog_0__Test_Builder BuildDog()
                     {
-                        return new global::Test.Step_Dog_0__Test_Factory();
+                        return new global::Test.Step_Dog_0__Test_Builder();
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Cat"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Cat_2__Test_Factory BuildCat()
+                    public static global::Test.Step_Cat_2__Test_Builder BuildCat()
                     {
-                        return new global::Test.Step_Cat_2__Test_Factory();
+                        return new global::Test.Step_Cat_2__Test_Builder();
                     }
                 }
 
@@ -181,9 +181,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_0__Test_Factory
+                public readonly struct Step_Dog_0__Test_Builder
                 {
-                    public Step_Dog_0__Test_Factory()
+                    public Step_Dog_0__Test_Builder()
                     {
                     }
 
@@ -191,9 +191,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Dog_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_Dog_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_Dog_1__Test_Factory(name);
+                        return new global::Test.Step_Dog_1__Test_Builder(name);
                     }
                 }
 
@@ -201,10 +201,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_1__Test_Factory
+                public readonly struct Step_Dog_1__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_Dog_1__Test_Factory(in string name)
+                    internal Step_Dog_1__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -225,9 +225,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Cat"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Cat_2__Test_Factory
+                public readonly struct Step_Cat_2__Test_Builder
                 {
-                    public Step_Cat_2__Test_Factory()
+                    public Step_Cat_2__Test_Builder()
                     {
                     }
 
@@ -235,9 +235,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Cat"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Cat_3__Test_Factory WithLives(in int lives)
+                    public global::Test.Step_Cat_3__Test_Builder WithLives(in int lives)
                     {
-                        return new global::Test.Step_Cat_3__Test_Factory(lives);
+                        return new global::Test.Step_Cat_3__Test_Builder(lives);
                     }
                 }
 
@@ -245,10 +245,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Cat"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Cat_3__Test_Factory
+                public readonly struct Step_Cat_3__Test_Builder
                 {
                     private readonly int _lives__parameter;
-                    internal Step_Cat_3__Test_Factory(in int lives)
+                    internal Step_Cat_3__Test_Builder(in int lives)
                     {
                         this._lives__parameter = lives;
                     }
@@ -274,7 +274,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -291,11 +291,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Circle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildCircle")]
                 public Circle(double radius)
                 {
@@ -307,7 +307,7 @@ public class TypeFirstTests
 
             public class Circle<T>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildCircle")]
                 public Circle(T radius)
                 {
@@ -325,16 +325,16 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Circle"/>
                     ///     <seealso cref="Test.Circle{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Circle_0__Test_Factory BuildCircle()
+                    public static global::Test.Step_Circle_0__Test_Builder BuildCircle()
                     {
-                        return new global::Test.Step_Circle_0__Test_Factory();
+                        return new global::Test.Step_Circle_0__Test_Builder();
                     }
                 }
 
@@ -343,9 +343,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Circle{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Circle_0__Test_Factory
+                public readonly struct Step_Circle_0__Test_Builder
                 {
-                    public Step_Circle_0__Test_Factory()
+                    public Step_Circle_0__Test_Builder()
                     {
                     }
 
@@ -353,18 +353,18 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Circle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Circle_1__Test_Factory WithRadius(in double radius)
+                    public global::Test.Step_Circle_1__Test_Builder WithRadius(in double radius)
                     {
-                        return new global::Test.Step_Circle_1__Test_Factory(radius);
+                        return new global::Test.Step_Circle_1__Test_Builder(radius);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Circle{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Circle_2__Test_Factory<T> WithRadius<T>(in T radius)
+                    public global::Test.Step_Circle_2__Test_Builder<T> WithRadius<T>(in T radius)
                     {
-                        return new global::Test.Step_Circle_2__Test_Factory<T>(radius);
+                        return new global::Test.Step_Circle_2__Test_Builder<T>(radius);
                     }
                 }
 
@@ -372,10 +372,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Circle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Circle_1__Test_Factory
+                public readonly struct Step_Circle_1__Test_Builder
                 {
                     private readonly double _radius__parameter;
-                    internal Step_Circle_1__Test_Factory(in double radius)
+                    internal Step_Circle_1__Test_Builder(in double radius)
                     {
                         this._radius__parameter = radius;
                     }
@@ -396,10 +396,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Circle{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Circle_2__Test_Factory<T>
+                public readonly struct Step_Circle_2__Test_Builder<T>
                 {
                     private readonly T _radius__parameter;
-                    internal Step_Circle_2__Test_Factory(in T radius)
+                    internal Step_Circle_2__Test_Builder(in T radius)
                     {
                         this._radius__parameter = radius;
                     }
@@ -425,7 +425,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -442,11 +442,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildDog")]
                 public Dog(string name)
                 {
@@ -458,7 +458,7 @@ public class TypeFirstTests
 
             public class Cat
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Cat(int lives)
                 {
                     Lives = lives;
@@ -475,24 +475,24 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Cat"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithLives(in int lives)
+                    public static global::Test.Step_0__Test_Builder WithLives(in int lives)
                     {
-                        return new global::Test.Step_0__Test_Factory(lives);
+                        return new global::Test.Step_0__Test_Builder(lives);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Dog_1__Test_Factory BuildDog()
+                    public static global::Test.Step_Dog_1__Test_Builder BuildDog()
                     {
-                        return new global::Test.Step_Dog_1__Test_Factory();
+                        return new global::Test.Step_Dog_1__Test_Builder();
                     }
                 }
 
@@ -500,10 +500,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Cat"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _lives__parameter;
-                    internal Step_0__Test_Factory(in int lives)
+                    internal Step_0__Test_Builder(in int lives)
                     {
                         this._lives__parameter = lives;
                     }
@@ -524,9 +524,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_1__Test_Factory
+                public readonly struct Step_Dog_1__Test_Builder
                 {
-                    public Step_Dog_1__Test_Factory()
+                    public Step_Dog_1__Test_Builder()
                     {
                     }
 
@@ -534,9 +534,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Dog_2__Test_Factory WithName(in string name)
+                    public global::Test.Step_Dog_2__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_Dog_2__Test_Factory(name);
+                        return new global::Test.Step_Dog_2__Test_Builder(name);
                     }
                 }
 
@@ -544,10 +544,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_2__Test_Factory
+                public readonly struct Step_Dog_2__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_Dog_2__Test_Factory(in string name)
+                    internal Step_Dog_2__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -573,7 +573,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -590,11 +590,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("MakeDog")]
                 public Dog(string name)
                 {
@@ -612,15 +612,15 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Dog_0__Test_Factory MakeDog()
+                    public static global::Test.Step_Dog_0__Test_Builder MakeDog()
                     {
-                        return new global::Test.Step_Dog_0__Test_Factory();
+                        return new global::Test.Step_Dog_0__Test_Builder();
                     }
                 }
 
@@ -628,9 +628,9 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_0__Test_Factory
+                public readonly struct Step_Dog_0__Test_Builder
                 {
-                    public Step_Dog_0__Test_Factory()
+                    public Step_Dog_0__Test_Builder()
                     {
                     }
 
@@ -638,9 +638,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Dog_1__Test_Factory WithName(in string name)
+                    public global::Test.Step_Dog_1__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_Dog_1__Test_Factory(name);
+                        return new global::Test.Step_Dog_1__Test_Builder(name);
                     }
                 }
 
@@ -648,10 +648,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Dog_1__Test_Factory
+                public readonly struct Step_Dog_1__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_Dog_1__Test_Factory(in string name)
+                    internal Step_Dog_1__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -677,7 +677,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -696,13 +696,13 @@ public class TypeFirstTests
             namespace Test
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 namespace A
                 {
                     public class Circle
                     {
-                        [FluentTarget(typeof(Test.Factory))]
+                        [FluentTarget(typeof(Test.Builder))]
                         [FluentEntryMethod("BuildCircle")]
                         public Circle(double radius)
                         {
@@ -717,7 +717,7 @@ public class TypeFirstTests
                 {
                     public class Circle
                     {
-                        [FluentTarget(typeof(Test.Factory))]
+                        [FluentTarget(typeof(Test.Builder))]
                         [FluentEntryMethod("BuildCircle")]
                         public Circle(int radius)
                         {
@@ -770,11 +770,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Config
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildConfig")]
                 public Config(string host = "localhost", int port = 8080, bool ssl = false)
                 {
@@ -796,15 +796,15 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_Config_0__Test_Factory BuildConfig()
+                    public static global::Test.Step_Config_0__Test_Builder BuildConfig()
                     {
-                        return new global::Test.Step_Config_0__Test_Factory();
+                        return new global::Test.Step_Config_0__Test_Builder();
                     }
                 }
 
@@ -812,12 +812,12 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Config"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_Config_0__Test_Factory
+                public struct Step_Config_0__Test_Builder
                 {
                     private string _host__parameter;
                     private int _port__parameter;
                     private bool _ssl__parameter;
-                    public Step_Config_0__Test_Factory()
+                    public Step_Config_0__Test_Builder()
                     {
                         this._host__parameter = "localhost";
                         this._port__parameter = 8080;
@@ -828,7 +828,7 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Config_0__Test_Factory WithHost(in string host)
+                    public global::Test.Step_Config_0__Test_Builder WithHost(in string host)
                     {
                         this._host__parameter = host;
                         return this;
@@ -838,7 +838,7 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Config_0__Test_Factory WithPort(in int port)
+                    public global::Test.Step_Config_0__Test_Builder WithPort(in int port)
                     {
                         this._port__parameter = port;
                         return this;
@@ -848,7 +848,7 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Config_0__Test_Factory WithSsl(in bool ssl)
+                    public global::Test.Step_Config_0__Test_Builder WithSsl(in bool ssl)
                     {
                         this._ssl__parameter = ssl;
                         return this;
@@ -875,7 +875,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             },
             CompilerDiagnostics = CompilerDiagnostics.None
@@ -897,12 +897,12 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels;
 
-                public Factory(int wheels)
+                public Builder(int wheels)
                 {
                     _wheels = wheels;
                 }
@@ -910,7 +910,7 @@ public class TypeFirstTests
 
             public class Car
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [FluentEntryMethod("BuildCar")]
                 public Car(int wheels, string color)
                 {
@@ -930,15 +930,15 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Car"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Car_0__Test_Factory BuildCar()
+                    public global::Test.Step_Car_0__Test_Builder BuildCar()
                     {
-                        return new global::Test.Step_Car_0__Test_Factory(this._wheels);
+                        return new global::Test.Step_Car_0__Test_Builder(this._wheels);
                     }
                 }
 
@@ -946,10 +946,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Car"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Car_0__Test_Factory
+                public readonly struct Step_Car_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
-                    internal Step_Car_0__Test_Factory(in int wheels)
+                    internal Step_Car_0__Test_Builder(in int wheels)
                     {
                         this._wheels__parameter = wheels;
                     }
@@ -958,9 +958,9 @@ public class TypeFirstTests
                     ///     <seealso cref="Test.Car"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_Car_1__Test_Factory WithColor(in string color)
+                    public global::Test.Step_Car_1__Test_Builder WithColor(in string color)
                     {
-                        return new global::Test.Step_Car_1__Test_Factory(this._wheels__parameter, color);
+                        return new global::Test.Step_Car_1__Test_Builder(this._wheels__parameter, color);
                     }
                 }
 
@@ -968,11 +968,11 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Car"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_Car_1__Test_Factory
+                public readonly struct Step_Car_1__Test_Builder
                 {
                     private readonly string _color__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_Car_1__Test_Factory(in int wheels, in string color)
+                    internal Step_Car_1__Test_Builder(in int wheels, in string color)
                     {
                         this._wheels__parameter = wheels;
                         this._color__parameter = color;
@@ -999,7 +999,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             },
             CompilerDiagnostics = CompilerDiagnostics.None
@@ -1021,11 +1021,11 @@ public class TypeFirstTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Widget
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Widget(string label, int count)
                 {
                     Label = label;
@@ -1044,15 +1044,15 @@ public class TypeFirstTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Widget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithLabel(in string label)
+                    public static global::Test.Step_0__Test_Builder WithLabel(in string label)
                     {
-                        return new global::Test.Step_0__Test_Factory(label);
+                        return new global::Test.Step_0__Test_Builder(label);
                     }
                 }
 
@@ -1060,10 +1060,10 @@ public class TypeFirstTests
                 ///     <seealso cref="Test.Widget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _label__parameter;
-                    internal Step_0__Test_Factory(in string label)
+                    internal Step_0__Test_Builder(in string label)
                     {
                         this._label__parameter = label;
                     }
@@ -1087,7 +1087,7 @@ public class TypeFirstTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

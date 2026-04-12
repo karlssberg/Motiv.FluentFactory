@@ -17,7 +17,7 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -25,7 +25,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance of MyBuildTarget.
                 /// </summary>
                 /// <param name="value">The initial value for the target.</param>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -42,7 +42,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// The initial value for the target.
@@ -50,9 +50,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in string value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -60,10 +60,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value__parameter;
-                    internal Step_0__Test_Factory(in string value)
+                    internal Step_0__Test_Builder(in string value)
                     {
                         this._value__parameter = value;
                     }
@@ -90,7 +90,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -106,14 +106,14 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
                 /// <summary>
                 /// Constructs a new instance with the given value.
                 /// </summary>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -130,7 +130,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// Constructs a new instance with the given value.
@@ -138,9 +138,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in string value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -148,10 +148,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value__parameter;
-                    internal Step_0__Test_Factory(in string value)
+                    internal Step_0__Test_Builder(in string value)
                     {
                         this._value__parameter = value;
                     }
@@ -178,7 +178,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -194,7 +194,7 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -202,7 +202,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance of MyBuildTarget.
                 /// </summary>
                 /// <param name="value">The input value to process.</param>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget([MultipleFluentMethods(typeof(Methods))]string value)
                 {
                     Value = value;
@@ -238,7 +238,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// Sets the value directly from a string.
@@ -247,9 +247,9 @@ public class XmlDocumentationTests
                     /// </summary>
                     /// <param name="value">The string value to set.</param>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory SetValue(in string value)
+                    public static global::Test.Step_0__Test_Builder SetValue(in string value)
                     {
-                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.SetValue(value));
+                        return new global::Test.Step_0__Test_Builder(global::Test.Methods.SetValue(value));
                     }
 
                     /// <summary>
@@ -259,9 +259,9 @@ public class XmlDocumentationTests
                     /// </summary>
                     /// <param name="value">The integer value to convert.</param>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory SetValue(in int value)
+                    public static global::Test.Step_0__Test_Builder SetValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.SetValue(value));
+                        return new global::Test.Step_0__Test_Builder(global::Test.Methods.SetValue(value));
                     }
                 }
 
@@ -269,10 +269,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value__parameter;
-                    internal Step_0__Test_Factory(in string value)
+                    internal Step_0__Test_Builder(in string value)
                     {
                         this._value__parameter = value;
                     }
@@ -299,7 +299,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -315,7 +315,7 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -324,7 +324,7 @@ public class XmlDocumentationTests
                 /// </summary>
                 /// <param name="name">The name of the instance.</param>
                 /// <param name="value">The numeric value to store.</param>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(string name, int value)
                 {
                     Name = name;
@@ -343,7 +343,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// The name of the instance.
@@ -351,9 +351,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -361,10 +361,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -375,9 +375,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithValue(in int value)
+                    public global::Test.Step_1__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, value);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, value);
                     }
                 }
 
@@ -385,11 +385,11 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _value__parameter;
-                    internal Step_1__Test_Factory(in string name, in int value)
+                    internal Step_1__Test_Builder(in string name, in int value)
                     {
                         this._name__parameter = name;
                         this._value__parameter = value;
@@ -417,7 +417,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -433,7 +433,7 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -441,7 +441,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance.
                 /// <param name="value">Unclosed parameter tag
                 /// </summary>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(string value)
                 {
                     Value = value;
@@ -458,7 +458,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// <!-- Badly formed XML comment ignored for member "M:Test.MyBuildTarget.#ctor(System.String)" -->
@@ -466,9 +466,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in string value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in string value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -476,10 +476,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _value__parameter;
-                    internal Step_0__Test_Factory(in string value)
+                    internal Step_0__Test_Builder(in string value)
                     {
                         this._value__parameter = value;
                     }
@@ -505,7 +505,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -521,7 +521,7 @@ public class XmlDocumentationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget
             {
@@ -529,7 +529,7 @@ public class XmlDocumentationTests
                 /// Constructs a new instance.
                 /// </summary>
                 /// <param name="processor">This parameter documentation should be ignored.</param>
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget([MultipleFluentMethods(typeof(Methods))]string processor)
                 {
                     Value = processor;
@@ -555,7 +555,7 @@ public class XmlDocumentationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// This template method documentation should take precedence.
@@ -563,9 +563,9 @@ public class XmlDocumentationTests
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory Process(in string input)
+                    public static global::Test.Step_0__Test_Builder Process(in string input)
                     {
-                        return new global::Test.Step_0__Test_Factory(global::Test.Methods.Process(input));
+                        return new global::Test.Step_0__Test_Builder(global::Test.Methods.Process(input));
                     }
                 }
 
@@ -573,10 +573,10 @@ public class XmlDocumentationTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _processor__parameter;
-                    internal Step_0__Test_Factory(in string processor)
+                    internal Step_0__Test_Builder(in string processor)
                     {
                         this._processor__parameter = processor;
                     }
@@ -602,7 +602,7 @@ public class XmlDocumentationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -20,11 +20,11 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget([FluentMethod("SetValue")]T value)
                 {
                     Value = value;
@@ -41,7 +41,7 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -62,7 +62,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -80,9 +80,9 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget<T1, T2, T3>(
                 int x,
                 [MultipleFluentMethods(typeof(Methods))]Func<IEnumerable<T1>, T2, T3> function)
@@ -113,15 +113,15 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithX(in int x)
+                    public static global::Test.Step_0__Test_Builder WithX(in int x)
                     {
-                        return new global::Test.Step_0__Test_Factory(x);
+                        return new global::Test.Step_0__Test_Builder(x);
                     }
                 }
 
@@ -129,10 +129,10 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _x__parameter;
-                    internal Step_0__Test_Factory(in int x)
+                    internal Step_0__Test_Builder(in int x)
                     {
                         this._x__parameter = x;
                     }
@@ -165,7 +165,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -183,9 +183,9 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public class MyBuildTarget<T>([MultipleFluentMethods(typeof(Converter))]IEnumerable<IEnumerable<T>> function)
             {
                 public IEnumerable<IEnumerable<T>> Value { get; set; } = function;
@@ -214,7 +214,7 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -244,7 +244,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -260,11 +260,11 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2)
@@ -286,15 +286,15 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -302,10 +302,10 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -329,7 +329,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -345,11 +345,11 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -375,15 +375,15 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -391,10 +391,10 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -403,9 +403,9 @@ public class MethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> SetValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -413,11 +413,11 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -442,7 +442,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -458,11 +458,11 @@ public class MethodCustomizationTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(
                     [FluentMethod("SetValue1")]T1 value1,
                     [FluentMethod("SetValue2")]T2 value2,
@@ -492,15 +492,15 @@ public class MethodCustomizationTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T1> SetValue1<T1>(in T1 value1)
+                    public static global::Test.Step_0__Test_Builder<T1> SetValue1<T1>(in T1 value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T1>(value1);
+                        return new global::Test.Step_0__Test_Builder<T1>(value1);
                     }
                 }
 
@@ -508,10 +508,10 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T1>
+                public readonly struct Step_0__Test_Builder<T1>
                 {
                     private readonly T1 _value1__parameter;
-                    internal Step_0__Test_Factory(in T1 value1)
+                    internal Step_0__Test_Builder(in T1 value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -520,9 +520,9 @@ public class MethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T1, T2> SetValue2<T2>(in T2 value2)
+                    public global::Test.Step_1__Test_Builder<T1, T2> SetValue2<T2>(in T2 value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T1, T2>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T1, T2>(this._value1__parameter, value2);
                     }
                 }
 
@@ -530,11 +530,11 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T1, T2>
+                public readonly struct Step_1__Test_Builder<T1, T2>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
-                    internal Step_1__Test_Factory(in T1 value1, in T2 value2)
+                    internal Step_1__Test_Builder(in T1 value1, in T2 value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -544,9 +544,9 @@ public class MethodCustomizationTests
                     ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory<T1, T2, T3> SetValue3<T3>(in T3 value3)
+                    public global::Test.Step_2__Test_Builder<T1, T2, T3> SetValue3<T3>(in T3 value3)
                     {
-                        return new global::Test.Step_2__Test_Factory<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
+                        return new global::Test.Step_2__Test_Builder<T1, T2, T3>(this._value1__parameter, this._value2__parameter, value3);
                     }
                 }
 
@@ -554,12 +554,12 @@ public class MethodCustomizationTests
                 ///     <seealso cref="Test.MyBuildTarget{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T1, T2, T3>
+                public readonly struct Step_2__Test_Builder<T1, T2, T3>
                 {
                     private readonly T1 _value1__parameter;
                     private readonly T2 _value2__parameter;
                     private readonly T3 _value3__parameter;
-                    internal Step_2__Test_Factory(in T1 value1, in T2 value2, in T3 value3)
+                    internal Step_2__Test_Builder(in T1 value1, in T2 value2, in T3 value3)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -585,7 +585,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -600,11 +600,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -635,7 +635,7 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T}"/>
@@ -664,7 +664,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -679,11 +679,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass([MultipleFluentMethods(typeof(Overloads))]T value)
                 {
                     Value = value;
@@ -714,7 +714,7 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T}"/>
@@ -743,7 +743,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -758,11 +758,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]string value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]string value2)
@@ -812,24 +812,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory Value1(in string value)
+                public static global::Step_0__Builder Value1(in string value)
                 {
-                    return new global::Step_0__Factory(global::Value1Methods.Value1<string>(value));
+                    return new global::Step_0__Builder(global::Value1Methods.Value1<string>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory Value1(in global::System.Func<string> factory)
+                public static global::Step_0__Builder Value1(in global::System.Func<string> factory)
                 {
-                    return new global::Step_0__Factory(global::Value1Methods.Value1<string>(factory));
+                    return new global::Step_0__Builder(global::Value1Methods.Value1<string>(factory));
                 }
             }
 
@@ -837,10 +837,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory
+            public readonly struct Step_0__Builder
             {
                 private readonly string _value1__parameter;
-                internal Step_0__Factory(in string value1)
+                internal Step_0__Builder(in string value1)
                 {
                     this._value1__parameter = value1;
                 }
@@ -872,7 +872,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -887,11 +887,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T value1,
                     [MultipleFluentMethods(typeof(CreateMethods))]T value2)
@@ -941,24 +941,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T> Value1<T>(in T value)
+                public static global::Step_0__Builder<T> Value1<T>(in T value)
                 {
-                    return new global::Step_0__Factory<T>(global::Value1Methods.Value1<T>(value));
+                    return new global::Step_0__Builder<T>(global::Value1Methods.Value1<T>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T> Value1<T>(in global::System.Func<T> factory)
+                public static global::Step_0__Builder<T> Value1<T>(in global::System.Func<T> factory)
                 {
-                    return new global::Step_0__Factory<T>(global::Value1Methods.Value1<T>(factory));
+                    return new global::Step_0__Builder<T>(global::Value1Methods.Value1<T>(factory));
                 }
             }
 
@@ -966,10 +966,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T>
+            public readonly struct Step_0__Builder<T>
             {
                 private readonly T _value1__parameter;
-                internal Step_0__Factory(in T value1)
+                internal Step_0__Builder(in T value1)
                 {
                     this._value1__parameter = value1;
                 }
@@ -1001,7 +1001,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1016,11 +1016,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T1, T2, T3>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]T1 value1,
                     [MultipleFluentMethods(typeof(Value2Methods))]T2 value2,
@@ -1093,24 +1093,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1> Value1<T1>(in T1 value)
+                public static global::Step_0__Builder<T1> Value1<T1>(in T1 value)
                 {
-                    return new global::Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(value));
+                    return new global::Step_0__Builder<T1>(global::Value1Methods.Value1<T1>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1> Value1<T1>(in global::System.Func<string, string, T1> function)
+                public static global::Step_0__Builder<T1> Value1<T1>(in global::System.Func<string, string, T1> function)
                 {
-                    return new global::Step_0__Factory<T1>(global::Value1Methods.Value1<T1>(function));
+                    return new global::Step_0__Builder<T1>(global::Value1Methods.Value1<T1>(function));
                 }
             }
 
@@ -1118,10 +1118,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1>
+            public readonly struct Step_0__Builder<T1>
             {
                 private readonly T1 _value1__parameter;
-                internal Step_0__Factory(in T1 value1)
+                internal Step_0__Builder(in T1 value1)
                 {
                     this._value1__parameter = value1;
                 }
@@ -1130,18 +1130,18 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1, T2> Value2<T2>(in T2 value)
+                public global::Step_1__Builder<T1, T2> Value2<T2>(in T2 value)
                 {
-                    return new global::Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(value));
+                    return new global::Step_1__Builder<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1, T2> Value2<T2>(in global::System.Func<string, string, T2> function)
+                public global::Step_1__Builder<T1, T2> Value2<T2>(in global::System.Func<string, string, T2> function)
                 {
-                    return new global::Step_1__Factory<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(function));
+                    return new global::Step_1__Builder<T1, T2>(this._value1__parameter, global::Value2Methods.Value2<T2>(function));
                 }
             }
 
@@ -1149,11 +1149,11 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_1__Factory<T1, T2>
+            public readonly struct Step_1__Builder<T1, T2>
             {
                 private readonly T1 _value1__parameter;
                 private readonly T2 _value2__parameter;
-                internal Step_1__Factory(in T1 value1, in T2 value2)
+                internal Step_1__Builder(in T1 value1, in T2 value2)
                 {
                     this._value1__parameter = value1;
                     this._value2__parameter = value2;
@@ -1186,7 +1186,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1201,11 +1201,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T1A, T1B>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory)
                 {
@@ -1236,7 +1236,7 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B}"/>
@@ -1265,7 +1265,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1280,24 +1280,24 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T1A, T1B, T2A, T2B, T3A, T3B>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1A, T1B> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2A, T2B> factory2,
                     [MultipleFluentMethods(typeof(Value3Methods))]Func<T3A, T3B> factory3)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
-                    Factory3 = factory3;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
+                    Builder3 = factory3;
                 }
 
-                public Func<T1A, T1B> Factory1 { get; set; }
-                public Func<T2A, T2B> Factory2 { get; set; }
-                public Func<T3A, T3B> Factory3 { get; set; }
+                public Func<T1A, T1B> Builder1 { get; set; }
+                public Func<T2A, T2B> Builder2 { get; set; }
+                public Func<T3A, T3B> Builder3 { get; set; }
             }
 
             public static class Value1Methods
@@ -1351,24 +1351,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in global::System.Func<T1A, T1B> value)
+                public static global::Step_0__Builder<T1A, T1B> Value1<T1A, T1B>(in global::System.Func<T1A, T1B> value)
                 {
-                    return new global::Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
+                    return new global::Step_0__Builder<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1A, T1B> Value1<T1A, T1B>(in T1B value)
+                public static global::Step_0__Builder<T1A, T1B> Value1<T1A, T1B>(in T1B value)
                 {
-                    return new global::Step_0__Factory<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
+                    return new global::Step_0__Builder<T1A, T1B>(global::Value1Methods.Value1<T1A, T1B>(value));
                 }
             }
 
@@ -1376,10 +1376,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1A, T1B>
+            public readonly struct Step_0__Builder<T1A, T1B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1A, T1B> factory1)
+                internal Step_0__Builder(in global::System.Func<T1A, T1B> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -1388,18 +1388,18 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in global::System.Func<T2A, T2B> value)
+                public global::Step_1__Builder<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in global::System.Func<T2A, T2B> value)
                 {
-                    return new global::Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
+                    return new global::Step_1__Builder<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in T2B value)
+                public global::Step_1__Builder<T1A, T1B, T2A, T2B> Value2<T2A, T2B>(in T2B value)
                 {
-                    return new global::Step_1__Factory<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
+                    return new global::Step_1__Builder<T1A, T1B, T2A, T2B>(this._factory1__parameter, global::Value2Methods.Value2<T2A, T2B>(value));
                 }
             }
 
@@ -1407,11 +1407,11 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1A, T1B, T2A, T2B, T3A, T3B}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_1__Factory<T1A, T1B, T2A, T2B>
+            public readonly struct Step_1__Builder<T1A, T1B, T2A, T2B>
             {
                 private readonly global::System.Func<T1A, T1B> _factory1__parameter;
                 private readonly global::System.Func<T2A, T2B> _factory2__parameter;
-                internal Step_1__Factory(in global::System.Func<T1A, T1B> factory1, in global::System.Func<T2A, T2B> factory2)
+                internal Step_1__Builder(in global::System.Func<T1A, T1B> factory1, in global::System.Func<T2A, T2B> factory2)
                 {
                     this._factory1__parameter = factory1;
                     this._factory2__parameter = factory2;
@@ -1444,7 +1444,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1459,24 +1459,24 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClass<T1, T2, T3, T4>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClass(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Value2Methods))]Func<T2, T3> factory2,
                     [MultipleFluentMethods(typeof(Value3Methods))]Func<T3, T4> factory3)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
-                    Factory3 = factory3;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
+                    Builder3 = factory3;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T2, T3> Factory2 { get; set; }
-                public Func<T3, T4> Factory3 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T2, T3> Builder2 { get; set; }
+                public Func<T3, T4> Builder3 { get; set; }
             }
 
             public static class Value1Methods
@@ -1530,24 +1530,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -1555,10 +1555,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Builder<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
+                internal Step_0__Builder(in global::System.Func<T1, T2> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -1567,18 +1567,18 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1, T2, T3> Value2<T3>(in global::System.Func<T2, T3> value)
+                public global::Step_1__Builder<T1, T2, T3> Value2<T3>(in global::System.Func<T2, T3> value)
                 {
-                    return new global::Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
+                    return new global::Step_1__Builder<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public global::Step_1__Factory<T1, T2, T3> Value2<T3>(in T3 value)
+                public global::Step_1__Builder<T1, T2, T3> Value2<T3>(in T3 value)
                 {
-                    return new global::Step_1__Factory<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
+                    return new global::Step_1__Builder<T1, T2, T3>(this._factory1__parameter, global::Value2Methods.Value2<T2, T3>(value));
                 }
             }
 
@@ -1586,11 +1586,11 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClass{T1, T2, T3, T4}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_1__Factory<T1, T2, T3>
+            public readonly struct Step_1__Builder<T1, T2, T3>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
                 private readonly global::System.Func<T2, T3> _factory2__parameter;
-                internal Step_1__Factory(in global::System.Func<T1, T2> factory1, in global::System.Func<T2, T3> factory2)
+                internal Step_1__Builder(in global::System.Func<T1, T2> factory1, in global::System.Func<T2, T3> factory2)
                 {
                     this._factory1__parameter = factory1;
                     this._factory2__parameter = factory2;
@@ -1623,7 +1623,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1638,36 +1638,36 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassACreateMethods))]Func<T1, T2, string> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, string> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, string> Builder2 { get; set; }
             }
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(MyClassBCreateMethods))]Func<T1, T2, int> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, int> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, int> Builder2 { get; set; }
             }
 
             public static class Value1Methods
@@ -1721,16 +1721,16 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T1, T2}"/>
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
@@ -1738,9 +1738,9 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -1749,10 +1749,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Builder<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
+                internal Step_0__Builder(in global::System.Func<T1, T2> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -1802,7 +1802,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1817,36 +1817,36 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [FluentMethod("Value")]Func<T1, T2> factory1,
                     [FluentMethod("Value")]Func<T1, T2, string> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, string> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, string> Builder2 { get; set; }
             }
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(Overloads))]Func<T1, T2, int> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, int> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, int> Builder2 { get; set; }
             }
 
             public static class Overloads
@@ -1876,16 +1876,16 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T1, T2}"/>
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value<T1, T2>(in global::System.Func<T1, T2> factory1)
+                public static global::Step_0__Builder<T1, T2> Value<T1, T2>(in global::System.Func<T1, T2> factory1)
                 {
-                    return new global::Step_0__Factory<T1, T2>(factory1);
+                    return new global::Step_0__Builder<T1, T2>(factory1);
                 }
 
                 /// <summary>
@@ -1893,9 +1893,9 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value<T1, T2>(in T2 value)
+                public static global::Step_0__Builder<T1, T2> Value<T1, T2>(in T2 value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Overloads.Value<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Overloads.Value<T1, T2>(value));
                 }
             }
 
@@ -1904,10 +1904,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Builder<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
+                internal Step_0__Builder(in global::System.Func<T1, T2> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -1939,7 +1939,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
@@ -1980,36 +1980,36 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(FirstStep))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(SecondStep))]Func<T1, T2, string> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, string> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, string> Builder2 { get; set; }
             }
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value1")]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, int> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, int> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, int> Builder2 { get; set; }
             }
 
             public static class FirstStep
@@ -2048,16 +2048,16 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T1, T2}"/>
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> factory1)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> factory1)
                 {
-                    return new global::Step_0__Factory<T1, T2>(factory1);
+                    return new global::Step_0__Builder<T1, T2>(factory1);
                 }
 
                 /// <summary>
@@ -2065,9 +2065,9 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::FirstStep.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::FirstStep.Value1<T1, T2>(value));
                 }
             }
 
@@ -2076,10 +2076,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Builder<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
+                internal Step_0__Builder(in global::System.Func<T1, T2> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -2120,7 +2120,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             },
             // CVJG0002/CVJG0006 suppressed: Value1(Func) template has active sibling templates
@@ -2136,36 +2136,36 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [FluentMethod("Create")]Func<T1, T2, string> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, string> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, string> Builder2 { get; set; }
             }
 
             public class MyClassB<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory1,
                     [MultipleFluentMethods(typeof(CreateMethods))]Func<T1, T2, int> factory2)
                 {
-                    Factory1 = factory1;
-                    Factory2 = factory2;
+                    Builder1 = factory1;
+                    Builder2 = factory2;
                 }
 
-                public Func<T1, T2> Factory1 { get; set; }
-                public Func<T1, T2, int> Factory2 { get; set; }
+                public Func<T1, T2> Builder1 { get; set; }
+                public Func<T1, T2, int> Builder2 { get; set; }
             }
 
             public static class Value1Methods
@@ -2204,16 +2204,16 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T1, T2}"/>
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in global::System.Func<T1, T2> value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
 
                 /// <summary>
@@ -2221,9 +2221,9 @@ public class MethodCustomizationTests
                 ///     <seealso cref="MyClassB{T1, T2}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T1, T2> Value1<T1, T2>(in T2 value)
+                public static global::Step_0__Builder<T1, T2> Value1<T1, T2>(in T2 value)
                 {
-                    return new global::Step_0__Factory<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
+                    return new global::Step_0__Builder<T1, T2>(global::Value1Methods.Value1<T1, T2>(value));
                 }
             }
 
@@ -2232,10 +2232,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassB{T1, T2}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T1, T2>
+            public readonly struct Step_0__Builder<T1, T2>
             {
                 private readonly global::System.Func<T1, T2> _factory1__parameter;
-                internal Step_0__Factory(in global::System.Func<T1, T2> factory1)
+                internal Step_0__Builder(in global::System.Func<T1, T2> factory1)
                 {
                     this._factory1__parameter = factory1;
                 }
@@ -2276,7 +2276,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -2292,11 +2292,11 @@ public class MethodCustomizationTests
 
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Overloads))]Func<T> value1,
                     [FluentMethod("Create")]Func<T> value2)
@@ -2311,7 +2311,7 @@ public class MethodCustomizationTests
 
             public class MyClassB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassB(
                     [FluentMethod("Value")]string value1,
                     [FluentMethod("Create")]Func<string> value2)
@@ -2326,7 +2326,7 @@ public class MethodCustomizationTests
 
             public class MyClassC
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassC(
                     [MultipleFluentMethods(typeof(Overloads))]Func<string> value1,
                     [FluentMethod("Create")]Func<int> value2)
@@ -2360,24 +2360,24 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T}"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_0__Factory<T> Value<T>(in T value)
+                public static global::Step_0__Builder<T> Value<T>(in T value)
                 {
-                    return new global::Step_0__Factory<T>(global::Overloads.Value<T>(value));
+                    return new global::Step_0__Builder<T>(global::Overloads.Value<T>(value));
                 }
 
                 /// <summary>
                 ///     <seealso cref="MyClassB"/>
                 /// </summary>
                 [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                public static global::Step_1__Factory Value(in string value1)
+                public static global::Step_1__Builder Value(in string value1)
                 {
-                    return new global::Step_1__Factory(value1);
+                    return new global::Step_1__Builder(value1);
                 }
             }
 
@@ -2385,10 +2385,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassA{T}"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_0__Factory<T>
+            public readonly struct Step_0__Builder<T>
             {
                 private readonly global::System.Func<T> _value1__parameter;
-                internal Step_0__Factory(in global::System.Func<T> value1)
+                internal Step_0__Builder(in global::System.Func<T> value1)
                 {
                     this._value1__parameter = value1;
                 }
@@ -2407,10 +2407,10 @@ public class MethodCustomizationTests
             ///     <seealso cref="MyClassB"/>
             /// </summary>
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public readonly struct Step_1__Factory
+            public readonly struct Step_1__Builder
             {
                 private readonly string _value1__parameter;
-                internal Step_1__Factory(in string value1)
+                internal Step_1__Builder(in string value1)
                 {
                     this._value1__parameter = value1;
                 }
@@ -2433,7 +2433,7 @@ public class MethodCustomizationTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 },
                 // CVJG0002/CVJG0006 suppressed: Value(string) template has active sibling Value(Func<T>) template
             }
@@ -2449,11 +2449,11 @@ public class MethodCustomizationTests
             using Converj.Generator;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyClassA<T1, T2>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyClassA(
                     [MultipleFluentMethods(typeof(Value1Methods))]Func<T1, T2> factory)
                 {
@@ -2478,7 +2478,7 @@ public class MethodCustomizationTests
             // <auto-generated/>
             #nullable enable
             [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-            public static partial class Factory
+            public static partial class Builder
             {
                 /// <summary>
                 ///     <seealso cref="MyClassA{T1, T2}"/>
@@ -2498,7 +2498,7 @@ public class MethodCustomizationTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -18,12 +18,12 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels;
 
-                public Factory(int wheels)
+                public Builder(int wheels)
                 {
                     _wheels = wheels;
                 }
@@ -31,7 +31,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -50,15 +50,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, name);
                     }
                 }
 
@@ -66,11 +66,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -97,14 +97,14 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_thread_fluent_parameter_from_factory_with_primary_constructor()
+    internal async Task Should_thread_fluent_parameter_from_root_with_primary_constructor()
     {
         const string code =
             """
@@ -114,7 +114,7 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory(int wheels)
+            public partial class Builder(int wheels)
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels = wheels;
@@ -122,7 +122,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -141,15 +141,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, name);
                     }
                 }
 
@@ -157,11 +157,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -188,7 +188,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -205,15 +205,15 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels;
 
-                public Factory(int wheels) { _wheels = wheels; }
+                public Builder(int wheels) { _wheels = wheels; }
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -228,15 +228,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, name);
                     }
                 }
 
@@ -244,11 +244,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -275,14 +275,14 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_thread_fluent_parameter_from_factory_property_to_record_target()
+    internal async Task Should_thread_fluent_parameter_from_root_property_to_record_target()
     {
         const string code =
             """
@@ -292,15 +292,15 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 public int Wheels { get; }
 
-                public Factory(int wheels) { Wheels = wheels; }
+                public Builder(int wheels) { Wheels = wheels; }
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public record Vehicle(int wheels, string Name);
             """;
 
@@ -311,15 +311,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.Wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.Wheels, name);
                     }
                 }
 
@@ -327,11 +327,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -358,7 +358,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -375,7 +375,7 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory(int wheels, string name)
+            public partial class Builder(int wheels, string name)
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels = wheels;
@@ -384,7 +384,7 @@ public class FluentParameterTests
                 private readonly string _name = name;
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -399,7 +399,7 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     /// Creates a new instance using constructor Test.Vehicle.Vehicle(int wheels, string name).
@@ -422,7 +422,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -441,11 +441,11 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial {{typeKeyword}} Factory(int wheels);
+            public partial {{typeKeyword}} Builder(int wheels);
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -464,15 +464,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial {{typeKeyword}} Factory
+                public partial {{typeKeyword}} Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.wheels, name);
                     }
                 }
 
@@ -480,11 +480,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -511,7 +511,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -528,11 +528,11 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial record Factory([FluentParameter("wheels")] int wheels);
+            public partial record Builder([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -551,15 +551,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record Factory
+                public partial record Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.wheels, name);
                     }
                 }
 
@@ -567,11 +567,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -598,7 +598,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -615,11 +615,11 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial record struct Factory([FluentParameter("wheels")] int wheels);
+            public partial record struct Builder([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -638,15 +638,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial record struct Factory
+                public partial record struct Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.wheels, name);
                     }
                 }
 
@@ -654,11 +654,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -685,7 +685,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -702,14 +702,14 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory([FluentParameter("wheels")] int wheels)
+            public partial class Builder([FluentParameter("wheels")] int wheels)
             {
                 private readonly int _wheels = wheels;
             }
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -728,15 +728,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, name);
                     }
                 }
 
@@ -744,11 +744,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -775,7 +775,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -792,11 +792,11 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory([FluentParameter("wheels")] int wheels);
+            public partial class Builder([FluentParameter("wheels")] int wheels);
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string name)
                 {
                     Wheels = wheels;
@@ -815,16 +815,16 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     private readonly int _wheels__fluentParameter = wheels;
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels__fluentParameter, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels__fluentParameter, name);
                     }
                 }
 
@@ -832,11 +832,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -863,7 +863,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -961,15 +961,15 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter]
                 public int Wheels { get; }
 
-                public Factory(int wheels) { Wheels = wheels; }
+                public Builder(int wheels) { Wheels = wheels; }
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -984,15 +984,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.Wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.Wheels, name);
                     }
                 }
 
@@ -1000,11 +1000,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -1031,7 +1031,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1048,15 +1048,15 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter]
                 private readonly int _wheels;
 
-                public Factory(int wheels) { _wheels = wheels; }
+                public Builder(int wheels) { _wheels = wheels; }
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public class Vehicle(int wheels, string name)
             {
                 public int Wheels { get; set; } = wheels;
@@ -1071,15 +1071,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, name);
                     }
                 }
 
@@ -1087,11 +1087,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -1118,14 +1118,14 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_thread_fluent_parameter_for_open_generic_factory_with_inferred_name()
+    internal async Task Should_thread_fluent_parameter_for_open_generic_root_with_inferred_name()
     {
         // Same as the explicit name test but uses [FluentParameter] (no arg) to infer from property name
         const string code =
@@ -1217,13 +1217,13 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory(int wheels)
+            public partial class Builder(int wheels)
             {
                 [FluentParameter]
                 public int Wheels { get; set; } = wheels;
             }
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public record Vehicle(int Wheels, string Name);
             """;
 
@@ -1234,15 +1234,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithName(in string name)
+                    public global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(this.Wheels, name);
+                        return new global::Test.Step_0__Test_Builder(this.Wheels, name);
                     }
                 }
 
@@ -1250,11 +1250,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string name)
+                    internal Step_0__Test_Builder(in int wheels, in string name)
                     {
                         this._wheels__parameter = wheels;
                         this._name__parameter = name;
@@ -1281,7 +1281,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1327,12 +1327,12 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("name")]
                 private readonly string _name;
 
-                public Factory(string name)
+                public Builder(string name)
                 {
                     _name = name;
                 }
@@ -1340,7 +1340,7 @@ public class FluentParameterTests
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name)
                 {
                     Name = name;
@@ -1359,15 +1359,15 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_0__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._name, email);
+                        return new global::Test.Step_0__Test_Builder(this._name, email);
                     }
                 }
 
@@ -1375,11 +1375,11 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
-                    internal Step_0__Test_Factory(in string name, in string email)
+                    internal Step_0__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -1409,7 +1409,7 @@ public class FluentParameterTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -1417,7 +1417,7 @@ public class FluentParameterTests
     }
 
     /// <summary>
-    /// Issue #10: Factory has a [FluentParameter] and the target constructor has multi-optional
+    /// Issue #10: Builder has a [FluentParameter] and the target constructor has multi-optional
     /// parameters (2+ optional, 0 additional required beyond threaded). This triggers gateway
     /// step creation via CreateAllOptionalStepsAndGatewayMethods, which runs AFTER
     /// PropagateThreadedParametersToSteps. Gateway steps may not receive threaded parameters.
@@ -1433,12 +1433,12 @@ public class FluentParameterTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels;
 
-                public Factory(int wheels)
+                public Builder(int wheels)
                 {
                     _wheels = wheels;
                 }
@@ -1446,7 +1446,7 @@ public class FluentParameterTests
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels, string color = "red", int seats = 4)
                 {
                     Wheels = wheels;
@@ -1467,7 +1467,7 @@ public class FluentParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     /// Creates a new instance using constructor Test.Vehicle.Vehicle(int wheels, string color = "red", int seats = 4).
@@ -1484,18 +1484,18 @@ public class FluentParameterTests
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithColor(in string color)
+                    public global::Test.Step_0__Test_Builder WithColor(in string color)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, color: color);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, color: color);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithSeats(in int seats)
+                    public global::Test.Step_0__Test_Builder WithSeats(in int seats)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, seats: seats);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, seats: seats);
                     }
                 }
 
@@ -1503,12 +1503,12 @@ public class FluentParameterTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _color__parameter;
                     private readonly int _seats__parameter;
                     private readonly int _wheels__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string color = "red", in int seats = 4)
+                    internal Step_0__Test_Builder(in int wheels, in string color = "red", in int seats = 4)
                     {
                         this._wheels__parameter = wheels;
                         this._color__parameter = color;
@@ -1519,18 +1519,18 @@ public class FluentParameterTests
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithColor(in string color)
+                    public global::Test.Step_0__Test_Builder WithColor(in string color)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels__parameter, color, this._seats__parameter);
+                        return new global::Test.Step_0__Test_Builder(this._wheels__parameter, color, this._seats__parameter);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithSeats(in int seats)
+                    public global::Test.Step_0__Test_Builder WithSeats(in int seats)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels__parameter, this._color__parameter, seats);
+                        return new global::Test.Step_0__Test_Builder(this._wheels__parameter, this._color__parameter, seats);
                     }
 
                     /// <summary>
@@ -1554,7 +1554,7 @@ public class FluentParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             },
             CompilerDiagnostics = CompilerDiagnostics.None

@@ -16,11 +16,11 @@ public class GenericAttributeTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory;
+            public partial class Builder;
 
             public class MyBuildTarget
             {
-                [FluentTarget<Factory>]
+                [FluentTarget<Builder>]
                 public MyBuildTarget(int value)
                 {
                     Value = value;
@@ -37,15 +37,15 @@ public class GenericAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithValue(in int value)
+                    public static global::Test.Step_0__Test_Builder WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -53,10 +53,10 @@ public class GenericAttributeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -82,7 +82,7 @@ public class GenericAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -99,13 +99,13 @@ public class GenericAttributeTests
             namespace Test;
 
             [FluentRoot]
-            public partial class FactoryA;
+            public partial class BuilderA;
 
             [FluentRoot]
-            public partial class FactoryB;
+            public partial class BuilderB;
 
-            [FluentTarget<FactoryA>]
-            [FluentTarget(typeof(FactoryB))]
+            [FluentTarget<BuilderA>]
+            [FluentTarget(typeof(BuilderB))]
             public class MyBuildTarget
             {
                 public MyBuildTarget(int value)
@@ -124,15 +124,15 @@ public class GenericAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class FactoryA
+                public partial class BuilderA
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_FactoryA WithValue(in int value)
+                    public static global::Test.Step_0__Test_BuilderA WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_FactoryA(value);
+                        return new global::Test.Step_0__Test_BuilderA(value);
                     }
                 }
 
@@ -140,10 +140,10 @@ public class GenericAttributeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_FactoryA
+                public readonly struct Step_0__Test_BuilderA
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_FactoryA(in int value)
+                    internal Step_0__Test_BuilderA(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -169,15 +169,15 @@ public class GenericAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class FactoryB
+                public partial class BuilderB
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_FactoryB WithValue(in int value)
+                    public static global::Test.Step_0__Test_BuilderB WithValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_FactoryB(value);
+                        return new global::Test.Step_0__Test_BuilderB(value);
                     }
                 }
 
@@ -185,10 +185,10 @@ public class GenericAttributeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_FactoryB
+                public readonly struct Step_0__Test_BuilderB
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_FactoryB(in int value)
+                    internal Step_0__Test_BuilderB(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -214,8 +214,8 @@ public class GenericAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.FactoryA.g.cs", expectedA),
-                    (typeof(FluentRootGenerator), "Test.FactoryB.g.cs", expectedB),
+                    (typeof(FluentRootGenerator), "Test.BuilderA.g.cs", expectedA),
+                    (typeof(FluentRootGenerator), "Test.BuilderB.g.cs", expectedB),
                 }
             }
         }.RunAsync();
@@ -232,9 +232,9 @@ public class GenericAttributeTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory;
+            public partial class Builder;
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public class MyBuildTarget
             {
                 public MyBuildTarget(string name)
@@ -253,15 +253,15 @@ public class GenericAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -269,10 +269,10 @@ public class GenericAttributeTests
                 ///     <seealso cref="Test.MyBuildTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -298,7 +298,7 @@ public class GenericAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

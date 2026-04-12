@@ -21,17 +21,17 @@ public class FluentParameterDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("value")]
                 private readonly string _value;
 
-                public Factory(string value) { _value = value; }
+                public Builder(string value) { _value = value; }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int value) { Value = value; }
 
                 public int Value { get; set; }
@@ -62,7 +62,7 @@ public class FluentParameterDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("value")]
                 private readonly int _value1;
@@ -70,12 +70,12 @@ public class FluentParameterDiagnosticsTests
                 [FluentParameter("value")]
                 private readonly int _value2;
 
-                public Factory(int value1, int value2) { _value1 = value1; _value2 = value2; }
+                public Builder(int value1, int value2) { _value1 = value1; _value2 = value2; }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int value) { Value = value; }
 
                 public int Value { get; set; }
@@ -106,7 +106,7 @@ public class FluentParameterDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("value")]
                 public int Value { set { } }
@@ -114,7 +114,7 @@ public class FluentParameterDiagnosticsTests
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int value) { }
             }
             """;

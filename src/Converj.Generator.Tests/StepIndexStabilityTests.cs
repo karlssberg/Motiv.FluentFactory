@@ -11,7 +11,7 @@ namespace Converj.Generator.Tests;
 public class StepIndexStabilityTests
 {
     /// <summary>
-    /// Factory with multiple target types, some with required properties.
+    /// Builder with multiple target types, some with required properties.
     /// All three index-assignment phases contribute steps. Verify all Step_N__ names are unique.
     /// </summary>
     [Fact]
@@ -25,11 +25,11 @@ public class StepIndexStabilityTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Dog
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Dog(string name, int age)
                 {
                     Name = name;
@@ -42,7 +42,7 @@ public class StepIndexStabilityTests
 
             public class Cat
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Cat(string name, bool indoor)
                 {
                     Name = name;
@@ -55,7 +55,7 @@ public class StepIndexStabilityTests
 
             public class Bird
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Bird(string name)
                 {
                     Name = name;
@@ -72,7 +72,7 @@ public class StepIndexStabilityTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Bird"/>
@@ -80,9 +80,9 @@ public class StepIndexStabilityTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -92,10 +92,10 @@ public class StepIndexStabilityTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -104,18 +104,18 @@ public class StepIndexStabilityTests
                     ///     <seealso cref="Test.Dog"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithAge(in int age)
+                    public global::Test.Step_1__Test_Builder WithAge(in int age)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, age);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, age);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Cat"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory WithIndoor(in bool indoor)
+                    public global::Test.Step_2__Test_Builder WithIndoor(in bool indoor)
                     {
-                        return new global::Test.Step_2__Test_Factory(this._name__parameter, indoor);
+                        return new global::Test.Step_2__Test_Builder(this._name__parameter, indoor);
                     }
 
                     /// <summary>
@@ -134,11 +134,11 @@ public class StepIndexStabilityTests
                 ///     <seealso cref="Test.Dog"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _age__parameter;
-                    internal Step_1__Test_Factory(in string name, in int age)
+                    internal Step_1__Test_Builder(in string name, in int age)
                     {
                         this._name__parameter = name;
                         this._age__parameter = age;
@@ -160,11 +160,11 @@ public class StepIndexStabilityTests
                 ///     <seealso cref="Test.Cat"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory
+                public readonly struct Step_2__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly bool _indoor__parameter;
-                    internal Step_2__Test_Factory(in string name, in bool indoor)
+                    internal Step_2__Test_Builder(in string name, in bool indoor)
                     {
                         this._name__parameter = name;
                         this._indoor__parameter = indoor;
@@ -191,7 +191,7 @@ public class StepIndexStabilityTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

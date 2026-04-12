@@ -15,11 +15,11 @@ public class AsAttributeTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<[As("T")] TNum>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyBuildTarget(TNum value)
                 {
                     Value = value;
@@ -36,15 +36,15 @@ public class AsAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{TNum}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithValue<T>(in T value)
+                    public static global::Test.Step_0__Test_Builder<T> WithValue<T>(in T value)
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(value);
+                        return new global::Test.Step_0__Test_Builder<T>(value);
                     }
                 }
 
@@ -52,10 +52,10 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.MyBuildTarget{TNum}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Builder<T>
                 {
                     private readonly T _value__parameter;
-                    internal Step_0__Test_Factory(in T value)
+                    internal Step_0__Test_Builder(in T value)
                     {
                         this._value__parameter = value;
                     }
@@ -81,7 +81,7 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -173,7 +173,7 @@ public class AsAttributeTests
     }
 
     [Fact]
-    internal async Task Should_use_local_type_parameter_names_on_root_factory_type_with_As_aliases()
+    internal async Task Should_use_local_type_parameter_names_on_root_type_with_As_aliases()
     {
         const string code =
             """
@@ -328,11 +328,11 @@ public class AsAttributeTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Target1<T>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target1(T value1, int value2)
                 {
                     Value1 = value1;
@@ -345,7 +345,7 @@ public class AsAttributeTests
 
             public class Target2<[As("T")] TNum>
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target2(TNum value1, string value2)
                 {
                     Value1 = value1;
@@ -364,16 +364,16 @@ public class AsAttributeTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Target1{T}"/>
                     ///     <seealso cref="Test.Target2{TNum}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithValue1<T>(in T value1)
+                    public static global::Test.Step_0__Test_Builder<T> WithValue1<T>(in T value1)
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(value1);
+                        return new global::Test.Step_0__Test_Builder<T>(value1);
                     }
                 }
 
@@ -382,10 +382,10 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.Target2{TNum}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Builder<T>
                 {
                     private readonly T _value1__parameter;
-                    internal Step_0__Test_Factory(in T value1)
+                    internal Step_0__Test_Builder(in T value1)
                     {
                         this._value1__parameter = value1;
                     }
@@ -394,18 +394,18 @@ public class AsAttributeTests
                     ///     <seealso cref="Test.Target1{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T> WithValue2(in int value2)
+                    public global::Test.Step_1__Test_Builder<T> WithValue2(in int value2)
                     {
-                        return new global::Test.Step_1__Test_Factory<T>(this._value1__parameter, value2);
+                        return new global::Test.Step_1__Test_Builder<T>(this._value1__parameter, value2);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Target2{TNum}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_2__Test_Factory<T> WithValue2(in string value2)
+                    public global::Test.Step_2__Test_Builder<T> WithValue2(in string value2)
                     {
-                        return new global::Test.Step_2__Test_Factory<T>(this._value1__parameter, value2);
+                        return new global::Test.Step_2__Test_Builder<T>(this._value1__parameter, value2);
                     }
                 }
 
@@ -413,11 +413,11 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.Target1{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T>
+                public readonly struct Step_1__Test_Builder<T>
                 {
                     private readonly T _value1__parameter;
                     private readonly int _value2__parameter;
-                    internal Step_1__Test_Factory(in T value1, in int value2)
+                    internal Step_1__Test_Builder(in T value1, in int value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -439,11 +439,11 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.Target2{TNum}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_2__Test_Factory<T>
+                public readonly struct Step_2__Test_Builder<T>
                 {
                     private readonly T _value1__parameter;
                     private readonly string _value2__parameter;
-                    internal Step_2__Test_Factory(in T value1, in string value2)
+                    internal Step_2__Test_Builder(in T value1, in string value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -470,7 +470,7 @@ public class AsAttributeTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -486,25 +486,25 @@ public class AsAttributeTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             [FluentRoot(TerminalMethod = TerminalMethod.FixedName)]
             [FluentTarget(typeof(Square<>))]
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial record Square<[As("T")] TUnit>(TUnit Width);
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public partial record Rectangle<T>(T Width, T Height);
             """;
 
-        const string factoryExpected =
+        const string builderExpected =
             """
             // <auto-generated/>
             #nullable enable
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Rectangle{T}"/>
@@ -523,9 +523,9 @@ public class AsAttributeTests
                     ///     <seealso cref="Test.Rectangle{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<TUnit> Height(in TUnit height)
+                    public global::Test.Step_1__Test_Builder<TUnit> Height(in TUnit height)
                     {
-                        return new global::Test.Step_1__Test_Factory<TUnit>(this.Width, height);
+                        return new global::Test.Step_1__Test_Builder<TUnit>(this.Width, height);
                     }
                 }
 
@@ -533,11 +533,11 @@ public class AsAttributeTests
                 ///     <seealso cref="Test.Rectangle{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T>
+                public readonly struct Step_1__Test_Builder<T>
                 {
                     private readonly T _width__parameter;
                     private readonly T _height__parameter;
-                    internal Step_1__Test_Factory(in T width, in T height)
+                    internal Step_1__Test_Builder(in T width, in T height)
                     {
                         this._width__parameter = width;
                         this._height__parameter = height;
@@ -610,7 +610,7 @@ public class AsAttributeTests
                 GeneratedSources =
                 {
                     (typeof(FluentRootGenerator), "Test.Square____.g.cs", squareExpected),
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", factoryExpected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", builderExpected)
                 }
             }
         }.RunAsync();

@@ -20,11 +20,11 @@ public class PartiallyOpenGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> value)
                 {
                     Value = value;
@@ -41,7 +41,7 @@ public class PartiallyOpenGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -62,7 +62,7 @@ public class PartiallyOpenGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -83,11 +83,11 @@ public class PartiallyOpenGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Func<int, T> selector)
                 {
                     Selector = selector;
@@ -104,7 +104,7 @@ public class PartiallyOpenGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
@@ -125,7 +125,7 @@ public class PartiallyOpenGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -148,11 +148,11 @@ public class PartiallyOpenGenericTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyBuildTarget<T>
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyBuildTarget(Dictionary<string, T> lookup, List<int> counts, Func<T, bool> predicate)
                 {
                     Lookup = lookup;
@@ -173,15 +173,15 @@ public class PartiallyOpenGenericTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithLookup<T>(in global::System.Collections.Generic.Dictionary<string, T> lookup)
+                    public static global::Test.Step_0__Test_Builder<T> WithLookup<T>(in global::System.Collections.Generic.Dictionary<string, T> lookup)
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(lookup);
+                        return new global::Test.Step_0__Test_Builder<T>(lookup);
                     }
                 }
 
@@ -189,10 +189,10 @@ public class PartiallyOpenGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Builder<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
-                    internal Step_0__Test_Factory(in global::System.Collections.Generic.Dictionary<string, T> lookup)
+                    internal Step_0__Test_Builder(in global::System.Collections.Generic.Dictionary<string, T> lookup)
                     {
                         this._lookup__parameter = lookup;
                     }
@@ -201,9 +201,9 @@ public class PartiallyOpenGenericTests
                     ///     <seealso cref="Test.MyBuildTarget{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory<T> WithCounts(in global::System.Collections.Generic.List<int> counts)
+                    public global::Test.Step_1__Test_Builder<T> WithCounts(in global::System.Collections.Generic.List<int> counts)
                     {
-                        return new global::Test.Step_1__Test_Factory<T>(this._lookup__parameter, counts);
+                        return new global::Test.Step_1__Test_Builder<T>(this._lookup__parameter, counts);
                     }
                 }
 
@@ -211,11 +211,11 @@ public class PartiallyOpenGenericTests
                 ///     <seealso cref="Test.MyBuildTarget{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory<T>
+                public readonly struct Step_1__Test_Builder<T>
                 {
                     private readonly global::System.Collections.Generic.Dictionary<string, T> _lookup__parameter;
                     private readonly global::System.Collections.Generic.List<int> _counts__parameter;
-                    internal Step_1__Test_Factory(in global::System.Collections.Generic.Dictionary<string, T> lookup, in global::System.Collections.Generic.List<int> counts)
+                    internal Step_1__Test_Builder(in global::System.Collections.Generic.Dictionary<string, T> lookup, in global::System.Collections.Generic.List<int> counts)
                     {
                         this._lookup__parameter = lookup;
                         this._counts__parameter = counts;
@@ -240,7 +240,7 @@ public class PartiallyOpenGenericTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

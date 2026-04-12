@@ -18,11 +18,11 @@ public class NamespaceConflictTests
             public class String { }
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(string name, int value)
                 {
                     Name = name;
@@ -40,15 +40,15 @@ public class NamespaceConflictTests
             namespace ConflictTest
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::ConflictTest.Step_0__ConflictTest_Factory WithName(in string name)
+                    public static global::ConflictTest.Step_0__ConflictTest_Builder WithName(in string name)
                     {
-                        return new global::ConflictTest.Step_0__ConflictTest_Factory(name);
+                        return new global::ConflictTest.Step_0__ConflictTest_Builder(name);
                     }
                 }
 
@@ -56,10 +56,10 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__ConflictTest_Factory
+                public readonly struct Step_0__ConflictTest_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__ConflictTest_Factory(in string name)
+                    internal Step_0__ConflictTest_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -68,9 +68,9 @@ public class NamespaceConflictTests
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::ConflictTest.Step_1__ConflictTest_Factory WithValue(in int value)
+                    public global::ConflictTest.Step_1__ConflictTest_Builder WithValue(in int value)
                     {
-                        return new global::ConflictTest.Step_1__ConflictTest_Factory(this._name__parameter, value);
+                        return new global::ConflictTest.Step_1__ConflictTest_Builder(this._name__parameter, value);
                     }
                 }
 
@@ -78,11 +78,11 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__ConflictTest_Factory
+                public readonly struct Step_1__ConflictTest_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly int _value__parameter;
-                    internal Step_1__ConflictTest_Factory(in string name, in int value)
+                    internal Step_1__ConflictTest_Builder(in string name, in int value)
                     {
                         this._name__parameter = name;
                         this._value__parameter = value;
@@ -109,7 +109,7 @@ public class NamespaceConflictTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "ConflictTest.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "ConflictTest.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -129,11 +129,11 @@ public class NamespaceConflictTests
             public class List { }
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(List<string> items)
                 {
                     Items = items;
@@ -149,15 +149,15 @@ public class NamespaceConflictTests
             namespace ConflictTest
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="ConflictTest.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::ConflictTest.Step_0__ConflictTest_Factory WithItems(in global::System.Collections.Generic.List<string> items)
+                    public static global::ConflictTest.Step_0__ConflictTest_Builder WithItems(in global::System.Collections.Generic.List<string> items)
                     {
-                        return new global::ConflictTest.Step_0__ConflictTest_Factory(items);
+                        return new global::ConflictTest.Step_0__ConflictTest_Builder(items);
                     }
                 }
 
@@ -165,10 +165,10 @@ public class NamespaceConflictTests
                 ///     <seealso cref="ConflictTest.Target"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__ConflictTest_Factory
+                public readonly struct Step_0__ConflictTest_Builder
                 {
                     private readonly global::System.Collections.Generic.List<string> _items__parameter;
-                    internal Step_0__ConflictTest_Factory(in global::System.Collections.Generic.List<string> items)
+                    internal Step_0__ConflictTest_Builder(in global::System.Collections.Generic.List<string> items)
                     {
                         this._items__parameter = items;
                     }
@@ -194,7 +194,7 @@ public class NamespaceConflictTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "ConflictTest.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "ConflictTest.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

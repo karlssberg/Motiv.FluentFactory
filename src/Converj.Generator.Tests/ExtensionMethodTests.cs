@@ -452,14 +452,14 @@ public class ExtensionMethodTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class WrapperFactory;
+            public static partial class WrapperBuilder;
 
             public class Wrapper
             {
                 public string Value { get; }
                 public int Priority { get; }
 
-                [FluentTarget(typeof(WrapperFactory))]
+                [FluentTarget(typeof(WrapperBuilder))]
                 public Wrapper([This] string value, int priority)
                 {
                     Value = value;
@@ -475,15 +475,15 @@ public class ExtensionMethodTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class WrapperFactory
+                public static partial class WrapperBuilder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Wrapper"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_WrapperFactory WithPriority(this string value, in int priority)
+                    public static global::Test.Step_0__Test_WrapperBuilder WithPriority(this string value, in int priority)
                     {
-                        return new global::Test.Step_0__Test_WrapperFactory(value, priority);
+                        return new global::Test.Step_0__Test_WrapperBuilder(value, priority);
                     }
                 }
 
@@ -491,11 +491,11 @@ public class ExtensionMethodTests
                 ///     <seealso cref="Test.Wrapper"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_WrapperFactory
+                public readonly struct Step_0__Test_WrapperBuilder
                 {
                     private readonly string _value__parameter;
                     private readonly int _priority__parameter;
-                    internal Step_0__Test_WrapperFactory(in string value, in int priority)
+                    internal Step_0__Test_WrapperBuilder(in string value, in int priority)
                     {
                         this._value__parameter = value;
                         this._priority__parameter = priority;
@@ -522,7 +522,7 @@ public class ExtensionMethodTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.WrapperFactory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.WrapperBuilder.g.cs", expected)
                 }
             }
         }.RunAsync();

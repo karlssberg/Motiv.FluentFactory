@@ -39,11 +39,11 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name)
                 {
                     Name = name;
@@ -62,15 +62,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -78,10 +78,10 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -90,9 +90,9 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_1__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, email);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, email);
                     }
                 }
 
@@ -100,11 +100,11 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
-                    internal Step_1__Test_Factory(in string name, in string email)
+                    internal Step_1__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -134,7 +134,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -151,9 +151,9 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory))]
+            [FluentTarget(typeof(Builder))]
             public partial record Person(string Name)
             {
                 public required string Email { get; init; }
@@ -167,15 +167,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -183,10 +183,10 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -195,9 +195,9 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_1__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, email);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, email);
                     }
                 }
 
@@ -205,11 +205,11 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
-                    internal Step_1__Test_Factory(in string name, in string email)
+                    internal Step_1__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -239,7 +239,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -256,11 +256,11 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name)
                 {
                     Name = name;
@@ -280,15 +280,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -296,10 +296,10 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -308,9 +308,9 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory SetEmail(in string email)
+                    public global::Test.Step_1__Test_Builder SetEmail(in string email)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, email);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, email);
                     }
                 }
 
@@ -318,11 +318,11 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
-                    internal Step_1__Test_Factory(in string name, in string email)
+                    internal Step_1__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -352,7 +352,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -370,11 +370,11 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 [SetsRequiredMembers]
                 public Person(string name, string email)
                 {
@@ -395,15 +395,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -411,10 +411,10 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -423,9 +423,9 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_1__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, email);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, email);
                     }
                 }
 
@@ -433,11 +433,11 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
-                    internal Step_1__Test_Factory(in string name, in string email)
+                    internal Step_1__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -464,7 +464,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -481,12 +481,12 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public partial class Factory
+            public partial class Builder
             {
                 [FluentParameter("wheels")]
                 private readonly int _wheels;
 
-                public Factory(int wheels)
+                public Builder(int wheels)
                 {
                     _wheels = wheels;
                 }
@@ -494,7 +494,7 @@ public class RequiredPropertyTests
 
             public class Vehicle
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Vehicle(int wheels)
                 {
                     Wheels = wheels;
@@ -513,15 +513,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Vehicle"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithColor(in string color)
+                    public global::Test.Step_0__Test_Builder WithColor(in string color)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._wheels, color);
+                        return new global::Test.Step_0__Test_Builder(this._wheels, color);
                     }
                 }
 
@@ -529,11 +529,11 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Vehicle"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _wheels__parameter;
                     private readonly string _color__parameter;
-                    internal Step_0__Test_Factory(in int wheels, in string color)
+                    internal Step_0__Test_Builder(in int wheels, in string color)
                     {
                         this._wheels__parameter = wheels;
                         this._color__parameter = color;
@@ -563,7 +563,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };
@@ -581,11 +581,11 @@ public class RequiredPropertyTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name)
                 {
                     Name = name;
@@ -607,15 +607,15 @@ public class RequiredPropertyTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -623,10 +623,10 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -635,9 +635,9 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithEmail(in string email)
+                    public global::Test.Step_1__Test_Builder WithEmail(in string email)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._name__parameter, email);
+                        return new global::Test.Step_1__Test_Builder(this._name__parameter, email);
                     }
                 }
 
@@ -645,12 +645,12 @@ public class RequiredPropertyTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_1__Test_Factory
+                public struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly string _email__parameter;
                     private string? _nickname__parameter;
-                    internal Step_1__Test_Factory(in string name, in string email)
+                    internal Step_1__Test_Builder(in string name, in string email)
                     {
                         this._name__parameter = name;
                         this._email__parameter = email;
@@ -676,7 +676,7 @@ public class RequiredPropertyTests
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithNickname(in string? nickname)
+                    public global::Test.Step_1__Test_Builder WithNickname(in string? nickname)
                     {
                         this._nickname__parameter = nickname;
                         return this;
@@ -692,7 +692,7 @@ public class RequiredPropertyTests
                 Sources = { code, RequiredPolyfill },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         };

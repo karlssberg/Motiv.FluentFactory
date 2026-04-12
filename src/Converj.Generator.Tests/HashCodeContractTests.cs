@@ -17,7 +17,7 @@ public class HashCodeContractTests
     /// FluentMethodParameter.Equals() returns false because Names.Overlaps({"SetValue"}, {"WithText"}) = false.
     ///
     /// This exercises the hash collision path in the Trie: same hash bucket, different equality.
-    /// The DESIRED output is two distinct factory methods: SetValue and WithText, each returning its
+    /// The DESIRED output is two distinct root methods: SetValue and WithText, each returning its
     /// respective build target.
     /// </summary>
     [Fact]
@@ -30,11 +30,11 @@ public class HashCodeContractTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetA([FluentMethod("SetValue")] string text)
                 {
                     Text = text;
@@ -45,7 +45,7 @@ public class HashCodeContractTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("WithText")] string text)
                 {
                     Text = text;
@@ -62,7 +62,7 @@ public class HashCodeContractTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.TargetA"/>
@@ -92,7 +92,7 @@ public class HashCodeContractTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -115,11 +115,11 @@ public class HashCodeContractTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class TargetA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetA(string value)
                 {
                     Value = value;
@@ -130,7 +130,7 @@ public class HashCodeContractTests
 
             public class TargetB
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TargetB([FluentMethod("WithValue")] string value)
                 {
                     Value = value;

@@ -19,11 +19,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "Having")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -40,15 +40,15 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory HavingValue(in int value)
+                    public static global::Test.Step_0__Test_Builder HavingValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -56,10 +56,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -85,7 +85,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -101,11 +101,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "Having")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Builder), MethodPrefix = "Set")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -122,15 +122,15 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory SetValue(in int value)
+                    public static global::Test.Step_0__Test_Builder SetValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -138,10 +138,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -167,7 +167,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -183,11 +183,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -204,15 +204,15 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory Value(in int value)
+                    public static global::Test.Step_0__Test_Builder Value(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -220,10 +220,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -249,7 +249,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -265,11 +265,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "Having")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha([FluentMethod("CustomName")] int value)
                 {
                     Value = value;
@@ -286,15 +286,15 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory CustomName(in int value)
+                    public static global::Test.Step_0__Test_Builder CustomName(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -302,10 +302,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -331,7 +331,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -347,11 +347,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "Having")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -362,7 +362,7 @@ public class MethodPrefixTests
 
             public class Beta
             {
-                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Builder), MethodPrefix = "Set")]
                 public Beta(string name)
                 {
                     Name = name;
@@ -379,24 +379,24 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory HavingValue(in int value)
+                    public static global::Test.Step_0__Test_Builder HavingValue(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Beta"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_1__Test_Factory SetName(in string name)
+                    public static global::Test.Step_1__Test_Builder SetName(in string name)
                     {
-                        return new global::Test.Step_1__Test_Factory(name);
+                        return new global::Test.Step_1__Test_Builder(name);
                     }
                 }
 
@@ -404,10 +404,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -428,10 +428,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Beta"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_1__Test_Factory(in string name)
+                    internal Step_1__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -457,7 +457,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -473,11 +473,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "123Bad")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -512,11 +512,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory), MethodPrefix = "1Bad")]
+                [FluentTarget(typeof(Builder), MethodPrefix = "1Bad")]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -551,11 +551,11 @@ public class MethodPrefixTests
             namespace Test;
 
             [FluentRoot(MethodPrefix = "")]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Alpha
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Alpha(int value)
                 {
                     Value = value;
@@ -572,15 +572,15 @@ public class MethodPrefixTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Alpha"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory Value(in int value)
+                    public static global::Test.Step_0__Test_Builder Value(in int value)
                     {
-                        return new global::Test.Step_0__Test_Factory(value);
+                        return new global::Test.Step_0__Test_Builder(value);
                     }
                 }
 
@@ -588,10 +588,10 @@ public class MethodPrefixTests
                 ///     <seealso cref="Test.Alpha"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly int _value__parameter;
-                    internal Step_0__Test_Factory(in int value)
+                    internal Step_0__Test_Builder(in int value)
                     {
                         this._value__parameter = value;
                     }
@@ -617,7 +617,7 @@ public class MethodPrefixTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

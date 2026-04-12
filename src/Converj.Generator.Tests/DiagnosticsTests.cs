@@ -22,11 +22,11 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -37,7 +37,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Company(string name)
                     {
                         Name = name;
@@ -77,11 +77,11 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Person
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Person(string name)
                     {
                         Name = name;
@@ -92,7 +92,7 @@ public class DiagnosticsTests
 
                 public partial class Company
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Company([MultipleFluentMethods(typeof(Convert))]int? id)
                     {
                         Id = id;
@@ -119,7 +119,7 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="MyNamespace.Person"/>
@@ -148,7 +148,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -519,11 +519,11 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Foo
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -536,7 +536,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Bar(string name)
                     {
                         Name = name;
@@ -572,11 +572,11 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Foo
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -589,7 +589,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Bar(string name, bool active = true)
                     {
                         Name = name;
@@ -630,11 +630,11 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Foo
                 {
-                    [FluentTarget(typeof(Factory), TerminalVerb = "MakeFoo")]
+                    [FluentTarget(typeof(Builder), TerminalVerb = "MakeFoo")]
                     public Foo(string name, int age = 25)
                     {
                         Name = name;
@@ -647,7 +647,7 @@ public class DiagnosticsTests
 
                 public partial class Bar
                 {
-                    [FluentTarget(typeof(Factory), TerminalVerb = "MakeBar")]
+                    [FluentTarget(typeof(Builder), TerminalVerb = "MakeBar")]
                     public Bar(string name)
                     {
                         Name = name;
@@ -665,16 +665,16 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="MyNamespace.Bar"/>
                     ///     <seealso cref="MyNamespace.Foo"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::MyNamespace.Step_0__MyNamespace_Factory WithName(in string name)
+                    public static global::MyNamespace.Step_0__MyNamespace_Builder WithName(in string name)
                     {
-                        return new global::MyNamespace.Step_0__MyNamespace_Factory(name);
+                        return new global::MyNamespace.Step_0__MyNamespace_Builder(name);
                     }
                 }
 
@@ -683,11 +683,11 @@ public class DiagnosticsTests
                 ///     <seealso cref="MyNamespace.Foo"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__MyNamespace_Factory
+                public struct Step_0__MyNamespace_Builder
                 {
                     private readonly string _name__parameter;
                     private int _age__parameter;
-                    internal Step_0__MyNamespace_Factory(in string name)
+                    internal Step_0__MyNamespace_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._age__parameter = 25;
@@ -720,7 +720,7 @@ public class DiagnosticsTests
                     ///     <seealso cref="MyNamespace.Foo"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::MyNamespace.Step_0__MyNamespace_Factory WithAge(in int age)
+                    public global::MyNamespace.Step_0__MyNamespace_Builder WithAge(in int age)
                     {
                         this._age__parameter = age;
                         return this;
@@ -736,7 +736,7 @@ public class DiagnosticsTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -752,18 +752,18 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class MyClass
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyClass(string name, int age = 25)
                     {
                         Name = name;
                         Age = age;
                     }
 
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public MyClass(string name)
                     {
                         Name = name;
@@ -783,15 +783,15 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="MyNamespace.MyClass"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::MyNamespace.Step_0__MyNamespace_Factory WithName(in string name)
+                    public static global::MyNamespace.Step_0__MyNamespace_Builder WithName(in string name)
                     {
-                        return new global::MyNamespace.Step_0__MyNamespace_Factory(name);
+                        return new global::MyNamespace.Step_0__MyNamespace_Builder(name);
                     }
                 }
 
@@ -799,11 +799,11 @@ public class DiagnosticsTests
                 ///     <seealso cref="MyNamespace.MyClass"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__MyNamespace_Factory
+                public struct Step_0__MyNamespace_Builder
                 {
                     private readonly string _name__parameter;
                     private int _age__parameter;
-                    internal Step_0__MyNamespace_Factory(in string name)
+                    internal Step_0__MyNamespace_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._age__parameter = 25;
@@ -835,7 +835,7 @@ public class DiagnosticsTests
                     ///     <seealso cref="MyNamespace.MyClass"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::MyNamespace.Step_0__MyNamespace_Factory WithAge(in int age)
+                    public global::MyNamespace.Step_0__MyNamespace_Builder WithAge(in int age)
                     {
                         this._age__parameter = age;
                         return this;
@@ -852,12 +852,12 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CS0111")
-                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\MyNamespace.Factory.g.cs", 49, 44, 49, 57)
-                        .WithArguments("CreateMyClass", "MyNamespace.Step_0__MyNamespace_Factory"),
+                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\MyNamespace.Builder.g.cs", 49, 44, 49, 57)
+                        .WithArguments("CreateMyClass", "MyNamespace.Step_0__MyNamespace_Builder"),
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "MyNamespace.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "MyNamespace.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -873,11 +873,11 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class MyStep
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public MyStep(
                     [FluentMethod("WithName")]string name,
                     [FluentMethod("WithAge")]int age)
@@ -891,7 +891,7 @@ public class DiagnosticsTests
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(string name, int age, bool active)
                 {
                     Name = name;
@@ -930,20 +930,20 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int X, int Y, string Z, int W)
                 {
                     this.X = X;
@@ -968,7 +968,7 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 13, 6, 13, 73)
-                        .WithArguments("Test.TypeA", "Test.Factory")
+                        .WithArguments("Test.TypeA", "Test.Builder")
                 }
             }
         }.RunAsync();
@@ -984,20 +984,20 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string? Z) : this(X, Y) { }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int X, int Y, string? Z, int W)
                 {
                     this.X = X;
@@ -1023,7 +1023,7 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 13, 6, 13, 73)
-                        .WithArguments("Test.TypeA", "Test.Factory"),
+                        .WithArguments("Test.TypeA", "Test.Builder"),
                 }
             }
         }.RunAsync();
@@ -1039,9 +1039,9 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
-            [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+            [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
             public partial record TypeA(int X, int Y);
 
             public partial record TypeA
@@ -1049,13 +1049,13 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { get; init; }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int X, int Y, string Z) : this(X, Y) { this.Z = Z; }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int X, int Y, string Z, int W)
                 {
                     this.X = X;
@@ -1080,7 +1080,7 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 16, 6, 16, 73)
-                        .WithArguments("Test.TypeA", "Test.Factory"),
+                        .WithArguments("Test.TypeA", "Test.Builder"),
                 }
             }
         }.RunAsync();
@@ -1096,7 +1096,7 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class TypeA
             {
@@ -1106,7 +1106,7 @@ public class DiagnosticsTests
                 [FluentStorage]
                 public string Z { set { } }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y, string z) { }
             }
             """;
@@ -1136,11 +1136,11 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class TypeA
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y) { X = x; Y = y; }
 
                 public int X { get; set; }
@@ -1152,13 +1152,13 @@ public class DiagnosticsTests
                 [FluentStorage("Z")]
                 public string AnotherZ { get; set; }
 
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public TypeA(int x, int y, string z) : this(x, y) { }
             }
 
             public class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(int x, int y, string z, int w)
                 {
                     X = x; Y = y; Z = z; W = w;
@@ -1180,14 +1180,14 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 22, 6, 22, 73)
-                        .WithArguments("Test.TypeA", "Test.Factory")
+                        .WithArguments("Test.TypeA", "Test.Builder")
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_report_error_when_type_has_multiple_FluentConstructors_with_factory_level_CreateMethodNone()
+    internal async Task Should_report_error_when_type_has_multiple_FluentTargets_with_root_level_CreateMethodNone()
     {
         const string code =
             """
@@ -1196,14 +1196,14 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot(TerminalMethod = TerminalMethod.None)]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Target
                 {
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public Target(int a, int b) { A = a; B = b; }
 
-                    [FluentTarget(typeof(Factory))]
+                    [FluentTarget(typeof(Builder))]
                     public Target(int b) { B = b; }
 
                     public int A { get; }
@@ -1221,14 +1221,14 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 13, 10, 13, 39)
-                        .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
+                        .WithArguments("MyNamespace.Target", "MyNamespace.Builder"),
                 }
             }
         }.RunAsync();
     }
 
     [Fact]
-    internal async Task Should_report_error_when_type_has_multiple_FluentConstructors_with_per_constructor_CreateMethodNone()
+    internal async Task Should_report_error_when_type_has_multiple_FluentTargets_with_per_constructor_CreateMethodNone()
     {
         const string code =
             """
@@ -1237,14 +1237,14 @@ public class DiagnosticsTests
             namespace MyNamespace
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
 
                 public partial class Target
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Target(int a, int b) { A = a; B = b; }
 
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public Target(int b) { B = b; }
 
                     public int A { get; }
@@ -1262,7 +1262,7 @@ public class DiagnosticsTests
                 {
                     DiagnosticResult.CompilerError(MultipleTargetsWithBuilderNone.Id)
                         .WithSpan(SourceFile, 13, 10, 13, 77)
-                        .WithArguments("MyNamespace.Target", "MyNamespace.Factory"),
+                        .WithArguments("MyNamespace.Target", "MyNamespace.Builder"),
                 }
             }
         }.RunAsync();
@@ -1282,11 +1282,11 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Target
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None, TerminalVerb = "Build")]
                 public Target(string name)
                 {
                     Name = name;
@@ -1326,11 +1326,11 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class ValidTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public ValidTarget(string name)
                 {
                     Name = name;
@@ -1341,7 +1341,7 @@ public class DiagnosticsTests
 
             public class AnotherTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public AnotherTarget(string name)
                 {
                     Name = name;
@@ -1358,16 +1358,16 @@ public class DiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.AnotherTarget"/>
                     ///     <seealso cref="Test.ValidTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -1376,10 +1376,10 @@ public class DiagnosticsTests
                 ///     <seealso cref="Test.ValidTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -1416,7 +1416,7 @@ public class DiagnosticsTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1432,19 +1432,19 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None)]
-            public partial class Factory;
+            public partial class Builder;
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record First(
                 [FluentMethod("Build")]int value1);
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondA(
                 [FluentMethod("Build")]int value1,
                 [FluentMethod("Value2")]int value2,
                 [FluentMethod("Value3")]int value3);
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondB(
                 [FluentMethod("Build")]int value1,
                 [MultipleFluentMethods(typeof(MultipleMethods))]int value2,
@@ -1464,7 +1464,7 @@ public class DiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.First"/>
@@ -1484,9 +1484,9 @@ public class DiagnosticsTests
                     ///     <seealso cref="Test.SecondA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory Value2(in int value2)
+                    public global::Test.Step_1__Test_Builder Value2(in int value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.value1, value2);
+                        return new global::Test.Step_1__Test_Builder(this.value1, value2);
                     }
                 }
 
@@ -1494,11 +1494,11 @@ public class DiagnosticsTests
                 ///     <seealso cref="Test.SecondA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _value1__parameter;
                     private readonly int _value2__parameter;
-                    internal Step_1__Test_Factory(in int value1, in int value2)
+                    internal Step_1__Test_Builder(in int value1, in int value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -1547,7 +1547,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1563,19 +1563,19 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None)]
-            public partial class Factory;
+            public partial class Builder;
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record First(
                 [FluentMethod("Build")]int value1);
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondB(
                 [FluentMethod("Build")]int value1,
                 [MultipleFluentMethods(typeof(MultipleMethods))]int value2,
                 [FluentMethod("Value3")]int value3);
                 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondA(
                 [FluentMethod("Build")]int value1,
                 [FluentMethod("Value2")]int value2,
@@ -1595,7 +1595,7 @@ public class DiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.First"/>
@@ -1615,9 +1615,9 @@ public class DiagnosticsTests
                     ///     <seealso cref="Test.SecondA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory Value2(in int value2)
+                    public global::Test.Step_1__Test_Builder Value2(in int value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.value1, value2);
+                        return new global::Test.Step_1__Test_Builder(this.value1, value2);
                     }
                 }
 
@@ -1625,11 +1625,11 @@ public class DiagnosticsTests
                 ///     <seealso cref="Test.SecondA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _value1__parameter;
                     private readonly int _value2__parameter;
-                    internal Step_1__Test_Factory(in int value1, in int value2)
+                    internal Step_1__Test_Builder(in int value1, in int value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -1678,7 +1678,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -1695,19 +1695,19 @@ public class DiagnosticsTests
             namespace Test;
 
             [FluentRoot(TerminalMethod = TerminalMethod.None)]
-            public partial class Factory;
+            public partial class Builder;
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record First(
                 [FluentMethod("Build")]int value1);
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondA(
                 [FluentMethod("Build")]int value1,
                 [FluentMethod("Value2")]int value2,
                 [FluentMethod("Value3")]int value3);
 
-            [FluentTarget<Factory>]
+            [FluentTarget<Builder>]
             public partial record SecondB(
                 [FluentMethod("Build")]int value1,
                 [MultipleFluentMethods(typeof(MultipleMethods))]int value2,
@@ -1729,7 +1729,7 @@ public class DiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public partial class Factory
+                public partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.First"/>
@@ -1749,18 +1749,18 @@ public class DiagnosticsTests
                     ///     <seealso cref="Test.SecondA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory Value2(in int value2)
+                    public global::Test.Step_1__Test_Builder Value2(in int value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.value1, value2);
+                        return new global::Test.Step_1__Test_Builder(this.value1, value2);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.SecondA"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory Value2(in global::System.Func<int> value2)
+                    public global::Test.Step_1__Test_Builder Value2(in global::System.Func<int> value2)
                     {
-                        return new global::Test.Step_1__Test_Factory(this.value1, global::Test.MultipleMethods.Value2(value2));
+                        return new global::Test.Step_1__Test_Builder(this.value1, global::Test.MultipleMethods.Value2(value2));
                     }
                 }
 
@@ -1768,11 +1768,11 @@ public class DiagnosticsTests
                 ///     <seealso cref="Test.SecondA"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_1__Test_Factory
+                public readonly struct Step_1__Test_Builder
                 {
                     private readonly int _value1__parameter;
                     private readonly int _value2__parameter;
-                    internal Step_1__Test_Factory(in int value1, in int value2)
+                    internal Step_1__Test_Builder(in int value1, in int value2)
                     {
                         this._value1__parameter = value1;
                         this._value2__parameter = value2;
@@ -1821,7 +1821,7 @@ public class DiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

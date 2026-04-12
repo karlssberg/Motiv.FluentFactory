@@ -16,11 +16,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyService
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyService(string name, int timeout = 30)
                 {
                     Name = name;
@@ -39,15 +39,15 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -55,11 +55,11 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__Test_Factory
+                public struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private int _timeout__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._timeout__parameter = 30;
@@ -80,7 +80,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithTimeout(in int timeout)
+                    public global::Test.Step_0__Test_Builder WithTimeout(in int timeout)
                     {
                         this._timeout__parameter = timeout;
                         return this;
@@ -96,7 +96,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -113,11 +113,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyHandler
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyHandler(string host, int port, int retries = 3)
                 {
                     Host = host;
@@ -138,15 +138,15 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyHandler"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithHost(in string host)
+                    public static global::Test.Step_0__Test_Builder WithHost(in string host)
                     {
-                        return new global::Test.Step_0__Test_Factory(host);
+                        return new global::Test.Step_0__Test_Builder(host);
                     }
                 }
 
@@ -154,10 +154,10 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyHandler"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _host__parameter;
-                    internal Step_0__Test_Factory(in string host)
+                    internal Step_0__Test_Builder(in string host)
                     {
                         this._host__parameter = host;
                     }
@@ -166,9 +166,9 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyHandler"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithPort(in int port)
+                    public global::Test.Step_1__Test_Builder WithPort(in int port)
                     {
-                        return new global::Test.Step_1__Test_Factory(this._host__parameter, port);
+                        return new global::Test.Step_1__Test_Builder(this._host__parameter, port);
                     }
                 }
 
@@ -176,12 +176,12 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyHandler"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_1__Test_Factory
+                public struct Step_1__Test_Builder
                 {
                     private readonly string _host__parameter;
                     private readonly int _port__parameter;
                     private int _retries__parameter;
-                    internal Step_1__Test_Factory(in string host, in int port)
+                    internal Step_1__Test_Builder(in string host, in int port)
                     {
                         this._host__parameter = host;
                         this._port__parameter = port;
@@ -203,7 +203,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyHandler"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_1__Test_Factory WithRetries(in int retries)
+                    public global::Test.Step_1__Test_Builder WithRetries(in int retries)
                     {
                         this._retries__parameter = retries;
                         return this;
@@ -219,7 +219,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -237,11 +237,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyWidget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyWidget(string name, string label = "default", bool isEnabled = true, IDisposable? handler = null)
                 {
                     Name = name;
@@ -264,15 +264,15 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyWidget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -280,13 +280,13 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyWidget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__Test_Factory
+                public struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private string _label__parameter;
                     private bool _isEnabled__parameter;
                     private global::System.IDisposable? _handler__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._label__parameter = "default";
@@ -309,7 +309,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyWidget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithLabel(in string label)
+                    public global::Test.Step_0__Test_Builder WithLabel(in string label)
                     {
                         this._label__parameter = label;
                         return this;
@@ -319,7 +319,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyWidget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithIsEnabled(in bool isEnabled)
+                    public global::Test.Step_0__Test_Builder WithIsEnabled(in bool isEnabled)
                     {
                         this._isEnabled__parameter = isEnabled;
                         return this;
@@ -329,7 +329,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyWidget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithHandler(in global::System.IDisposable? handler)
+                    public global::Test.Step_0__Test_Builder WithHandler(in global::System.IDisposable? handler)
                     {
                         this._handler__parameter = handler;
                         return this;
@@ -345,7 +345,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -362,11 +362,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyService
             {
-                [FluentTarget(typeof(Factory), MethodPrefix = "Set")]
+                [FluentTarget(typeof(Builder), MethodPrefix = "Set")]
                 public MyService(string name, int timeout = 30)
                 {
                     Name = name;
@@ -385,15 +385,15 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory SetName(in string name)
+                    public static global::Test.Step_0__Test_Builder SetName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -401,11 +401,11 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__Test_Factory
+                public struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private int _timeout__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._timeout__parameter = 30;
@@ -426,7 +426,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory SetTimeout(in int timeout)
+                    public global::Test.Step_0__Test_Builder SetTimeout(in int timeout)
                     {
                         this._timeout__parameter = timeout;
                         return this;
@@ -442,7 +442,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -647,11 +647,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class MyService
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public MyService(
                     string name,
                     [FluentMethod("HavingTimeout")] int timeout = 30)
@@ -672,15 +672,15 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -688,11 +688,11 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.MyService"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public struct Step_0__Test_Factory
+                public struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private int _timeout__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._timeout__parameter = 30;
@@ -713,7 +713,7 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.MyService"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory HavingTimeout(in int timeout)
+                    public global::Test.Step_0__Test_Builder HavingTimeout(in int timeout)
                     {
                         this._timeout__parameter = timeout;
                         return this;
@@ -729,7 +729,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -750,11 +750,11 @@ public class OptionalParameterTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Config
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Config(string host = "localhost", int port = 80)
                 {
                     Host = host;
@@ -773,7 +773,7 @@ public class OptionalParameterTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// Creates a new instance using constructor Test.Config.Config(string host = "localhost", int port = 80).
@@ -790,18 +790,18 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithHost(in string host)
+                    public static global::Test.Step_0__Test_Builder WithHost(in string host)
                     {
-                        return new global::Test.Step_0__Test_Factory(host: host);
+                        return new global::Test.Step_0__Test_Builder(host: host);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithPort(in int port)
+                    public static global::Test.Step_0__Test_Builder WithPort(in int port)
                     {
-                        return new global::Test.Step_0__Test_Factory(port: port);
+                        return new global::Test.Step_0__Test_Builder(port: port);
                     }
                 }
 
@@ -809,11 +809,11 @@ public class OptionalParameterTests
                 ///     <seealso cref="Test.Config"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _host__parameter;
                     private readonly int _port__parameter;
-                    internal Step_0__Test_Factory(in string host = "localhost", in int port = 80)
+                    internal Step_0__Test_Builder(in string host = "localhost", in int port = 80)
                     {
                         this._host__parameter = host;
                         this._port__parameter = port;
@@ -823,18 +823,18 @@ public class OptionalParameterTests
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithHost(in string host)
+                    public global::Test.Step_0__Test_Builder WithHost(in string host)
                     {
-                        return new global::Test.Step_0__Test_Factory(host, this._port__parameter);
+                        return new global::Test.Step_0__Test_Builder(host, this._port__parameter);
                     }
 
                     /// <summary>
                     ///     <seealso cref="Test.Config"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithPort(in int port)
+                    public global::Test.Step_0__Test_Builder WithPort(in int port)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._host__parameter, port);
+                        return new global::Test.Step_0__Test_Builder(this._host__parameter, port);
                     }
 
                     /// <summary>
@@ -858,7 +858,7 @@ public class OptionalParameterTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

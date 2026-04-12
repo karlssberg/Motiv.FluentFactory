@@ -41,11 +41,11 @@ public class RequiredPropertyDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person(string name) { Name = name; }
                 public string Name { get; set; }
 
@@ -79,11 +79,11 @@ public class RequiredPropertyDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Person
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Person(string name) { Name = name; }
                 public string Name { get; set; }
 
@@ -98,7 +98,7 @@ public class RequiredPropertyDiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
@@ -120,7 +120,7 @@ public class RequiredPropertyDiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CS9035")
-                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\Test.Factory.g.cs", 14, 24, 14, 43)
+                        .WithSpan("Converj.Generator\\Converj.Generator.FluentRootGenerator\\Test.Builder.g.cs", 14, 24, 14, 43)
                         .WithArguments("Test.Person.Email"),
                     DiagnosticResult.CompilerWarning(FluentMethodPropertyWithBuilderNone.Id)
                         .WithSpan(SourceFile, 14, 28, 14, 33)
@@ -128,7 +128,7 @@ public class RequiredPropertyDiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -144,11 +144,11 @@ public class RequiredPropertyDiagnosticsTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class Person
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Person([FluentMethod] string name) { Name = name; }
                 public string Name { get; set; }
             }
@@ -161,15 +161,15 @@ public class RequiredPropertyDiagnosticsTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Person"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -177,10 +177,10 @@ public class RequiredPropertyDiagnosticsTests
                 ///     <seealso cref="Test.Person"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -212,7 +212,7 @@ public class RequiredPropertyDiagnosticsTests
                 },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

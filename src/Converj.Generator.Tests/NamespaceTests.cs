@@ -14,7 +14,7 @@ public class NamespaceTests
             namespace Test
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
             }
 
             namespace Test.NamespaceA
@@ -22,7 +22,7 @@ public class NamespaceTests
 
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Test.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Test.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -40,7 +40,7 @@ public class NamespaceTests
             {
                 public class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         string value)
@@ -77,16 +77,16 @@ public class NamespaceTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.NamespaceA.MyBuildTargetA{T}"/>
                     ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithDefaultValue<T>()
+                    public static global::Test.Step_0__Test_Builder<T> WithDefaultValue<T>()
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(global::MethodVariants.WithDefaultValue<T>());
+                        return new global::Test.Step_0__Test_Builder<T>(global::MethodVariants.WithDefaultValue<T>());
                     }
 
                     /// <summary>
@@ -94,9 +94,9 @@ public class NamespaceTests
                     ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory<T> WithFunction<T>(in global::System.Func<T> function)
+                    public static global::Test.Step_0__Test_Builder<T> WithFunction<T>(in global::System.Func<T> function)
                     {
-                        return new global::Test.Step_0__Test_Factory<T>(global::MethodVariants.WithFunction<T>(function));
+                        return new global::Test.Step_0__Test_Builder<T>(global::MethodVariants.WithFunction<T>(function));
                     }
                 }
 
@@ -105,10 +105,10 @@ public class NamespaceTests
                 ///     <seealso cref="Test.NamespaceB.MyBuildTargetB{T}"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory<T>
+                public readonly struct Step_0__Test_Builder<T>
                 {
                     private readonly T _data__parameter;
-                    internal Step_0__Test_Factory(in T data)
+                    internal Step_0__Test_Builder(in T data)
                     {
                         this._data__parameter = data;
                     }
@@ -141,7 +141,7 @@ public class NamespaceTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -158,14 +158,14 @@ public class NamespaceTests
             namespace Test
             {
                 [FluentRoot]
-                public static partial class Factory;
+                public static partial class Builder;
             }
 
             namespace Test.NamespaceA
             {
                 public class MyBuildTargetA<T>
                 {
-                    [FluentTarget(typeof(Test.Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Test.Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetA(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data,
                         int value)
@@ -183,7 +183,7 @@ public class NamespaceTests
             {
                 public partial class MyBuildTargetB<T>
                 {
-                    [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                    [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                     public MyBuildTargetB(
                         [MultipleFluentMethods(typeof(MethodVariants))]T data)
                     {
@@ -217,7 +217,7 @@ public class NamespaceTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.NamespaceA.MyBuildTargetA{T}"/>
@@ -265,7 +265,7 @@ public class NamespaceTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();

@@ -16,7 +16,7 @@ public class CompilationErrorResilienceTests
     private const string SourceFile = "Source.cs";
 
     /// <summary>
-    /// DIAG-03 Test 1: A FluentConstructor with a parameter whose type does not exist
+    /// DIAG-03 Test 1: A FluentTarget with a parameter whose type does not exist
     /// (e.g., <c>NonExistentType value</c>) causes the C# compiler to emit CS0246.
     ///
     /// The generator must not throw an unhandled exception when it encounters an IErrorTypeSymbol
@@ -33,11 +33,11 @@ public class CompilationErrorResilienceTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(NonExistentType value) { }
             }
             """;
@@ -54,7 +54,7 @@ public class CompilationErrorResilienceTests
     }
 
     /// <summary>
-    /// DIAG-03 Test 2: A FluentConstructor on a class where the factory type's declaration has
+    /// DIAG-03 Test 2: A FluentTarget on a class where the root type's declaration has
     /// a deliberate syntax error (missing closing brace). The C# parser may not recognize the
     /// attribute at all, or may partially parse the file.
     ///
@@ -62,7 +62,7 @@ public class CompilationErrorResilienceTests
     /// is that no generated output is produced and no CVJG diagnostics are emitted.
     /// </summary>
     [Fact]
-    internal async Task Given_a_factory_type_declaration_with_a_syntax_error_Should_not_throw()
+    internal async Task Given_a_root_type_declaration_with_a_syntax_error_Should_not_throw()
     {
         const string code =
             """
@@ -71,7 +71,7 @@ public class CompilationErrorResilienceTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory
+            public static partial class Builder
             {
                 // Missing closing brace is impossible to represent cleanly in a well-formed string,
                 // so we simulate a syntax error via an unclosed generic constraint instead.
@@ -91,7 +91,7 @@ public class CompilationErrorResilienceTests
     }
 
     /// <summary>
-    /// DIAG-03 Test 3: A FluentConstructor on a class with a mix of valid and invalid parameter
+    /// DIAG-03 Test 3: A FluentTarget on a class with a mix of valid and invalid parameter
     /// types. The first parameter (<c>string name</c>) is valid, but the second (<c>UndefinedType broken</c>)
     /// does not exist and triggers CS0246.
     ///
@@ -109,11 +109,11 @@ public class CompilationErrorResilienceTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Target
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public Target(string name, UndefinedType broken) { }
             }
             """;
@@ -145,11 +145,11 @@ public class CompilationErrorResilienceTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public class ValidTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public ValidTarget(string name)
                 {
                     Name = name;
@@ -160,7 +160,7 @@ public class CompilationErrorResilienceTests
 
             public class ErrorTarget
             {
-                [FluentTarget(typeof(Factory))]
+                [FluentTarget(typeof(Builder))]
                 public ErrorTarget(NonExistentType broken)
                 {
                 }
@@ -174,15 +174,15 @@ public class CompilationErrorResilienceTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.ValidTarget"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithName(in string name)
+                    public static global::Test.Step_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Factory(name);
+                        return new global::Test.Step_0__Test_Builder(name);
                     }
                 }
 
@@ -190,10 +190,10 @@ public class CompilationErrorResilienceTests
                 ///     <seealso cref="Test.ValidTarget"/>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _name__parameter;
-                    internal Step_0__Test_Factory(in string name)
+                    internal Step_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                     }
@@ -219,7 +219,7 @@ public class CompilationErrorResilienceTests
                 Sources = { (SourceFile, code) },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             },
             CompilerDiagnostics = CompilerDiagnostics.None

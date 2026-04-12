@@ -26,11 +26,11 @@ public class CreateMethodNoneOptionalTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Config
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Config(string name, int timeout = 30)
                 {
                     Name = name;
@@ -49,7 +49,7 @@ public class CreateMethodNoneOptionalTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Config"/>
@@ -83,7 +83,7 @@ public class CreateMethodNoneOptionalTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -104,11 +104,11 @@ public class CreateMethodNoneOptionalTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Config
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Config(string name, int timeout = 30, bool verbose = false)
                 {
                     Name = name;
@@ -129,7 +129,7 @@ public class CreateMethodNoneOptionalTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     ///     <seealso cref="Test.Config"/>
@@ -172,7 +172,7 @@ public class CreateMethodNoneOptionalTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 }
             }
         }.RunAsync();
@@ -189,11 +189,11 @@ public class CreateMethodNoneOptionalTests
             namespace Test;
 
             [FluentRoot]
-            public static partial class Factory;
+            public static partial class Builder;
 
             public partial class Config
             {
-                [FluentTarget(typeof(Factory), TerminalMethod = TerminalMethod.None)]
+                [FluentTarget(typeof(Builder), TerminalMethod = TerminalMethod.None)]
                 public Config(string host = "localhost", int port = 8080)
                 {
                     Host = host;
@@ -212,33 +212,33 @@ public class CreateMethodNoneOptionalTests
             namespace Test
             {
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public static partial class Factory
+                public static partial class Builder
                 {
                     /// <summary>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithHost(in string host)
+                    public static global::Test.Step_0__Test_Builder WithHost(in string host)
                     {
-                        return new global::Test.Step_0__Test_Factory(host: host);
+                        return new global::Test.Step_0__Test_Builder(host: host);
                     }
 
                     /// <summary>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Factory WithPort(in int port)
+                    public static global::Test.Step_0__Test_Builder WithPort(in int port)
                     {
-                        return new global::Test.Step_0__Test_Factory(port: port);
+                        return new global::Test.Step_0__Test_Builder(port: port);
                     }
                 }
 
                 /// <summary>
                 /// </summary>
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Factory
+                public readonly struct Step_0__Test_Builder
                 {
                     private readonly string _host__parameter;
                     private readonly int _port__parameter;
-                    internal Step_0__Test_Factory(in string host = "localhost", in int port = 8080)
+                    internal Step_0__Test_Builder(in string host = "localhost", in int port = 8080)
                     {
                         this._host__parameter = host;
                         this._port__parameter = port;
@@ -247,17 +247,17 @@ public class CreateMethodNoneOptionalTests
                     /// <summary>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithHost(in string host)
+                    public global::Test.Step_0__Test_Builder WithHost(in string host)
                     {
-                        return new global::Test.Step_0__Test_Factory(host, this._port__parameter);
+                        return new global::Test.Step_0__Test_Builder(host, this._port__parameter);
                     }
 
                     /// <summary>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Step_0__Test_Factory WithPort(in int port)
+                    public global::Test.Step_0__Test_Builder WithPort(in int port)
                     {
-                        return new global::Test.Step_0__Test_Factory(this._host__parameter, port);
+                        return new global::Test.Step_0__Test_Builder(this._host__parameter, port);
                     }
                 }
             }
@@ -270,7 +270,7 @@ public class CreateMethodNoneOptionalTests
                 Sources = { code },
                 GeneratedSources =
                 {
-                    (typeof(FluentRootGenerator), "Test.Factory.g.cs", expected)
+                    (typeof(FluentRootGenerator), "Test.Builder.g.cs", expected)
                 },
                 ExpectedDiagnostics =
                 {
