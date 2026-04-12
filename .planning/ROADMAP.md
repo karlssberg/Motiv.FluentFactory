@@ -121,7 +121,10 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. Test-local sample helper types that used legacy vocabulary (e.g., a local `class Factory { ... }` inside a test file) have been renamed to Root/Target-aligned names
   4. `git grep -n "Factory\|FluentConstructor" -- src/Converj.Generator.Tests/ src/Converj.Tests/` returns zero hits for any occurrence that refers to the fluent root (occurrences referring to a C# constructor or an intentionally retained GoF pattern are allowed and documented)
   5. `dotnet build` succeeds with zero warnings and `dotnet test` passes every existing test with no modified assertions
-**Plans**: TBD
+**Plans** (3 plans in 2 waves):
+  - [ ] 19-01-PLAN.md (wave 1) — Rename EmptyFactoryTests/NestedFactoryTests classes via git mv; bulk rename test-local `class Factory` to `class Builder` across all generator test source strings, expected outputs, method names, and comments; update FluentConstructor references to FluentTarget (TEST-01, TEST-02, TEST-04)
+  - [ ] 19-02-PLAN.md (wave 1) — Rename NestedFactoryRuntimeTests via git mv; bulk rename all *Factory partial types to *Builder across runtime test files (TEST-03, TEST-04)
+  - [ ] 19-03-PLAN.md (wave 2, depends on 19-01 + 19-02) — Run TEST-05 grep gate, fix any residual hits, final build/test verification (TEST-05)
 
 ### Phase 20: Documentation Cleanup & Final Verification
 **Goal**: All project-level documentation uses current vocabulary, no residual legacy terminology remains anywhere in active source/tests/docs, and milestone-wide behavior preservation is formally verified
@@ -157,7 +160,5 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | 16. Diagnostic Alignment | 3/3 | Complete    | 2026-04-12 | - |
 | 17. Core Generator Type Renames | 3/3 | Complete    | 2026-04-12 | - |
 | 18. Builder Pattern Renames | 1/1 | Complete    | 2026-04-12 | - |
-| 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |
+| 19. Test Fixture Alignment | v2.1 | 0/3 | Not started | - |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 0/? | Not started | - |
-</content>
-</invoke>
