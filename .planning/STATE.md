@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
-stopped_at: Completed 18-01-PLAN.md
-last_updated: "2026-04-12T18:11:27.974Z"
+stopped_at: Completed 19-02-PLAN.md
+last_updated: "2026-04-12T18:40:30.359Z"
 last_activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 10
+  completed_plans: 8
 ---
 
 # Project State
@@ -56,6 +56,7 @@ Recent decisions affecting current work:
 - [Phase 17]: COMPLETE — all five requirements NAME-01..04, FILE-01 satisfied; zero legacy FluentFactory* type names in src/Converj.Generator/
 - [Phase 18-01]: Builder suffix replaces Factory suffix for internal helper types to eliminate GoF/public-API naming ambiguity
 - [Phase 18-01]: Phase 17 deferred method renames (CreateFluentFactoryCompilationUnit, GetFluentFactoryMetadata, GetFluentFactoryDefaults) fully discharged using FluentRoot* vocabulary
+- [Phase 19-02]: Terminal method names preserved unchanged — derived from TARGET type name, not root name; renaming root *Factory to *Builder does not affect terminal method identifiers
 
 ### Pending Todos
 
@@ -67,6 +68,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T18:08:24.121Z
-Stopped at: Completed 18-01-PLAN.md
+Last session: 2026-04-12T18:40:30.357Z
+Stopped at: Completed 19-02-PLAN.md
 Resume file: None
