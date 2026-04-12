@@ -61,7 +61,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
 
 - [x] **Phase 16: Diagnostic Alignment** - Update diagnostic category strings, titles, message formats, and AnalyzerReleases to remove `FluentFactory` / `MFFG` vocabulary (completed 2026-04-12)
 - [x] **Phase 17: Core Generator Type Renames** - Rename the top-level `FluentFactory*` generator types (Generator, CompilationUnit, Metadata, MethodDeclaration) to `FluentRoot*` vocabulary and `git mv` their files (completed 2026-04-12)
-- [ ] **Phase 18: Builder Pattern Renames** - Rename internal GoF factory helpers (`FluentModelFactory`, `FluentMethodFactory`, `IgnoredMultiMethodWarningFactory`) to `*Builder` and `git mv` their files
+- [x] **Phase 18: Builder Pattern Renames** - Rename internal GoF factory helpers (`FluentModelFactory`, `FluentMethodFactory`, `IgnoredMultiMethodWarningFactory`) to `*Builder` and `git mv` their files (completed 2026-04-12)
 - [ ] **Phase 19: Test Fixture Alignment** - Rename test classes, test files, and in-test sample types carrying legacy `*Factory*` vocabulary
 - [ ] **Phase 20: Documentation Cleanup & Final Verification** - Align `CLAUDE.md` files, perform final repo-wide grep, confirm no residual vocabulary remains, and formally verify behavior preservation across the milestone
 
@@ -156,7 +156,7 @@ Phases execute in numeric order: 16 → 17 → 18 → 19 → 20
 | — v2.0 organic work — | v2.0 | — | Complete | 2026-04-11 |
 | 16. Diagnostic Alignment | 3/3 | Complete    | 2026-04-12 | - |
 | 17. Core Generator Type Renames | 3/3 | Complete    | 2026-04-12 | - |
-| 18. Builder Pattern Renames | v2.1 | 0/? | Not started | - |
+| 18. Builder Pattern Renames | 1/1 | Complete   | 2026-04-12 | - |
 | 19. Test Fixture Alignment | v2.1 | 0/? | Not started | - |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 0/? | Not started | - |
 </content>

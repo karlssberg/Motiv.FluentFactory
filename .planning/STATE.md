@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Naming Alignment Refactor
 status: completed
-stopped_at: Completed 17-03-PLAN.md
-last_updated: "2026-04-12T01:28:01.588Z"
-last_activity: 2026-04-12 — Plan 17-03 executed (FluentFactoryMethodDeclaration/FluentRootFactoryMethodDeclaration renamed to StepTerminalMethodDeclaration/RootTerminalMethodDeclaration, Phase 17 complete, 415 tests passing)
+stopped_at: Completed 18-01-PLAN.md
+last_updated: "2026-04-12T18:08:24.122Z"
+last_activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-04-11)
 
 ## Current Position
 
-Phase: 17-core-generator-type-renames (COMPLETE)
-Plan: 17-01 complete; 17-02 complete; 17-03 complete
-Status: 3 of 3 plans complete in Phase 17 — Phase 17 CLOSED
-Last activity: 2026-04-12 — Plan 17-03 executed (FluentFactoryMethodDeclaration/FluentRootFactoryMethodDeclaration renamed to StepTerminalMethodDeclaration/RootTerminalMethodDeclaration, Phase 17 complete, 415 tests passing)
+Phase: 18-builder-pattern-renames (COMPLETE)
+Plan: 18-01 complete
+Status: 1 of 1 plans complete in Phase 18 — Phase 18 CLOSED
+Last activity: 2026-04-12 — Plan 18-01 executed (FluentModelFactory/FluentMethodFactory/IgnoredMultiMethodWarningFactory renamed to *Builder, deferred Phase 17 method identifiers discharged, 415 tests passing)
 
 ## Accumulated Context
 
@@ -54,6 +54,8 @@ Recent decisions affecting current work:
 - [Phase 17-03]: FluentRootFactoryMethodDeclaration renamed to RootTerminalMethodDeclaration (Root prefix mirrors RootTypeDeclaration, symmetric with StepTerminalMethodDeclaration)
 - [Phase 17-03]: Phase 17 zero-hit gate uses word-boundary regex refinement to exclude deferred method-name substrings; Phase 18 obligation to run plain ROADMAP alternation after method renames complete
 - [Phase 17]: COMPLETE — all five requirements NAME-01..04, FILE-01 satisfied; zero legacy FluentFactory* type names in src/Converj.Generator/
+- [Phase 18-01]: Builder suffix replaces Factory suffix for internal helper types to eliminate GoF/public-API naming ambiguity
+- [Phase 18-01]: Phase 17 deferred method renames (CreateFluentFactoryCompilationUnit, GetFluentFactoryMetadata, GetFluentFactoryDefaults) fully discharged using FluentRoot* vocabulary
 
 ### Pending Todos
 
@@ -65,6 +67,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12T01:35:00Z
-Stopped at: Completed 17-03-PLAN.md
+Last session: 2026-04-12T18:08:24.121Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None
