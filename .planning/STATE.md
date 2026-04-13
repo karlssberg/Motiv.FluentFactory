@@ -1,39 +1,43 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.1
-milestone_name: Naming Alignment Refactor
-status: archived
-stopped_at: Milestone complete
-last_updated: "2026-04-12"
-last_activity: 2026-04-12 — Milestone v2.1 archived
+milestone: v2.2
+milestone_name: Fluent Collection Accumulation
+status: active
+stopped_at: Defining requirements
+last_updated: "2026-04-14"
+last_activity: 2026-04-14 — Milestone v2.2 started
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 12
-  completed_plans: 12
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-12)
+See: .planning/PROJECT.md (updated 2026-04-14)
 
 **Core value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
-**Current focus:** Planning next milestone
+**Current focus:** v2.2 Fluent Collection Accumulation
 
 ## Current Position
 
-Phase: None — between milestones
-Plan: None
-Status: v2.1 shipped and archived
-Last activity: 2026-04-12 — Milestone v2.1 archived
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-14 — Milestone v2.2 started
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
+- Internal accumulation always uses `List<T>`, converts to declared parameter type at terminal
+- Auto-singularize method names with explicit override via attribute property
+- `[FluentCollectionMethod]` composes with `[FluentMethod]` for both accumulator + bulk-set
+- Configurable MinItems (default 0)
+- Error diagnostic on non-collection parameters
 
 ### Pending Todos
 
@@ -45,6 +49,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-12
-Stopped at: Milestone v2.1 complete
+Last session: 2026-04-14
+Stopped at: Defining requirements
 Resume file: None

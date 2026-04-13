@@ -71,7 +71,17 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 
 <!-- Current scope. Building toward these. -->
 
-(No active milestone — planning next)
+## Current Milestone: v2.2 Fluent Collection Accumulation
+
+**Goal:** Add `[FluentCollectionMethod]` parameter attribute enabling item-by-item collection building via repeated fluent calls
+
+**Target features:**
+- `[FluentCollectionMethod]` parameter attribute with auto-singularized method names and explicit override
+- Configurable minimum items (0 or 1+) via attribute property
+- Internal `List<T>` accumulation with terminal-time conversion to declared parameter type
+- Composability with `[FluentMethod]` for combined accumulator + bulk-set on same parameter
+- Error diagnostic when applied to non-collection parameter types
+- Support for IEnumerable<T>, ICollection<T>, IList<T>, T[], IReadOnlyList<T>, IReadOnlyCollection<T>
 
 ### Out of Scope
 
@@ -99,7 +109,7 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 - **Target framework**: netstandard2.0 (generator and attributes)
 - **Roslyn compatibility**: Must work with Microsoft.CodeAnalysis 4.x
 - **Zero runtime overhead**: Generated code uses structs and aggressive inlining
-- **Behavior preservation**: This milestone is a pure rename — no observable output changes, no test assertion changes, no API breaks for consumers of public attributes
+- **Backward compatibility**: New attribute is additive — existing code without `[FluentCollectionMethod]` must produce identical output
 
 ## Key Decisions
 
@@ -115,4 +125,4 @@ Developers write constructor parameters once and get a complete, type-safe fluen
 | Keep internal rename as a dedicated milestone | Separation from feature work reduces risk and isolates rename churn in git history | ✓ Good |
 
 ---
-*Last updated: 2026-04-12 after v2.1 milestone*
+*Last updated: 2026-04-14 after v2.2 milestone start*
