@@ -12,28 +12,28 @@ internal static class FluentStepMethodDeclaration
 {
     public static MethodDeclarationSyntax Create(
         MultiMethod multiMethod,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null,
         bool isStepContext = false)
     {
-        var stepActivationArgs = CreateStepConstructorArguments(multiMethod, knownConstructorParameters, isStepContext);
+        var stepActivationArgs = CreateStepConstructorArguments(multiMethod, knownTargetParameters, isStepContext);
 
         var returnObjectExpression = FluentStepCreationExpression.Create(multiMethod, stepActivationArgs);
 
-        return CreateMethodDeclaration(multiMethod, knownConstructorParameters, returnObjectExpression, ambientTypeParameters ?? []);
+        return CreateMethodDeclaration(multiMethod, knownTargetParameters, returnObjectExpression, ambientTypeParameters ?? []);
     }
 
     public static MethodDeclarationSyntax Create(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ImmutableArray<ITypeParameterSymbol>? ambientTypeParameters = null,
         bool isStepContext = false)
     {
-        var stepActivationArgs = CreateStepConstructorArguments(method, knownConstructorParameters, isStepContext);
+        var stepActivationArgs = CreateStepConstructorArguments(method, knownTargetParameters, isStepContext);
 
         var returnObjectExpression = FluentStepCreationExpression.Create(method, stepActivationArgs);
 
-        return CreateMethodDeclaration(method, knownConstructorParameters, returnObjectExpression, ambientTypeParameters ?? []);
+        return CreateMethodDeclaration(method, knownTargetParameters, returnObjectExpression, ambientTypeParameters ?? []);
     }
 
     private static List<object?> GetDocumentationLinesWithParameters(IFluentMethod method)
@@ -55,7 +55,7 @@ internal static class FluentStepMethodDeclaration
 
     private static MethodDeclarationSyntax CreateMethodDeclaration(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ObjectCreationExpressionSyntax returnObjectExpression,
         ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
     {
@@ -73,7 +73,7 @@ internal static class FluentStepMethodDeclaration
 
         methodDeclaration = AttachParameterList(method, methodDeclaration);
 
-        return StepMethodTypeParameterResolver.AttachTypeParameters(method, knownConstructorParameters, ambientTypeParameters, methodDeclaration)
+        return StepMethodTypeParameterResolver.AttachTypeParameters(method, knownTargetParameters, ambientTypeParameters, methodDeclaration)
             .WithLeadingTrivia(GetDocumentationTrivia(method));
     }
 
@@ -135,14 +135,14 @@ internal static class FluentStepMethodDeclaration
 
     private static IEnumerable<ArgumentSyntax> CreateStepConstructorArguments(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         bool isStepContext)
     {
         // Root methods handle threading via RewriteRootMethodForThreadedParameters in RootTypeDeclaration.
-        // Step methods must always forward threaded parameters, even when knownConstructorParameters is empty
+        // Step methods must always forward threaded parameters, even when knownTargetParameters is empty
         // (e.g., property steps from root-level terminal methods where all constructor params are pre-satisfied).
         var threadedArgs = Enumerable.Empty<ArgumentSyntax>();
-        if ((knownConstructorParameters.Any() || isStepContext)
+        if ((knownTargetParameters.Any() || isStepContext)
             && method.Return is IFluentStep { ThreadedParameters.IsEmpty: false } nextStep)
         {
             threadedArgs = nextStep.ThreadedParameters
@@ -174,7 +174,7 @@ internal static class FluentStepMethodDeclaration
         var isTerminalCreation = method.Return is TargetTypeReturn;
 
         return threadedArgs
-            .Concat(knownConstructorParameters
+            .Concat(knownTargetParameters
                 .SelectMany(parameter => ExpandFieldArguments(parameter, method)))
             .Concat(propertyFieldArgs)
             .Concat(isTerminalCreation

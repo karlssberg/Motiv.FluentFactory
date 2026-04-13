@@ -4,7 +4,7 @@ namespace Converj.Generator.Extensions;
 
 /// <summary>
 /// Extension methods for fluent model domain operations including method display,
-/// unreachable constructor detection, and fluent return type arguments.
+/// unreachable target detection, and fluent return type arguments.
 /// </summary>
 internal static class FluentModelExtensions
 {
@@ -50,31 +50,31 @@ internal static class FluentModelExtensions
     }
 
     /// <summary>
-    /// Finds constructors from the ignored method's return that are unreachable
+    /// Finds targets from the ignored method's return that are unreachable
     /// from the selected method's return.
     /// </summary>
     /// <param name="selectedMethod">The method being selected.</param>
     /// <param name="ignoredMethod">The method being ignored.</param>
     /// <param name="allIgnoredMultiMethods">All multi-methods that are being ignored.</param>
-    /// <returns>An enumerable of unreachable constructor method symbols.</returns>
-    public static IEnumerable<IMethodSymbol> FindUnreachableConstructors(
+    /// <returns>An enumerable of unreachable target method symbols.</returns>
+    public static IEnumerable<IMethodSymbol> FindUnreachableTargets(
         this IFluentMethod selectedMethod,
         IFluentMethod ignoredMethod,
         IEnumerable<IMethodSymbol> allIgnoredMultiMethods)
     {
-        var reachableConstructors = (selectedMethod, ignoredMethod) switch
+        var reachableTargets = (selectedMethod, ignoredMethod) switch
         {
             (_, MultiMethod multiMethod) when multiMethod.SiblingMultiMethods.IsSubsetOf(allIgnoredMultiMethods) =>
                 selectedMethod.Return.CandidateTargets,
             (_, MultiMethod multiMethod) =>
                 [..selectedMethod.Return.CandidateTargets, ..multiMethod.Return.CandidateTargets],
             ({ Return: TargetTypeReturn targetTypeReturn }, _) =>
-                [targetTypeReturn.Constructor],
+                [targetTypeReturn.Method],
             _ => selectedMethod.Return.CandidateTargets
         };
 
         return ignoredMethod.Return.CandidateTargets
-            .Except<IMethodSymbol>(reachableConstructors, SymbolEqualityComparer.Default);
+            .Except<IMethodSymbol>(reachableTargets, SymbolEqualityComparer.Default);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ internal static class FluentModelExtensions
         this IFluentReturn fluentReturn,
         IDictionary<FluentType, ITypeSymbol> genericTypeParameterMap)
     {
-        return fluentReturn.GenericConstructorParameters
+        return fluentReturn.GenericTargetParameters
             .SelectMany(parameterSymbol => parameterSymbol.Type.GetGenericTypeArguments())
             .Select(parameter => genericTypeParameterMap.TryGetValue(new FluentType(parameter), out var type)
                 ? type

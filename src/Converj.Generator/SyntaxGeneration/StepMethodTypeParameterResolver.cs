@@ -19,14 +19,14 @@ internal static class StepMethodTypeParameterResolver
     /// </summary>
     internal static ImmutableArray<TypeParameterSyntax> GetMethodTypeParameterSyntaxes(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ImmutableArray<ITypeParameterSymbol> ambientTypeParameters)
     {
         var rootTypeParametersSet = new HashSet<FluentTypeParameter>(
             ambientTypeParameters.Select(tp => new FluentTypeParameter(tp)));
 
         return method.TypeParameters
-            .Except(knownConstructorParameters
+            .Except(knownTargetParameters
                 .SelectMany(parameter => parameter.Type.GetGenericTypeParameters())
                 .Select(genericTypeParameters => new FluentTypeParameter(genericTypeParameters)))
             .Except(rootTypeParametersSet)
@@ -41,14 +41,14 @@ internal static class StepMethodTypeParameterResolver
     /// </summary>
     internal static MethodDeclarationSyntax AttachTypeParameters(
         IFluentMethod method,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ImmutableArray<ITypeParameterSymbol> ambientTypeParameters,
         MethodDeclarationSyntax methodDeclaration)
     {
         if (!method.TypeParameters.Any())
             return methodDeclaration;
 
-        var typeParameterSyntaxes = GetMethodTypeParameterSyntaxes(method, knownConstructorParameters, ambientTypeParameters);
+        var typeParameterSyntaxes = GetMethodTypeParameterSyntaxes(method, knownTargetParameters, ambientTypeParameters);
 
         if (typeParameterSyntaxes.Length == 0)
             return methodDeclaration;
@@ -79,9 +79,9 @@ internal static class StepMethodTypeParameterResolver
 
         // Include target type parameters for non-generic root types
         if (ambientTypeParameters.IsEmpty && method.Return is TargetTypeReturn targetTypeReturn &&
-            targetTypeReturn.Constructor.ContainingType.IsGenericType)
+            targetTypeReturn.Method.ContainingType.IsGenericType)
         {
-            typeParameters.AddRange(targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters);
+            typeParameters.AddRange(targetTypeReturn.Method.ContainingType.OriginalDefinition.TypeParameters);
         }
 
         // Include method type parameters

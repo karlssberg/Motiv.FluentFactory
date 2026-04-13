@@ -21,9 +21,9 @@ internal interface IFluentReturn
     /// The known constructor parameters up until this step.
     /// Potentially more parameters are required to satisfy a constructor signature.
     /// </summary>
-    ParameterSequence KnownConstructorParameters { get; }
+    ParameterSequence KnownTargetParameters { get; }
 
-    ImmutableArray<IParameterSymbol> GenericConstructorParameters { get; }
+    ImmutableArray<IParameterSymbol> GenericTargetParameters { get; }
 
     OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; }
 

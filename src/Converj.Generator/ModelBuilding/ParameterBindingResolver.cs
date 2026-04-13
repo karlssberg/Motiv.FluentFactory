@@ -34,8 +34,8 @@ internal class ParameterBindingResolver(Compilation compilation, INamedTypeSymbo
         var bindings = ImmutableArray.CreateBuilder<FluentParameterBinding>();
 
         var allTargetParams = fluentTargetContexts
-            .Where(ctx => !IsSelfReferencing(ctx.Constructor))
-            .SelectMany(ctx => ctx.Constructor.Parameters)
+            .Where(ctx => !IsSelfReferencing(ctx.Method))
+            .SelectMany(ctx => ctx.Method.Parameters)
             .ToList();
 
         foreach (var member in fluentParameterMembers)
@@ -77,12 +77,12 @@ internal class ParameterBindingResolver(Compilation compilation, INamedTypeSymbo
 
             if (!allAssignable) continue;
 
-            // Create bindings for each matching parameter (deduped by constructor)
-            var addedConstructors = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
+            // Create bindings for each matching parameter (deduped by target method)
+            var addedTargets = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
             foreach (var targetParam in matchingParams)
             {
-                var constructor = (IMethodSymbol)targetParam.ContainingSymbol;
-                if (addedConstructors.Add(constructor))
+                var target = (IMethodSymbol)targetParam.ContainingSymbol;
+                if (addedTargets.Add(target))
                 {
                     bindings.Add(new FluentParameterBinding(member, targetParam));
                 }
@@ -182,7 +182,7 @@ internal class ParameterBindingResolver(Compilation compilation, INamedTypeSymbo
 
     /// <summary>
     /// Propagates the extension receiver parameter to all steps in the chain.
-    /// Prepends it to KnownConstructorParameters and adds field storage.
+    /// Prepends it to KnownTargetParameters and adds field storage.
     /// </summary>
     public static void PropagateReceiverToSteps(ImmutableArray<IFluentStep> steps, IParameterSymbol receiverParameter)
     {
@@ -193,8 +193,8 @@ internal class ParameterBindingResolver(Compilation compilation, INamedTypeSymbo
             // Prepend receiver to known parameters so it gets a field and constructor parameter
             if (step is RegularFluentStep regularStep)
             {
-                regularStep.KnownConstructorParameters = new ParameterSequence(
-                    [receiverParameter, ..regularStep.KnownConstructorParameters]);
+                regularStep.KnownTargetParameters = new ParameterSequence(
+                    [receiverParameter, ..regularStep.KnownTargetParameters]);
             }
 
             if (!step.ValueStorage.ContainsKey(receiverParameter))

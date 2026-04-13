@@ -58,7 +58,7 @@ internal static class CompilationUnit
             switch (step)
             {
                 case ExistingTypeFluentStep existingStep:
-                    var containingType = existingStep.ConstructorContext.Constructor.ContainingType;
+                    var containingType = existingStep.TargetContext.Method.ContainingType;
                     if (!existingTypeGroups.TryGetValue(containingType, out var group))
                     {
                         group = [];

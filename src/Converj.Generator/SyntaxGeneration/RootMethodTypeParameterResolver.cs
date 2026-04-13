@@ -52,7 +52,7 @@ internal static class RootMethodTypeParameterResolver
         var hasMethodTypeParameters = method.TypeParameters.Any();
         var shouldIncludeTargetTypeParameters = rootType?.IsGenericType != true &&
                                                method.Return is TargetTypeReturn targetTypeReturn &&
-                                               targetTypeReturn.Constructor.ContainingType.IsGenericType;
+                                               targetTypeReturn.Method.ContainingType.IsGenericType;
 
         return hasMethodTypeParameters || shouldIncludeTargetTypeParameters;
     }
@@ -69,7 +69,7 @@ internal static class RootMethodTypeParameterResolver
         var targetTypeParameterSyntaxes = shouldIncludeTargetTypeParameters
             ? method.Return switch
             {
-                TargetTypeReturn targetTypeReturn => targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters
+                TargetTypeReturn targetTypeReturn => targetTypeReturn.Method.ContainingType.OriginalDefinition.TypeParameters
                     .Select(typeParameterSymbol => typeParameterSymbol.ToTypeParameterSyntax()),
                 _ => []
             }
@@ -97,9 +97,9 @@ internal static class RootMethodTypeParameterResolver
 
         // Include target type parameters for non-generic root types
         if (rootType?.IsGenericType != true && method.Return is TargetTypeReturn targetTypeReturn &&
-            targetTypeReturn.Constructor.ContainingType.IsGenericType)
+            targetTypeReturn.Method.ContainingType.IsGenericType)
         {
-            typeParameters.AddRange(targetTypeReturn.Constructor.ContainingType.OriginalDefinition.TypeParameters);
+            typeParameters.AddRange(targetTypeReturn.Method.ContainingType.OriginalDefinition.TypeParameters);
         }
 
         // Include method type parameters

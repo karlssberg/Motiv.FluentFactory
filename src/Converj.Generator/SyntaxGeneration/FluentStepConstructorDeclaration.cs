@@ -21,7 +21,7 @@ internal static class FluentStepConstructorDeclaration
                         MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, ThisExpression(), IdentifierName(b.TargetParameter.Name.ToParameterFieldName())),
                         IdentifierName(b.TargetParameter.Name.ToCamelCase()))));
 
-        var requiredParamAssignments = step.KnownConstructorParameters
+        var requiredParamAssignments = step.KnownTargetParameters
             .SelectMany(p => CreateParameterAssignments(p, step.ValueStorage));
 
         var propertyParamAssignments = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } propStep
@@ -68,7 +68,7 @@ internal static class FluentStepConstructorDeclaration
                     .WithType(ParseTypeName(b.TargetParameter.Type.ToGlobalDisplayString()))
                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword))));
 
-        var regularParams = step.KnownConstructorParameters
+        var regularParams = step.KnownTargetParameters
             .SelectMany(parameter => CreateConstructorParameters(parameter, step.ValueStorage, isAllOptionalStep));
 
         var propertyParams = step is RegularFluentStep { PropertyFieldStorage.IsEmpty: false } ps
@@ -156,7 +156,7 @@ internal static class FluentStepConstructorDeclaration
     private static IEnumerable<StatementSyntax> GetOptionalParameterInitializations(IFluentStep step)
     {
         var knownParamFieldNames = new HashSet<string>(
-            step.KnownConstructorParameters.Select(p => p.Name.ToParameterFieldName()));
+            step.KnownTargetParameters.Select(p => p.Name.ToParameterFieldName()));
 
         return step.ValueStorage
             .Where(kvp => kvp.Value is FieldStorage { IsReadOnly: false })

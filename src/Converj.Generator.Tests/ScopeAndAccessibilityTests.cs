@@ -50,7 +50,7 @@ public class ScopeAndAccessibilityTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerWarning(InaccessibleConstructor.Id)
+                    DiagnosticResult.CompilerWarning(InaccessibleTarget.Id)
                         .WithSpan(SourceFile, 11, 13, 11, 21)
                         .WithArguments("Test.MyTarget.MyTarget(int)", "Private")
                 }
@@ -94,7 +94,7 @@ public class ScopeAndAccessibilityTests
                 Sources = { (SourceFile, code) },
                 ExpectedDiagnostics =
                 {
-                    DiagnosticResult.CompilerWarning(InaccessibleConstructor.Id)
+                    DiagnosticResult.CompilerWarning(InaccessibleTarget.Id)
                         .WithSpan(SourceFile, 11, 15, 11, 23)
                         .WithArguments("Test.MyTarget.MyTarget(int)", "Protected")
                 }

@@ -13,10 +13,10 @@ namespace Converj.Generator.ModelBuilding;
 internal static class TargetContextFilter
 {
     /// <summary>
-    /// Filters out constructors that are inaccessible (private, protected, or protected-and-internal).
+    /// Filters out targets that are inaccessible (private, protected, or protected-and-internal).
     /// </summary>
     public static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
-        FilterInaccessibleConstructors(
+        FilterInaccessibleTargets(
             ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var diagnostics = new List<Diagnostic>();
@@ -24,7 +24,7 @@ internal static class TargetContextFilter
 
         foreach (var context in fluentTargetContexts)
         {
-            var accessibility = context.Constructor.DeclaredAccessibility;
+            var accessibility = context.Method.DeclaredAccessibility;
             var isInaccessible = accessibility is
                 Accessibility.Private or
                 Accessibility.Protected or
@@ -36,11 +36,11 @@ internal static class TargetContextFilter
                 continue;
             }
 
-            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+            var location = context.Method.Locations.FirstOrDefault() ?? Location.None;
             diagnostics.Add(Diagnostic.Create(
-                FluentDiagnostics.InaccessibleConstructor,
+                FluentDiagnostics.InaccessibleTarget,
                 location,
-                context.Constructor.ToDisplayString(),
+                context.Method.ToDisplayString(),
                 accessibility.ToString()));
         }
 
@@ -48,10 +48,10 @@ internal static class TargetContextFilter
     }
 
     /// <summary>
-    /// Filters out constructors that have unsupported parameter modifiers (ref, out, ref readonly).
+    /// Filters out targets that have unsupported parameter modifiers (ref, out, ref readonly).
     /// </summary>
     public static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
-        FilterUnsupportedParameterModifierConstructors(
+        FilterUnsupportedParameterModifierTargets(
             ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var diagnostics = new List<Diagnostic>();
@@ -59,7 +59,7 @@ internal static class TargetContextFilter
 
         foreach (var context in fluentTargetContexts)
         {
-            var unsupportedParameter = context.Constructor.Parameters
+            var unsupportedParameter = context.Method.Parameters
                 .FirstOrDefault(p => p.RefKind is RefKind.Ref or RefKind.Out or RefKind.RefReadOnlyParameter);
 
             if (unsupportedParameter is null)
@@ -76,11 +76,11 @@ internal static class TargetContextFilter
                 _ => unsupportedParameter.RefKind.ToString().ToLowerInvariant()
             };
 
-            var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+            var location = context.Method.Locations.FirstOrDefault() ?? Location.None;
             diagnostics.Add(Diagnostic.Create(
                 FluentDiagnostics.UnsupportedParameterModifier,
                 location,
-                context.Constructor.ToDisplayString(),
+                context.Method.ToDisplayString(),
                 unsupportedParameter.Name,
                 modifierText));
         }
@@ -89,15 +89,15 @@ internal static class TargetContextFilter
     }
 
     /// <summary>
-    /// Filters out constructors that have parameters with error types.
+    /// Filters out targets that have parameters with error types.
     /// </summary>
-    public static ImmutableArray<FluentTargetContext> FilterErrorTypeConstructors(
+    public static ImmutableArray<FluentTargetContext> FilterErrorTypeTargets(
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         return
         [
             ..fluentTargetContexts
-                .Where(ctx => ctx.Constructor.Parameters
+                .Where(ctx => ctx.Method.Parameters
                     .All(p => p.Type.TypeKind != TypeKind.Error))
         ];
     }
@@ -109,7 +109,7 @@ internal static class TargetContextFilter
     {
         foreach (var context in contexts)
         {
-            var method = context.Constructor;
+            var method = context.Method;
 
             foreach (var param in method.Parameters)
             {

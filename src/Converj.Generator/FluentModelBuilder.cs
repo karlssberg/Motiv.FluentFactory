@@ -11,7 +11,7 @@ internal class FluentModelBuilder(Compilation compilation)
 {
     private readonly DiagnosticList _diagnostics = [];
     private readonly OrderedDictionary<ParameterSequence, RegularFluentStep> _regularFluentSteps = new();
-    private readonly UnreachableConstructorAnalyzer _unreachableConstructorAnalyzer = new();
+    private readonly UnreachableTargetAnalyzer _unreachableTargetAnalyzer = new();
 
     private FluentMethodSelector _methodSelector = null!;
     private FluentStepBuilder _stepBuilder = null!;
@@ -24,7 +24,7 @@ internal class FluentModelBuilder(Compilation compilation)
     {
         _regularFluentSteps.Clear();
         _diagnostics.Clear();
-        _unreachableConstructorAnalyzer.Clear();
+        _unreachableTargetAnalyzer.Clear();
 
         // Filter out instance method targets and report diagnostics
         foreach (var instanceMethod in fluentTargetContexts.Where(c => c.IsInstanceMethodTarget))
@@ -34,7 +34,7 @@ internal class FluentModelBuilder(Compilation compilation)
             _diagnostics.Add(Diagnostic.Create(
                 FluentDiagnostics.InstanceMethodTarget,
                 location,
-                instanceMethod.Constructor.Name));
+                instanceMethod.Method.Name));
         }
 
         _diagnostics.AddRange(TargetContextFilter.ValidateThisAttributeUsage(fluentTargetContexts));
@@ -47,25 +47,25 @@ internal class FluentModelBuilder(Compilation compilation)
         _diagnostics.AddRange(TargetContextFilter.ValidateRootForExtensionTargets(rootType, fluentTargetContexts));
 
         var (validContexts, unsupportedModifierDiagnostics) =
-            TargetContextFilter.FilterUnsupportedParameterModifierConstructors(fluentTargetContexts);
+            TargetContextFilter.FilterUnsupportedParameterModifierTargets(fluentTargetContexts);
 
         _diagnostics.AddRange(unsupportedModifierDiagnostics);
 
-        var (accessibleContexts, inaccessibleConstructorDiagnostics) =
-            TargetContextFilter.FilterInaccessibleConstructors(validContexts);
+        var (accessibleContexts, inaccessibleTargetDiagnostics) =
+            TargetContextFilter.FilterInaccessibleTargets(validContexts);
 
-        _diagnostics.AddRange(inaccessibleConstructorDiagnostics);
+        _diagnostics.AddRange(inaccessibleTargetDiagnostics);
         validContexts = accessibleContexts;
 
-        validContexts = TargetContextFilter.FilterErrorTypeConstructors(validContexts);
+        validContexts = TargetContextFilter.FilterErrorTypeTargets(validContexts);
 
         if (validContexts.IsEmpty)
             return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics };
 
         fluentTargetContexts = validContexts;
 
-        _unreachableConstructorAnalyzer.AddAllTargetConstructors(fluentTargetContexts.Select(context => context.Constructor));
-        _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableConstructorAnalyzer);
+        _unreachableTargetAnalyzer.AddAllTargets(fluentTargetContexts.Select(context => context.Method));
+        _methodSelector = new FluentMethodSelector(compilation, _diagnostics, _unreachableTargetAnalyzer);
 
         _stepBuilder = new FluentStepBuilder(_regularFluentSteps, _diagnostics);
         _rootType = rootType;
@@ -103,7 +103,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
         var descendentFluentSteps = FluentStepBuilder.GetDescendentFluentSteps(childFluentSteps);
         var fluentBuilderSteps = descendentFluentSteps
-            .DistinctBy(step => step.KnownConstructorParameters)
+            .DistinctBy(step => step.KnownTargetParameters)
             .Select((step, index) =>
             {
                 if (step is not RegularFluentStep regularFluentStep)
@@ -180,18 +180,18 @@ internal class FluentModelBuilder(Compilation compilation)
 
         MarkUnavailableTargets(fluentRootMethods, fluentBuilderSteps);
 
-        _diagnostics.AddRange(_unreachableConstructorAnalyzer.GetUnreachableConstructorsDiagnostics());
-        var sampleConstructorContext = fluentTargetContexts.First();
+        _diagnostics.AddRange(_unreachableTargetAnalyzer.GetUnreachableTargetsDiagnostics());
+        var sampleTargetContext = fluentTargetContexts.First();
 
         return new FluentRootCompilationUnit(rootType)
         {
             FluentMethods = fluentRootMethods,
             FluentSteps = fluentBuilderSteps,
             Usings = usings,
-            IsStatic = sampleConstructorContext.IsStatic && _bindingResolver.ThreadedParameters.IsEmpty,
-            TypeKind = sampleConstructorContext.TypeKind,
-            Accessibility = sampleConstructorContext.Accessibility,
-            IsRecord = sampleConstructorContext.IsRecord,
+            IsStatic = sampleTargetContext.IsStatic && _bindingResolver.ThreadedParameters.IsEmpty,
+            TypeKind = sampleTargetContext.TypeKind,
+            Accessibility = sampleTargetContext.Accessibility,
+            IsRecord = sampleTargetContext.IsRecord,
             ThreadedParameters = _bindingResolver.ThreadedParameters,
             Diagnostics = _diagnostics
         };
@@ -199,7 +199,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
     private ImmutableArray<IFluentMethod> ConvertNodeToFluentFluentMethods(
         INamedTypeSymbol type,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages,
         FluentStepBuilder stepBuilder)
     {
@@ -219,7 +219,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
     private void AddOptionalMethodsToStep(
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         IFluentStep step,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
     {
@@ -227,7 +227,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
         // Exclude optional params already in the trie path (handled as regular step methods)
         var knownParamFieldNames = new HashSet<string>(
-            step.KnownConstructorParameters.Select(p => p.Name.ToParameterFieldName()));
+            step.KnownTargetParameters.Select(p => p.Name.ToParameterFieldName()));
 
         var optionalParameters = node.EndValues
             .SelectMany(v => v.OptionalParameters)
@@ -270,7 +270,7 @@ internal class FluentModelBuilder(Compilation compilation)
     }
 
     private IEnumerable<IFluentMethod> ConvertNodeToTerminalMethods(INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources)
     {
         if (!node.IsEnd) yield break;
@@ -281,13 +281,13 @@ internal class FluentModelBuilder(Compilation compilation)
 
         foreach (var value in node.EndValues)
         {
-            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Constructor)
+            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Method)
                 ? new HashSet<string>()
-                : _bindingResolver.GetPreSatisfiedParameterNames(value.Constructor);
+                : _bindingResolver.GetPreSatisfiedParameterNames(value.Method);
             var receiverCount = value.ReceiverParameter is not null ? 1 : 0;
 
             if (node.Key.Length < value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount) continue;
-            if (node.Key.Length > value.Constructor.Parameters.Length - preSatisfiedNames.Count - receiverCount) continue;
+            if (node.Key.Length > value.Method.Parameters.Length - preSatisfiedNames.Count - receiverCount) continue;
             if (value.TerminalMethod == TerminalMethodKind.None) continue;
 
             var keyParamFieldNames = new HashSet<string>(
@@ -296,7 +296,7 @@ internal class FluentModelBuilder(Compilation compilation)
                 .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
                 .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
 
-            var threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Constructor, preSatisfiedNames);
+            var threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Method, preSatisfiedNames);
             var receiverField = value.ReceiverParameter is { } receiver
                 ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
                 : ImmutableArray<FluentMethodParameter>.Empty;
@@ -309,7 +309,7 @@ internal class FluentModelBuilder(Compilation compilation)
             var terminalMethod = BuildTerminalMethod(
                 rootType.ContainingNamespace, value, preSatisfiedNames, allParameterFields, valueSources);
 
-            _unreachableConstructorAnalyzer.AddReachableMethod(terminalMethod);
+            _unreachableTargetAnalyzer.AddReachableMethod(terminalMethod);
             yield return terminalMethod;
         }
     }
@@ -320,7 +320,7 @@ internal class FluentModelBuilder(Compilation compilation)
     /// </summary>
     private TerminalMethod BuildTerminalMethod(
         INamespaceSymbol rootNamespace,
-        ConstructorMetadata metadata,
+        TargetMetadata metadata,
         HashSet<string> preSatisfiedNames,
         ImmutableArray<FluentMethodParameter> allParameterFields,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources)
@@ -328,10 +328,10 @@ internal class FluentModelBuilder(Compilation compilation)
         var verb = metadata.Context.TerminalVerb ?? "Create";
         var methodName = metadata.TerminalMethod == TerminalMethodKind.FixedName
             ? verb
-            : $"{verb}{metadata.Constructor.ContainingType.ToCreateMethodSuffix()}";
+            : $"{verb}{metadata.Method.ContainingType.ToCreateMethodSuffix()}";
 
         var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
-            metadata.Constructor, valueSources, preSatisfiedNames);
+            metadata.Method, valueSources, preSatisfiedNames);
 
         return new TerminalMethod(rootNamespace, metadata, allParameterFields, mergedValueSources, methodName);
     }
@@ -355,7 +355,7 @@ internal class FluentModelBuilder(Compilation compilation)
         var groups = typeFirstContexts
             .GroupBy(c =>
             {
-                var type = c.Constructor.ContainingType;
+                var type = c.Method.ContainingType;
                 var ns = type.ContainingNamespace?.ToDisplayString() ?? "";
                 return $"{ns}.{type.Name}";
             })
@@ -372,7 +372,7 @@ internal class FluentModelBuilder(Compilation compilation)
             foreach (var collision in entryMethodNames)
             {
                 var collidingTypes = collision
-                    .SelectMany(g => g.Select(c => c.Constructor.ContainingType.ToDisplayString()))
+                    .SelectMany(g => g.Select(c => c.Method.ContainingType.ToDisplayString()))
                     .Distinct()
                     .ToArray();
 
@@ -396,7 +396,7 @@ internal class FluentModelBuilder(Compilation compilation)
         foreach (var group in groups)
         {
             var contexts = group.ToImmutableArray();
-            var targetTypeName = contexts.First().Constructor.ContainingType.Name;
+            var targetTypeName = contexts.First().Method.ContainingType.Name;
 
             // Build a parameter trie for this target type group
             var trie = CreateFluentStepTrie(contexts);
@@ -418,7 +418,7 @@ internal class FluentModelBuilder(Compilation compilation)
                 .Select(m => m.Return)
                 .OfType<IFluentStep>();
             var descendantSteps = FluentStepBuilder.GetDescendentFluentSteps(childSteps)
-                .DistinctBy(step => step.KnownConstructorParameters)
+                .DistinctBy(step => step.KnownTargetParameters)
                 .ToList();
 
             // Separate terminal methods from step methods so terminal methods appear last
@@ -428,9 +428,9 @@ internal class FluentModelBuilder(Compilation compilation)
             // Create the type-first root step that wraps the trie's root methods
             var rootStep = new RegularFluentStep(
                 rootType,
-                contexts.SelectMany(c => new[] { c.Constructor }))
+                contexts.SelectMany(c => new[] { c.Method }))
             {
-                KnownConstructorParameters = [],
+                KnownTargetParameters = [],
                 FluentMethods = new List<IFluentMethod>(stepMethods),
                 IsEndStep = trie.Root.IsEnd,
                 ValueStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(),
@@ -460,15 +460,15 @@ internal class FluentModelBuilder(Compilation compilation)
             // Determine entry method name
             var entryMethodName = contexts.First().EntryMethodName;
 
-            var candidateConstructors = contexts
-                .Select(c => c.Constructor)
+            var candidateTargets = contexts
+                .Select(c => c.Method)
                 .ToImmutableArray();
 
             var entryMethod = new TypeFirstEntryMethod(
                 entryMethodName,
                 rootStep,
                 rootType.ContainingNamespace,
-                candidateConstructors);
+                candidateTargets);
 
             allEntryMethods.Add(entryMethod);
             allSteps.Add(rootStep);
@@ -493,7 +493,7 @@ internal class FluentModelBuilder(Compilation compilation)
     /// Recursively sets CreateMethod to Fixed on all end values in the trie,
     /// ensuring type-first terminal methods are named "Create()" instead of "CreateTypeName()".
     /// </summary>
-    private static void ForceFixedCreateMethod(Trie<FluentMethodParameter, ConstructorMetadata>.Node node)
+    private static void ForceFixedCreateMethod(Trie<FluentMethodParameter, TargetMetadata>.Node node)
     {
         foreach (var endValue in node.EndValues)
             endValue.TerminalMethod = TerminalMethodKind.FixedName;
@@ -502,25 +502,25 @@ internal class FluentModelBuilder(Compilation compilation)
             ForceFixedCreateMethod(child);
     }
 
-    private Trie<FluentMethodParameter, ConstructorMetadata> CreateFluentStepTrie(
+    private Trie<FluentMethodParameter, TargetMetadata> CreateFluentStepTrie(
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
-        var trie = new Trie<FluentMethodParameter, ConstructorMetadata>();
+        var trie = new Trie<FluentMethodParameter, TargetMetadata>();
         foreach (var targetContext in fluentTargetContexts)
         {
             var methodPrefix = targetContext.MethodPrefix ?? "With";
 
-            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(targetContext.Constructor)
+            var preSatisfiedNames = _bindingResolver.IsSelfReferencing(targetContext.Method)
                 ? []
-                : _bindingResolver.GetPreSatisfiedParameterNames(targetContext.Constructor);
+                : _bindingResolver.GetPreSatisfiedParameterNames(targetContext.Method);
 
-            var requiredParameters = targetContext.Constructor.Parameters
+            var requiredParameters = targetContext.Method.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
                 .Where(p => !preSatisfiedNames.Contains(p.Name))
                 .Where(p => !SymbolEqualityComparer.Default.Equals(p, targetContext.ReceiverParameter))
                 .Select(ToFluentMethodParameter);
 
-            var metadata = new ConstructorMetadata(targetContext);
+            var metadata = new TargetMetadata(targetContext);
 
             // Always insert the required-only path (marks root as end when all params are optional)
             trie.Insert(requiredParameters, metadata);
@@ -531,7 +531,7 @@ internal class FluentModelBuilder(Compilation compilation)
             var effectiveRequiredCount = metadata.RequiredParameterCount - preSatisfiedNames.Count;
             if (effectiveRequiredCount <= 0 && metadata.OptionalParameters.Length == 1)
             {
-                var optionalParameters = targetContext.Constructor.Parameters
+                var optionalParameters = targetContext.Method.Parameters
                     .Where(p => p.HasExplicitDefaultValue)
                     .Select(ToFluentMethodParameter);
 
@@ -578,28 +578,28 @@ internal class FluentModelBuilder(Compilation compilation)
     private (ImmutableArray<IFluentMethod> GatewayMethods, ImmutableArray<IFluentStep> Steps)
         CreateAllOptionalStepsAndGatewayMethods(
             INamedTypeSymbol rootType,
-            Trie<FluentMethodParameter, ConstructorMetadata>.Node rootNode,
+            Trie<FluentMethodParameter, TargetMetadata>.Node rootNode,
             int nextStepIndex)
     {
         if (!rootNode.IsEnd) return ([], []);
 
         // Find all-optional constructors with multiple params (not handled by trie insertion)
         // Account for pre-satisfied (threaded) parameters when determining effective required count
-        var allOptionalConstructors = rootNode.EndValues
+        var allOptionalTargets = rootNode.EndValues
             .Where(v =>
             {
-                var preSatisfiedCount = _bindingResolver.IsSelfReferencing(v.Constructor)
+                var preSatisfiedCount = _bindingResolver.IsSelfReferencing(v.Method)
                     ? 0
-                    : _bindingResolver.GetPreSatisfiedParameterNames(v.Constructor).Count;
+                    : _bindingResolver.GetPreSatisfiedParameterNames(v.Method).Count;
                 return v.RequiredParameterCount - preSatisfiedCount <= 0
                     && v.OptionalParameters.Length > 1;
             })
             .ToList();
 
-        if (allOptionalConstructors.Count == 0) return ([], []);
+        if (allOptionalTargets.Count == 0) return ([], []);
 
         // Group constructors that share the same set of optional parameters
-        var groups = allOptionalConstructors
+        var groups = allOptionalTargets
             .GroupBy(v => string.Join(",", v.OptionalParameters
                 .Select(p => $"{p.Type.ToGlobalDisplayString()}:{p.Name}")
                 .OrderBy(s => s)))
@@ -621,7 +621,7 @@ internal class FluentModelBuilder(Compilation compilation)
                         p,
                         FieldStorage.FromParameter(p, rootType.ContainingNamespace))));
 
-            var knownConstructorParameters = new ParameterSequence(allOptionalParams);
+            var knownTargetParameters = new ParameterSequence(allOptionalParams);
 
             // Create the shared step
             var candidateCtors = constructors
@@ -630,7 +630,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
             var step = new RegularFluentStep(rootType, candidateCtors)
             {
-                KnownConstructorParameters = knownConstructorParameters,
+                KnownTargetParameters = knownTargetParameters,
                 FluentMethods = [],
                 IsEndStep = true,
                 IsAllOptionalStep = true,
@@ -658,10 +658,10 @@ internal class FluentModelBuilder(Compilation compilation)
             {
                 if (metadata.TerminalMethod == TerminalMethodKind.None) continue;
 
-                var preSatisfiedNames = _bindingResolver.IsSelfReferencing(metadata.Constructor)
+                var preSatisfiedNames = _bindingResolver.IsSelfReferencing(metadata.Method)
                     ? new HashSet<string>()
-                    : _bindingResolver.GetPreSatisfiedParameterNames(metadata.Constructor);
-                var threadedParamFields = _bindingResolver.GetThreadedParameterFields(metadata.Constructor, preSatisfiedNames);
+                    : _bindingResolver.GetPreSatisfiedParameterNames(metadata.Method);
+                var threadedParamFields = _bindingResolver.GetThreadedParameterFields(metadata.Method, preSatisfiedNames);
                 var optionalParamFields = allOptionalParams
                     .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
                 ImmutableArray<FluentMethodParameter> allParamFields = [..threadedParamFields, ..optionalParamFields];
@@ -669,7 +669,7 @@ internal class FluentModelBuilder(Compilation compilation)
                 var terminalMethod = BuildTerminalMethod(
                     rootType.ContainingNamespace, metadata, preSatisfiedNames, allParamFields, valueStorages);
 
-                _unreachableConstructorAnalyzer.AddReachableMethod(terminalMethod);
+                _unreachableTargetAnalyzer.AddReachableMethod(terminalMethod);
                 step.FluentMethods.Add(terminalMethod);
             }
 
@@ -695,7 +695,7 @@ internal class FluentModelBuilder(Compilation compilation)
     /// <summary>
     /// Populates <see cref="IFluentReturn.UnavailableTargets"/> on every step and terminal return
     /// in the graph, after method selection is complete. The unavailable set is the subset of
-    /// candidate targets that the <see cref="UnreachableConstructorAnalyzer"/> did not mark as reached.
+    /// candidate targets that the <see cref="UnreachableTargetAnalyzer"/> did not mark as reached.
     /// </summary>
     private void MarkUnavailableTargets(
         ImmutableArray<IFluentMethod> rootMethods,
@@ -731,7 +731,7 @@ internal class FluentModelBuilder(Compilation compilation)
         }
 
         ImmutableArray<IMethodSymbol> ComputeUnavailable(ImmutableArray<IMethodSymbol> candidates) =>
-            [..candidates.Where(target => !_unreachableConstructorAnalyzer.IsReachable(target))];
+            [..candidates.Where(target => !_unreachableTargetAnalyzer.IsReachable(target))];
     }
 
     private static ImmutableArray<INamespaceSymbol> GetUsingStatements(
@@ -740,9 +740,9 @@ internal class FluentModelBuilder(Compilation compilation)
         return
         [
             ..fluentTargetContexts
-                .SelectMany(ctx => ctx.Constructor.Parameters)
+                .SelectMany(ctx => ctx.Method.Parameters)
                 .Select(parameter => parameter.Type.ContainingNamespace)
-                .Concat(fluentTargetContexts.Select(ctx => ctx.Constructor.ContainingType.ContainingNamespace))
+                .Concat(fluentTargetContexts.Select(ctx => ctx.Method.ContainingType.ContainingNamespace))
                 .Where(namespaceSymbol => namespaceSymbol is not null)
                 .Select(namespaceSymbol => (namespaceSymbol, displayString: namespaceSymbol.ToDisplayString()))
                 .DistinctBy(ns => ns.displayString)

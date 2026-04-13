@@ -52,10 +52,10 @@ internal static class FluentTargetContextFactory
 
                     return symbol switch
                     {
-                        IMethodSymbol constructor =>
+                        IMethodSymbol method =>
                         [
                             new FluentTargetContext(
-                                constructor,
+                                method,
                                 metadata.AttributeData!,
                                 metadata.RootTypeSymbol,
                                 metadata,
@@ -93,40 +93,40 @@ internal static class FluentTargetContextFactory
     }
 
     /// <summary>
-    /// De-duplicates fluent targets by choosing overriding targets when the same constructor
-    /// is attributed both on the type and on the constructor directly.
+    /// De-duplicates fluent targets by choosing overriding targets when the same target method
+    /// is attributed both on the type and on the member directly.
     /// </summary>
     /// <param name="fluentApiTargets">The target contexts to de-duplicate.</param>
     /// <returns>De-duplicated target contexts.</returns>
     public static IEnumerable<FluentTargetContext> DeDuplicateFluentTargets(
         IEnumerable<FluentTargetContext> fluentApiTargets) =>
         fluentApiTargets
-            .GroupBy(targetContext => targetContext.Constructor,
+            .GroupBy(targetContext => targetContext.Method,
                 SymbolEqualityComparer.Default)
             .SelectMany(ChooseOverridingTargets);
 
     /// <summary>
     /// Chooses which target contexts to keep when duplicates exist, preferring
-    /// constructor-level attributes over type-level attributes.
+    /// member-level attributes over type-level attributes.
     /// </summary>
     /// <param name="duplicateTargets">The duplicate target contexts to choose from.</param>
     /// <returns>The chosen target contexts.</returns>
     public static ImmutableList<FluentTargetContext> ChooseOverridingTargets(IEnumerable<FluentTargetContext> duplicateTargets)
     {
         var emptyList = ImmutableList<FluentTargetContext>.Empty;
-        var (usedOnType, usedOnConstructor) = duplicateTargets
+        var (usedOnType, usedOnMember) = duplicateTargets
             .Aggregate(
-                (OnType: emptyList, OnConstructor: emptyList),
+                (OnType: emptyList, OnMember: emptyList),
                 (whenAttributes, ctor) => ctor.IsAttributedUsedOnContainingType switch
                 {
                     true => (whenAttributes.OnType.Add(ctor),
-                        whenAttributes.OnConstructor),
+                        whenAttributes.OnMember),
                     false => (whenAttributes.OnType,
-                        whenAttributes.OnConstructor.Add(ctor)),
+                        whenAttributes.OnMember.Add(ctor)),
                 });
 
-        return usedOnConstructor.Any()
-            ? usedOnConstructor
+        return usedOnMember.Any()
+            ? usedOnMember
             : usedOnType;
     }
 }

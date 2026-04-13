@@ -21,23 +21,23 @@ internal class FluentMethodBuilder(
     /// <param name="node">The current trie node.</param>
     /// <param name="fluentParameterInstances">The parameter instances at this node.</param>
     /// <param name="nextStep">The next fluent step, or null if this is the final step.</param>
-    /// <param name="constructorMetadataList">The constructor metadata for this node.</param>
+    /// <param name="targetMetadataList">The target metadata for this node.</param>
     /// <param name="valueStorages">The accumulated value storages.</param>
     /// <returns>An enumerable of fluent methods.</returns>
     public IEnumerable<IFluentMethod> CreateFluentMethods(
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         ICollection<FluentMethodParameter> fluentParameterInstances,
         IFluentStep? nextStep,
-        IList<ConstructorMetadata> constructorMetadataList,
+        IList<TargetMetadata> targetMetadataList,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
     {
-        var constructorMetadata = MergeConstructorMetadata(node, constructorMetadataList);
+        var targetMetadata = MergeTargetMetadata(node, targetMetadataList);
         IFluentReturn methodReturn = nextStep switch
         {
             null => new TargetTypeReturn(
-                constructorMetadata.Constructor,
-                [..constructorMetadata.CandidateTargets],
+                targetMetadata.Method,
+                [..targetMetadata.CandidateTargets],
                 new ParameterSequence(node.Key)),
             _ => nextStep
         };
@@ -66,7 +66,7 @@ internal class FluentMethodBuilder(
         ICollection<FluentMethodParameter> fluentParameterInstances,
         IFluentReturn methodReturn,
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
     {
         var propParam = fluentParameterInstances.First();
@@ -78,7 +78,7 @@ internal class FluentMethodBuilder(
         FluentMethodParameter parameter,
         IFluentReturn methodReturn,
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
     {
         var multipleFluentMethodInfo = compilation
@@ -111,7 +111,7 @@ internal class FluentMethodBuilder(
         ICollection<FluentMethodParameter> fluentParameterInstances,
         IFluentReturn methodReturn,
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages)
     {
         var fluentParameter = fluentParameterInstances.First();
@@ -145,21 +145,21 @@ internal class FluentMethodBuilder(
                 .SelectMany(info => info.Diagnostics));
     }
 
-    private static ConstructorMetadata MergeConstructorMetadata(
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node, IList<ConstructorMetadata> constructorMetadataList)
+    private static TargetMetadata MergeTargetMetadata(
+        Trie<FluentMethodParameter, TargetMetadata>.Node node, IList<TargetMetadata> targetMetadataList)
     {
-        return constructorMetadataList.Skip(1).Aggregate(constructorMetadataList.First().Clone(), (merged, metadata) =>
+        return targetMetadataList.Skip(1).Aggregate(targetMetadataList.First().Clone(), (merged, metadata) =>
         {
-            var mergeableConstructors = metadata.CandidateTargets
+            var mergeableTargets = metadata.CandidateTargets
                 .Except<IMethodSymbol>(merged.CandidateTargets, SymbolEqualityComparer.Default);
 
-            merged.CandidateTargets.AddRange(mergeableConstructors);
+            merged.CandidateTargets.AddRange(mergeableTargets);
             if (metadata.TerminalMethod == TerminalMethodKind.None)
                 merged.TerminalMethod = TerminalMethodKind.None;
-            if (metadata.Constructor.Parameters.Length - 1 != node.Key.Length)
+            if (metadata.Method.Parameters.Length - 1 != node.Key.Length)
                 return merged;
 
-            merged.Constructor = metadata.Constructor;
+            merged.Method = metadata.Method;
 
             return merged;
         });

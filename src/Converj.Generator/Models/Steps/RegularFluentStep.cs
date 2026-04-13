@@ -9,7 +9,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Converj.Generator.Models.Steps;
 
 [DebuggerDisplay("{ToString()}")]
-internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodSymbol> candidateConstructors) : IFluentStep
+internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodSymbol> candidateTargets) : IFluentStep
 {
 #if DEBUG
     public int InstanceId => RuntimeHelpers.GetHashCode(this);
@@ -22,15 +22,15 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     /// The known constructor parameters up until this step.
     /// Potentially more parameters are required to satisfy a constructor signature.
     /// </summary>
-    public ParameterSequence KnownConstructorParameters { get; set; } = [];
+    public ParameterSequence KnownTargetParameters { get; set; } = [];
 
     public IList<IFluentMethod> FluentMethods { get; set; } = [];
 
-    public ImmutableArray<IParameterSymbol> GenericConstructorParameters => [
+    public ImmutableArray<IParameterSymbol> GenericTargetParameters => [
         ..ThreadedParameters
             .Select(b => b.TargetParameter)
             .Where(parameter => parameter.Type.IsOpenGenericType()),
-        ..KnownConstructorParameters
+        ..KnownTargetParameters
             .Where(parameter => parameter.Type.IsOpenGenericType())
     ];
 
@@ -38,7 +38,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public override string ToString()
     {
-        return string.Join(", ", KnownConstructorParameters.Select(p => p.ToDisplayString()));
+        return string.Join(", ", KnownTargetParameters.Select(p => p.ToDisplayString()));
     }
 
     public bool IsEndStep { get; set; }
@@ -76,7 +76,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
 
     public INamedTypeSymbol RootType { get; } = rootType;
 
-    public ImmutableArray<IMethodSymbol> CandidateTargets => [..candidateConstructors];
+    public ImmutableArray<IMethodSymbol> CandidateTargets => [..candidateTargets];
 
     public ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; } = [];
 
@@ -120,7 +120,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     /// </summary>
     public string DeclarationDisplayString()
     {
-        var distinctGenericParameters = GenericConstructorParameters
+        var distinctGenericParameters = GenericTargetParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
             .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();
@@ -139,7 +139,7 @@ internal class RegularFluentStep(INamedTypeSymbol rootType, IEnumerable<IMethodS
     public INamespaceSymbol Namespace => RootType.ContainingNamespace;
 
     private ITypeParameterSymbol[] GetDistinctEffectiveTypeArguments() =>
-        GenericConstructorParameters
+        GenericTargetParameters
             .SelectMany(t => t.Type.GetGenericTypeArguments())
             .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();

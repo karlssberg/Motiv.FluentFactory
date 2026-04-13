@@ -11,7 +11,7 @@ namespace Converj.Generator.ModelBuilding;
 internal class FluentMethodSelector(
     Compilation compilation,
     DiagnosticList diagnostics,
-    UnreachableConstructorAnalyzer unreachableConstructorAnalyzer)
+    UnreachableTargetAnalyzer unreachableTargetAnalyzer)
 {
     private readonly FluentMethodBuilder _methodFactory = new(compilation, diagnostics);
 
@@ -31,9 +31,9 @@ internal class FluentMethodSelector(
     /// <returns>The selected fluent methods for the node's children.</returns>
     public IEnumerable<IFluentMethod> ConvertNodeToFluentMethods(
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorages,
-        Func<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node, IFluentStep?> convertNodeToStep)
+        Func<INamedTypeSymbol, Trie<FluentMethodParameter, TargetMetadata>.Node, IFluentStep?> convertNodeToStep)
     {
         var candidateFluentMethods =
             node.Children.Values
@@ -55,12 +55,12 @@ internal class FluentMethodSelector(
 
         var ignoredMultiMethodWarningBuilder = new IgnoredMultiMethodWarningBuilder(
             allIgnoredMethods,
-            unreachableConstructorAnalyzer);
+            unreachableTargetAnalyzer);
 
         foreach (var (selectedMethod, ignoredMethods) in selectedAndIgnoredMethods)
         {
-            ReconcileTargetTypeReturnConstructor(selectedMethod);
-            unreachableConstructorAnalyzer.AddReachableMethod(selectedMethod);
+            ReconcileTargetTypeReturnMethod(selectedMethod);
+            unreachableTargetAnalyzer.AddReachableMethod(selectedMethod);
             diagnostics.AddRange(
                 [
                     ..ignoredMultiMethodWarningBuilder
@@ -100,32 +100,32 @@ internal class FluentMethodSelector(
     ];
 
     /// <summary>
-    /// After method selection, updates the TargetTypeReturn's Constructor to match
-    /// the selected method's source constructor. MergeConstructorMetadata may have stored
-    /// a different constructor due to merge ordering, so this reconciliation ensures the
+    /// After method selection, updates the TargetTypeReturn's Method to match
+    /// the selected method's source target. MergeTargetMetadata may have stored
+    /// a different target due to merge ordering, so this reconciliation ensures the
     /// generated code constructs the correct type and reachability tracking is accurate.
     /// Walks through step chains to reach the leaf TargetTypeReturn when the immediate
     /// Return is a step, but only for RegularMethod selections: an upstream RegularMethod
-    /// winning its signature group is an authoritative source-constructor signal that
+    /// winning its signature group is an authoritative source-target signal that
     /// should propagate downstream. A MultiMethod selected at an upstream level is merely
     /// the sole remaining candidate for that signature and must not overwrite the
     /// reconciliation already performed at the terminal step, or a sibling MultiMethod from
-    /// a different source constructor would clobber a correct downstream write.
+    /// a different source target would clobber a correct downstream write.
     /// </summary>
-    private void ReconcileTargetTypeReturnConstructor(IFluentMethod selectedMethod)
+    private void ReconcileTargetTypeReturnMethod(IFluentMethod selectedMethod)
     {
-        if (selectedMethod.SourceParameter?.ContainingSymbol is not IMethodSymbol selectedConstructor) return;
+        if (selectedMethod.SourceParameter?.ContainingSymbol is not IMethodSymbol selectedTarget) return;
 
         var targetTypeReturn = ResolveTargetTypeReturn(selectedMethod);
         if (targetTypeReturn is null) return;
 
-        if (!targetTypeReturn.CandidateTargets.Contains(selectedConstructor, SymbolEqualityComparer.Default)) return;
+        if (!targetTypeReturn.CandidateTargets.Contains(selectedTarget, SymbolEqualityComparer.Default)) return;
 
-        if (SymbolEqualityComparer.Default.Equals(targetTypeReturn.Constructor, selectedConstructor)) return;
+        if (SymbolEqualityComparer.Default.Equals(targetTypeReturn.Method, selectedTarget)) return;
 
-        unreachableConstructorAnalyzer.RemoveReachableConstructor(targetTypeReturn.Constructor);
-        targetTypeReturn.Constructor = selectedConstructor;
-        unreachableConstructorAnalyzer.AddReachableConstructor(selectedConstructor);
+        unreachableTargetAnalyzer.RemoveReachableTarget(targetTypeReturn.Method);
+        targetTypeReturn.Method = selectedTarget;
+        unreachableTargetAnalyzer.AddReachableTarget(selectedTarget);
     }
 
     private static TargetTypeReturn? ResolveTargetTypeReturn(IFluentMethod selectedMethod)

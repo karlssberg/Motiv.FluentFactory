@@ -34,14 +34,14 @@ internal class FluentStepBuilder(
     /// <returns>A fluent step if the node has any fluent methods; null otherwise.</returns>
     public IFluentStep? ConvertNodeToFluentStep(
         INamedTypeSymbol rootType,
-        Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
-        Func<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node, 
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
+        Func<INamedTypeSymbol, Trie<FluentMethodParameter, TargetMetadata>.Node, 
             OrderedDictionary<IParameterSymbol, IFluentValueStorage>, ImmutableArray<IFluentMethod>> getFluentMethods,
-        Action<INamedTypeSymbol, Trie<FluentMethodParameter, ConstructorMetadata>.Node,
+        Action<INamedTypeSymbol, Trie<FluentMethodParameter, TargetMetadata>.Node,
             IFluentStep, OrderedDictionary<IParameterSymbol, IFluentValueStorage>>? postCreateStep = null)
     {
-        var knownConstructorParameters = new ParameterSequence(node.Key);
-        var constructorMetadata = node.EndValues.FirstOrDefault();
+        var knownTargetParameters = new ParameterSequence(node.Key);
+        var targetMetadata = node.EndValues.FirstOrDefault();
         var useExistingTypeAsStep = UseExistingTypeAsStep();
 
         var valueStorages = GetValueStorages();
@@ -66,10 +66,10 @@ internal class FluentStepBuilder(
 
         bool UseExistingTypeAsStep()
         {
-            if (constructorMetadata is null) return false;
+            if (targetMetadata is null) return false;
 
-            var containingType = constructorMetadata.Constructor.ContainingType;
-            var doNotGenerateCreateMethod = constructorMetadata.TerminalMethod == TerminalMethodKind.None;
+            var containingType = targetMetadata.Method.ContainingType;
+            var doNotGenerateCreateMethod = targetMetadata.TerminalMethod == TerminalMethodKind.None;
 
             // FUTURE ENHANCEMENT: Create a dedicated analyzer to validate that target types are partial and instantiatable.
             // This would help avoid issues where constructors with similar build steps might be hidden.
@@ -79,12 +79,12 @@ internal class FluentStepBuilder(
 
         IFluentStep CreateStep(OrderedDictionary<IParameterSymbol, IFluentValueStorage> storage)
         {
-            return (useExistingTypeAsStep, constructorMetadata) switch
+            return (useExistingTypeAsStep, targetMetadata) switch
             {
                 (true, { } metadata) =>
                     new ExistingTypeFluentStep(metadata)
                     {
-                        KnownConstructorParameters = knownConstructorParameters,
+                        KnownTargetParameters = knownTargetParameters,
                         FluentMethods = new List<IFluentMethod>(fluentMethods),
                         ValueStorage = storage,
                         CandidateTargets =
@@ -96,7 +96,7 @@ internal class FluentStepBuilder(
                     },
                 _ =>
                     regularFluentSteps.GetOrAdd(
-                        knownConstructorParameters,
+                        knownTargetParameters,
                         () =>
                             new RegularFluentStep(
                                 rootType,
@@ -105,7 +105,7 @@ internal class FluentStepBuilder(
                                     .Distinct(SymbolEqualityComparer.Default)
                                     .OfType<IMethodSymbol>())
                             {
-                                KnownConstructorParameters = knownConstructorParameters,
+                                KnownTargetParameters = knownTargetParameters,
                                 FluentMethods = new List<IFluentMethod>(fluentMethods),
                                 IsEndStep = node.IsEnd,
                                 ValueStorage = storage
@@ -115,22 +115,22 @@ internal class FluentStepBuilder(
 
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> GetValueStorages()
         {
-            return (useExistingTypeAsStep, constructorMetadata) switch
+            return (useExistingTypeAsStep, targetMetadata) switch
             {
                 (true, not null and var metadata) => SupplementWithFluentStorage(metadata),
-                _ => CreateRegularStepValueStorage(rootType, knownConstructorParameters)
+                _ => CreateRegularStepValueStorage(rootType, knownTargetParameters)
             };
         }
 
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> SupplementWithFluentStorage(
-            ConstructorMetadata metadata)
+            TargetMetadata metadata)
         {
             var valueStorage = metadata.ValueStorage;
 
             var hasNullStorage = valueStorage.Any(kvp => kvp.Value is NullStorage);
             if (!hasNullStorage) return valueStorage;
 
-            var targetType = metadata.Constructor.ContainingType;
+            var targetType = metadata.Method.ContainingType;
             if (!_fluentStorageCache.TryGetValue(targetType, out var fluentStorageMap))
             {
                 fluentStorageMap = FluentStorageAnalyzer.Analyze(targetType, diagnostics);
@@ -186,27 +186,27 @@ internal class FluentStepBuilder(
     /// mapping each known constructor parameter to a field storage.
     /// </summary>
     /// <param name="rootType">The root type whose containing namespace is used for field storage.</param>
-    /// <param name="knownConstructorParameters">The parameters known at this step in the builder chain.</param>
+    /// <param name="knownTargetParameters">The parameters known at this step in the builder chain.</param>
     /// <returns>An ordered dictionary mapping parameters to their field storage.</returns>
     public static OrderedDictionary<IParameterSymbol, IFluentValueStorage> CreateRegularStepValueStorage(
         INamedTypeSymbol rootType,
-        ParameterSequence knownConstructorParameters)
+        ParameterSequence knownTargetParameters)
     {
         var parameterStoragePairs =
-            from parameter in knownConstructorParameters
+            from parameter in knownTargetParameters
             select new KeyValuePair<IParameterSymbol, IFluentValueStorage>(
                 parameter,
-                CreateStorageForParameter(parameter, knownConstructorParameters, rootType.ContainingNamespace));
+                CreateStorageForParameter(parameter, knownTargetParameters, rootType.ContainingNamespace));
 
         return new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(parameterStoragePairs);
     }
 
     private static IFluentValueStorage CreateStorageForParameter(
         IParameterSymbol parameter,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         INamespaceSymbol containingNamespace)
     {
-        var fluentParam = knownConstructorParameters.GetFluentMethodParameter(parameter);
+        var fluentParam = knownTargetParameters.GetFluentMethodParameter(parameter);
         if (fluentParam is TupleFluentMethodParameter tuple)
         {
             return TupleFieldStorage.FromTupleParameter(parameter, tuple.Elements, containingNamespace);

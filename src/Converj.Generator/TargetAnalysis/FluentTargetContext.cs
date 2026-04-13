@@ -12,14 +12,14 @@ namespace Converj.Generator.TargetAnalysis;
 internal class FluentTargetContext
 {
     public FluentTargetContext(
-        IMethodSymbol constructor,
+        IMethodSymbol method,
         AttributeData attributeData,
         INamedTypeSymbol rootSymbol,
         FluentRootMetadata metadata,
         bool isAttributedUsedOnContainingType,
         SemanticModel semanticModel)
     {
-        Constructor = constructor;
+        Method = method;
         AttributeData = attributeData;
         MethodPrefix = metadata.MethodPrefix;
         ReturnType = metadata.ReturnType;
@@ -34,16 +34,16 @@ internal class FluentTargetContext
         Accessibility = rootSymbol.DeclaredAccessibility;
         RootType = rootSymbol;
 
-        IsStaticMethodTarget = constructor.MethodKind == MethodKind.Ordinary && constructor.IsStatic;
-        IsInstanceMethodTarget = constructor.MethodKind == MethodKind.Ordinary && !constructor.IsStatic;
+        IsStaticMethodTarget = method.MethodKind == MethodKind.Ordinary && method.IsStatic;
+        IsInstanceMethodTarget = method.MethodKind == MethodKind.Ordinary && !method.IsStatic;
 
-        ReceiverParameter = DetectReceiverParameter(constructor);
+        ReceiverParameter = DetectReceiverParameter(method);
 
         // For static methods, default terminal verb to the method name and builder to FixedName
         TerminalMethod = IsStaticMethodTarget
             ? metadata.TerminalMethod ?? TerminalMethodKind.FixedName
             : metadata.TerminalMethod ?? TerminalMethodKind.DynamicSuffix;
-        TerminalVerb = metadata.TerminalVerb ?? (IsStaticMethodTarget ? constructor.Name : null);
+        TerminalVerb = metadata.TerminalVerb ?? (IsStaticMethodTarget ? method.Name : null);
 
         if (IsStaticMethodTarget || IsInstanceMethodTarget)
         {
@@ -54,10 +54,10 @@ internal class FluentTargetContext
             return;
         }
 
-        ValueStorage = new ConstructorAnalyzer(semanticModel).FindParameterValueStorage(constructor);
+        ValueStorage = new ConstructorAnalyzer(semanticModel).FindParameterValueStorage(method);
 
         // Get all declarations of the type to find modifiers
-        var declarations = constructor.ContainingType.DeclaringSyntaxReferences
+        var declarations = method.ContainingType.DeclaringSyntaxReferences
             .Select(r => r.GetSyntax())
             .OfType<TypeDeclarationSyntax>()
             .ToArray();
@@ -78,7 +78,7 @@ internal class FluentTargetContext
         var methodPrefixValue = MethodPrefix ?? "With";
         var propertyDiagnostics = new DiagnosticList();
         TargetTypeProperties = FluentPropertyAnalyzer.Analyze(
-            constructor, constructor.ContainingType, methodPrefixValue, propertyDiagnostics);
+            method, method.ContainingType, methodPrefixValue, propertyDiagnostics);
         PropertyDiagnostics = propertyDiagnostics;
     }
 
@@ -97,7 +97,7 @@ internal class FluentTargetContext
 
     public TypeKind TypeKind { get; }
 
-    public IMethodSymbol Constructor { get; }
+    public IMethodSymbol Method { get; }
     public AttributeData AttributeData { get; }
 
     /// <summary>
@@ -151,7 +151,7 @@ internal class FluentTargetContext
     /// </summary>
     public bool HasReceiver => ReceiverParameter is not null;
 
-    public string ToDisplayString() => $"{Constructor.ToDisplayString()}";
+    public string ToDisplayString() => $"{Method.ToDisplayString()}";
 
     private static IParameterSymbol? DetectReceiverParameter(IMethodSymbol method)
     {

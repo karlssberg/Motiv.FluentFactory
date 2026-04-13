@@ -109,9 +109,9 @@ internal class ParameterSequence : IEquatable<ParameterSequence>, IEnumerable<IP
         return ParameterSymbolsPrecomputed.SequenceEqual(other.ParameterSymbolsPrecomputed);
     }
 
-    public static implicit operator ImmutableArray<IParameterSymbol> (ParameterSequence knownConstructorParameters)
+    public static implicit operator ImmutableArray<IParameterSymbol> (ParameterSequence knownTargetParameters)
     {
-        return knownConstructorParameters.ParameterSymbols;
+        return knownTargetParameters.ParameterSymbols;
     }
 
     public static bool operator ==(ParameterSequence left, ParameterSequence right)

@@ -206,7 +206,7 @@ internal static class FluentTargetValidatorExtensions
         fluentTargetContexts
             .Where(context => !string.IsNullOrEmpty(context.TerminalVerb))
             .Select(context => (Context: context, ResolvedName: ResolveTerminalMethodName(context)))
-            .GroupBy(x => (x.ResolvedName, TypeName: x.Context.Constructor.ContainingType.ToDisplayString()), x => x.Context)
+            .GroupBy(x => (x.ResolvedName, TypeName: x.Context.Method.ContainingType.ToDisplayString()), x => x.Context)
             .Where(group => group.Count() > 1);
 
     private static string ResolveTerminalMethodName(FluentTargetContext context)
@@ -215,7 +215,7 @@ internal static class FluentTargetValidatorExtensions
         return context.TerminalMethod switch
         {
             TerminalMethodKind.FixedName => verb,
-            _ => $"{verb}{context.Constructor.ContainingType.ToCreateMethodSuffix()}"
+            _ => $"{verb}{context.Method.ContainingType.ToCreateMethodSuffix()}"
         };
     }
 
@@ -254,7 +254,7 @@ internal static class FluentTargetValidatorExtensions
         {
             var factoryAccessibility = context.RootType.DeclaredAccessibility;
 
-            foreach (var parameter in context.Constructor.Parameters)
+            foreach (var parameter in context.Method.Parameters)
             {
                 var paramType = parameter.Type;
 
@@ -274,7 +274,7 @@ internal static class FluentTargetValidatorExtensions
                         location,
                         parameter.Name,
                         paramType.ToDisplayString(),
-                        context.Constructor.ToDisplayString(),
+                        context.Method.ToDisplayString(),
                         context.RootType.ToDisplayString());
                 }
             }
@@ -285,13 +285,13 @@ internal static class FluentTargetValidatorExtensions
     {
         foreach (var context in fluentTargetContexts)
         {
-            var targetType = context.Constructor.ContainingType;
+            var targetType = context.Method.ContainingType;
             var factoryAccessibility = context.RootType.DeclaredAccessibility;
             var targetAccessibility = targetType.DeclaredAccessibility;
 
             if ((int)targetAccessibility < (int)factoryAccessibility)
             {
-                var location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+                var location = context.Method.Locations.FirstOrDefault() ?? Location.None;
                 yield return Diagnostic.Create(
                     FluentDiagnostics.AccessibilityMismatch,
                     location,
@@ -312,10 +312,10 @@ internal static class FluentTargetValidatorExtensions
     private static bool HasExplicitMethodPrefix(FluentTargetContext context) =>
         context.AttributeData.NamedArguments.Any(namedArg => namedArg.Key == "MethodPrefix");
 
-    private static Location FindRootTypeLocation(AttributeData? fluentConstructorAttribute, FluentTargetContext context)
+    private static Location FindRootTypeLocation(AttributeData? fluentTargetAttribute, FluentTargetContext context)
     {
         Location location;
-        if (fluentConstructorAttribute?.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
+        if (fluentTargetAttribute?.ApplicationSyntaxReference?.GetSyntax() is AttributeSyntax attributeSyntax)
         {
             // Find the typeof argument that references the root type
             var typeofArg = attributeSyntax.ArgumentList?.Arguments
@@ -328,7 +328,7 @@ internal static class FluentTargetValidatorExtensions
         }
         else
         {
-            location = context.Constructor.Locations.FirstOrDefault() ?? Location.None;
+            location = context.Method.Locations.FirstOrDefault() ?? Location.None;
         }
 
         return location;
@@ -342,7 +342,7 @@ internal static class FluentTargetValidatorExtensions
 
     private static Location FindNamedArgumentLocation(FluentTargetContext context, string argumentName) =>
         FindNamedArgumentLocation(context.AttributeData, argumentName,
-            context.Constructor.Locations.FirstOrDefault() ?? Location.None);
+            context.Method.Locations.FirstOrDefault() ?? Location.None);
 
     private static Location FindNamedArgumentLocation(AttributeData attributeData, string argumentName,
         Location? fallback = null)
@@ -367,7 +367,7 @@ internal static class FluentTargetValidatorExtensions
         // Skip constructors with [MultipleFluentMethods] parameters since their
         // fluent method names are resolved from template methods, not GetFluentMethodName()
         var eligibleContexts = fluentTargetContexts
-            .Where(ctx => !ctx.Constructor.Parameters.Any(
+            .Where(ctx => !ctx.Method.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
 
         var ambiguousGroups = eligibleContexts
@@ -377,7 +377,7 @@ internal static class FluentTargetValidatorExtensions
         foreach (var group in ambiguousGroups)
         {
             var participatingTypes = group
-                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Select(ctx => ctx.Method.ContainingType.ToDisplayString())
                 .Distinct()
                 .OrderBy(t => t);
 
@@ -385,7 +385,7 @@ internal static class FluentTargetValidatorExtensions
 
             foreach (var context in group)
             {
-                foreach (var parameter in context.Constructor.Parameters)
+                foreach (var parameter in context.Method.Parameters)
                 {
                     var methodName = parameter.GetFluentMethodName(context.MethodPrefix ?? "With");
                     var location = FindFluentMethodOrParameterLocation(parameter);
@@ -394,7 +394,7 @@ internal static class FluentTargetValidatorExtensions
                         FluentDiagnostics.AmbiguousFluentMethodChain,
                         location,
                         parameter.Name,
-                        context.Constructor.ToDisplayString(),
+                        context.Method.ToDisplayString(),
                         methodName,
                         typesString);
                 }
@@ -406,7 +406,7 @@ internal static class FluentTargetValidatorExtensions
     {
         // Must have constructors from at least 2 different types
         var distinctTypes = group
-            .Select(ctx => ctx.Constructor.ContainingType)
+            .Select(ctx => ctx.Method.ContainingType)
             .Distinct(SymbolEqualityComparer.Default)
             .Count();
 
@@ -425,7 +425,7 @@ internal static class FluentTargetValidatorExtensions
         // NoCreateMethod constructors use the containing type as the step, so at most one
         // distinct type can use NoCreateMethod at the same chain position
         var distinctNoCreateTypes = constructorsWithNoCreate
-            .Select(ctx => ctx.Constructor.ContainingType)
+            .Select(ctx => ctx.Method.ContainingType)
             .Distinct(SymbolEqualityComparer.Default)
             .Count();
 
@@ -447,7 +447,7 @@ internal static class FluentTargetValidatorExtensions
         if (constructors.Count <= 1)
             return true;
 
-        // Constructors with None don't produce create methods and can't be disambiguated by name
+        // Targets with None don't produce create methods and can't be disambiguated by name
         var constructorsWithCreate = constructors
             .Where(ctx => ctx.TerminalMethod != TerminalMethodKind.None)
             .ToList();
@@ -466,16 +466,16 @@ internal static class FluentTargetValidatorExtensions
     }
 
     private static string GetFluentParameterChainKey(FluentTargetContext context) =>
-        string.Join("|", context.Constructor.Parameters
+        string.Join("|", context.Method.Parameters
             .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
 
     private static string GetFirstParameterKey(
         FluentTargetContext context, Func<ITypeSymbol, string> typeStringResolver)
     {
-        if (context.Constructor.Parameters.Length == 0)
+        if (context.Method.Parameters.Length == 0)
             return "";
 
-        var p = context.Constructor.Parameters[0];
+        var p = context.Method.Parameters[0];
         return $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{typeStringResolver(p.Type)}";
     }
 
@@ -483,8 +483,8 @@ internal static class FluentTargetValidatorExtensions
         ImmutableArray<FluentTargetContext> fluentTargetContexts)
     {
         var eligibleContexts = fluentTargetContexts
-            .Where(ctx => ctx.Constructor.Parameters.Length > 0)
-            .Where(ctx => !ctx.Constructor.Parameters.Any(
+            .Where(ctx => ctx.Method.Parameters.Length > 0)
+            .Where(ctx => !ctx.Method.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
 
         // Group by first parameter's C# method signature (ignoring generic constraints)
@@ -499,7 +499,7 @@ internal static class FluentTargetValidatorExtensions
 
             // Must have constructors from at least 2 different types
             var distinctTypes = contexts
-                .Select(ctx => ctx.Constructor.ContainingType)
+                .Select(ctx => ctx.Method.ContainingType)
                 .Distinct(SymbolEqualityComparer.Default)
                 .Count();
 
@@ -516,7 +516,7 @@ internal static class FluentTargetValidatorExtensions
                 continue;
 
             var participatingTypes = contexts
-                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Select(ctx => ctx.Method.ContainingType.ToDisplayString())
                 .Distinct()
                 .OrderBy(t => t);
 
@@ -524,7 +524,7 @@ internal static class FluentTargetValidatorExtensions
 
             foreach (var context in contexts)
             {
-                var parameter = context.Constructor.Parameters[0];
+                var parameter = context.Method.Parameters[0];
                 var methodName = parameter.GetFluentMethodName(context.MethodPrefix ?? "With");
                 var location = FindFluentMethodOrParameterLocation(parameter);
 
@@ -532,7 +532,7 @@ internal static class FluentTargetValidatorExtensions
                     FluentDiagnostics.ConflictingTypeConstraints,
                     location,
                     parameter.Name,
-                    context.Constructor.ToDisplayString(),
+                    context.Method.ToDisplayString(),
                     methodName,
                     typesString);
             }
@@ -550,7 +550,7 @@ internal static class FluentTargetValidatorExtensions
     }
 
     private static string GetRequiredFluentParameterChainKey(FluentTargetContext context) =>
-        string.Join("|", context.Constructor.Parameters
+        string.Join("|", context.Method.Parameters
             .Where(p => !p.HasExplicitDefaultValue)
             .Select(p => $"{p.GetFluentMethodName(context.MethodPrefix ?? "With")}:{p.Type.ToDisplayString()}"));
 
@@ -559,7 +559,7 @@ internal static class FluentTargetValidatorExtensions
     {
         // Skip constructors with [MultipleFluentMethods] parameters
         var eligibleContexts = fluentTargetContexts
-            .Where(ctx => !ctx.Constructor.Parameters.Any(
+            .Where(ctx => !ctx.Method.Parameters.Any(
                 p => p.GetAttribute(TypeName.MultipleFluentMethodsAttribute) is not null));
 
         var groups = eligibleContexts
@@ -571,7 +571,7 @@ internal static class FluentTargetValidatorExtensions
 
             // Must have constructors from at least 2 different types
             var distinctTypes = contexts
-                .Select(ctx => ctx.Constructor.ContainingType)
+                .Select(ctx => ctx.Method.ContainingType)
                 .Distinct(SymbolEqualityComparer.Default)
                 .Count();
 
@@ -579,7 +579,7 @@ internal static class FluentTargetValidatorExtensions
                 continue;
 
             // Skip groups where no constructor has optional params (CVJG0016 covers these)
-            if (!contexts.Any(ctx => ctx.Constructor.Parameters.Any(p => p.HasExplicitDefaultValue)))
+            if (!contexts.Any(ctx => ctx.Method.Parameters.Any(p => p.HasExplicitDefaultValue)))
                 continue;
 
             // Skip groups where all full-chain keys are identical (CVJG0016 covers these)
@@ -592,7 +592,7 @@ internal static class FluentTargetValidatorExtensions
                 continue;
 
             var participatingTypes = contexts
-                .Select(ctx => ctx.Constructor.ContainingType.ToDisplayString())
+                .Select(ctx => ctx.Method.ContainingType.ToDisplayString())
                 .Distinct()
                 .OrderBy(t => t);
 
@@ -600,14 +600,14 @@ internal static class FluentTargetValidatorExtensions
 
             foreach (var context in contexts)
             {
-                var optionalParams = context.Constructor.Parameters
+                var optionalParams = context.Method.Parameters
                     .Where(p => p.HasExplicitDefaultValue);
 
                 // Find a colliding constructor from a different type
                 var collidingContext = contexts.First(ctx =>
                     !SymbolEqualityComparer.Default.Equals(
-                        ctx.Constructor.ContainingType,
-                        context.Constructor.ContainingType));
+                        ctx.Method.ContainingType,
+                        context.Method.ContainingType));
 
                 foreach (var parameter in optionalParams)
                 {
@@ -617,8 +617,8 @@ internal static class FluentTargetValidatorExtensions
                         FluentDiagnostics.OptionalParameterAmbiguousFluentMethodChain,
                         location,
                         parameter.Name,
-                        context.Constructor.ToDisplayString(),
-                        collidingContext.Constructor.ToDisplayString(),
+                        context.Method.ToDisplayString(),
+                        collidingContext.Method.ToDisplayString(),
                         typesString);
                 }
             }
@@ -649,10 +649,10 @@ internal static class FluentTargetValidatorExtensions
             foreach (var context in factoryContexts)
             {
                 var diagnostic = ValidateReturnTypeAssignment(
-                    context.Constructor.ContainingType,
+                    context.Method.ContainingType,
                     defaults.ReturnType,
                     location,
-                    context.Constructor.Locations.FirstOrDefault() ?? Location.None);
+                    context.Method.Locations.FirstOrDefault() ?? Location.None);
 
                 if (diagnostic is not null)
                     yield return diagnostic;
@@ -675,7 +675,7 @@ internal static class FluentTargetValidatorExtensions
             }
 
             var diagnostic = ValidateReturnTypeAssignment(
-                context.Constructor.ContainingType,
+                context.Method.ContainingType,
                 context.ReturnType,
                 location,
                 location);
@@ -750,7 +750,7 @@ internal static class FluentTargetValidatorExtensions
     {
         var groups = fluentTargetContexts
             .Where(ctx => ctx.TerminalMethod == TerminalMethodKind.None)
-            .GroupBy(ctx => (ctx.Constructor.ContainingType, ctx.RootType),
+            .GroupBy(ctx => (ctx.Method.ContainingType, ctx.RootType),
                 ContainingAndRootTypeComparer.Default);
 
         foreach (var group in groups)
@@ -760,7 +760,7 @@ internal static class FluentTargetValidatorExtensions
                 yield return Diagnostic.Create(
                     FluentDiagnostics.MultipleTargetsWithBuilderNone,
                     GetAttributeLocation(context.AttributeData),
-                    context.Constructor.ContainingType.ToDisplayString(),
+                    context.Method.ContainingType.ToDisplayString(),
                     context.RootType.ToDisplayString());
             }
         }
@@ -794,7 +794,7 @@ internal static class FluentTargetValidatorExtensions
 
         foreach (var context in fluentTargetContexts)
         {
-            foreach (var parameter in context.Constructor.Parameters)
+            foreach (var parameter in context.Method.Parameters)
             {
                 if (!seen.Add(parameter)) continue;
 
@@ -836,7 +836,7 @@ internal static class FluentTargetValidatorExtensions
                     FluentDiagnostics.FluentMethodPropertyWithBuilderNone,
                     prop.Location,
                     prop.Property.Name,
-                    context.Constructor.ContainingType.ToDisplayString());
+                    context.Method.ContainingType.ToDisplayString());
             }
         }
     }

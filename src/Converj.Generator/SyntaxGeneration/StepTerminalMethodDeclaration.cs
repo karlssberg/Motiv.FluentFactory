@@ -86,7 +86,7 @@ internal static class StepTerminalMethodDeclaration
     private static ImmutableArray<TypeParameterSyntax> GetTypeParameterSyntaxes(IFluentMethod method, IFluentStep step)
     {
         return method.TypeParameters
-            .Except(step.KnownConstructorParameters
+            .Except(step.KnownTargetParameters
                 .SelectMany(parameter => parameter.Type.GetGenericTypeParameters())
                 .Select(genericTypeParameters => new FluentTypeParameter(genericTypeParameters)))
             .Select(fluentTypeParameter => fluentTypeParameter.TypeParameterSymbol.ToTypeParameterSyntax())

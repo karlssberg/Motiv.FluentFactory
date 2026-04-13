@@ -203,7 +203,7 @@ public class DiagnosticsTests
                         .WithSpan(SourceFile, 15, 28, 15, 53)
                         .WithArguments("System.Func<TModel, MyNamespace.BooleanResultBase<string>, string> trueBecause"),
                     DiagnosticResult
-                        .CompilerError(UnreachableConstructor.Id)
+                        .CompilerError(UnreachableTarget.Id)
                         .WithSpan(SourceFile, 14, 32, 14, 39)
                         .WithArguments("MyTypeB<TModel, TPredicateResult>.MyTypeB(Func<TModel, BooleanResultBase<string>, string> trueBecause)")
                 }
@@ -419,7 +419,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(UnreachableConstructor.Id)
+                        .CompilerError(UnreachableTarget.Id)
                         .WithSpan(SourceFile, 26, 12, 26, 69)
                         .WithArguments(
                             "MultiAssertionExplanationExpressionTreePropositionFactory<TModel, TPredicateResult>.MultiAssertionExplanationExpressionTreePropositionFactory(Expression<Func<TModel, TPredicateResult>> expression, Func<TModel, BooleanResultBase<string>, string> trueBecause)"),
@@ -1524,7 +1524,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(UnreachableConstructor.Id)
+                        .CompilerError(UnreachableTarget.Id)
                         .WithSpan(SourceFile, 19, 23, 19, 30)
                         .WithArguments("SecondB.SecondB(int value1, int value2, int value3)"),
                     DiagnosticResult
@@ -1535,7 +1535,7 @@ public class DiagnosticsTests
                             "Test.MultipleMethods.Value2(int value2)",
                             "int value2",
                             "Test.SecondB.SecondB(int value1, int value2, int value3)",
-                            "the parameter 'int value2' in the constructor 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                            "the parameter 'int value2' in the target method 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
                         .WithSpan(SourceFile, 27, 23, 27, 29)
                         .WithArguments(
@@ -1655,7 +1655,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(UnreachableConstructor.Id)
+                        .CompilerError(UnreachableTarget.Id)
                         .WithSpan(SourceFile, 13, 23, 13, 30)
                         .WithArguments("SecondB.SecondB(int value1, int value2, int value3)"),
                     DiagnosticResult
@@ -1666,7 +1666,7 @@ public class DiagnosticsTests
                             "Test.MultipleMethods.Value2(int value2)",
                             "int value2",
                             "Test.SecondB.SecondB(int value1, int value2, int value3)",
-                            "the parameter 'int value2' in the constructor 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                            "the parameter 'int value2' in the target method 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
                         .WithSpan(SourceFile, 27, 23, 27, 29)
                         .WithArguments(
@@ -1798,7 +1798,7 @@ public class DiagnosticsTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult
-                        .CompilerError(UnreachableConstructor.Id)
+                        .CompilerError(UnreachableTarget.Id)
                         .WithSpan(SourceFile, 20, 23, 20, 30)
                         .WithArguments("SecondB.SecondB(int value1, int value2, int value3)"),
                     DiagnosticResult
@@ -1809,7 +1809,7 @@ public class DiagnosticsTests
                             "Test.MultipleMethods.Value2(int value2)",
                             "int value2",
                             "Test.SecondB.SecondB(int value1, int value2, int value3)",
-                            "the parameter 'int value2' in the constructor 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                            "the parameter 'int value2' in the target method 'Test.SecondA.SecondA(int value1, int value2, int value3)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
                         .WithSpan(SourceFile, 28, 23, 28, 29)
                         .WithArguments(

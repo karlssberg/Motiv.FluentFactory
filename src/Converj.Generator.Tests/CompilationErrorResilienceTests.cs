@@ -130,8 +130,8 @@ public class CompilationErrorResilienceTests
     }
 
     /// <summary>
-    /// Issue #13: FilterErrorTypeConstructors is silent — drops constructors with error-type
-    /// parameters without emitting a diagnostic. A valid constructor alongside an error-type
+    /// Issue #13: FilterErrorTypeTargets is silent — drops targets with error-type
+    /// parameters without emitting a diagnostic. A valid target alongside an error-type
     /// constructor should still produce output for the valid one.
     /// </summary>
     [Fact]

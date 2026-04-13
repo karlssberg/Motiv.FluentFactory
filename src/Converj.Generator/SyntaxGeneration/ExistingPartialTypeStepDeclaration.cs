@@ -82,7 +82,7 @@ internal static class ExistingPartialTypeStepDeclaration
     /// </summary>
     private static bool HasOwnRootDeclaration(ExistingTypeFluentStep step)
     {
-        return step.ConstructorContext.Constructor.ContainingType
+        return step.TargetContext.Method.ContainingType
             .GetAttributes(TypeName.FluentRootAttribute)
             .Any();
     }
@@ -122,7 +122,7 @@ internal static class ExistingPartialTypeStepDeclaration
     {
         if (step is ExistingTypeFluentStep existingStep)
         {
-            var originalModifiers = existingStep.ConstructorContext.OriginalTypeModifiers;
+            var originalModifiers = existingStep.TargetContext.OriginalTypeModifiers;
 
             // Filter out 'partial' from original modifiers since we'll add it back
             var modifiersToKeep = originalModifiers.Where(m => !m.IsKind(SyntaxKind.PartialKeyword));

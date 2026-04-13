@@ -30,7 +30,7 @@ internal static class PropertyStepEnricher
         foreach (var step in existingSteps)
         {
             ProcessTerminalMethodsOnStep(rootType, step, step.FluentMethods, step.ValueStorage,
-                step.KnownConstructorParameters, step.Accessibility,
+                step.KnownTargetParameters, step.Accessibility,
                 step is RegularFluentStep rfs ? rfs.TypeKind : TypeKind.Class,
                 step is RegularFluentStep rfs2 ? rfs2.PropertyFieldStorage : ImmutableArray<FieldStorage>.Empty,
                 step.CandidateTargets,
@@ -53,11 +53,11 @@ internal static class PropertyStepEnricher
         IFluentStep ownerStep,
         IList<IFluentMethod> methods,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorage,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         Accessibility accessibility,
         TypeKind typeKind,
         ImmutableArray<FieldStorage> propertyFieldStorage,
-        ImmutableArray<IMethodSymbol> candidateConstructors,
+        ImmutableArray<IMethodSymbol> candidateTargets,
         List<IFluentStep> newSteps,
         ref int nextStepIndex)
     {
@@ -74,8 +74,8 @@ internal static class PropertyStepEnricher
 
                 BuildPropertyStepChain(
                     rootType, terminalMethod, requiredProperties,
-                    ownerStep, valueStorage, knownConstructorParameters,
-                    accessibility, typeKind, propertyFieldStorage, candidateConstructors,
+                    ownerStep, valueStorage, knownTargetParameters,
+                    accessibility, typeKind, propertyFieldStorage, candidateTargets,
                     newSteps, ref nextStepIndex);
                 continue;
             }
@@ -118,7 +118,7 @@ internal static class PropertyStepEnricher
             foreach (var kvp in terminalMethod.ValueSources)
                 emptyValueStorage.Add(kvp.Key, kvp.Value);
 
-            var candidateConstructors = terminalMethod.Return.CandidateTargets;
+            var candidateTargets = terminalMethod.Return.CandidateTargets;
 
             // Create the first property step and entry method
             var firstProperty = requiredProperties[0];
@@ -128,7 +128,7 @@ internal static class PropertyStepEnricher
             var firstStep = CreatePropertyStep(
                 rootType, emptyValueStorage, [],
                 ImmutableArray<FieldStorage>.Empty, firstProperty,
-                candidateConstructors, rootType.DeclaredAccessibility, TypeKind.Class,
+                candidateTargets, rootType.DeclaredAccessibility, TypeKind.Class,
                 ref nextStepIndex);
 
             var firstMethod = new RegularMethod(
@@ -167,7 +167,7 @@ internal static class PropertyStepEnricher
                     rootType, terminalMethod, requiredProperties,
                     firstStep, firstStep.ValueStorage, [],
                     rootType.DeclaredAccessibility, TypeKind.Class,
-                    firstStep.PropertyFieldStorage, candidateConstructors,
+                    firstStep.PropertyFieldStorage, candidateTargets,
                     newSteps, ref nextStepIndex,
                     startIndex: 1);
             }
@@ -287,10 +287,10 @@ internal static class PropertyStepEnricher
     private static RegularFluentStep CreatePropertyStep(
         INamedTypeSymbol rootType,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> sourceValueStorage,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         ImmutableArray<FieldStorage> prevPropertyFields,
         IPropertySymbol property,
-        ImmutableArray<IMethodSymbol> candidateConstructors,
+        ImmutableArray<IMethodSymbol> candidateTargets,
         Accessibility accessibility,
         TypeKind typeKind,
         ref int nextStepIndex)
@@ -300,7 +300,7 @@ internal static class PropertyStepEnricher
             propFieldName, property.Type, rootType.ContainingNamespace);
         var allPropertyFields = prevPropertyFields.Add(thisPropField);
 
-        var propertyStep = new RegularFluentStep(rootType, candidateConstructors)
+        var propertyStep = new RegularFluentStep(rootType, candidateTargets)
         {
             Index = nextStepIndex++,
             IsEndStep = false,
@@ -312,7 +312,7 @@ internal static class PropertyStepEnricher
         foreach (var kvp in sourceValueStorage)
             newStorage.Add(kvp.Key, kvp.Value);
 
-        propertyStep.KnownConstructorParameters = knownConstructorParameters;
+        propertyStep.KnownTargetParameters = knownTargetParameters;
         propertyStep.ValueStorage = newStorage;
         propertyStep.PropertyFieldStorage = allPropertyFields;
 
@@ -329,11 +329,11 @@ internal static class PropertyStepEnricher
         List<IPropertySymbol> requiredProperties,
         IFluentStep ownerStep,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorage,
-        ParameterSequence knownConstructorParameters,
+        ParameterSequence knownTargetParameters,
         Accessibility accessibility,
         TypeKind typeKind,
         ImmutableArray<FieldStorage> propertyFieldStorage,
-        ImmutableArray<IMethodSymbol> candidateConstructors,
+        ImmutableArray<IMethodSymbol> candidateTargets,
         List<IFluentStep> newSteps,
         ref int nextStepIndex,
         int startIndex = 0)
@@ -353,9 +353,9 @@ internal static class PropertyStepEnricher
                 : propertyFieldStorage;
 
             var propertyStep = CreatePropertyStep(
-                rootType, currentValueStorage, knownConstructorParameters,
+                rootType, currentValueStorage, knownTargetParameters,
                 prevPropertyFields, prop,
-                candidateConstructors, accessibility, typeKind,
+                candidateTargets, accessibility, typeKind,
                 ref nextStepIndex);
 
             propertyStep.IsEndStep = isLast;

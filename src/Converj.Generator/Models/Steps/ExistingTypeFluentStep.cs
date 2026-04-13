@@ -9,35 +9,35 @@ namespace Converj.Generator.Models.Steps;
 
 [DebuggerDisplay("{ToString()}")]
 internal class ExistingTypeFluentStep(
-    ConstructorMetadata constructorMetadata
+    TargetMetadata targetMetadata
    ) : IFluentStep
 {
 #if DEBUG
     public int InstanceId => RuntimeHelpers.GetHashCode(this);
 #endif
-    public string Name { get; } = constructorMetadata.Constructor.ContainingType.ToUnqualifiedDisplayString();
+    public string Name { get; } = targetMetadata.Method.ContainingType.ToUnqualifiedDisplayString();
 
-    public string FullName => constructorMetadata.Constructor.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+    public string FullName => targetMetadata.Method.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 
     /// <summary>
     ///     The known constructor parameters up until this step.
     ///     Potentially more parameters are required to satisfy a constructor signature.
     /// </summary>
-    public ParameterSequence KnownConstructorParameters { get; set; } = [];
+    public ParameterSequence KnownTargetParameters { get; set; } = [];
 
     public IList<IFluentMethod> FluentMethods { get; set; } = [];
 
-    public ImmutableArray<IParameterSymbol> GenericConstructorParameters =>
+    public ImmutableArray<IParameterSymbol> GenericTargetParameters =>
     [
-        ..constructorMetadata.Constructor.Parameters
+        ..targetMetadata.Method.Parameters
             .Where(parameter => parameter.Type.IsOpenGenericType())
     ];
 
-    public Accessibility Accessibility { get; } = constructorMetadata.Constructor.ContainingType.DeclaredAccessibility;
+    public Accessibility Accessibility { get; } = targetMetadata.Method.ContainingType.DeclaredAccessibility;
 
-    public TypeKind TypeKind { get;  } = constructorMetadata.Constructor.ContainingType.TypeKind;
+    public TypeKind TypeKind { get;  } = targetMetadata.Method.ContainingType.TypeKind;
 
-    public bool IsRecord { get; } = constructorMetadata.Constructor.ContainingType.IsRecord;
+    public bool IsRecord { get; } = targetMetadata.Method.ContainingType.IsRecord;
 
     public OrderedDictionary<IParameterSymbol, IFluentValueStorage> ValueStorage { get; set; } = [];
 
@@ -52,11 +52,11 @@ internal class ExistingTypeFluentStep(
 
     public ImmutableArray<IMethodSymbol> UnavailableTargets { get; set; } = [];
     
-    public FluentTargetContext ConstructorContext => constructorMetadata.Context;
+    public FluentTargetContext TargetContext => targetMetadata.Context;
 
     public string IdentifierDisplayString()
     {
-        return constructorMetadata.Constructor.ContainingType.ToGlobalDisplayString();
+        return targetMetadata.Method.ContainingType.ToGlobalDisplayString();
     }
 
     public string IdentifierDisplayString(
@@ -64,10 +64,10 @@ internal class ExistingTypeFluentStep(
     {
         var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap).ToArray();
 
-        var existingStepConstructed = constructorMetadata.Constructor.ContainingType.Construct(distinctGenericParameters);
+        var existingStepConstructed = targetMetadata.Method.ContainingType.Construct(distinctGenericParameters);
 
         return existingStepConstructed.ToGlobalDisplayString();
     }
 
-    public INamespaceSymbol Namespace => constructorMetadata.Constructor.ContainingNamespace;
+    public INamespaceSymbol Namespace => targetMetadata.Method.ContainingNamespace;
 }

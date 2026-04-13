@@ -41,7 +41,7 @@ internal static class OptionalFluentMethodDeclaration
                     ThisExpression(),
                     IdentifierName(b.TargetParameter.Name.ToParameterFieldName()))));
 
-        var knownArgs = step.KnownConstructorParameters.Select(p =>
+        var knownArgs = step.KnownTargetParameters.Select(p =>
             SymbolEqualityComparer.Default.Equals(p, method.SourceParameter)
                 ? Argument(IdentifierName(parameterName))
                 : Argument(

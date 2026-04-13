@@ -742,11 +742,11 @@ public class TypeFirstTests
                         .WithSpan(sourceFile, 13, 14, 13, 48)
                         .WithArguments("BuildCircle", "'Test.A.Circle', 'Test.B.Circle'"),
                     DiagnosticResult
-                        .CompilerError(FluentDiagnostics.UnreachableConstructor.Id)
+                        .CompilerError(FluentDiagnostics.UnreachableTarget.Id)
                         .WithSpan(sourceFile, 15, 20, 15, 26)
                         .WithArguments("Circle.Circle(double radius)"),
                     DiagnosticResult
-                        .CompilerError(FluentDiagnostics.UnreachableConstructor.Id)
+                        .CompilerError(FluentDiagnostics.UnreachableTarget.Id)
                         .WithSpan(sourceFile, 30, 20, 30, 26)
                         .WithArguments("Circle.Circle(int radius)")
                 }

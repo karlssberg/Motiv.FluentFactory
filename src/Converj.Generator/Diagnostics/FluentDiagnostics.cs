@@ -10,13 +10,13 @@ public static class FluentDiagnostics
     private const string Category = "Converj";
 
     /// <summary>
-    /// Diagnostic for unreachable fluent constructor.
+    /// Diagnostic for unreachable fluent target.
     /// </summary>
-    public static readonly DiagnosticDescriptor UnreachableConstructor = new(
+    public static readonly DiagnosticDescriptor UnreachableTarget = new(
         id: "CVJG0001",
-        title: "Unreachable fluent constructor",
+        title: "Unreachable fluent target",
         messageFormat:
-        "Unreachable fluent constructor '{0}'",
+        "Unreachable fluent target method '{0}'",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
@@ -126,23 +126,23 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for constructors with unsupported parameter modifiers (ref, out, in, ref readonly).
+    /// Diagnostic for targets with unsupported parameter modifiers (ref, out, in, ref readonly).
     /// </summary>
     public static readonly DiagnosticDescriptor UnsupportedParameterModifier = new(
         id: "CVJG0011",
         title: "Unsupported parameter modifier",
-        messageFormat: "Constructor '{0}' has parameter '{1}' with unsupported modifier '{2}'. The Converj generator requires value-type parameters. This constructor will be skipped.",
+        messageFormat: "Target method '{0}' has parameter '{1}' with unsupported modifier '{2}'. The Converj generator requires value-type parameters. This target will be skipped.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic for constructors with inaccessible accessibility (private, protected).
+    /// Diagnostic for targets with inaccessible accessibility (private, protected).
     /// </summary>
-    public static readonly DiagnosticDescriptor InaccessibleConstructor = new(
+    public static readonly DiagnosticDescriptor InaccessibleTarget = new(
         id: "CVJG0012",
-        title: "Inaccessible constructor",
-        messageFormat: "Constructor '{0}' has '{1}' accessibility and cannot be used by the Converj generator. Only public and internal constructors are supported.",
+        title: "Inaccessible target",
+        messageFormat: "Target method '{0}' has '{1}' accessibility and cannot be used by the Converj generator. Only public and internal targets are supported.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true);

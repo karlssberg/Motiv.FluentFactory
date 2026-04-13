@@ -8,7 +8,7 @@ using Converj.Generator.TargetAnalysis;
 namespace Converj.Generator;
 
 /// <summary>
-/// Source generator that emits fluent root builder APIs from constructors, methods, and types annotated with [FluentTarget].
+/// Source generator that emits fluent root builder APIs from types, constructors, and methods annotated with [FluentTarget].
 /// </summary>
 [Generator(LanguageNames.CSharp)]
 public class FluentRootGenerator : IIncrementalGenerator
@@ -26,7 +26,7 @@ public class FluentRootGenerator : IIncrementalGenerator
             .ForAttributeWithMetadataName(TypeName.FluentTargetAttribute,
                 (node, _) => node switch
                 {
-                    // Capture type declarations with FluentTarget attributes (for applying to all constructors)
+                    // Capture type declarations with FluentTarget attributes (for applying to all targets)
                     TypeDeclarationSyntax { AttributeLists.Count: > 0 } => true,
                     // Capture explicit constructors
                     ConstructorDeclarationSyntax { AttributeLists.Count: > 0 } => true,
@@ -59,13 +59,13 @@ public class FluentRootGenerator : IIncrementalGenerator
                 }
             );
 
-        var typeOrConstructorDeclarations = nonGenericDeclarations
+        var typeOrTargetDeclarations = nonGenericDeclarations
             .Collect()
             .Combine(genericDeclarations.Collect())
             .SelectMany((pair, _) => DeduplicateBySyntaxNode(pair.Left, pair.Right));
 
-        // Step 2: Gather all discovered candidate constructors and capture metadata
-        var constructorModels = typeOrConstructorDeclarations
+        // Step 2: Gather all discovered candidate targets and capture metadata
+        var targetModels = typeOrTargetDeclarations
             .Combine(compilationProvider)
             .SelectMany((data, ct) =>
             {
@@ -73,26 +73,26 @@ public class FluentRootGenerator : IIncrementalGenerator
                 var syntax = data.Left.syntax;
                 return FluentTargetContextFactory.CreateTargetContexts(compilation, syntax, ct);
             })
-            .WithTrackingName("ConstructorModelCreation");
+            .WithTrackingName("TargetModelCreation");
 
-        // Step 3: Transform constructor contexts into compiled file contents
-        var consolidated = constructorModels
+        // Step 3: Transform target contexts into compiled file contents
+        var consolidated = targetModels
             .Collect()
             .Combine(compilationProvider)
-            .WithTrackingName("ConstructorModelsConsolidation")
+            .WithTrackingName("TargetModelsConsolidation")
             .SelectMany((tuple, _) =>
             {
                 var (builderContextsCollection, compilation) = tuple;
                 return builderContextsCollection
                     .SelectMany(builderContexts => builderContexts)
                     .GroupBy(builderContext => builderContext.RootType, SymbolEqualityComparer.Default)
-                    .Select(fluentApiConstructors =>
+                    .Select(fluentApiTargets =>
                         new FluentModelBuilder(compilation)
                             .CreateFluentRootCompilationUnit(
-                                (INamedTypeSymbol)fluentApiConstructors.Key!,
-                                [..FluentTargetContextFactory.DeDuplicateFluentTargets(fluentApiConstructors)]));
+                                (INamedTypeSymbol)fluentApiTargets.Key!,
+                                [..FluentTargetContextFactory.DeDuplicateFluentTargets(fluentApiTargets)]));
             })
-            .WithTrackingName("ConstructorModelsToFluentBuilderFiles");
+            .WithTrackingName("TargetModelsToFluentBuilderFiles");
 
         // Step 4: Write the generated files.
         context.RegisterSourceOutput(consolidated, Execute);

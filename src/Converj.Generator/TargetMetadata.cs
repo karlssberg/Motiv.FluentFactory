@@ -7,11 +7,11 @@ using FluentPropertyMember = Converj.Generator.TargetAnalysis.FluentPropertyMemb
 namespace Converj.Generator;
 
 [DebuggerDisplay("{ToDisplayString()}")]
-internal class ConstructorMetadata(FluentTargetContext targetContext)
+internal class TargetMetadata(FluentTargetContext targetContext)
 {
-    public IMethodSymbol Constructor { get; set; } = targetContext.Constructor;
+    public IMethodSymbol Method { get; set; } = targetContext.Method;
 
-    public IList<IMethodSymbol> CandidateTargets { get; } = [targetContext.Constructor];
+    public IList<IMethodSymbol> CandidateTargets { get; } = [targetContext.Method];
 
     public TerminalMethodKind TerminalMethod { get; set; } = targetContext.TerminalMethod;
 
@@ -41,13 +41,13 @@ internal class ConstructorMetadata(FluentTargetContext targetContext)
     /// Parameters with explicit default values that become optional fluent setter methods.
     /// </summary>
     public ImmutableArray<IParameterSymbol> OptionalParameters { get; } =
-        [..targetContext.Constructor.Parameters.Where(p => p.HasExplicitDefaultValue)];
+        [..targetContext.Method.Parameters.Where(p => p.HasExplicitDefaultValue)];
 
     /// <summary>
-    /// The count of required (non-optional) parameters in the constructor.
+    /// The count of required (non-optional) parameters in the target method.
     /// </summary>
     public int RequiredParameterCount =>
-        Constructor.Parameters.Length - OptionalParameters.Length;
+        Method.Parameters.Length - OptionalParameters.Length;
 
     /// <summary>
     /// Required properties (C# required keyword or [Required] attribute) on the target type
@@ -62,10 +62,10 @@ internal class ConstructorMetadata(FluentTargetContext targetContext)
     public ImmutableArray<FluentPropertyMember> OptionalProperties { get; } =
         [..targetContext.TargetTypeProperties.Where(p => !p.IsRequired)];
 
-    public ConstructorMetadata Clone()
+    public TargetMetadata Clone()
     {
-        return new ConstructorMetadata(Context);
+        return new TargetMetadata(Context);
     }
 
-    public string ToDisplayString() => Constructor.ToDisplayString();
+    public string ToDisplayString() => Method.ToDisplayString();
 }

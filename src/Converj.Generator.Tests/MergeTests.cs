@@ -1638,7 +1638,7 @@ public class MergeTests
                             "WhenFalseYieldOverloads.WhenFalse<TModel, string>(System.Func<TModel, string> whenFalse)",
                             "System.Func<TModel, System.Collections.Generic.IEnumerable<string>> falseBecause",
                             "MultiAssertionExplanationWithNamePropositionFactory<TModel>.MultiAssertionExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, System.Collections.Generic.IEnumerable<string>> falseBecause)",
-                            "the parameter 'System.Func<TModel, string> falseBecause' in the constructor 'ExplanationWithNamePropositionFactory<TModel>.ExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, string> falseBecause)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                            "the parameter 'System.Func<TModel, string> falseBecause' in the target method 'ExplanationWithNamePropositionFactory<TModel>.ExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, string> falseBecause)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     DiagnosticResult
                         .CompilerWarning(ContainsSupersededFluentMethodTemplate.Id)
                         .WithSpan(SourceFile, 21, 28, 21, 59)
@@ -1647,7 +1647,7 @@ public class MergeTests
                             "WhenFalseYieldOverloads.WhenFalse<TModel, string>(string whenFalse)",
                             "System.Func<TModel, System.Collections.Generic.IEnumerable<string>> falseBecause",
                             "MultiAssertionExplanationWithNamePropositionFactory<TModel>.MultiAssertionExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, System.Collections.Generic.IEnumerable<string>> falseBecause)",
-                            "the parameter 'System.Func<TModel, string> falseBecause' in the constructor 'ExplanationWithNamePropositionFactory<TModel>.ExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, string> falseBecause)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
+                            "the parameter 'System.Func<TModel, string> falseBecause' in the target method 'ExplanationWithNamePropositionFactory<TModel>.ExplanationWithNamePropositionFactory(System.Func<TModel, bool> predicate, string trueBecause, System.Func<TModel, string> falseBecause)' was used as the basis for the fluent method. Perhaps the ignored method-template can be removed or modified."),
                     new DiagnosticResult(FluentMethodTemplateSuperseded.Id, Info)
                         .WithSpan(SourceFile, 67, 58, 67, 67)
                         .WithArguments(

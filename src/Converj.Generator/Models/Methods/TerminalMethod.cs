@@ -11,7 +11,7 @@ internal class TerminalMethod : IFluentMethod
 
     public TerminalMethod(
         INamespaceSymbol rootNamespace,
-        ConstructorMetadata constructorMetadata,
+        TargetMetadata targetMetadata,
         ImmutableArray<FluentMethodParameter> availableParameterFields,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources,
         string? terminalMethodName = null)
@@ -21,15 +21,15 @@ internal class TerminalMethod : IFluentMethod
         RootNamespace = rootNamespace;
         AvailableParameterFields = availableParameterFields;
         ValueSources = valueSources;
-        IsStaticMethodTarget = constructorMetadata.IsStaticMethodTarget;
-        ReceiverParameter = constructorMetadata.ReceiverParameter;
+        IsStaticMethodTarget = targetMetadata.IsStaticMethodTarget;
+        ReceiverParameter = targetMetadata.ReceiverParameter;
         Name = terminalMethodName ?? "Create";
         Return = new TargetTypeReturn(
-            constructorMetadata.Constructor,
-            [..constructorMetadata.CandidateTargets],
+            targetMetadata.Method,
+            [..targetMetadata.CandidateTargets],
             new ParameterSequence(availableParameterFields),
-            constructorMetadata.ReturnType,
-            IsStaticMethodTarget ? constructorMetadata.Constructor.ReturnType as INamedTypeSymbol : null);
+            targetMetadata.ReturnType,
+            IsStaticMethodTarget ? targetMetadata.Method.ReturnType as INamedTypeSymbol : null);
     }
 
     /// <summary>

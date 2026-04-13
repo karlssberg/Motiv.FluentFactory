@@ -15,7 +15,7 @@ internal static class FluentStepDeclaration
     {
         // Compute ambient type parameters from the step struct's generic type parameters
         // so that step methods don't re-declare type parameters already on the struct
-        var ambientTypeParameters = step.GenericConstructorParameters
+        var ambientTypeParameters = step.GenericTargetParameters
             .SelectMany(p => p.Type.GetGenericTypeArguments())
             .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToImmutableArray();
@@ -25,10 +25,10 @@ internal static class FluentStepDeclaration
                 method switch
                 {
                     TerminalMethod terminalMethod => StepTerminalMethodDeclaration.Create(terminalMethod, step),
-                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownConstructorParameters, ambientTypeParameters, isStepContext: true),
+                    MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownTargetParameters, ambientTypeParameters, isStepContext: true),
                     OptionalFluentMethod optionalMethod => OptionalFluentMethodDeclaration.Create(optionalMethod, step),
                     OptionalPropertyFluentMethod optionalPropertyMethod => OptionalPropertyFluentMethodDeclaration.Create(optionalPropertyMethod, step),
-                    _ => FluentStepMethodDeclaration.Create(method, step.KnownConstructorParameters, ambientTypeParameters, isStepContext: true)
+                    _ => FluentStepMethodDeclaration.Create(method, step.KnownTargetParameters, ambientTypeParameters, isStepContext: true)
                 });
 
         var fieldDeclarations = FieldAndPropertySyntax.CreateDeclarations(step.ValueStorage);
@@ -143,7 +143,7 @@ internal static class FluentStepDeclaration
         }
 
         // Get the generic type arguments that are actually used in this step
-        var usedGenericArguments = step.GenericConstructorParameters
+        var usedGenericArguments = step.GenericTargetParameters
             .SelectMany(p => p.Type.GetGenericTypeArguments())
             .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();

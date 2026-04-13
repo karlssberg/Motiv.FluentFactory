@@ -11,7 +11,7 @@ internal class TypeFirstEntryMethod(
     string name,
     IFluentStep rootStep,
     INamespaceSymbol rootNamespace,
-    ImmutableArray<IMethodSymbol> candidateConstructors) : IFluentMethod
+    ImmutableArray<IMethodSymbol> candidateTargets) : IFluentMethod
 {
     /// <inheritdoc />
     public string Name { get; } = name;
@@ -46,5 +46,5 @@ internal class TypeFirstEntryMethod(
     /// <summary>
     /// The candidate constructors reachable from this type-first entry point.
     /// </summary>
-    public ImmutableArray<IMethodSymbol> CandidateTargets { get; } = candidateConstructors;
+    public ImmutableArray<IMethodSymbol> CandidateTargets { get; } = candidateTargets;
 }

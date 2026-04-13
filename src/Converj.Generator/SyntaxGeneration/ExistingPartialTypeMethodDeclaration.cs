@@ -36,7 +36,7 @@ internal static class ExistingPartialTypeMethodDeclaration
             {
                 TargetTypeReturn tr => tr.IdentifierDisplayString(typeParamMap),
                 ExistingTypeFluentStep existingReturn =>
-                    existingReturn.ConstructorContext.Constructor.ContainingType
+                    existingReturn.TargetContext.Method.ContainingType
                         .ToGlobalDisplayString(typeParamMap),
                 RegularFluentStep regularReturn => regularReturn.IdentifierDisplayString(typeParamMap),
                 _ => method.Return.IdentifierDisplayString()
@@ -90,7 +90,7 @@ internal static class ExistingPartialTypeMethodDeclaration
 
         var typeParameterSyntaxes = method.TypeParameters
             .Except(
-                step.KnownConstructorParameters
+                step.KnownTargetParameters
                     .SelectMany(parameter => parameter.Type.GetGenericTypeParameters())
                     .Select(genericTypeParameters => new FluentTypeParameter(genericTypeParameters)))
             .Select(fluentTypeParameter => fluentTypeParameter.TypeParameterSymbol.ToTypeParameterSyntax())
@@ -112,7 +112,7 @@ internal static class ExistingPartialTypeMethodDeclaration
         if (step is not ExistingTypeFluentStep existingStep)
             return new Dictionary<string, string>();
 
-        var containingType = existingStep.ConstructorContext.Constructor.ContainingType;
+        var containingType = existingStep.TargetContext.Method.ContainingType;
 
         // Only build a mapping when at least one type parameter has an [As] alias.
         // This avoids unnecessary work in downstream methods that check Count > 0.

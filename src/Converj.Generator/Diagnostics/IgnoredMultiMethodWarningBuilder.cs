@@ -6,7 +6,7 @@ namespace Converj.Generator.Diagnostics;
 
 internal class IgnoredMultiMethodWarningBuilder(
     ImmutableHashSet<IFluentMethod> allIgnoredMethods,
-    UnreachableConstructorAnalyzer unreachableConstructorAnalyzer)
+    UnreachableTargetAnalyzer unreachableTargetAnalyzer)
 {
 
     private readonly ImmutableHashSet<IMethodSymbol> _allIgnoredMultiMethods = allIgnoredMethods
@@ -32,7 +32,7 @@ internal class IgnoredMultiMethodWarningBuilder(
     {
         switch (selectedMethod)
         {
-            case RegularMethod when DoIgnoredMethodsCollectivelyCauseUnreachableConstructors():
+            case RegularMethod when DoIgnoredMethodsCollectivelyCauseUnreachableTargets():
             case MultiMethod selectedMultiMethod when AreSelectedAndIgnoredMethodsFromSameContainingType(selectedMultiMethod):
                 yield break;
         }
@@ -41,7 +41,7 @@ internal class IgnoredMultiMethodWarningBuilder(
         {
             if (selectedMethod is RegularMethod
                 && HasActiveSiblingTemplates(ignoredMethod)
-                && IsSourceConstructorReachable(ignoredMethod))
+                && IsSourceTargetReachable(ignoredMethod))
                 continue;
 
             var ctorDisplayString = ignoredMethod.ToDisplayString();
@@ -75,19 +75,19 @@ internal class IgnoredMultiMethodWarningBuilder(
         bool HasActiveSiblingTemplates(MultiMethod ignoredMethod) =>
             !ignoredMethod.SiblingMultiMethods.IsSubsetOf(_allIgnoredMultiMethods);
 
-        // An "active sibling" only keeps the ignored method's source constructor reachable
-        // if the source constructor is still in the reachable set after selection/reconciliation.
+        // An "active sibling" only keeps the ignored method's source target reachable
+        // if the source target is still in the reachable set after selection/reconciliation.
         // When sibling templates chain into a shared step whose terminal reconciles to a different
         // target (e.g., Value2(Func<int>) from SecondB that flows into a step whose Value3 builds
         // SecondA), the sibling is superficially "active" but contributes nothing to reachability.
-        bool IsSourceConstructorReachable(MultiMethod ignoredMethod) =>
-            ignoredMethod.SourceParameter.ContainingSymbol is IMethodSymbol sourceConstructor
-            && unreachableConstructorAnalyzer.IsReachable(sourceConstructor);
+        bool IsSourceTargetReachable(MultiMethod ignoredMethod) =>
+            ignoredMethod.SourceParameter.ContainingSymbol is IMethodSymbol sourceTarget
+            && unreachableTargetAnalyzer.IsReachable(sourceTarget);
 
-        bool DoIgnoredMethodsCollectivelyCauseUnreachableConstructors() =>
+        bool DoIgnoredMethodsCollectivelyCauseUnreachableTargets() =>
             ignoredMultiMethods
                 .All(ignoredMethod =>
-                    selectedMethod.FindUnreachableConstructors(ignoredMethod, _allIgnoredMultiMethods).Any());
+                    selectedMethod.FindUnreachableTargets(ignoredMethod, _allIgnoredMultiMethods).Any());
 
         bool AreSelectedAndIgnoredMethodsFromSameContainingType(MultiMethod selectedMultiMethod) =>
             ignoredMultiMethods.All(ignoredMethod => SymbolEqualityComparer.Default
@@ -98,7 +98,7 @@ internal class IgnoredMultiMethodWarningBuilder(
         string GetSelectedMethodDescription()
         {
             return $"the parameter '{selectedMethod.SourceParameter?.ToDisplayString(_shortFormat)}' in " +
-                   $"the constructor '{selectedMethod.SourceParameter?.ContainingSymbol.ToFullDisplayString()}' " +
+                   $"the target method '{selectedMethod.SourceParameter?.ContainingSymbol.ToFullDisplayString()}' " +
                    $"was used as the basis for the fluent method. " +
                    "Perhaps the ignored method-template can be removed or modified.";
         }
