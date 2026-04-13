@@ -140,7 +140,7 @@ internal static class FluentStepMethodDeclaration
     {
         // Root methods handle threading via RewriteRootMethodForThreadedParameters in RootTypeDeclaration.
         // Step methods must always forward threaded parameters, even when knownConstructorParameters is empty
-        // (e.g., property steps from root-level creation methods where all constructor params are pre-satisfied).
+        // (e.g., property steps from root-level terminal methods where all constructor params are pre-satisfied).
         var threadedArgs = Enumerable.Empty<ArgumentSyntax>();
         if ((knownConstructorParameters.Any() || isStepContext)
             && method.Return is IFluentStep { ThreadedParameters.IsEmpty: false } nextStep)

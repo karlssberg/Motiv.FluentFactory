@@ -819,7 +819,7 @@ internal static class FluentTargetValidatorExtensions
 
     /// <summary>
     /// Reports a warning diagnostic when a target type has required properties but the constructor
-    /// uses TerminalMethod.None, which doesn't generate a creation method for object initializer syntax.
+    /// uses TerminalMethod.None, which doesn't generate a terminal method for object initializer syntax.
     /// </summary>
     private static IEnumerable<Diagnostic> ValidatePropertyWithBuilderNone(
         ImmutableArray<FluentTargetContext> fluentTargetContexts)

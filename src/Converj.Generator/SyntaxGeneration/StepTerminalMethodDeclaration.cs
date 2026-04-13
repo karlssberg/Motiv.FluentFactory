@@ -24,7 +24,7 @@ internal static class StepTerminalMethodDeclaration
 
         var methodArguments = GetMethodArguments(method);
 
-        ExpressionSyntax returnExpression = method is CreationMethod { IsStaticMethodTarget: true } staticCreation
+        ExpressionSyntax returnExpression = method is TerminalMethod { IsStaticMethodTarget: true } staticCreation
             ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldArguments, methodArguments)
             : TargetTypeObjectCreationExpression.Create(method, fieldArguments, methodArguments);
 

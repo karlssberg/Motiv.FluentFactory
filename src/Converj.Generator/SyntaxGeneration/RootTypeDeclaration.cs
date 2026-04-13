@@ -180,7 +180,7 @@ internal static class RootTypeDeclaration
         var receiverParameter = method switch
         {
             { Return: IFluentStep { ReceiverParameter: not null } step } => step.ReceiverParameter,
-            CreationMethod { ReceiverParameter: not null } creation => creation.ReceiverParameter,
+            TerminalMethod { ReceiverParameter: not null } creation => creation.ReceiverParameter,
             _ => null
         };
 

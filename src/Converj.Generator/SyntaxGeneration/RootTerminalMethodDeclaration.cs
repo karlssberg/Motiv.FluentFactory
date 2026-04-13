@@ -26,7 +26,7 @@ internal static class RootTerminalMethodDeclaration
         var fieldArguments = ExpandArguments(method.AvailableParameterFields);
         var methodArguments = ExpandArguments(method.MethodParameters);
 
-        ExpressionSyntax returnExpression = method is CreationMethod { IsStaticMethodTarget: true } staticCreation
+        ExpressionSyntax returnExpression = method is TerminalMethod { IsStaticMethodTarget: true } staticCreation
             ? TargetTypeObjectCreationExpression.CreateStaticMethodInvocation(staticCreation, fieldArguments, methodArguments)
             : TargetTypeObjectCreationExpression.Create(method, fieldArguments, methodArguments);
 

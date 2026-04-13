@@ -4,17 +4,17 @@ using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Models.Methods;
 
-internal class CreationMethod : IFluentMethod
+internal class TerminalMethod : IFluentMethod
 {
     private readonly Lazy<ImmutableArray<FluentTypeParameter>> _lazyTypeParameters;
 
 
-    public CreationMethod(
+    public TerminalMethod(
         INamespaceSymbol rootNamespace,
         ConstructorMetadata constructorMetadata,
         ImmutableArray<FluentMethodParameter> availableParameterFields,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources,
-        string? createMethodName = null)
+        string? terminalMethodName = null)
     {
         _lazyTypeParameters = new Lazy<ImmutableArray<FluentTypeParameter>>(GetFluentTypeParameter);
 
@@ -23,7 +23,7 @@ internal class CreationMethod : IFluentMethod
         ValueSources = valueSources;
         IsStaticMethodTarget = constructorMetadata.IsStaticMethodTarget;
         ReceiverParameter = constructorMetadata.ReceiverParameter;
-        Name = createMethodName ?? "Create";
+        Name = terminalMethodName ?? "Create";
         Return = new TargetTypeReturn(
             constructorMetadata.Constructor,
             [..constructorMetadata.CandidateTargets],
@@ -33,7 +33,7 @@ internal class CreationMethod : IFluentMethod
     }
 
     /// <summary>
-    /// Whether this creation method targets a static method instead of a constructor.
+    /// Whether this terminal method targets a static method instead of a constructor.
     /// </summary>
     public bool IsStaticMethodTarget { get; }
 
@@ -86,7 +86,7 @@ internal class CreationMethod : IFluentMethod
         }
     }
 
-    public Dictionary<string, string>? ParameterDocumentation => null; // Creation methods don't use template methods
+    public Dictionary<string, string>? ParameterDocumentation => null; // Terminal methods don't use template methods
 
     public IParameterSymbol? SourceParameter => null;
 

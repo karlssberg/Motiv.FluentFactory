@@ -24,9 +24,9 @@ internal static class TargetTypeObjectCreationExpression
             .WithArgumentList(ArgumentList(SeparatedList([..fieldArguments, ..methodArguments])));
 
         // Add object initializer for property-backed parameters
-        if (method is CreationMethod { PropertyInitializers.IsEmpty: false } creationMethod)
+        if (method is TerminalMethod { PropertyInitializers.IsEmpty: false } terminalMethod)
         {
-            var initializerExpressions = creationMethod.PropertyInitializers
+            var initializerExpressions = terminalMethod.PropertyInitializers
                 .Select(pi =>
                     (ExpressionSyntax)AssignmentExpression(
                         SyntaxKind.SimpleAssignmentExpression,
@@ -50,7 +50,7 @@ internal static class TargetTypeObjectCreationExpression
     /// Creates an invocation expression for a static method target (e.g., Class.Method(args)).
     /// </summary>
     public static InvocationExpressionSyntax CreateStaticMethodInvocation(
-        CreationMethod method,
+        TerminalMethod method,
         IEnumerable<ArgumentSyntax> fieldArguments,
         IEnumerable<ArgumentSyntax> methodArguments)
     {

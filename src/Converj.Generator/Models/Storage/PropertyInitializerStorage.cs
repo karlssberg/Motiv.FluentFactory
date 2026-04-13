@@ -5,7 +5,7 @@ namespace Converj.Generator.Models.Storage;
 
 /// <summary>
 /// Value storage for a property that will be set via object initializer syntax
-/// in the creation method, rather than passed as a constructor argument.
+/// in the terminal method, rather than passed as a constructor argument.
 /// </summary>
 internal record PropertyInitializerStorage(string PropertyName, string IdentifierName, ITypeSymbol Type, INamespaceSymbol ContainingNamespace) : IFluentValueStorage
 {

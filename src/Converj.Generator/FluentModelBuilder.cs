@@ -164,7 +164,7 @@ internal class FluentModelBuilder(Compilation compilation)
             fluentBuilderSteps = [..fluentBuilderSteps, ..typeFirstSteps];
         }
 
-        // Post-process: insert required property steps between end steps and creation methods
+        // Post-process: insert required property steps between end steps and terminal methods
         var (propertySteps, updatedRootMethods) = PropertyStepEnricher.InsertRequiredPropertySteps(rootType, fluentRootMethods, fluentBuilderSteps);
         if (propertySteps.Length > 0)
         {
@@ -211,7 +211,7 @@ internal class FluentModelBuilder(Compilation compilation)
                     rootType, child,
                     (t, n, vs) => ConvertNodeToFluentFluentMethods(t, n, vs, stepBuilder),
                     AddOptionalMethodsToStep)),
-            ..ConvertNodeToCreationMethods(type, node, valueStorages)
+            ..ConvertNodeToTerminalMethods(type, node, valueStorages)
         ];
 
         return fluentMethods;
@@ -269,7 +269,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
     }
 
-    private IEnumerable<IFluentMethod> ConvertNodeToCreationMethods(INamedTypeSymbol rootType,
+    private IEnumerable<IFluentMethod> ConvertNodeToTerminalMethods(INamedTypeSymbol rootType,
         Trie<FluentMethodParameter, ConstructorMetadata>.Node node,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources)
     {
@@ -306,19 +306,19 @@ internal class FluentModelBuilder(Compilation compilation)
                 ? [..receiverField, ..threadedParamFields, ..node.Key, ..optionalParamFields]
                 : [..receiverField, ..threadedParamFields, ..node.Key];
 
-            var creationMethod = BuildCreationMethod(
+            var terminalMethod = BuildTerminalMethod(
                 rootType.ContainingNamespace, value, preSatisfiedNames, allParameterFields, valueSources);
 
-            _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
-            yield return creationMethod;
+            _unreachableConstructorAnalyzer.AddReachableMethod(terminalMethod);
+            yield return terminalMethod;
         }
     }
 
     /// <summary>
-    /// Builds a <see cref="CreationMethod"/> for a constructor metadata entry, resolving the terminal method name
+    /// Builds a <see cref="TerminalMethod"/> for a constructor metadata entry, resolving the terminal method name
     /// and merging threaded parameter value sources.
     /// </summary>
-    private CreationMethod BuildCreationMethod(
+    private TerminalMethod BuildTerminalMethod(
         INamespaceSymbol rootNamespace,
         ConstructorMetadata metadata,
         HashSet<string> preSatisfiedNames,
@@ -333,7 +333,7 @@ internal class FluentModelBuilder(Compilation compilation)
         var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
             metadata.Constructor, valueSources, preSatisfiedNames);
 
-        return new CreationMethod(rootNamespace, metadata, allParameterFields, mergedValueSources, methodName);
+        return new TerminalMethod(rootNamespace, metadata, allParameterFields, mergedValueSources, methodName);
     }
 
     /// <summary>
@@ -401,7 +401,7 @@ internal class FluentModelBuilder(Compilation compilation)
             // Build a parameter trie for this target type group
             var trie = CreateFluentStepTrie(contexts);
 
-            // Force Fixed creation method on all trie end values so terminals are "Create()"
+            // Force Fixed terminal method on all trie end values so terminals are "Create()"
             ForceFixedCreateMethod(trie.Root);
 
             // Use a separate step builder to avoid collisions with parameter-first steps
@@ -421,9 +421,9 @@ internal class FluentModelBuilder(Compilation compilation)
                 .DistinctBy(step => step.KnownConstructorParameters)
                 .ToList();
 
-            // Separate creation methods from step methods so creation methods appear last
-            var stepMethods = trieRootMethods.Where(m => m is not CreationMethod).ToList();
-            var creationMethods = trieRootMethods.Where(m => m is CreationMethod).ToList();
+            // Separate terminal methods from step methods so terminal methods appear last
+            var stepMethods = trieRootMethods.Where(m => m is not TerminalMethod).ToList();
+            var terminalMethods = trieRootMethods.Where(m => m is TerminalMethod).ToList();
 
             // Create the type-first root step that wraps the trie's root methods
             var rootStep = new RegularFluentStep(
@@ -444,8 +444,8 @@ internal class FluentModelBuilder(Compilation compilation)
                 AddOptionalMethodsToStep(rootType, trie.Root, rootStep, rootStep.ValueStorage);
             }
 
-            // Add creation methods after optional methods
-            rootStep.FluentMethods.AddRange(creationMethods);
+            // Add terminal methods after optional methods
+            rootStep.FluentMethods.AddRange(terminalMethods);
 
             // Number and tag all descendant steps with the target type name
             foreach (var step in descendantSteps)
@@ -653,7 +653,7 @@ internal class FluentModelBuilder(Compilation compilation)
                 step.FluentMethods.Add(optionalMethod);
             }
 
-            // Add creation methods to the step
+            // Add terminal methods to the step
             foreach (var metadata in constructors)
             {
                 if (metadata.TerminalMethod == TerminalMethodKind.None) continue;
@@ -666,11 +666,11 @@ internal class FluentModelBuilder(Compilation compilation)
                     .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
                 ImmutableArray<FluentMethodParameter> allParamFields = [..threadedParamFields, ..optionalParamFields];
 
-                var creationMethod = BuildCreationMethod(
+                var terminalMethod = BuildTerminalMethod(
                     rootType.ContainingNamespace, metadata, preSatisfiedNames, allParamFields, valueStorages);
 
-                _unreachableConstructorAnalyzer.AddReachableMethod(creationMethod);
-                step.FluentMethods.Add(creationMethod);
+                _unreachableConstructorAnalyzer.AddReachableMethod(terminalMethod);
+                step.FluentMethods.Add(terminalMethod);
             }
 
             steps.Add(step);

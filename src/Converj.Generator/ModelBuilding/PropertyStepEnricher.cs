@@ -6,16 +6,16 @@ namespace Converj.Generator.ModelBuilding;
 
 /// <summary>
 /// Post-processes fluent step chains to insert required and optional property initialization steps
-/// between end steps and their creation methods.
+/// between end steps and their terminal methods.
 /// </summary>
 internal static class PropertyStepEnricher
 {
     /// <summary>
     /// Post-processes the step chain to insert required property steps between end steps
-    /// and their creation methods. For each creation method whose target type has required
-    /// properties, removes the creation method from its current step, creates a chain of
-    /// property steps, and places the creation method on the last property step.
-    /// Also handles root-level creation methods (when all constructor params are pre-satisfied).
+    /// and their terminal methods. For each terminal method whose target type has required
+    /// properties, removes the terminal method from its current step, creates a chain of
+    /// property steps, and places the terminal method on the last property step.
+    /// Also handles root-level terminal methods (when all constructor params are pre-satisfied).
     /// </summary>
     public static (ImmutableArray<IFluentStep> NewSteps, ImmutableArray<IFluentMethod> UpdatedRootMethods)
         InsertRequiredPropertySteps(
@@ -26,10 +26,10 @@ internal static class PropertyStepEnricher
         var newSteps = new List<IFluentStep>();
         var nextStepIndex = existingSteps.Length;
 
-        // Process step-level creation methods
+        // Process step-level terminal methods
         foreach (var step in existingSteps)
         {
-            ProcessCreationMethodsOnStep(rootType, step, step.FluentMethods, step.ValueStorage,
+            ProcessTerminalMethodsOnStep(rootType, step, step.FluentMethods, step.ValueStorage,
                 step.KnownConstructorParameters, step.Accessibility,
                 step is RegularFluentStep rfs ? rfs.TypeKind : TypeKind.Class,
                 step is RegularFluentStep rfs2 ? rfs2.PropertyFieldStorage : ImmutableArray<FieldStorage>.Empty,
@@ -37,18 +37,18 @@ internal static class PropertyStepEnricher
                 newSteps, ref nextStepIndex);
         }
 
-        // Process root-level creation methods (0-param constructors with pre-satisfied params)
-        var updatedRootMethods = ProcessRootLevelCreationMethods(
+        // Process root-level terminal methods (0-param constructors with pre-satisfied params)
+        var updatedRootMethods = ProcessRootLevelTerminalMethods(
             rootType, rootMethods, newSteps, ref nextStepIndex);
 
         return ([..newSteps], updatedRootMethods);
     }
 
     /// <summary>
-    /// Processes creation methods on a step, replacing them with property step chains
+    /// Processes terminal methods on a step, replacing them with property step chains
     /// when the target type has required properties.
     /// </summary>
-    private static void ProcessCreationMethodsOnStep(
+    private static void ProcessTerminalMethodsOnStep(
         INamedTypeSymbol rootType,
         IFluentStep ownerStep,
         IList<IFluentMethod> methods,
@@ -61,19 +61,19 @@ internal static class PropertyStepEnricher
         List<IFluentStep> newSteps,
         ref int nextStepIndex)
     {
-        var creationMethods = methods.OfType<CreationMethod>()
+        var terminalMethods = methods.OfType<TerminalMethod>()
             .Where(cm => cm.Return is TargetTypeReturn)
             .ToList();
 
-        foreach (var creationMethod in creationMethods)
+        foreach (var terminalMethod in terminalMethods)
         {
-            var requiredProperties = GetRequiredPropertiesForCreationMethod(creationMethod);
+            var requiredProperties = GetRequiredPropertiesForTerminalMethod(terminalMethod);
             if (requiredProperties.Count > 0)
             {
-                methods.Remove(creationMethod);
+                methods.Remove(terminalMethod);
 
                 BuildPropertyStepChain(
-                    rootType, creationMethod, requiredProperties,
+                    rootType, terminalMethod, requiredProperties,
                     ownerStep, valueStorage, knownConstructorParameters,
                     accessibility, typeKind, propertyFieldStorage, candidateConstructors,
                     newSteps, ref nextStepIndex);
@@ -81,44 +81,44 @@ internal static class PropertyStepEnricher
             }
 
             // Handle optional [FluentMethod] properties when there are no required properties
-            var optionalProperties = GetOptionalFluentMethodProperties(creationMethod);
+            var optionalProperties = GetOptionalFluentMethodProperties(terminalMethod);
             if (optionalProperties.Count > 0 && ownerStep is RegularFluentStep regularStep)
             {
                 AddOptionalPropertyMethodsToStep(
-                    rootType, regularStep, creationMethod, optionalProperties, "With");
+                    rootType, regularStep, terminalMethod, optionalProperties, "With");
             }
         }
     }
 
     /// <summary>
-    /// Processes root-level creation methods, replacing them with property methods
+    /// Processes root-level terminal methods, replacing them with property methods
     /// that lead to property step chains.
     /// </summary>
-    private static ImmutableArray<IFluentMethod> ProcessRootLevelCreationMethods(
+    private static ImmutableArray<IFluentMethod> ProcessRootLevelTerminalMethods(
         INamedTypeSymbol rootType,
         ImmutableArray<IFluentMethod> rootMethods,
         List<IFluentStep> newSteps,
         ref int nextStepIndex)
     {
-        var rootCreationMethods = rootMethods.OfType<CreationMethod>()
+        var rootTerminalMethods = rootMethods.OfType<TerminalMethod>()
             .Where(cm => cm.Return is TargetTypeReturn)
             .ToList();
 
-        var methodsToRemove = new List<CreationMethod>();
+        var methodsToRemove = new List<TerminalMethod>();
         var methodsToAdd = new List<IFluentMethod>();
 
-        foreach (var creationMethod in rootCreationMethods)
+        foreach (var terminalMethod in rootTerminalMethods)
         {
-            var requiredProperties = GetRequiredPropertiesForCreationMethod(creationMethod);
+            var requiredProperties = GetRequiredPropertiesForTerminalMethod(terminalMethod);
             if (requiredProperties.Count == 0) continue;
 
-            methodsToRemove.Add(creationMethod);
+            methodsToRemove.Add(terminalMethod);
 
             var emptyValueStorage = new OrderedDictionary<IParameterSymbol, IFluentValueStorage>();
-            foreach (var kvp in creationMethod.ValueSources)
+            foreach (var kvp in terminalMethod.ValueSources)
                 emptyValueStorage.Add(kvp.Key, kvp.Value);
 
-            var candidateConstructors = creationMethod.Return.CandidateTargets;
+            var candidateConstructors = terminalMethod.Return.CandidateTargets;
 
             // Create the first property step and entry method
             var firstProperty = requiredProperties[0];
@@ -146,25 +146,25 @@ internal static class PropertyStepEnricher
             {
                 // Single property: finalize directly
                 firstStep.IsEndStep = true;
-                creationMethod.PropertyInitializers =
+                terminalMethod.PropertyInitializers =
                 [
                     ..requiredProperties.Select(rp =>
                         (PropertyName: rp.Name, FieldName: rp.Name.ToParameterFieldName()))
                 ];
-                firstStep.FluentMethods = [creationMethod];
+                firstStep.FluentMethods = [terminalMethod];
 
-                var optionalProperties = GetOptionalFluentMethodProperties(creationMethod);
+                var optionalProperties = GetOptionalFluentMethodProperties(terminalMethod);
                 if (optionalProperties.Count > 0)
                 {
                     AddOptionalPropertyMethodsToStep(
-                        rootType, firstStep, creationMethod, optionalProperties, "With");
+                        rootType, firstStep, terminalMethod, optionalProperties, "With");
                 }
             }
             else
             {
                 // Multiple properties: delegate remaining chain to shared builder
                 BuildPropertyStepChain(
-                    rootType, creationMethod, requiredProperties,
+                    rootType, terminalMethod, requiredProperties,
                     firstStep, firstStep.ValueStorage, [],
                     rootType.DeclaredAccessibility, TypeKind.Class,
                     firstStep.PropertyFieldStorage, candidateConstructors,
@@ -185,11 +185,11 @@ internal static class PropertyStepEnricher
     }
 
     /// <summary>
-    /// Gets the required properties for a creation method's target type.
+    /// Gets the required properties for a terminal method's target type.
     /// </summary>
-    private static List<IPropertySymbol> GetRequiredPropertiesForCreationMethod(CreationMethod creationMethod)
+    private static List<IPropertySymbol> GetRequiredPropertiesForTerminalMethod(TerminalMethod terminalMethod)
     {
-        var constructor = creationMethod.Return.CandidateTargets.FirstOrDefault();
+        var constructor = terminalMethod.Return.CandidateTargets.FirstOrDefault();
         if (constructor is null) return [];
 
         var targetType = constructor.ContainingType;
@@ -204,12 +204,12 @@ internal static class PropertyStepEnricher
     }
 
     /// <summary>
-    /// Gets optional [FluentMethod] properties for a creation method's target type.
+    /// Gets optional [FluentMethod] properties for a terminal method's target type.
     /// These are non-required properties opted in via [FluentMethod] attribute.
     /// </summary>
-    private static List<IPropertySymbol> GetOptionalFluentMethodProperties(CreationMethod creationMethod)
+    private static List<IPropertySymbol> GetOptionalFluentMethodProperties(TerminalMethod terminalMethod)
     {
-        var constructor = creationMethod.Return.CandidateTargets.FirstOrDefault();
+        var constructor = terminalMethod.Return.CandidateTargets.FirstOrDefault();
         if (constructor is null) return [];
 
         var targetType = constructor.ContainingType;
@@ -225,12 +225,12 @@ internal static class PropertyStepEnricher
     }
 
     /// <summary>
-    /// Adds optional [FluentMethod] property methods to a step that contains a creation method.
+    /// Adds optional [FluentMethod] property methods to a step that contains a terminal method.
     /// </summary>
     private static void AddOptionalPropertyMethodsToStep(
         INamedTypeSymbol rootType,
         RegularFluentStep step,
-        CreationMethod creationMethod,
+        TerminalMethod terminalMethod,
         List<IPropertySymbol> optionalProperties,
         string methodPrefix)
     {
@@ -256,10 +256,10 @@ internal static class PropertyStepEnricher
 
         step.OptionalPropertyFieldStorage = [..optionalFieldStorages];
 
-        // Add optional properties to the creation method's property initializers
-        creationMethod.PropertyInitializers =
+        // Add optional properties to the terminal method's property initializers
+        terminalMethod.PropertyInitializers =
         [
-            ..creationMethod.PropertyInitializers,
+            ..terminalMethod.PropertyInitializers,
             ..optionalProperties.Select(p =>
                 (PropertyName: p.Name, FieldName: p.Name.ToParameterFieldName()))
         ];
@@ -321,11 +321,11 @@ internal static class PropertyStepEnricher
 
     /// <summary>
     /// Builds a chain of property steps for required properties, attaching them
-    /// to the owner step and adding the creation method to the last step.
+    /// to the owner step and adding the terminal method to the last step.
     /// </summary>
     private static void BuildPropertyStepChain(
         INamedTypeSymbol rootType,
-        CreationMethod creationMethod,
+        TerminalMethod terminalMethod,
         List<IPropertySymbol> requiredProperties,
         IFluentStep ownerStep,
         OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueStorage,
@@ -372,19 +372,19 @@ internal static class PropertyStepEnricher
 
             if (isLast)
             {
-                creationMethod.PropertyInitializers =
+                terminalMethod.PropertyInitializers =
                 [
                     ..requiredProperties.Select(rp =>
                         (PropertyName: rp.Name, FieldName: rp.Name.ToParameterFieldName()))
                 ];
-                propertyStep.FluentMethods = [creationMethod];
+                propertyStep.FluentMethods = [terminalMethod];
 
                 // Add optional [FluentMethod] property methods to the last step
-                var optionalProperties = GetOptionalFluentMethodProperties(creationMethod);
+                var optionalProperties = GetOptionalFluentMethodProperties(terminalMethod);
                 if (optionalProperties.Count > 0)
                 {
                     AddOptionalPropertyMethodsToStep(
-                        rootType, propertyStep, creationMethod, optionalProperties, methodPrefix);
+                        rootType, propertyStep, terminalMethod, optionalProperties, methodPrefix);
                 }
             }
 

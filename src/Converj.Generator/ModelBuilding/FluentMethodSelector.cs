@@ -140,7 +140,7 @@ internal class FluentMethodSelector(
         var current = selectedMethod.Return;
         while (current is IFluentStep step)
         {
-            var nextMethod = step.FluentMethods.FirstOrDefault(m => m is not CreationMethod and not OptionalFluentMethod);
+            var nextMethod = step.FluentMethods.FirstOrDefault(m => m is not TerminalMethod and not OptionalFluentMethod);
             if (nextMethod is null) return null;
             current = nextMethod.Return;
         }
