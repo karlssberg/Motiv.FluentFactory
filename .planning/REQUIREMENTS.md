@@ -78,18 +78,35 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ATTR-01..03 | TBD | Pending |
-| NAME-01..04 | TBD | Pending |
-| GEN-01..06 | TBD | Pending |
-| COMP-01..03 | TBD | Pending |
-| MIN-01..04 | TBD | Pending |
-| BACK-01..03 | TBD | Pending |
+| ATTR-01 | Phase 21 | Pending |
+| ATTR-02 | Phase 21 | Pending |
+| ATTR-03 | Phase 21 | Pending |
+| NAME-01 | Phase 21 | Pending |
+| NAME-02 | Phase 21 | Pending |
+| NAME-03 | Phase 21 | Pending |
+| NAME-04 | Phase 21 | Pending |
+| BACK-01 | Phase 21 | Pending |
+| BACK-02 | Phase 21 | Pending |
+| BACK-03 | Phase 21 | Pending |
+| GEN-01 | Phase 22 | Pending |
+| GEN-02 | Phase 22 | Pending |
+| GEN-03 | Phase 22 | Pending |
+| GEN-04 | Phase 22 | Pending |
+| GEN-05 | Phase 22 | Pending |
+| GEN-06 | Phase 22 | Pending |
+| COMP-01 | Phase 23 | Pending |
+| COMP-02 | Phase 23 | Pending |
+| COMP-03 | Phase 23 | Pending |
+| MIN-01 | Phase 24 | Pending |
+| MIN-02 | Phase 24 | Pending |
+| MIN-03 | Phase 24 | Pending |
+| MIN-04 | Phase 24 | Pending |
 
 **Coverage:**
 - v2.2 requirements: 23 total
-- Mapped to phases: 0 ⚠️ (pending roadmap)
-- Unmapped: 23
+- Mapped to phases: 23 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-14*
-*Last updated: 2026-04-14 after initial definition*
+*Last updated: 2026-04-14 — traceability updated after roadmap creation*
