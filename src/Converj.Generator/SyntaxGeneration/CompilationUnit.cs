@@ -72,6 +72,10 @@ internal static class CompilationUnit
                     outputOrder.Add(regularStep);
                     break;
 
+                case AccumulatorFluentStep accumulatorStep:
+                    outputOrder.Add(accumulatorStep);
+                    break;
+
                 default:
                     throw new NotSupportedException($"Step type {step.GetType()} is not supported.");
             }
@@ -83,6 +87,7 @@ internal static class CompilationUnit
             {
                 INamedTypeSymbol typeKey => ExistingPartialTypeStepDeclaration.CreateMerged(existingTypeGroups[typeKey]),
                 RegularFluentStep regularStep => FluentStepDeclaration.Create(regularStep),
+                AccumulatorFluentStep accumulatorStep => AccumulatorStepDeclaration.Create(accumulatorStep),
                 _ => throw new NotSupportedException()
             };
         }
