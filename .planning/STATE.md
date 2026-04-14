@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
-status: In progress
-stopped_at: Completed 22-01-PLAN.md
-last_updated: "2026-04-14T16:18:30Z"
+status: executing
+stopped_at: Completed 22-02-PLAN.md
+last_updated: "2026-04-14T16:22:31.503Z"
 last_activity: "2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 9
+  completed_plans: 7
   percent: 27
 ---
 
@@ -55,6 +55,8 @@ Progress: [██░░░░░░░░] 27% (v2.2 milestone — 1/4 phases co
 - [Phase 21 Plan 05]: _skippedTargetDiagnostics separate from _diagnostics — CVJG0052 is Error severity; storing separately prevents the error-bail-out guard from blocking sibling target generation
 - [Phase 21 Plan 05]: First-collision-only per target — FindCollision returns first pair; subsequent collisions surface after first is fixed (matches CVJG0011 UX)
 - [Phase 21 Plan 05]: BACK-02 snapshots use $$VERSION$$ placeholder resolved at runtime by CSharpSourceGeneratorVerifier
+- [Phase 22-core-code-generation]: AccumulatorFluentStep.Name pattern Accumulator_{Index}__{RootIdentifier} — distinct Accumulator_ prefix per RESEARCH.md Pitfall 7
+- [Phase 22-core-code-generation]: GEN-05 element-type parameter: ElementTypeFluentMethodParameter private inner subclass overrides SourceType to CollectionParameterInfo.ElementType without modifying existing FluentMethodParameter API
 
 ### Pending Todos
 
@@ -66,6 +68,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T16:18:30Z
-Stopped at: Completed 22-01-PLAN.md
+Last session: 2026-04-14T16:22:31.501Z
+Stopped at: Completed 22-02-PLAN.md
 Resume file: None
