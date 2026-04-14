@@ -6,6 +6,7 @@ using Converj.Generator.TargetAnalysis;
 
 namespace Converj.Generator.ModelBuilding;
 
+
 /// <summary>
 /// Validates and filters <see cref="FluentTargetContext"/> inputs before domain model building begins.
 /// All methods are static and return diagnostics without side-effects on shared state.
@@ -100,6 +101,57 @@ internal static class TargetContextFilter
                 .Where(ctx => ctx.Method.Parameters
                     .All(p => p.Type.TypeKind != TypeKind.Error))
         ];
+    }
+
+    /// <summary>
+    /// Filters out targets where two or more [FluentCollectionMethod] parameters produce the same
+    /// derived accumulator method name. Mirrors the skip-target-on-error behaviour of
+    /// <see cref="FilterUnsupportedParameterModifierTargets"/>.
+    /// </summary>
+    public static (ImmutableArray<FluentTargetContext> Valid, IEnumerable<Diagnostic> Diagnostics)
+        FilterCollectionAccumulatorCollisions(
+            ImmutableArray<FluentTargetContext> fluentTargetContexts)
+    {
+        var diagnostics = new List<Diagnostic>();
+        var validContexts = ImmutableArray.CreateBuilder<FluentTargetContext>(fluentTargetContexts.Length);
+
+        foreach (var context in fluentTargetContexts)
+        {
+            var collision = FindCollision(context.CollectionParameters);
+            if (collision is null)
+            {
+                validContexts.Add(context);
+                continue;
+            }
+
+            var (a, b) = collision.Value;
+            var location = a.Parameter.Locations.FirstOrDefault() ?? Location.None;
+            diagnostics.Add(Diagnostic.Create(
+                FluentDiagnostics.AccumulatorMethodNameCollision,
+                location,
+                a.Parameter.Name,
+                b.Parameter.Name,
+                context.Method.ToDisplayString(),
+                a.MethodName));
+            // Skip target entirely — consistent with CVJG0011 pattern.
+        }
+
+        return (validContexts.ToImmutable(), diagnostics);
+    }
+
+    /// <summary>
+    /// Finds the first pair of collection parameters whose derived accumulator method names collide.
+    /// Returns null when no collision exists.
+    /// </summary>
+    private static (CollectionParameterInfo First, CollectionParameterInfo Second)? FindCollision(
+        ImmutableArray<CollectionParameterInfo> parameters)
+    {
+        if (parameters.Length < 2) return null;
+        for (var i = 0; i < parameters.Length; i++)
+        for (var j = i + 1; j < parameters.Length; j++)
+            if (string.Equals(parameters[i].MethodName, parameters[j].MethodName, StringComparison.Ordinal))
+                return (parameters[i], parameters[j]);
+        return null;
     }
 
     /// <summary>

@@ -10,6 +10,7 @@ namespace Converj.Generator;
 internal class FluentModelBuilder(Compilation compilation)
 {
     private readonly DiagnosticList _diagnostics = [];
+    private readonly DiagnosticList _skippedTargetDiagnostics = [];
     private readonly OrderedDictionary<ParameterSequence, RegularFluentStep> _regularFluentSteps = new();
     private readonly UnreachableTargetAnalyzer _unreachableTargetAnalyzer = new();
 
@@ -24,6 +25,7 @@ internal class FluentModelBuilder(Compilation compilation)
     {
         _regularFluentSteps.Clear();
         _diagnostics.Clear();
+        _skippedTargetDiagnostics.Clear();
         _unreachableTargetAnalyzer.Clear();
 
         // Filter out instance method targets and report diagnostics
@@ -51,6 +53,13 @@ internal class FluentModelBuilder(Compilation compilation)
 
         _diagnostics.AddRange(unsupportedModifierDiagnostics);
 
+        var (afterCollisionCheck, collisionDiagnostics) =
+            TargetContextFilter.FilterCollectionAccumulatorCollisions(validContexts);
+        // Store collision diagnostics separately — they describe skipped targets and must not
+        // trigger the error-bail-out guard that would prevent sibling targets from being generated.
+        _skippedTargetDiagnostics.AddRange(collisionDiagnostics);
+        validContexts = afterCollisionCheck;
+
         var (accessibleContexts, inaccessibleTargetDiagnostics) =
             TargetContextFilter.FilterInaccessibleTargets(validContexts);
 
@@ -60,7 +69,10 @@ internal class FluentModelBuilder(Compilation compilation)
         validContexts = TargetContextFilter.FilterErrorTypeTargets(validContexts);
 
         if (validContexts.IsEmpty)
+        {
+            _diagnostics.AddRange(_skippedTargetDiagnostics);
             return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics };
+        }
 
         fluentTargetContexts = validContexts;
 
@@ -88,6 +100,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
         if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
         {
+            _diagnostics.AddRange(_skippedTargetDiagnostics);
             return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };
         }
 
@@ -185,6 +198,7 @@ internal class FluentModelBuilder(Compilation compilation)
         MarkUnavailableTargets(fluentRootMethods, fluentBuilderSteps);
 
         _diagnostics.AddRange(_unreachableTargetAnalyzer.GetUnreachableTargetsDiagnostics());
+        _diagnostics.AddRange(_skippedTargetDiagnostics);
         var sampleTargetContext = fluentTargetContexts.First();
 
         return new FluentRootCompilationUnit(rootType)
