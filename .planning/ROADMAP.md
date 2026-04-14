@@ -69,7 +69,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
 
 **Milestone Goal:** Add `[FluentCollectionMethod]` enabling item-by-item collection building via repeated fluent calls, with compile-time safety, zero runtime overhead, and zero impact on existing generated output.
 
-- [ ] **Phase 21: Foundation** (5 plans) — Attribute, collection detection, singularization, diagnostics, and backward compatibility gate
+- [x] **Phase 21: Foundation** (5 plans) — Attribute, collection detection, singularization, diagnostics, and backward compatibility gate — completed 2026-04-14
 - [ ] **Phase 22: Core Code Generation** — AccumulatorFluentStep emission, terminal conversion, and immutable field initialization
 - [ ] **Phase 23: Composability** — `[FluentCollectionMethod]` alongside `[FluentMethod]` on the same parameter
 - [ ] **Phase 24: MinItems Enforcement** — Compile-time minimum item count via two-step topology
@@ -86,13 +86,13 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. Generator emits a diagnostic error when two accumulator method names would collide within the same root
   4. Auto-singularized method names are valid C# identifiers for common English plurals (`items` -> `AddItem`, `tags` -> `AddTag`, `categories` -> `AddCategory`)
   5. All 415 existing tests pass with zero assertion changes and non-attributed code produces byte-identical generated output
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans executed — PHASE COMPLETE 2026-04-14
 Plans:
-- [ ] 21-01-PLAN.md — Wave 0 test scaffolding (six empty xUnit test classes ready for Plans 02–05)
-- [ ] 21-02-PLAN.md — Public attribute + TypeName constant + CVJG0050/0051/0052 diagnostic descriptors + AnalyzerReleases.Unshipped entries
-- [ ] 21-03-PLAN.md — StringExtensions.Singularize (irregulars + suffix rules) and CollectionParameterInfo carrier record
-- [ ] 21-04-PLAN.md — FluentCollectionMethodAnalyzer wired into FluentTargetContext + CollectionParameters on TargetMetadata (ATTR-01/02/03, NAME-01/02/03 end-to-end)
-- [ ] 21-05-PLAN.md — FilterCollectionAccumulatorCollisions (NAME-04 / CVJG0052) + byte-identical snapshot test (BACK-02) + full-suite verification (BACK-01, BACK-03)
+- [x] 21-01-PLAN.md — Wave 0 test scaffolding (six empty xUnit test classes ready for Plans 02–05)
+- [x] 21-02-PLAN.md — Public attribute + TypeName constant + CVJG0050/0051/0052 diagnostic descriptors + AnalyzerReleases.Unshipped entries
+- [x] 21-03-PLAN.md — StringExtensions.Singularize (irregulars + suffix rules) and CollectionParameterInfo carrier record
+- [x] 21-04-PLAN.md — FluentCollectionMethodAnalyzer wired into FluentTargetContext + CollectionParameters on TargetMetadata (ATTR-01/02/03, NAME-01/02/03 end-to-end)
+- [x] 21-05-PLAN.md — FilterCollectionAccumulatorCollisions (NAME-04 / CVJG0052) + byte-identical snapshot test (BACK-02) + full-suite verification (BACK-01, BACK-03)
 
 ### Phase 22: Core Code Generation
 **Goal**: A developer using `[FluentCollectionMethod]` gets a working fluent chain — the generated step struct accumulates items via repeated `AddX()` calls, each call returns to the same step for further chaining, and the terminal method converts the internal `ImmutableArray<T>` to the declared parameter type.
@@ -148,7 +148,7 @@ Plans:
 | 18. Builder Pattern Renames | v2.1 | 1/1 | Complete | 2026-04-12 |
 | 19. Test Fixture Alignment | v2.1 | 3/3 | Complete | 2026-04-12 |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
-| 21. Foundation | 4/5 | In Progress|  | - |
+| 21. Foundation | v2.2 | 5/5 | Complete | 2026-04-14 |
 | 22. Core Code Generation | v2.2 | 0/TBD | Not started | - |
 | 23. Composability | v2.2 | 0/TBD | Not started | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |

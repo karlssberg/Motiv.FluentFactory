@@ -44,9 +44,9 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Backward Compatibility
 
-- [ ] **BACK-01**: All 415 existing tests continue to pass with zero assertion changes
+- [x] **BACK-01**: All 415 existing tests continue to pass with zero assertion changes
 - [x] **BACK-02**: Code not using `[FluentCollectionMethod]` produces byte-identical generated output as before v2.2
-- [ ] **BACK-03**: The 9 intentionally failing tests from v1.3 remain in their current state (not fixed in this milestone, not further broken)
+- [x] **BACK-03**: The 9 intentionally failing tests from v1.3 remain in their current state (not fixed in this milestone, not further broken)
 
 ## v3 Requirements
 
@@ -85,9 +85,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAME-02 | Phase 21 | Complete |
 | NAME-03 | Phase 21 | Complete |
 | NAME-04 | Phase 21 | Complete |
-| BACK-01 | Phase 21 | Pending |
+| BACK-01 | Phase 21 | Complete |
 | BACK-02 | Phase 21 | Complete |
-| BACK-03 | Phase 21 | Pending |
+| BACK-03 | Phase 21 | Complete |
 | GEN-01 | Phase 22 | Pending |
 | GEN-02 | Phase 22 | Pending |
 | GEN-03 | Phase 22 | Pending |

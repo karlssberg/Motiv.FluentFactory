@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 21-04-PLAN.md
-last_updated: "2026-04-14T12:45:00.000Z"
-last_activity: "2026-04-14 — Plan 21-04 complete: FluentCollectionMethodAnalyzer wired; CVJG0050/0051 emit; 421 tests pass"
+stopped_at: Completed 21-05-PLAN.md
+last_updated: "2026-04-14T12:05:00.000Z"
+last_activity: "2026-04-14 — Plan 21-05 complete: FilterCollectionAccumulatorCollisions (CVJG0052); BACK-02 snapshot tests; 427 tests passing; Phase 21 closed"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 10
+  completed_plans: 5
+  percent: 25
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-14)
 
 **Core value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
-**Current focus:** Phase 21 — Foundation (v2.2 Fluent Collection Accumulation)
+**Current focus:** Phase 21 complete — ready for Phase 22 (Core Code Generation)
 
 ## Current Position
 
-Phase: 21 of 24 (Foundation)
-Plan: 4 of 5 complete in current phase
-Status: In progress
-Last activity: 2026-04-14 — Plan 21-04 complete: FluentCollectionMethodAnalyzer wired; CVJG0050/0051 emit; 421 tests pass
+Phase: 21 of 24 (Foundation — COMPLETE)
+Plan: 5 of 5 complete in current phase
+Status: Phase 21 closed
+Last activity: 2026-04-14 — Plan 21-05 complete: FilterCollectionAccumulatorCollisions (CVJG0052); BACK-02 snapshot tests; 427 tests passing; Phase 21 closed
 
-Progress: [██░░░░░░░░] 10% (v2.2 milestone — 0/4 phases complete, 4/5 plans in phase 21)
+Progress: [██░░░░░░░░] 25% (v2.2 milestone — 1/4 phases complete, 5/5 plans in phase 21)
 
 ## Accumulated Context
 
@@ -51,6 +51,9 @@ Progress: [██░░░░░░░░] 10% (v2.2 milestone — 0/4 phases co
 - [Phase 21]: TestBehaviors.SkipGeneratedSourcesCheck used for ATTR-02 positive tests; snapshot deferred to Plan 05
 - [Phase 21]: CollectionDiagnostics is a separate property parallel to PropertyDiagnostics in FluentTargetContext
 - [Phase 21]: DetectCollection does NOT walk AllInterfaces — prevents string from being accepted as IEnumerable&lt;char&gt;
+- [Phase 21 Plan 05]: _skippedTargetDiagnostics separate from _diagnostics — CVJG0052 is Error severity; storing separately prevents the error-bail-out guard from blocking sibling target generation
+- [Phase 21 Plan 05]: First-collision-only per target — FindCollision returns first pair; subsequent collisions surface after first is fixed (matches CVJG0011 UX)
+- [Phase 21 Plan 05]: BACK-02 snapshots use $$VERSION$$ placeholder resolved at runtime by CSharpSourceGeneratorVerifier
 
 ### Pending Todos
 
@@ -58,11 +61,10 @@ None.
 
 ### Blockers/Concerns
 
-- Attribute property name: research uses `MinimumItems`/`Minimum` inconsistently. Settled on `MinItems` — must be enforced in Phase 21 attribute definition.
 - Extension method targets + type-first mode with collection parameters: integration nuances not fully detailed in research. Must be covered explicitly in Phase 22 test planning.
 
 ## Session Continuity
 
-Last session: 2026-04-14T12:45:00.000Z
-Stopped at: Completed 21-04-PLAN.md
+Last session: 2026-04-14T12:05:00.000Z
+Stopped at: Completed 21-05-PLAN.md
 Resume file: None
