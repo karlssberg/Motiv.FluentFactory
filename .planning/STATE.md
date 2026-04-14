@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 21-02-PLAN.md
-last_updated: "2026-04-14T11:39:19.819Z"
-last_activity: "2026-04-14 — Plan 21-01 complete: six test class stubs created (+6 passing tests)"
+stopped_at: Completed 21-04-PLAN.md
+last_updated: "2026-04-14T12:45:00.000Z"
+last_activity: "2026-04-14 — Plan 21-04 complete: FluentCollectionMethodAnalyzer wired; CVJG0050/0051 emit; 421 tests pass"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
-  percent: 5
+  completed_plans: 4
+  percent: 10
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 ## Current Position
 
 Phase: 21 of 24 (Foundation)
-Plan: 1 of 5 complete in current phase
+Plan: 4 of 5 complete in current phase
 Status: In progress
-Last activity: 2026-04-14 — Plan 21-01 complete: six test class stubs created (+6 passing tests)
+Last activity: 2026-04-14 — Plan 21-04 complete: FluentCollectionMethodAnalyzer wired; CVJG0050/0051 emit; 421 tests pass
 
-Progress: [█░░░░░░░░░] 5% (v2.2 milestone — 0/4 phases complete, 1/5 plans in phase 21)
+Progress: [██░░░░░░░░] 10% (v2.2 milestone — 0/4 phases complete, 4/5 plans in phase 21)
 
 ## Accumulated Context
 
@@ -47,6 +47,10 @@ Progress: [█░░░░░░░░░] 5% (v2.2 milestone — 0/4 phases com
 - [Phase 21]: AttributeUsage restricted to Parameter only for FluentCollectionMethodAttribute (not Parameter|Property)
 - [Phase 21]: MinItems property defined in Phase 21 for API stability; enforcement deferred to Phase 24
 - [Phase 21]: CVJG0050/0051/0052 descriptors declared but not wired; emitting deferred to Plans 04 and 05
+- [Phase 21]: CVJG0050/0051 now emitted by FluentCollectionMethodAnalyzer (Plan 04); CVJG0052 remains Plan 05
+- [Phase 21]: TestBehaviors.SkipGeneratedSourcesCheck used for ATTR-02 positive tests; snapshot deferred to Plan 05
+- [Phase 21]: CollectionDiagnostics is a separate property parallel to PropertyDiagnostics in FluentTargetContext
+- [Phase 21]: DetectCollection does NOT walk AllInterfaces — prevents string from being accepted as IEnumerable&lt;char&gt;
 
 ### Pending Todos
 
@@ -59,6 +63,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T11:39:19.818Z
-Stopped at: Completed 21-02-PLAN.md
+Last session: 2026-04-14T12:45:00.000Z
+Stopped at: Completed 21-04-PLAN.md
 Resume file: None
