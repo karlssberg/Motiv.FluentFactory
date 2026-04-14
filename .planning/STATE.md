@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 22-02-PLAN.md
-last_updated: "2026-04-14T16:22:31.503Z"
+stopped_at: Completed 22-03-PLAN.md
+last_updated: "2026-04-14T16:28:22.343Z"
 last_activity: "2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
   percent: 27
 ---
 
@@ -57,6 +57,8 @@ Progress: [██░░░░░░░░] 27% (v2.2 milestone — 1/4 phases co
 - [Phase 21 Plan 05]: BACK-02 snapshots use $$VERSION$$ placeholder resolved at runtime by CSharpSourceGeneratorVerifier
 - [Phase 22-core-code-generation]: AccumulatorFluentStep.Name pattern Accumulator_{Index}__{RootIdentifier} — distinct Accumulator_ prefix per RESEARCH.md Pitfall 7
 - [Phase 22-core-code-generation]: GEN-05 element-type parameter: ElementTypeFluentMethodParameter private inner subclass overrides SourceType to CollectionParameterInfo.ElementType without modifying existing FluentMethodParameter API
+- [Phase 22-core-code-generation]: ReadOnlyKeyword emitted unconditionally by AccumulatorStepDeclaration — GEN-06 is unconditional; accumulator steps never host OptionalFluentMethod
+- [Phase 22-core-code-generation]: AccumulatorStepDeclaration implements terminal method inline rather than reusing StepTerminalMethodDeclaration — needs AccumulatorCollectionConversionExpression dispatch
 
 ### Pending Todos
 
@@ -68,6 +70,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T16:22:31.501Z
-Stopped at: Completed 22-02-PLAN.md
+Last session: 2026-04-14T16:28:22.342Z
+Stopped at: Completed 22-03-PLAN.md
 Resume file: None

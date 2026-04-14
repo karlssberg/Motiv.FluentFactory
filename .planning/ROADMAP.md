@@ -104,7 +104,7 @@ Plans:
   3. Generated accumulator step struct is `readonly` and all accumulator methods carry `[MethodImpl(AggressiveInlining)]`
   4. Accumulator field is initialized to `ImmutableArray<T>.Empty` (never uninitialized/default) so calling the terminal on a zero-item chain does not throw
   5. Generated code compiles for all six declared collection types: `IEnumerable<T>`, `ICollection<T>`, `IList<T>`, `IReadOnlyCollection<T>`, `IReadOnlyList<T>`, and `T[]`
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 - [ ] 22-01-PLAN.md — Wave 0 test scaffolding: AccumulatorStepGenerationTests.cs stub (placeholder [Fact], replaced in 22-04)
 - [ ] 22-02-PLAN.md — Domain model objects: AccumulatorFluentStep (IFluentStep), AccumulatorMethod (IFluentMethod, self-return, element-type param), AccumulatorTransitionMethod
@@ -154,6 +154,6 @@ Plans:
 | 19. Test Fixture Alignment | v2.1 | 3/3 | Complete | 2026-04-12 |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
 | 21. Foundation | v2.2 | Complete    | 2026-04-14 | 2026-04-14 |
-| 22. Core Code Generation | 2/4 | In Progress|  | - |
+| 22. Core Code Generation | 3/4 | In Progress|  | - |
 | 23. Composability | v2.2 | 0/TBD | Not started | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |
