@@ -82,6 +82,10 @@ internal class FluentModelBuilder(Compilation compilation)
         foreach (var context in fluentTargetContexts)
             _diagnostics.AddRange(context.PropertyDiagnostics);
 
+        // Collect collection parameter analysis diagnostics (CVJG0050, CVJG0051)
+        foreach (var context in fluentTargetContexts)
+            _diagnostics.AddRange(context.CollectionDiagnostics);
+
         if (_diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
         {
             return new FluentRootCompilationUnit(rootType) { Diagnostics = _diagnostics, Usings = usings };

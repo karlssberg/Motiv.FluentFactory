@@ -1,4 +1,7 @@
 using Converj.Generator.Extensions;
+using Microsoft.CodeAnalysis.Testing;
+using static Microsoft.CodeAnalysis.DiagnosticSeverity;
+using static Converj.Generator.Diagnostics.FluentDiagnostics;
 using VerifyCS =
     Converj.Generator.Tests.CSharpSourceGeneratorVerifier<Converj.Generator.FluentRootGenerator>;
 
@@ -115,5 +118,43 @@ public class SingularizationTests
     {
         var result = input.Singularize();
         Assert.Equal(expected, result);
+    }
+
+    // NAME-01 end-to-end integration: [FluentCollectionMethod] on tags: IList<string>
+    // "tags".Singularize() → "tag" → not a keyword → derived name is "AddTag".
+    // We assert absence of CVJG0050/0051 diagnostics (the actual method emission is Phase 22).
+    // We intentionally avoid constructing FluentTargetContext directly to prevent coupling to
+    // internal implementation details; the derived name is verified by Plan 05's snapshot test.
+    [Fact]
+    internal async Task Integration_Tags_IListString_ProducesNoDiagnostic()
+    {
+        const string code = """
+            using System;
+            using System.Collections.Generic;
+            using Converj.Attributes;
+
+            namespace Test;
+
+            [FluentRoot]
+            public partial class Builder;
+
+            public class Target
+            {
+                [FluentTarget(typeof(Builder))]
+                public Target([FluentCollectionMethod] IList<string> tags) { }
+            }
+            """;
+
+        var test = new VerifyCS.Test
+        {
+            TestState = { Sources = { code } }
+        };
+
+        // Skip generated sources check — we only verify absence of CVJG0050/0051.
+        // The derived "AddTag" name is verified by Plan 05's snapshot test.
+        test.TestBehaviors |= TestBehaviors.SkipGeneratedSourcesCheck;
+
+        // No diagnostics: collection type is valid (IList<T>), "tags" singularizes to "tag" (not a keyword)
+        await test.RunAsync();
     }
 }

@@ -62,6 +62,14 @@ internal class TargetMetadata(FluentTargetContext targetContext)
     public ImmutableArray<FluentPropertyMember> OptionalProperties { get; } =
         [..targetContext.TargetTypeProperties.Where(p => !p.IsRequired)];
 
+    /// <summary>
+    /// Collection parameters annotated with <c>[FluentCollectionMethod]</c> on this target,
+    /// ready for Phase 22 accumulator step generation.
+    /// Empty when no parameters carry the attribute.
+    /// </summary>
+    public ImmutableArray<CollectionParameterInfo> CollectionParameters { get; } =
+        targetContext.CollectionParameters;
+
     public TargetMetadata Clone()
     {
         return new TargetMetadata(Context);

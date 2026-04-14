@@ -45,6 +45,12 @@ internal class FluentTargetContext
             : metadata.TerminalMethod ?? TerminalMethodKind.DynamicSuffix;
         TerminalVerb = metadata.TerminalVerb ?? (IsStaticMethodTarget ? method.Name : null);
 
+        // Analyze [FluentCollectionMethod] parameters unconditionally — applies to constructors,
+        // static methods, and extension methods alike. Instance methods are rejected upstream.
+        var collectionDiagnostics = new DiagnosticList();
+        CollectionParameters = FluentCollectionMethodAnalyzer.Analyze(method, collectionDiagnostics);
+        CollectionDiagnostics = collectionDiagnostics;
+
         if (IsStaticMethodTarget || IsInstanceMethodTarget)
         {
             // Method targets don't have value storage or property analysis
@@ -139,6 +145,18 @@ internal class FluentTargetContext
     /// Diagnostics from property analysis.
     /// </summary>
     public DiagnosticList PropertyDiagnostics { get; }
+
+    /// <summary>
+    /// Collection parameters annotated with <c>[FluentCollectionMethod]</c> on this target,
+    /// including derived or explicit accumulator method names.
+    /// Empty when no parameters carry the attribute.
+    /// </summary>
+    public ImmutableArray<CollectionParameterInfo> CollectionParameters { get; }
+
+    /// <summary>
+    /// Diagnostics from <c>[FluentCollectionMethod]</c> parameter analysis (CVJG0050, CVJG0051).
+    /// </summary>
+    public DiagnosticList CollectionDiagnostics { get; }
 
     /// <summary>
     /// The first parameter designated as the extension receiver, either via
