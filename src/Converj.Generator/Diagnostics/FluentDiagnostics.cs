@@ -577,4 +577,47 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for <c>[FluentCollectionMethod]</c> applied to a parameter whose type is not a
+    /// supported collection type (ATTR-03). Supported types: <c>T[]</c>, <c>IEnumerable&lt;T&gt;</c>,
+    /// <c>ICollection&lt;T&gt;</c>, <c>IList&lt;T&gt;</c>, <c>IReadOnlyCollection&lt;T&gt;</c>,
+    /// <c>IReadOnlyList&lt;T&gt;</c>. Enforced by the Phase 21 analyzer (Plan 04).
+    /// </summary>
+    public static readonly DiagnosticDescriptor NonCollectionFluentCollectionMethod = new(
+        id: "CVJG0050",
+        title: "FluentCollectionMethod on non-collection parameter",
+        messageFormat:
+        "Parameter '{0}' of type '{1}' is not a supported collection type. [FluentCollectionMethod] requires T[], IEnumerable<T>, ICollection<T>, IList<T>, IReadOnlyCollection<T>, or IReadOnlyList<T>.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when the accumulator method name cannot be derived from the parameter name via
+    /// singularization and no explicit name was provided (NAME-03). Emitted by the Phase 21 analyzer
+    /// (Plan 04). Resolution: add an explicit name via <c>[FluentCollectionMethod("AddEntry")]</c>.
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnsingularizableParameterName = new(
+        id: "CVJG0051",
+        title: "Cannot derive accumulator method name",
+        messageFormat:
+        "Cannot derive an accumulator method name from parameter '{0}'. Provide an explicit name, e.g., [FluentCollectionMethod(\"AddEntry\")].",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when two or more parameters on the same target produce the same accumulator method
+    /// name after singularization (NAME-04). Emitted by the Phase 21 collision filter (Plan 05).
+    /// Resolution: disambiguate via <c>[FluentCollectionMethod("AlternateName")]</c>.
+    /// </summary>
+    public static readonly DiagnosticDescriptor AccumulatorMethodNameCollision = new(
+        id: "CVJG0052",
+        title: "Accumulator method name collision",
+        messageFormat:
+        "Parameters '{0}' and '{1}' on '{2}' both produce accumulator method '{3}'. Disambiguate via [FluentCollectionMethod(\"AlternateName\")].",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }

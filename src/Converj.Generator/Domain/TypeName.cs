@@ -14,6 +14,7 @@ internal class TypeName
     public static readonly TypeName GenericFluentTargetAttribute = new(GeneratorAttributesNamespace + "FluentTargetAttribute`1");
     public static readonly TypeName FluentRootAttribute = new(GeneratorAttributesNamespace + "FluentRootAttribute");
     public static readonly TypeName FluentMethodAttribute = new(GeneratorAttributesNamespace + "FluentMethodAttribute");
+    public static readonly TypeName FluentCollectionMethodAttribute = new(GeneratorAttributesNamespace + "FluentCollectionMethodAttribute");
     public static readonly TypeName MultipleFluentMethodsAttribute = new(GeneratorAttributesNamespace + "MultipleFluentMethodsAttribute");
     public static readonly TypeName FluentMethodTemplateAttribute = new(GeneratorAttributesNamespace + "FluentMethodTemplateAttribute");
     public static readonly TypeName AsAttribute = new(GeneratorAttributesNamespace + "AsAttribute");

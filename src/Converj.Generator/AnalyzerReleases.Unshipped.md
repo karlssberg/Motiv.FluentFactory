@@ -53,3 +53,6 @@ CVJG0046 | Converj | Error | [This] must be on the first parameter
 CVJG0047 | Converj | Error | [This] is not supported on instance methods
 CVJG0048 | Converj | Info | [This] is redundant on extension method parameter
 CVJG0049 | Converj | Error | FluentRoot must be static for extension method targets
+CVJG0050 | Converj | Error | FluentCollectionMethod on non-collection parameter
+CVJG0051 | Converj | Error | Cannot derive accumulator method name
+CVJG0052 | Converj | Error | Accumulator method name collision
