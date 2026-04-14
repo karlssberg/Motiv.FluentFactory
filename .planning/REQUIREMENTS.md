@@ -22,12 +22,12 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Core Code Generation
 
-- [ ] **GEN-01**: Calling the accumulator method returns to the same step position, allowing repeated invocation in a chain
-- [ ] **GEN-02**: Terminal method materializes the accumulated items into the declared parameter type (`IEnumerable<T>`, `IList<T>`, `T[]`, `IReadOnlyList<T>`, etc.)
-- [ ] **GEN-03**: Chain branching at the accumulator step produces independent results (no shared mutation between branches)
-- [ ] **GEN-04**: Generated step struct field uses `ImmutableArray<T>` with `.Empty` initialization (never `default`) to guarantee safe enumeration
-- [ ] **GEN-05**: Element type of accumulator method parameter matches the collection's generic element type
-- [ ] **GEN-06**: Generated accumulator step struct remains `readonly` and supports `[MethodImpl(AggressiveInlining)]`
+- [x] **GEN-01**: Calling the accumulator method returns to the same step position, allowing repeated invocation in a chain
+- [x] **GEN-02**: Terminal method materializes the accumulated items into the declared parameter type (`IEnumerable<T>`, `IList<T>`, `T[]`, `IReadOnlyList<T>`, etc.)
+- [x] **GEN-03**: Chain branching at the accumulator step produces independent results (no shared mutation between branches)
+- [x] **GEN-04**: Generated step struct field uses `ImmutableArray<T>` with `.Empty` initialization (never `default`) to guarantee safe enumeration
+- [x] **GEN-05**: Element type of accumulator method parameter matches the collection's generic element type
+- [x] **GEN-06**: Generated accumulator step struct remains `readonly` and supports `[MethodImpl(AggressiveInlining)]`
 
 ### Composability
 
@@ -88,12 +88,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BACK-01 | Phase 21 | Complete |
 | BACK-02 | Phase 21 | Complete |
 | BACK-03 | Phase 21 | Complete |
-| GEN-01 | Phase 22 | Pending |
-| GEN-02 | Phase 22 | Pending |
-| GEN-03 | Phase 22 | Pending |
-| GEN-04 | Phase 22 | Pending |
-| GEN-05 | Phase 22 | Pending |
-| GEN-06 | Phase 22 | Pending |
+| GEN-01 | Phase 22 | Complete |
+| GEN-02 | Phase 22 | Complete |
+| GEN-03 | Phase 22 | Complete |
+| GEN-04 | Phase 22 | Complete |
+| GEN-05 | Phase 22 | Complete |
+| GEN-06 | Phase 22 | Complete |
 | COMP-01 | Phase 23 | Pending |
 | COMP-02 | Phase 23 | Pending |
 | COMP-03 | Phase 23 | Pending |

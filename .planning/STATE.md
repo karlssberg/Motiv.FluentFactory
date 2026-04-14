@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
-status: Phase 21 closed
-stopped_at: Completed 21-05-PLAN.md
-last_updated: "2026-04-14T12:07:55.973Z"
-last_activity: "2026-04-14 — Plan 21-05 complete: FilterCollectionAccumulatorCollisions (CVJG0052); BACK-02 snapshot tests; 427 tests passing; Phase 21 closed"
+status: In progress
+stopped_at: Completed 22-01-PLAN.md
+last_updated: "2026-04-14T16:18:30Z"
+last_activity: "2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 25
+  total_plans: 6
+  completed_plans: 6
+  percent: 27
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 
 ## Current Position
 
-Phase: 21 of 24 (Foundation — COMPLETE)
-Plan: 5 of 5 complete in current phase
-Status: Phase 21 closed
-Last activity: 2026-04-14 — Plan 21-05 complete: FilterCollectionAccumulatorCollisions (CVJG0052); BACK-02 snapshot tests; 427 tests passing; Phase 21 closed
+Phase: 22 of 24 (Core Code Generation — In Progress)
+Plan: 1 of 5 complete in current phase
+Status: In progress
+Last activity: 2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed
 
-Progress: [██░░░░░░░░] 25% (v2.2 milestone — 1/4 phases complete, 5/5 plans in phase 21)
+Progress: [██░░░░░░░░] 27% (v2.2 milestone — 1/4 phases complete, 1/5 plans in phase 22)
 
 ## Accumulated Context
 
@@ -42,6 +42,7 @@ Progress: [██░░░░░░░░] 25% (v2.2 milestone — 1/4 phases co
 - Attribute property for minimum count: use `MinItems` (matches REQUIREMENTS.md; research had inconsistent naming)
 
 - Stub pattern established: VerifyCS alias only, one Placeholder [Fact], omit unused `using static FluentDiagnostics` until real diagnostic tests added (Plans 02-05)
+- [Phase 22 Plan 01]: AccumulatorStepGenerationTests.cs stub created; GEN-* tests are source-gen-output assertions so FluentDiagnostics using is omitted; placeholder replaced in Plan 22-04
 - [Phase 21]: -ses added to suffix cluster to handle buses→bus (CONTEXT.md spec compliance)
 - [Phase 21]: CollectionParameterInfo uses explicit get-only property body (not auto-init setters) to compile under netstandard2.0 without IsExternalInit polyfill
 - [Phase 21]: AttributeUsage restricted to Parameter only for FluentCollectionMethodAttribute (not Parameter|Property)
@@ -65,6 +66,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T12:05:00.000Z
-Stopped at: Completed 21-05-PLAN.md
+Last session: 2026-04-14T16:18:30Z
+Stopped at: Completed 22-01-PLAN.md
 Resume file: None
