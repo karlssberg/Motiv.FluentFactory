@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Models.Methods;
 using Microsoft.CodeAnalysis;
 using Converj.Generator.Diagnostics;
 
@@ -140,7 +141,10 @@ internal class FluentMethodSelector(
         var current = selectedMethod.Return;
         while (current is IFluentStep step)
         {
-            var nextMethod = step.FluentMethods.FirstOrDefault(m => m is not TerminalMethod and not OptionalFluentMethod);
+            // Exclude self-returning methods (AccumulatorMethod) to avoid an infinite loop:
+            // AccumulatorMethod.Return == step, which would re-enter the same accumulator step.
+            var nextMethod = step.FluentMethods.FirstOrDefault(
+                m => m is not TerminalMethod and not OptionalFluentMethod and not AccumulatorMethod);
             if (nextMethod is null) return null;
             current = nextMethod.Return;
         }
