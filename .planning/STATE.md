@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 21-03-PLAN.md
-last_updated: "2026-04-14T11:38:33.193Z"
+stopped_at: Completed 21-02-PLAN.md
+last_updated: "2026-04-14T11:39:19.819Z"
 last_activity: "2026-04-14 — Plan 21-01 complete: six test class stubs created (+6 passing tests)"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 5
 ---
 
@@ -44,6 +44,9 @@ Progress: [█░░░░░░░░░] 5% (v2.2 milestone — 0/4 phases com
 - Stub pattern established: VerifyCS alias only, one Placeholder [Fact], omit unused `using static FluentDiagnostics` until real diagnostic tests added (Plans 02-05)
 - [Phase 21]: -ses added to suffix cluster to handle buses→bus (CONTEXT.md spec compliance)
 - [Phase 21]: CollectionParameterInfo uses explicit get-only property body (not auto-init setters) to compile under netstandard2.0 without IsExternalInit polyfill
+- [Phase 21]: AttributeUsage restricted to Parameter only for FluentCollectionMethodAttribute (not Parameter|Property)
+- [Phase 21]: MinItems property defined in Phase 21 for API stability; enforcement deferred to Phase 24
+- [Phase 21]: CVJG0050/0051/0052 descriptors declared but not wired; emitting deferred to Plans 04 and 05
 
 ### Pending Todos
 
@@ -56,6 +59,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T11:38:33.192Z
-Stopped at: Completed 21-03-PLAN.md
+Last session: 2026-04-14T11:39:19.818Z
+Stopped at: Completed 21-02-PLAN.md
 Resume file: None
