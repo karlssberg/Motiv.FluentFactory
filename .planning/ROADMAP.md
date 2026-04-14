@@ -86,7 +86,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. Generator emits a diagnostic error when two accumulator method names would collide within the same root
   4. Auto-singularized method names are valid C# identifiers for common English plurals (`items` -> `AddItem`, `tags` -> `AddTag`, `categories` -> `AddCategory`)
   5. All 415 existing tests pass with zero assertion changes and non-attributed code produces byte-identical generated output
-**Plans:** 5 plans
+**Plans:** 1/5 plans executed
 Plans:
 - [ ] 21-01-PLAN.md — Wave 0 test scaffolding (six empty xUnit test classes ready for Plans 02–05)
 - [ ] 21-02-PLAN.md — Public attribute + TypeName constant + CVJG0050/0051/0052 diagnostic descriptors + AnalyzerReleases.Unshipped entries
@@ -148,7 +148,7 @@ Plans:
 | 18. Builder Pattern Renames | v2.1 | 1/1 | Complete | 2026-04-12 |
 | 19. Test Fixture Alignment | v2.1 | 3/3 | Complete | 2026-04-12 |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
-| 21. Foundation | v2.2 | 0/5 | Not started | - |
+| 21. Foundation | 1/5 | In Progress|  | - |
 | 22. Core Code Generation | v2.2 | 0/TBD | Not started | - |
 | 23. Composability | v2.2 | 0/TBD | Not started | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |

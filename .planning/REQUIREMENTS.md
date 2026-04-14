@@ -9,16 +9,16 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Attribute & Detection
 
-- [ ] **ATTR-01**: Developer can apply `[FluentCollectionMethod]` to a collection-typed constructor or target-method parameter
-- [ ] **ATTR-02**: Generator recognizes `IEnumerable<T>`, `ICollection<T>`, `IList<T>`, `IReadOnlyCollection<T>`, `IReadOnlyList<T>`, and `T[]` as valid collection parameter types
-- [ ] **ATTR-03**: Generator emits an error diagnostic when `[FluentCollectionMethod]` is applied to a non-collection parameter
+- [x] **ATTR-01**: Developer can apply `[FluentCollectionMethod]` to a collection-typed constructor or target-method parameter
+- [x] **ATTR-02**: Generator recognizes `IEnumerable<T>`, `ICollection<T>`, `IList<T>`, `IReadOnlyCollection<T>`, `IReadOnlyList<T>`, and `T[]` as valid collection parameter types
+- [x] **ATTR-03**: Generator emits an error diagnostic when `[FluentCollectionMethod]` is applied to a non-collection parameter
 
 ### Method Naming
 
-- [ ] **NAME-01**: Generated accumulator method uses `Add` prefix followed by a singularized form of the parameter name (e.g., `items` → `AddItem`, `tags` → `AddTag`)
-- [ ] **NAME-02**: Developer can override the generated method name via attribute argument: `[FluentCollectionMethod("AddEntry")]`
-- [ ] **NAME-03**: Singularization handles common English plural suffixes (`-s`, `-es`, `-ies`→`-y`) and a small set of irregulars
-- [ ] **NAME-04**: Generator emits an error diagnostic when two generated accumulator method names would collide within the same root
+- [x] **NAME-01**: Generated accumulator method uses `Add` prefix followed by a singularized form of the parameter name (e.g., `items` → `AddItem`, `tags` → `AddTag`)
+- [x] **NAME-02**: Developer can override the generated method name via attribute argument: `[FluentCollectionMethod("AddEntry")]`
+- [x] **NAME-03**: Singularization handles common English plural suffixes (`-s`, `-es`, `-ies`→`-y`) and a small set of irregulars
+- [x] **NAME-04**: Generator emits an error diagnostic when two generated accumulator method names would collide within the same root
 
 ### Core Code Generation
 
@@ -45,7 +45,7 @@ Requirements for this milestone. Each maps to roadmap phases.
 ### Backward Compatibility
 
 - [ ] **BACK-01**: All 415 existing tests continue to pass with zero assertion changes
-- [ ] **BACK-02**: Code not using `[FluentCollectionMethod]` produces byte-identical generated output as before v2.2
+- [x] **BACK-02**: Code not using `[FluentCollectionMethod]` produces byte-identical generated output as before v2.2
 - [ ] **BACK-03**: The 9 intentionally failing tests from v1.3 remain in their current state (not fixed in this milestone, not further broken)
 
 ## v3 Requirements
@@ -78,15 +78,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ATTR-01 | Phase 21 | Pending |
-| ATTR-02 | Phase 21 | Pending |
-| ATTR-03 | Phase 21 | Pending |
-| NAME-01 | Phase 21 | Pending |
-| NAME-02 | Phase 21 | Pending |
-| NAME-03 | Phase 21 | Pending |
-| NAME-04 | Phase 21 | Pending |
+| ATTR-01 | Phase 21 | Complete |
+| ATTR-02 | Phase 21 | Complete |
+| ATTR-03 | Phase 21 | Complete |
+| NAME-01 | Phase 21 | Complete |
+| NAME-02 | Phase 21 | Complete |
+| NAME-03 | Phase 21 | Complete |
+| NAME-04 | Phase 21 | Complete |
 | BACK-01 | Phase 21 | Pending |
-| BACK-02 | Phase 21 | Pending |
+| BACK-02 | Phase 21 | Complete |
 | BACK-03 | Phase 21 | Pending |
 | GEN-01 | Phase 22 | Pending |
 | GEN-02 | Phase 22 | Pending |
