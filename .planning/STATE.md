@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 22-03-PLAN.md
-last_updated: "2026-04-14T16:28:22.343Z"
-last_activity: "2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed"
+stopped_at: Completed 22-04-PLAN.md
+last_updated: "2026-04-14T18:30:00.000Z"
+last_activity: "2026-04-14 — Plan 22-04 complete: FluentModelBuilder pipeline wiring + 13 source-gen tests; 440 tests passing; fixed ResolveTargetTypeReturn infinite loop"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 9
-  completed_plans: 8
-  percent: 27
+  completed_plans: 11
+  percent: 44
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 ## Current Position
 
 Phase: 22 of 24 (Core Code Generation — In Progress)
-Plan: 1 of 5 complete in current phase
+Plan: 4 of 5 complete in current phase
 Status: In progress
-Last activity: 2026-04-14 — Plan 22-01 complete: AccumulatorStepGenerationTests stub; 428 tests passing; Wave 0 gap closed
+Last activity: 2026-04-14 — Plan 22-04 complete: FluentModelBuilder pipeline wiring + 13 source-gen tests; 440 tests passing; fixed ResolveTargetTypeReturn infinite loop
 
-Progress: [██░░░░░░░░] 27% (v2.2 milestone — 1/4 phases complete, 1/5 plans in phase 22)
+Progress: [████░░░░░░] 44% (v2.2 milestone — 1/4 phases complete, 4/5 plans in phase 22)
 
 ## Accumulated Context
 
@@ -59,6 +59,9 @@ Progress: [██░░░░░░░░] 27% (v2.2 milestone — 1/4 phases co
 - [Phase 22-core-code-generation]: GEN-05 element-type parameter: ElementTypeFluentMethodParameter private inner subclass overrides SourceType to CollectionParameterInfo.ElementType without modifying existing FluentMethodParameter API
 - [Phase 22-core-code-generation]: ReadOnlyKeyword emitted unconditionally by AccumulatorStepDeclaration — GEN-06 is unconditional; accumulator steps never host OptionalFluentMethod
 - [Phase 22-core-code-generation]: AccumulatorStepDeclaration implements terminal method inline rather than reusing StepTerminalMethodDeclaration — needs AccumulatorCollectionConversionExpression dispatch
+- [Phase 22-core-code-generation Plan 04]: AccumulatorMethod excluded from all step-chain traversals (GetDescendentFluentSteps, MarkReturnsFromMethods, ResolveTargetTypeReturn) — self-returning method causes infinite loop if not excluded
+- [Phase 22-core-code-generation Plan 04]: Build{TypeName} transition method naming for DynamicSuffix targets — prevents CS0111 when multiple all-collection targets share root node
+- [Phase 22-core-code-generation Plan 04]: global using System.Linq injected into test compilation — resolves ImmutableArray<T>.ToArray() via LINQ extension in netstandard2.0 reference assembly context
 
 ### Pending Todos
 
@@ -70,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-14T16:28:22.342Z
-Stopped at: Completed 22-03-PLAN.md
+Last session: 2026-04-14T18:30:00.000Z
+Stopped at: Completed 22-04-PLAN.md
 Resume file: None

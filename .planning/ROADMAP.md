@@ -104,12 +104,13 @@ Plans:
   3. Generated accumulator step struct is `readonly` and all accumulator methods carry `[MethodImpl(AggressiveInlining)]`
   4. Accumulator field is initialized to `ImmutableArray<T>.Empty` (never uninitialized/default) so calling the terminal on a zero-item chain does not throw
   5. Generated code compiles for all six declared collection types: `IEnumerable<T>`, `ICollection<T>`, `IList<T>`, `IReadOnlyCollection<T>`, `IReadOnlyList<T>`, and `T[]`
-**Plans:** 3/4 plans executed
+**Plans:** 4/5 plans executed
 Plans:
-- [ ] 22-01-PLAN.md — Wave 0 test scaffolding: AccumulatorStepGenerationTests.cs stub (placeholder [Fact], replaced in 22-04)
-- [ ] 22-02-PLAN.md — Domain model objects: AccumulatorFluentStep (IFluentStep), AccumulatorMethod (IFluentMethod, self-return, element-type param), AccumulatorTransitionMethod
-- [ ] 22-03-PLAN.md — Syntax generation: AccumulatorStepDeclaration (readonly struct + two ctors + .Empty init + AggressiveInlining methods), AccumulatorCollectionConversionExpression (6-case conversion table), CompilationUnit dispatch
-- [ ] 22-04-PLAN.md — Pipeline wiring: trie exclusion of collection params, AccumulatorFluentStep creation in FluentModelBuilder, step-indexing, self-loop guard in FluentStepBuilder, end-to-end GEN-01..GEN-06 source-gen tests, BACK-02 regression gate
+- [x] 22-01-PLAN.md — Wave 0 test scaffolding: AccumulatorStepGenerationTests.cs stub (placeholder [Fact], replaced in 22-04)
+- [x] 22-02-PLAN.md — Domain model objects: AccumulatorFluentStep (IFluentStep), AccumulatorMethod (IFluentMethod, self-return, element-type param), AccumulatorTransitionMethod
+- [x] 22-03-PLAN.md — Syntax generation: AccumulatorStepDeclaration (readonly struct + two ctors + .Empty init + AggressiveInlining methods), AccumulatorCollectionConversionExpression (6-case conversion table), CompilationUnit dispatch
+- [x] 22-04-PLAN.md — Pipeline wiring: trie exclusion of collection params, AccumulatorFluentStep creation in FluentModelBuilder, step-indexing, self-loop guard in FluentStepBuilder, end-to-end GEN-01..GEN-06 source-gen tests, BACK-02 regression gate
+- [ ] 22-05-PLAN.md — (TBD)
 
 ### Phase 23: Composability
 **Goal**: A developer can apply both `[FluentCollectionMethod]` and `[FluentMethod]` to the same parameter and receive two distinct fluent paths — an item-by-item accumulator path and a bulk-set path — where choosing one path in a chain makes the other unavailable for that parameter.
@@ -154,6 +155,6 @@ Plans:
 | 19. Test Fixture Alignment | v2.1 | 3/3 | Complete | 2026-04-12 |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
 | 21. Foundation | v2.2 | Complete    | 2026-04-14 | 2026-04-14 |
-| 22. Core Code Generation | 3/4 | In Progress|  | - |
+| 22. Core Code Generation | v2.2 | 4/5 | In Progress | - |
 | 23. Composability | v2.2 | 0/TBD | Not started | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |
