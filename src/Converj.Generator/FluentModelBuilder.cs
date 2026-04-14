@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis;
 using Converj.Generator.Diagnostics;
 using Converj.Generator.Extensions;
 using Converj.Generator.ModelBuilding;
+using Converj.Generator.Models.Methods;
+using Converj.Generator.Models.Steps;
 using Converj.Generator.TargetAnalysis;
 
 namespace Converj.Generator;
@@ -120,14 +122,20 @@ internal class FluentModelBuilder(Compilation compilation)
 
         var descendentFluentSteps = FluentStepBuilder.GetDescendentFluentSteps(childFluentSteps);
         var fluentBuilderSteps = descendentFluentSteps
-            .DistinctBy(step => step.KnownTargetParameters)
+            .DistinctBy(step => step is RegularFluentStep rfs
+                ? (object)rfs.KnownTargetParameters
+                : step)   // AccumulatorFluentStep instances are unique per target; use reference equality
             .Select((step, index) =>
             {
-                if (step is not RegularFluentStep regularFluentStep)
-                    return step;
-
-                regularFluentStep.Index = index;
-
+                switch (step)
+                {
+                    case RegularFluentStep regularFluentStep:
+                        regularFluentStep.Index = index;
+                        break;
+                    case AccumulatorFluentStep accumulatorStep:
+                        accumulatorStep.Index = index;
+                        break;
+                }
                 return step;
             })
             .ToImmutableArray();
@@ -304,9 +312,22 @@ internal class FluentModelBuilder(Compilation compilation)
                 : _bindingResolver.GetPreSatisfiedParameterNames(value.Method);
             var receiverCount = value.ReceiverParameter is not null ? 1 : 0;
 
-            if (node.Key.Length < value.RequiredParameterCount - preSatisfiedNames.Count - receiverCount) continue;
-            if (node.Key.Length > value.Method.Parameters.Length - preSatisfiedNames.Count - receiverCount) continue;
+            // RequiredParameterCount includes collection params in the parameter list, but they've been
+            // excluded from the trie. Adjust the effective required count by subtracting collection params.
+            var collectionParamCount = value.CollectionParameters.Length;
+            var adjustedRequiredCount = value.RequiredParameterCount - collectionParamCount;
+
+            if (node.Key.Length < adjustedRequiredCount - preSatisfiedNames.Count - receiverCount) continue;
+            if (node.Key.Length > value.Method.Parameters.Length - preSatisfiedNames.Count - receiverCount - collectionParamCount) continue;
             if (value.TerminalMethod == TerminalMethodKind.None) continue;
+
+            // Branch: if the target has collection parameters, produce an AccumulatorTransitionMethod
+            // instead of a direct TerminalMethod. The terminal lives on the AccumulatorFluentStep.
+            if (value.CollectionParameters.Length > 0)
+            {
+                yield return BuildAccumulatorTransition(rootType, node, value, valueSources, methodPrefix);
+                continue;
+            }
 
             var keyParamFieldNames = new HashSet<string>(
                 node.Key.Select(k => k.SourceName.ToParameterFieldName()));
@@ -330,6 +351,175 @@ internal class FluentModelBuilder(Compilation compilation)
             _unreachableTargetAnalyzer.AddReachableMethod(terminalMethod);
             yield return terminalMethod;
         }
+    }
+
+    /// <summary>
+    /// Constructs an <see cref="AccumulatorFluentStep"/> with its <see cref="AccumulatorMethod"/>s and
+    /// a <see cref="TerminalMethod"/>, then returns an <see cref="AccumulatorTransitionMethod"/> that
+    /// the last regular trie step exposes to transition to the accumulator step (RESEARCH.md Open Question 3).
+    /// The terminal lives exclusively on the accumulator step — not on any regular step.
+    /// </summary>
+    private AccumulatorTransitionMethod BuildAccumulatorTransition(
+        INamedTypeSymbol rootType,
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
+        TargetMetadata value,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> valueSources,
+        string methodPrefix)
+    {
+        var preSatisfiedNames = _bindingResolver.IsSelfReferencing(value.Method)
+            ? new HashSet<string>()
+            : _bindingResolver.GetPreSatisfiedParameterNames(value.Method);
+
+        var threadedParamFields = _bindingResolver.GetThreadedParameterFields(value.Method, preSatisfiedNames);
+        var receiverField = value.ReceiverParameter is { } receiver
+            ? ImmutableArray.Create(FluentMethodParameter.FromParameter(receiver, receiver.Name))
+            : ImmutableArray<FluentMethodParameter>.Empty;
+
+        var keyParamFieldNames = new HashSet<string>(
+            node.Key.Select(k => k.SourceName.ToParameterFieldName()));
+        var optionalParamFields = value.OptionalParameters
+            .Where(p => !keyParamFieldNames.Contains(p.Name.ToParameterFieldName()))
+            .Select(p => FluentMethodParameter.FromParameter(p, p.GetFluentMethodName(methodPrefix)));
+
+        // The forwarded parameters on the accumulator step are the non-collection params already
+        // captured by the preceding regular trie step (node.Key), plus threaded/receiver fields.
+        var hasStep = node.Key.Length > 0;
+        ImmutableArray<FluentMethodParameter> forwardedParamFields = hasStep
+            ? [..receiverField, ..threadedParamFields, ..node.Key, ..optionalParamFields]
+            : [..receiverField, ..threadedParamFields];
+
+        // Build value storage for the accumulator step from the forwarded non-collection params.
+        var accumulatorValueStorage = BuildAccumulatorValueStorage(node, valueSources, rootType);
+
+        // Create the accumulator step — Index is assigned by the step-indexing pass after collection.
+        var accumulatorStep = new AccumulatorFluentStep(rootType)
+        {
+            ForwardedTargetParameters = new ParameterSequence(node.Key),
+            ValueStorage = accumulatorValueStorage,
+            CollectionParameters = value.CollectionParameters,
+            CandidateTargets = [value.Method],
+        };
+
+        // The available fields on the accumulator step for AddX methods:
+        // forwarded non-collection fields + one per collection parameter (for the field names).
+        var collectionFieldParams = value.CollectionParameters
+            .Select(cp => FluentMethodParameter.FromParameter(cp.Parameter, cp.MethodName))
+            .ToImmutableArray();
+        ImmutableArray<FluentMethodParameter> allAccumulatorFields = [..forwardedParamFields, ..collectionFieldParams];
+
+        // Build one AccumulatorMethod per collection parameter.
+        var addMethods = value.CollectionParameters
+            .Select(cp => new AccumulatorMethod(
+                cp,
+                accumulatorStep,
+                rootType.ContainingNamespace,
+                allAccumulatorFields,
+                accumulatorValueStorage))
+            .ToList<IFluentMethod>();
+
+        // Build the terminal method on the accumulator step.
+        // allParameterFields must be in constructor-parameter order: forwarded first, then collection.
+        // AccumulatorStepDeclaration.BuildTerminalArgument maps by field.SourceName to collectionLookup,
+        // so we include ALL constructor parameters in the original method.Parameters order.
+        var allTerminalFields = BuildTerminalFieldsInParameterOrder(value, forwardedParamFields, preSatisfiedNames, rootType);
+
+        var mergedValueSources = _bindingResolver.MergeThreadedValueSources(
+            value.Method, accumulatorValueStorage, preSatisfiedNames);
+
+        var verb = value.Context.TerminalVerb ?? "Create";
+        var terminalName = value.TerminalMethod == TerminalMethodKind.FixedName
+            ? verb
+            : $"{verb}{value.Method.ContainingType.ToCreateMethodSuffix()}";
+
+        var terminal = new TerminalMethod(
+            rootType.ContainingNamespace,
+            value,
+            allTerminalFields,
+            mergedValueSources,
+            terminalName);
+
+        _unreachableTargetAnalyzer.AddReachableMethod(terminal);
+
+        accumulatorStep.FluentMethods = [..addMethods, terminal];
+
+        // The transition method replaces the terminal on the last regular step.
+        // It is parameterless and returns the accumulator step.
+        // Apply the same DynamicSuffix / FixedName logic as terminal methods to avoid name
+        // collisions when multiple all-collection targets share the same root node.
+        var transitionName = value.TerminalMethod == TerminalMethodKind.FixedName
+            ? "Build"
+            : $"Build{value.Method.ContainingType.ToCreateMethodSuffix()}";
+
+        return new AccumulatorTransitionMethod(
+            name: transitionName,
+            returnStep: accumulatorStep,
+            rootNamespace: rootType.ContainingNamespace,
+            availableParameterFields: forwardedParamFields,
+            methodParameters: ImmutableArray<FluentMethodParameter>.Empty,
+            valueSources: valueSources);
+    }
+
+    /// <summary>
+    /// Builds the value storage for the accumulator step, containing only the forwarded non-collection
+    /// constructor parameters (the ones already captured by the preceding regular step).
+    /// </summary>
+    private static OrderedDictionary<IParameterSymbol, IFluentValueStorage> BuildAccumulatorValueStorage(
+        Trie<FluentMethodParameter, TargetMetadata>.Node node,
+        OrderedDictionary<IParameterSymbol, IFluentValueStorage> precedingStepValueSources,
+        INamedTypeSymbol rootType)
+    {
+        // Copy only the entries for node.Key parameters (the trie path params forwarded to the accumulator).
+        var keyParamNames = new HashSet<string>(
+            node.Key.Select(k => k.SourceName),
+            StringComparer.Ordinal);
+
+        var filteredEntries = precedingStepValueSources
+            .Where(kvp => keyParamNames.Contains(kvp.Key.Name))
+            .Select(kvp => new KeyValuePair<IParameterSymbol, IFluentValueStorage>(kvp.Key, kvp.Value));
+
+        return new OrderedDictionary<IParameterSymbol, IFluentValueStorage>(filteredEntries);
+    }
+
+    /// <summary>
+    /// Builds the terminal method's parameter field list in the original constructor parameter order,
+    /// interleaving forwarded non-collection fields and collection parameter fields so that
+    /// <c>AccumulatorStepDeclaration</c> can map each argument correctly.
+    /// </summary>
+    private ImmutableArray<FluentMethodParameter> BuildTerminalFieldsInParameterOrder(
+        TargetMetadata value,
+        ImmutableArray<FluentMethodParameter> forwardedParamFields,
+        HashSet<string> preSatisfiedNames,
+        INamedTypeSymbol rootType)
+    {
+        var collectionParamNames = new HashSet<string>(
+            value.CollectionParameters.Select(cp => cp.Parameter.Name),
+            StringComparer.Ordinal);
+
+        // Build a lookup from param name → FluentMethodParameter for forwarded fields
+        var forwardedByName = forwardedParamFields
+            .ToDictionary(f => f.SourceName, StringComparer.Ordinal);
+
+        // Walk the original constructor parameter list in order to emit args in the right order.
+        // Pre-satisfied (threaded) parameters are excluded; receiver parameters are excluded.
+        var result = new List<FluentMethodParameter>();
+        foreach (var param in value.Method.Parameters)
+        {
+            if (preSatisfiedNames.Contains(param.Name)) continue;
+            if (SymbolEqualityComparer.Default.Equals(param, value.ReceiverParameter)) continue;
+
+            if (collectionParamNames.Contains(param.Name))
+            {
+                // Collection parameter: emit as a regular FluentMethodParameter (SourceType = collection type)
+                // so AccumulatorStepDeclaration can look it up in collectionLookup by SourceName.
+                result.Add(FluentMethodParameter.FromParameter(param, param.Name));
+            }
+            else if (forwardedByName.TryGetValue(param.Name, out var fwd))
+            {
+                result.Add(fwd);
+            }
+        }
+
+        return [..result];
     }
 
     /// <summary>
@@ -532,10 +722,17 @@ internal class FluentModelBuilder(Compilation compilation)
                 ? []
                 : _bindingResolver.GetPreSatisfiedParameterNames(targetContext.Method);
 
+            // RESEARCH.md Pattern 1 / Pitfall 2: collection parameters must be excluded from the trie
+            // so they are handled as accumulator AddX methods, not regular With-step methods.
+            var collectionParamNames = new HashSet<string>(
+                targetContext.CollectionParameters.Select(cp => cp.Parameter.Name),
+                StringComparer.Ordinal);
+
             var requiredParameters = targetContext.Method.Parameters
                 .Where(p => !p.HasExplicitDefaultValue)
                 .Where(p => !preSatisfiedNames.Contains(p.Name))
                 .Where(p => !SymbolEqualityComparer.Default.Equals(p, targetContext.ReceiverParameter))
+                .Where(p => !collectionParamNames.Contains(p.Name))
                 .Select(ToFluentMethodParameter);
 
             var metadata = new TargetMetadata(targetContext);
@@ -725,12 +922,13 @@ internal class FluentModelBuilder(Compilation compilation)
         MarkReturnsFromMethods(rootMethods);
         return;
 
-        void MarkReturnsFromMethods(IEnumerable<IFluentMethod> methods)
+        void MarkReturnsFromMethods(IEnumerable<IFluentMethod> methods, HashSet<IFluentStep>? visitedSteps = null)
         {
-            // Exclude methods that return the step they live on (optional setters),
+            // Exclude methods that return the step they live on (optional setters and accumulator self-returns),
             // which would otherwise produce an infinite recursion.
             var forwardMethods = methods
-                .Where(m => m is not OptionalFluentMethod and not OptionalPropertyFluentMethod);
+                .Where(m => m is not OptionalFluentMethod and not OptionalPropertyFluentMethod
+                            and not AccumulatorMethod);
 
             foreach (var method in forwardMethods)
             {
@@ -740,9 +938,13 @@ internal class FluentModelBuilder(Compilation compilation)
                         targetTypeReturn.UnavailableTargets = ComputeUnavailable(targetTypeReturn.CandidateTargets);
                         break;
                     case IFluentStep step:
+                        // Guard against visiting accumulator steps twice (their AccumulatorMethod
+                        // would loop back to themselves if we recurse without a visited check).
+                        visitedSteps ??= new HashSet<IFluentStep>();
+                        if (!visitedSteps.Add(step)) break;
                         // The step's own UnavailableTargets was set in the outer loop;
                         // here we recurse to reach nested TargetTypeReturns.
-                        MarkReturnsFromMethods(step.FluentMethods);
+                        MarkReturnsFromMethods(step.FluentMethods, visitedSteps);
                         break;
                 }
             }

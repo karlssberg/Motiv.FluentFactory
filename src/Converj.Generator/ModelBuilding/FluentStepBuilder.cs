@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using Converj.Generator.Diagnostics;
 using Converj.Generator.Extensions;
+using Converj.Generator.Models.Methods;
 using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
 
@@ -217,7 +218,9 @@ internal class FluentStepBuilder(
 
     /// <summary>
     /// Recursively traverses fluent steps and their children to collect all descendant fluent steps
-    /// in depth-first order.
+    /// in depth-first order, preserving the original traversal order for stable step index assignment.
+    /// Excludes <see cref="AccumulatorMethod"/> from traversal to avoid infinite self-loops
+    /// (accumulator <c>AddX</c> methods return the same step instance they live on).
     /// </summary>
     /// <param name="fluentSteps">The starting set of fluent steps to traverse.</param>
     /// <returns>All descendant fluent steps including the input steps.</returns>
@@ -227,8 +230,10 @@ internal class FluentStepBuilder(
         {
             yield return fluentStep;
 
+            // Exclude OptionalFluentMethod (self-returning setters) and AccumulatorMethod
+            // (self-returning AddX methods that would cause infinite recursion).
             var childSteps = fluentStep.FluentMethods
-                .Where(m => m is not OptionalFluentMethod)
+                .Where(m => m is not OptionalFluentMethod and not AccumulatorMethod)
                 .Select(m => m.Return)
                 .OfType<IFluentStep>();
 

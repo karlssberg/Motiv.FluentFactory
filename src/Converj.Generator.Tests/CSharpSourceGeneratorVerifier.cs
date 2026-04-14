@@ -35,6 +35,9 @@ internal static class CSharpSourceGeneratorVerifier<TSourceGenerator>
                 """
                 // Global aliases so tests written against the old namespace still compile
                 global using Converj.Attributes;
+                // Make System.Linq.Enumerable.ToArray() accessible in test compilations that
+                // use ImmutableArray<T> fields in generated accumulator steps (GEN-02, GEN-04).
+                global using System.Linq;
 
                 // Provide IsExternalInit for record-like features in older targets
                 namespace System.Runtime.CompilerServices
