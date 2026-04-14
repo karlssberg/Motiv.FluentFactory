@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Extensions;
@@ -7,6 +8,120 @@ namespace Converj.Generator.Extensions;
 /// </summary>
 internal static class StringExtensions
 {
+    /// <summary>
+    /// Irregular plural-to-singular mappings that override all suffix rules.
+    /// Lookup is performed BEFORE any suffix rule is applied (Pattern 4 — irregulars first).
+    /// Covers NAME-03 irregular requirement.
+    /// </summary>
+    private static readonly Dictionary<string, string> Irregulars =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "children", "child" },
+            { "people",   "person" },
+            { "men",      "man" },
+            { "women",    "woman" },
+            { "indices",  "index" },
+            { "matrices", "matrix" },
+            { "analyses", "analysis" },
+            { "theses",   "thesis" },
+            { "criteria", "criterion" },
+            { "feet",     "foot" },
+            { "mice",     "mouse" },
+            { "geese",    "goose" },
+            { "teeth",    "tooth" },
+        };
+
+    /// <summary>
+    /// Curated set of "-ves" words that should singularize to "-f" or "-fe".
+    /// Words NOT in this list fall through to the trailing-s rule.
+    /// Covers the safe subset of NAME-03 -ves handling.
+    /// </summary>
+    private static readonly Dictionary<string, string> VesExceptions =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "knives",  "knife" },
+            { "wolves",  "wolf" },
+            { "leaves",  "leaf" },
+            { "lives",   "life" },
+            { "calves",  "calf" },
+            { "halves",  "half" },
+            { "selves",  "self" },
+            { "shelves", "shelf" },
+        };
+
+    /// <summary>
+    /// Attempts to singularize an English plural identifier following the rule chain:
+    /// (1) irregulars dict, (2) -ies→-y, (3) -sses/-shes/-ches/-xes/-zes/-ses→trim es,
+    /// (4) -ves→-f/-fe via curated exceptions, (5) trailing -s (not -ss)→trim.
+    /// Returns <see langword="null"/> when no rule fires (the caller emits CVJG0051).
+    /// Covers requirements NAME-01 (regular suffixes) and NAME-03 (irregulars + fallback).
+    /// </summary>
+    /// <param name="input">The plural word to singularize. May be null.</param>
+    /// <returns>
+    /// The singularized form preserving the case of the first character,
+    /// or <see langword="null"/> if no rule applies.
+    /// </returns>
+    public static string? Singularize(this string? input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return null;
+
+        // Rule 1: Irregulars dictionary (case-insensitive lookup, case-preserved result)
+        if (Irregulars.TryGetValue(input!, out var irregular))
+            return PreserveCase(input!, irregular);
+
+        // Rule 2: -ies → -y  (e.g., categories → category, Categories → Category)
+        if (input!.Length > 3 && input.EndsWith("ies", StringComparison.Ordinal))
+        {
+            var stem = input.Substring(0, input.Length - 3) + "y";
+            return PreserveCase(input, stem);
+        }
+
+        // Rule 3: -sses / -shes / -ches / -xes / -zes → trim "es"
+        // Also handles -ses (e.g., buses → bus) when NOT already caught by -sses
+        if (input.EndsWith("sses", StringComparison.Ordinal) ||
+            input.EndsWith("shes", StringComparison.Ordinal) ||
+            input.EndsWith("ches", StringComparison.Ordinal) ||
+            input.EndsWith("xes",  StringComparison.Ordinal) ||
+            input.EndsWith("zes",  StringComparison.Ordinal) ||
+            (input.EndsWith("ses", StringComparison.Ordinal) && input.Length > 4))
+        {
+            return input.Substring(0, input.Length - 2);
+        }
+
+        // Rule 4: -ves → curated exception list
+        if (input.EndsWith("ves", StringComparison.Ordinal) &&
+            VesExceptions.TryGetValue(input, out var vesSingular))
+        {
+            return PreserveCase(input, vesSingular);
+        }
+
+        // Rule 5: trailing -s (but not -ss)
+        if (input.Length > 1 &&
+            input.EndsWith("s", StringComparison.Ordinal) &&
+            !input.EndsWith("ss", StringComparison.Ordinal))
+        {
+            return input.Substring(0, input.Length - 1);
+        }
+
+        // No rule fired — return null so the caller can emit CVJG0051
+        return null;
+    }
+
+    /// <summary>
+    /// Preserves the case of the first character of <paramref name="original"/>
+    /// in <paramref name="singular"/>.
+    /// </summary>
+    private static string PreserveCase(string original, string singular)
+    {
+        if (string.IsNullOrEmpty(singular))
+            return singular;
+
+        return char.IsUpper(original[0])
+            ? char.ToUpperInvariant(singular[0]) + singular.Substring(1)
+            : singular;
+    }
+
     private static readonly SymbolDisplayFormat FullyQualifiedFormat = new(
         globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
         typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
