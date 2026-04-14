@@ -70,7 +70,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
 **Milestone Goal:** Add `[FluentCollectionMethod]` enabling item-by-item collection building via repeated fluent calls, with compile-time safety, zero runtime overhead, and zero impact on existing generated output.
 
 - [x] **Phase 21: Foundation** (5 plans) — Attribute, collection detection, singularization, diagnostics, and backward compatibility gate — completed 2026-04-14
-- [ ] **Phase 22: Core Code Generation** — AccumulatorFluentStep emission, terminal conversion, and immutable field initialization
+- [ ] **Phase 22: Core Code Generation** (4 plans) — AccumulatorFluentStep emission, terminal conversion, and immutable field initialization
 - [ ] **Phase 23: Composability** — `[FluentCollectionMethod]` alongside `[FluentMethod]` on the same parameter
 - [ ] **Phase 24: MinItems Enforcement** — Compile-time minimum item count via two-step topology
 
@@ -86,7 +86,7 @@ v2.0 shipped as 65 commits of unplanned, organic work. See `.planning/MILESTONES
   3. Generator emits a diagnostic error when two accumulator method names would collide within the same root
   4. Auto-singularized method names are valid C# identifiers for common English plurals (`items` -> `AddItem`, `tags` -> `AddTag`, `categories` -> `AddCategory`)
   5. All 415 existing tests pass with zero assertion changes and non-attributed code produces byte-identical generated output
-**Plans:** 5/5 plans executed — PHASE COMPLETE 2026-04-14
+**Plans:** 5/5 plans complete
 Plans:
 - [x] 21-01-PLAN.md — Wave 0 test scaffolding (six empty xUnit test classes ready for Plans 02–05)
 - [x] 21-02-PLAN.md — Public attribute + TypeName constant + CVJG0050/0051/0052 diagnostic descriptors + AnalyzerReleases.Unshipped entries
@@ -104,7 +104,12 @@ Plans:
   3. Generated accumulator step struct is `readonly` and all accumulator methods carry `[MethodImpl(AggressiveInlining)]`
   4. Accumulator field is initialized to `ImmutableArray<T>.Empty` (never uninitialized/default) so calling the terminal on a zero-item chain does not throw
   5. Generated code compiles for all six declared collection types: `IEnumerable<T>`, `ICollection<T>`, `IList<T>`, `IReadOnlyCollection<T>`, `IReadOnlyList<T>`, and `T[]`
-**Plans**: TBD
+**Plans:** 4 plans
+Plans:
+- [ ] 22-01-PLAN.md — Wave 0 test scaffolding: AccumulatorStepGenerationTests.cs stub (placeholder [Fact], replaced in 22-04)
+- [ ] 22-02-PLAN.md — Domain model objects: AccumulatorFluentStep (IFluentStep), AccumulatorMethod (IFluentMethod, self-return, element-type param), AccumulatorTransitionMethod
+- [ ] 22-03-PLAN.md — Syntax generation: AccumulatorStepDeclaration (readonly struct + two ctors + .Empty init + AggressiveInlining methods), AccumulatorCollectionConversionExpression (6-case conversion table), CompilationUnit dispatch
+- [ ] 22-04-PLAN.md — Pipeline wiring: trie exclusion of collection params, AccumulatorFluentStep creation in FluentModelBuilder, step-indexing, self-loop guard in FluentStepBuilder, end-to-end GEN-01..GEN-06 source-gen tests, BACK-02 regression gate
 
 ### Phase 23: Composability
 **Goal**: A developer can apply both `[FluentCollectionMethod]` and `[FluentMethod]` to the same parameter and receive two distinct fluent paths — an item-by-item accumulator path and a bulk-set path — where choosing one path in a chain makes the other unavailable for that parameter.
@@ -148,7 +153,7 @@ Plans:
 | 18. Builder Pattern Renames | v2.1 | 1/1 | Complete | 2026-04-12 |
 | 19. Test Fixture Alignment | v2.1 | 3/3 | Complete | 2026-04-12 |
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
-| 21. Foundation | v2.2 | 5/5 | Complete | 2026-04-14 |
-| 22. Core Code Generation | v2.2 | 0/TBD | Not started | - |
+| 21. Foundation | v2.2 | Complete    | 2026-04-14 | 2026-04-14 |
+| 22. Core Code Generation | v2.2 | 0/4 | Planned | - |
 | 23. Composability | v2.2 | 0/TBD | Not started | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |
