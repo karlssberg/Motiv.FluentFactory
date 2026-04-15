@@ -120,7 +120,13 @@ Plans:
   1. Developer can use `.AddTag("x").AddTag("y").Create()` (accumulator path) and `.WithTags(allTags).Create()` (bulk-set path) on the same root type, with both producing correct output
   2. After calling an accumulator method on a parameter, the bulk-set method for that parameter is not available in the chain (compile-time, no method present on the returned step type)
   3. After calling the bulk-set method on a parameter, the accumulator method for that parameter is not available in the chain (compile-time, no method present on the returned step type)
-**Plans**: TBD
+**Plans:** 5 plans
+Plans:
+- [ ] 23-01-PLAN.md — Wave 0: ROADMAP/REQUIREMENTS amendments + five xUnit test stubs
+- [ ] 23-02-PLAN.md — Core composability: AccumulatorBulkMethod + AccumulatorBulkTransitionMethod + ISelfReturningAccumulatorMethod marker + emission + pipeline wiring (COMP-01/02/03)
+- [ ] 23-03-PLAN.md — Property parity: AttributeUsage widened to Parameter|Property, CollectionPropertyInfo, analyzer extended, CVJG0053 introduced
+- [ ] 23-04-PLAN.md — Broad overload retrofit: CVJG0052 narrowed to signature-collision, generator-wide collision-diagnostic audit, CollectionMethodOverloadingTests
+- [ ] 23-05-PLAN.md — Regression gate: BACK-01/BACK-02 verification, user sign-off on audit dispositions, phase SUMMARY
 
 ### Phase 24: MinItems Enforcement
 **Goal**: A developer using `[FluentCollectionMethod(MinItems = N)]` where N >= 1 cannot call the terminal method until at least N items have been accumulated — enforced at compile time via distinct step types, not runtime guards.
@@ -156,5 +162,5 @@ Plans:
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
 | 21. Foundation | v2.2 | Complete    | 2026-04-14 | 2026-04-14 |
 | 22. Core Code Generation | v2.2 | Complete    | 2026-04-14 | - |
-| 23. Composability | v2.2 | 0/TBD | Not started | - |
+| 23. Composability | v2.2 | 0/5 | Planned | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |
