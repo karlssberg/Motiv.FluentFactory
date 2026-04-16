@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Converj.Generator.Extensions;
+using Converj.Generator.Models.Methods;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -28,6 +29,7 @@ internal static class FluentStepDeclaration
                     MultiMethod multiMethod => FluentStepMethodDeclaration.Create(multiMethod, step.KnownTargetParameters, ambientTypeParameters, isStepContext: true),
                     OptionalFluentMethod optionalMethod => OptionalFluentMethodDeclaration.Create(optionalMethod, step),
                     OptionalPropertyFluentMethod optionalPropertyMethod => OptionalPropertyFluentMethodDeclaration.Create(optionalPropertyMethod, step),
+                    AccumulatorBulkTransitionMethod bulkTransition => AccumulatorBulkTransitionMethodDeclaration.Create(bulkTransition, step),
                     _ => FluentStepMethodDeclaration.Create(method, step.KnownTargetParameters, ambientTypeParameters, isStepContext: true)
                 });
 

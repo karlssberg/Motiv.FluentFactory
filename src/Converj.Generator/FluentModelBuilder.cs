@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Converj.Generator.Diagnostics;
+using Converj.Generator.Domain;
 using Converj.Generator.Extensions;
 using Converj.Generator.ModelBuilding;
 using Converj.Generator.Models.Methods;
@@ -322,10 +323,13 @@ internal class FluentModelBuilder(Compilation compilation)
             if (value.TerminalMethod == TerminalMethodKind.None) continue;
 
             // Branch: if the target has collection parameters, produce an AccumulatorTransitionMethod
-            // instead of a direct TerminalMethod. The terminal lives on the AccumulatorFluentStep.
+            // (parameterless) plus optional AccumulatorBulkTransitionMethod(s) (parameterised, one per
+            // collection param that carries [FluentMethod]) instead of a direct TerminalMethod.
+            // The terminal lives on the AccumulatorFluentStep.
             if (value.CollectionParameters.Length > 0)
             {
-                yield return BuildAccumulatorTransition(rootType, node, value, valueSources, methodPrefix);
+                foreach (var transitionMethod in BuildAccumulatorTransitions(rootType, node, value, valueSources, methodPrefix))
+                    yield return transitionMethod;
                 continue;
             }
 
@@ -354,12 +358,18 @@ internal class FluentModelBuilder(Compilation compilation)
     }
 
     /// <summary>
-    /// Constructs an <see cref="AccumulatorFluentStep"/> with its <see cref="AccumulatorMethod"/>s and
-    /// a <see cref="TerminalMethod"/>, then returns an <see cref="AccumulatorTransitionMethod"/> that
-    /// the last regular trie step exposes to transition to the accumulator step (RESEARCH.md Open Question 3).
-    /// The terminal lives exclusively on the accumulator step — not on any regular step.
+    /// Constructs an <see cref="AccumulatorFluentStep"/> with its <see cref="AccumulatorMethod"/>s,
+    /// optional <see cref="AccumulatorBulkMethod"/>s, and a <see cref="TerminalMethod"/>, then yields:
+    /// <list type="bullet">
+    ///   <item>An <see cref="AccumulatorTransitionMethod"/> (parameterless, Phase 22 entry).</item>
+    ///   <item>Zero or more <see cref="AccumulatorBulkTransitionMethod"/>s — one per collection parameter
+    ///   that carries <c>[FluentMethod]</c>, providing a parameterised <c>IEnumerable&lt;T&gt;</c>
+    ///   entry path (Phase 23 COMP-01).</item>
+    /// </list>
+    /// All methods transition to the same accumulator step. The terminal lives exclusively on the
+    /// accumulator step — not on any regular step (RESEARCH.md Open Question 3).
     /// </summary>
-    private AccumulatorTransitionMethod BuildAccumulatorTransition(
+    private IEnumerable<IFluentMethod> BuildAccumulatorTransitions(
         INamedTypeSymbol rootType,
         Trie<FluentMethodParameter, TargetMetadata>.Node node,
         TargetMetadata value,
@@ -417,6 +427,20 @@ internal class FluentModelBuilder(Compilation compilation)
                 accumulatorValueStorage))
             .ToList<IFluentMethod>();
 
+        // Build one AccumulatorBulkMethod per collection parameter that also carries [FluentMethod].
+        // These are the WithXs(IEnumerable<T>) self-returning methods on the accumulator step (COMP-02).
+        var bulkMethods = value.CollectionParameters
+            .Where(HasFluentMethodAttribute)
+            .Select(cp => new AccumulatorBulkMethod(
+                cp,
+                accumulatorStep,
+                rootType.ContainingNamespace,
+                allAccumulatorFields,
+                accumulatorValueStorage,
+                bulkMethodName: ResolveBulkMethodName(cp, value),
+                compilation))
+            .ToList<IFluentMethod>();
+
         // Build the terminal method on the accumulator step.
         // allParameterFields must be in constructor-parameter order: forwarded first, then collection.
         // AccumulatorStepDeclaration.BuildTerminalArgument maps by field.SourceName to collectionLookup,
@@ -440,7 +464,7 @@ internal class FluentModelBuilder(Compilation compilation)
 
         _unreachableTargetAnalyzer.AddReachableMethod(terminal);
 
-        accumulatorStep.FluentMethods = [..addMethods, terminal];
+        accumulatorStep.FluentMethods = [..addMethods, ..bulkMethods, terminal];
 
         // The transition method replaces the terminal on the last regular step.
         // It is parameterless and returns the accumulator step.
@@ -450,13 +474,47 @@ internal class FluentModelBuilder(Compilation compilation)
             ? "Build"
             : $"Build{value.Method.ContainingType.ToCreateMethodSuffix()}";
 
-        return new AccumulatorTransitionMethod(
+        // Yield the parameterless transition (Phase 22 BACK-01 preserved).
+        yield return new AccumulatorTransitionMethod(
             name: transitionName,
             returnStep: accumulatorStep,
             rootNamespace: rootType.ContainingNamespace,
             availableParameterFields: forwardedParamFields,
             methodParameters: ImmutableArray<FluentMethodParameter>.Empty,
             valueSources: valueSources);
+
+        // Yield one AccumulatorBulkTransitionMethod per collection parameter carrying [FluentMethod].
+        // These provide a parameterised IEnumerable<T> entry into the same accumulator step (COMP-01).
+        foreach (var cp in value.CollectionParameters.Where(HasFluentMethodAttribute))
+        {
+            var bulkName = ResolveBulkMethodName(cp, value);
+            yield return new AccumulatorBulkTransitionMethod(
+                name: bulkName,
+                returnStep: accumulatorStep,
+                rootNamespace: rootType.ContainingNamespace,
+                availableParameterFields: forwardedParamFields,
+                valueSources: valueSources,
+                collectionParameter: cp,
+                compilation: compilation);
+        }
+    }
+
+    /// <summary>
+    /// Determines whether the given <see cref="CollectionParameterInfo"/> corresponds to a parameter
+    /// that also carries <c>[FluentMethod]</c>, meaning it should produce a bulk transition pair.
+    /// </summary>
+    private static bool HasFluentMethodAttribute(CollectionParameterInfo cp) =>
+        cp.Parameter.GetAttribute(TypeName.FluentMethodAttribute) is not null;
+
+    /// <summary>
+    /// Resolves the bulk method name for a collection parameter that carries <c>[FluentMethod]</c>.
+    /// Uses the same resolution logic as the regular trie: explicit attribute argument, or
+    /// <c>With{Capitalized}</c> default.
+    /// </summary>
+    private static string ResolveBulkMethodName(CollectionParameterInfo cp, TargetMetadata value)
+    {
+        var methodPrefix = value.Context.MethodPrefix ?? "With";
+        return cp.Parameter.GetFluentMethodName(methodPrefix);
     }
 
     /// <summary>
@@ -924,11 +982,12 @@ internal class FluentModelBuilder(Compilation compilation)
 
         void MarkReturnsFromMethods(IEnumerable<IFluentMethod> methods, HashSet<IFluentStep>? visitedSteps = null)
         {
-            // Exclude methods that return the step they live on (optional setters and accumulator self-returns),
-            // which would otherwise produce an infinite recursion.
+            // Exclude methods that return the step they live on (optional setters and any
+            // ISelfReturningAccumulatorMethod: AddX and WithXs bulk methods), which would otherwise
+            // produce an infinite recursion (Phase 22 Plan 04 STATE.md decision generalized via marker).
             var forwardMethods = methods
                 .Where(m => m is not OptionalFluentMethod and not OptionalPropertyFluentMethod
-                            and not AccumulatorMethod);
+                            and not ISelfReturningAccumulatorMethod);
 
             foreach (var method in forwardMethods)
             {

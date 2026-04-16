@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Converj.Generator.Extensions;
+using Converj.Generator.Models.Methods;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -138,13 +139,17 @@ internal static class RootTypeDeclaration
         {
             { Return: TargetTypeReturn } =>
                 RootTerminalMethodDeclaration.Create(method, file.RootType),
-            
+
             OptionalGatewayMethod gateway =>
                 OptionalGatewayMethodDeclaration.Create(gateway),
-            
+
             MultiMethod multiMethod =>
                 FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),
-            
+
+            // Bulk transition from root: emit WithXs(IEnumerable<T> items) -> new AccumulatorStep(ImmutableArray<T>.Empty.AddRange(items))
+            AccumulatorBulkTransitionMethod bulkTransition =>
+                AccumulatorBulkTransitionMethodDeclaration.Create(bulkTransition, currentStep: null),
+
             _ =>
                 FluentStepMethodDeclaration.Create(method, [], file.RootType.TypeParameters)
         };

@@ -141,10 +141,10 @@ internal class FluentMethodSelector(
         var current = selectedMethod.Return;
         while (current is IFluentStep step)
         {
-            // Exclude self-returning methods (AccumulatorMethod) to avoid an infinite loop:
-            // AccumulatorMethod.Return == step, which would re-enter the same accumulator step.
+            // Exclude self-returning methods (any ISelfReturningAccumulatorMethod: AddX and WithXs)
+            // to avoid an infinite loop: these methods' Return == step itself.
             var nextMethod = step.FluentMethods.FirstOrDefault(
-                m => m is not TerminalMethod and not OptionalFluentMethod and not AccumulatorMethod);
+                m => m is not TerminalMethod and not OptionalFluentMethod and not ISelfReturningAccumulatorMethod);
             if (nextMethod is null) return null;
             current = nextMethod.Return;
         }

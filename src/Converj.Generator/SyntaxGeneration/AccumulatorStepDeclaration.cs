@@ -161,21 +161,31 @@ internal static class AccumulatorStepDeclaration
 
     // ── AddX methods ──────────────────────────────────────────────────────────
 
+    private const string IEnumerableGlobal =
+        "global::System.Collections.Generic.IEnumerable";
+
     /// <summary>
     /// Emits one <c>public {StepType} AddX(in ElementType item)</c> method per
-    /// <see cref="AccumulatorMethod"/> in <c>step.FluentMethods</c>.
+    /// <see cref="AccumulatorMethod"/> in <c>step.FluentMethods</c>, plus one
+    /// <c>public {StepType} WithXs(IEnumerable&lt;ElementType&gt; items)</c> per
+    /// <see cref="AccumulatorBulkMethod"/> (Phase 23 Plan 02 composability feature).
     /// Each method carries <c>[MethodImpl(AggressiveInlining)]</c> (GEN-06) and returns a new
     /// struct instance via the private copy constructor, forwarding all non-target fields unchanged
-    /// and updating the target accumulator field via <c>.Add(item)</c>.
+    /// and updating the target accumulator field via <c>.Add(item)</c> or <c>.AddRange(items)</c>.
     /// </summary>
     private static ImmutableArray<MethodDeclarationSyntax> CreateAddMethods(AccumulatorFluentStep step)
     {
         var stepGlobalName = step.IdentifierDisplayString();
 
-        return step.FluentMethods
+        var singleAdds = step.FluentMethods
             .OfType<AccumulatorMethod>()
-            .Select(method => CreateAddMethod(step, method, stepGlobalName))
-            .ToImmutableArray();
+            .Select(method => CreateAddMethod(step, method, stepGlobalName));
+
+        var bulkAdds = step.FluentMethods
+            .OfType<AccumulatorBulkMethod>()
+            .Select(method => CreateBulkMethod(step, method, stepGlobalName));
+
+        return [..singleAdds, ..bulkAdds];
     }
 
     private static MethodDeclarationSyntax CreateAddMethod(
@@ -187,7 +197,8 @@ internal static class AccumulatorStepDeclaration
         var elementTypeName = cp.ElementType.ToGlobalDisplayString();
         var fieldName = cp.Parameter.Name.ToParameterFieldName();
 
-        var ctorArgs = BuildCopyConstructorArguments(step, targetFieldName: fieldName);
+        var targetFieldExpression = BuildAddExpression(fieldName);
+        var ctorArgs = BuildCopyConstructorArguments(step, targetFieldName: fieldName, targetFieldExpression);
 
         return MethodDeclaration(ParseTypeName(stepGlobalName), Identifier(method.Name))
             .WithAttributeLists(SingletonList(
@@ -202,6 +213,76 @@ internal static class AccumulatorStepDeclaration
                     ObjectCreationExpression(ParseTypeName(stepGlobalName))
                         .WithArgumentList(ArgumentList(SeparatedList<ArgumentSyntax>(
                             ctorArgs.InterleaveWith(Token(SyntaxKind.CommaToken))))))));
+    }
+
+    /// <summary>
+    /// Emits a <c>WithXs(IEnumerable&lt;ElementType&gt; items)</c> bulk-append method on the accumulator step.
+    /// The method body calls <c>this._{fieldName}__parameter.AddRange(items)</c> via the private
+    /// copy constructor, forwarding all other accumulator fields unchanged.
+    /// </summary>
+    private static MethodDeclarationSyntax CreateBulkMethod(
+        AccumulatorFluentStep step,
+        AccumulatorBulkMethod method,
+        string stepGlobalName)
+    {
+        var cp = method.CollectionParameter;
+        var elementTypeName = cp.ElementType.ToGlobalDisplayString();
+        var fieldName = cp.Parameter.Name.ToParameterFieldName();
+
+        var bulkParamType = $"{IEnumerableGlobal}<{elementTypeName}>";
+        var targetFieldExpression = BuildAddRangeExpression(fieldName);
+        var ctorArgs = BuildCopyConstructorArguments(step, targetFieldName: fieldName, targetFieldExpression);
+
+        return MethodDeclaration(ParseTypeName(stepGlobalName), Identifier(method.Name))
+            .WithAttributeLists(SingletonList(
+                AttributeList(SingletonSeparatedList(AggressiveInliningAttributeSyntax.Create()))))
+            .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+            .WithParameterList(ParameterList(SingletonSeparatedList(
+                Parameter(Identifier("items"))
+                    .WithType(ParseTypeName(bulkParamType)))))
+            .WithBody(Block(
+                ReturnStatement(
+                    ObjectCreationExpression(ParseTypeName(stepGlobalName))
+                        .WithArgumentList(ArgumentList(SeparatedList<ArgumentSyntax>(
+                            ctorArgs.InterleaveWith(Token(SyntaxKind.CommaToken))))))));
+    }
+
+    /// <summary>
+    /// Builds <c>this._{fieldName}__parameter.Add(item)</c> for use in the single-item AddX copy-ctor argument.
+    /// </summary>
+    private static ExpressionSyntax BuildAddExpression(string fieldName)
+    {
+        var thisField = MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            ThisExpression(),
+            IdentifierName(fieldName));
+
+        return InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                thisField,
+                IdentifierName("Add")))
+            .WithArgumentList(ArgumentList(
+                SingletonSeparatedList(Argument(IdentifierName("item")))));
+    }
+
+    /// <summary>
+    /// Builds <c>this._{fieldName}__parameter.AddRange(items)</c> for use in the bulk WithXs copy-ctor argument.
+    /// </summary>
+    private static ExpressionSyntax BuildAddRangeExpression(string fieldName)
+    {
+        var thisField = MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            ThisExpression(),
+            IdentifierName(fieldName));
+
+        return InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                thisField,
+                IdentifierName("AddRange")))
+            .WithArgumentList(ArgumentList(
+                SingletonSeparatedList(Argument(IdentifierName("items")))));
     }
 
     // ── Terminal method ───────────────────────────────────────────────────────
@@ -356,13 +437,22 @@ internal static class AccumulatorStepDeclaration
                         IdentifierName(cp.Parameter.Name.ToCamelCase()))));
 
     /// <summary>
-    /// Builds the argument list for the private copy constructor call inside an <c>AddX</c> method.
+    /// Builds the argument list for the private copy constructor call inside an <c>AddX</c> or
+    /// <c>WithXs</c> method.
     /// All forwarded fields are passed as <c>this._field</c>; the target accumulator field is
-    /// passed as <c>this._field.Add(item)</c>; all other accumulator fields pass-through unchanged.
+    /// passed as the caller-supplied <paramref name="targetFieldExpression"/>
+    /// (either <c>this._field.Add(item)</c> or <c>this._field.AddRange(items)</c>);
+    /// all other accumulator fields pass-through unchanged.
     /// </summary>
+    /// <param name="step">The accumulator step whose fields drive the argument order.</param>
+    /// <param name="targetFieldName">The field name of the collection being mutated.</param>
+    /// <param name="targetFieldExpression">
+    /// The expression to substitute for the target field (e.g., <c>Add(item)</c> or <c>AddRange(items)</c> invocation).
+    /// </param>
     private static IEnumerable<ArgumentSyntax> BuildCopyConstructorArguments(
         AccumulatorFluentStep step,
-        string targetFieldName)
+        string targetFieldName,
+        ExpressionSyntax targetFieldExpression)
     {
         // Forwarded non-collection fields — pass through unchanged
         foreach (var p in step.ForwardedTargetParameters)
@@ -374,7 +464,7 @@ internal static class AccumulatorStepDeclaration
                     IdentifierName(p.Name.ToParameterFieldName())));
         }
 
-        // Accumulator fields — update target, pass others through
+        // Accumulator fields — update target via caller-provided expression, pass others through
         foreach (var cp in step.CollectionParameters)
         {
             var fieldName = cp.Parameter.Name.ToParameterFieldName();
@@ -385,15 +475,7 @@ internal static class AccumulatorStepDeclaration
 
             if (fieldName == targetFieldName)
             {
-                // this._items__parameter.Add(item)
-                yield return Argument(
-                    InvocationExpression(
-                        MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            thisField,
-                            IdentifierName("Add")))
-                    .WithArgumentList(ArgumentList(
-                        SingletonSeparatedList(Argument(IdentifierName("item"))))));
+                yield return Argument(targetFieldExpression);
             }
             else
             {

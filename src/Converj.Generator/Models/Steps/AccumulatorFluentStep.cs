@@ -37,8 +37,10 @@ internal class AccumulatorFluentStep(INamedTypeSymbol rootType) : IFluentStep
 
     /// <summary>
     /// Gets or sets the fluent methods on this step.
-    /// Contains <c>AccumulatorMethod</c> instances (one per collection parameter)
-    /// plus the terminal <see cref="TerminalMethod"/> (RESEARCH.md Open Question 3).
+    /// Contains <c>AccumulatorMethod</c> instances (one per collection parameter),
+    /// zero or more <c>AccumulatorBulkMethod</c> instances (one per collection parameter
+    /// that also carries <c>[FluentMethod]</c>), and the terminal <see cref="TerminalMethod"/>
+    /// (RESEARCH.md Open Question 3; Phase 23 Plan 02 extends with bulk-append methods).
     /// </summary>
     public IList<IFluentMethod> FluentMethods { get; set; } = [];
 

@@ -230,10 +230,11 @@ internal class FluentStepBuilder(
         {
             yield return fluentStep;
 
-            // Exclude OptionalFluentMethod (self-returning setters) and AccumulatorMethod
-            // (self-returning AddX methods that would cause infinite recursion).
+            // Exclude OptionalFluentMethod (self-returning setters) and any ISelfReturningAccumulatorMethod
+            // (self-returning AddX/WithXs methods that would cause infinite recursion —
+            // see Phase 22 Plan 04 STATE.md decision and Phase 23 RESEARCH.md Pitfall 8).
             var childSteps = fluentStep.FluentMethods
-                .Where(m => m is not OptionalFluentMethod and not AccumulatorMethod)
+                .Where(m => m is not OptionalFluentMethod and not ISelfReturningAccumulatorMethod)
                 .Select(m => m.Return)
                 .OfType<IFluentStep>();
 
