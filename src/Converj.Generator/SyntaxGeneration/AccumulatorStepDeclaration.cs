@@ -45,8 +45,13 @@ internal static class AccumulatorStepDeclaration
 
         var modifiers = GetAccessibilityTokens(step.Accessibility);
 
+        var typeParameterList = CreateTypeParameterList(step);
+        var constraintClauses = CreateConstraintClauses(step);
+
         return StructDeclaration(step.Name)
             .WithModifiers(modifiers)
+            .WithTypeParameterList(typeParameterList)
+            .WithConstraintClauses(constraintClauses)
             .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
             .WithMembers(List<MemberDeclarationSyntax>([
                 ..forwardedFields,
@@ -58,6 +63,56 @@ internal static class AccumulatorStepDeclaration
                 ..addPropertyMethods,
                 terminalMethod
             ]));
+    }
+
+    /// <summary>
+    /// Builds the type parameter list for the accumulator struct from the effective generic
+    /// parameters carried by forwarded / threaded parameters (e.g., <c>&lt;TEngine&gt;</c>).
+    /// Returns <see langword="null"/> when no generic parameters are present.
+    /// </summary>
+    private static TypeParameterListSyntax? CreateTypeParameterList(AccumulatorFluentStep step)
+    {
+        var typeArguments = step.GetDistinctEffectiveTypeArguments();
+        if (typeArguments.Length == 0)
+            return null;
+
+        return TypeParameterList(SeparatedList(
+            typeArguments.Select(arg => TypeParameter(arg.GetEffectiveName()))));
+    }
+
+    /// <summary>
+    /// Builds the constraint clauses for the accumulator struct type parameters.
+    /// Collects type parameters from the candidate target containing type (and receiver when present),
+    /// matches them to the accumulator's effective type arguments by name, and emits the constraints
+    /// (e.g., <c>where TEngine : global::Ns.IEngine</c>).
+    /// </summary>
+    private static SyntaxList<TypeParameterConstraintClauseSyntax> CreateConstraintClauses(AccumulatorFluentStep step)
+    {
+        var typeArguments = step.GetDistinctEffectiveTypeArguments();
+        if (typeArguments.Length == 0)
+            return List<TypeParameterConstraintClauseSyntax>();
+
+        var candidateTypeParameters = new List<ITypeParameterSymbol>();
+
+        foreach (var target in step.CandidateTargets)
+        {
+            if (target.ContainingType is { IsGenericType: true } targetType)
+                candidateTypeParameters.AddRange(targetType.OriginalDefinition.TypeParameters);
+        }
+
+        if (step.ReceiverParameter?.Type is INamedTypeSymbol { IsGenericType: true } receiverType)
+            candidateTypeParameters.AddRange(receiverType.OriginalDefinition.TypeParameters);
+
+        var effectiveNames = new HashSet<string>(typeArguments.Select(tp => tp.GetEffectiveName()));
+        var matchedParameters = candidateTypeParameters
+            .Where(tp => effectiveNames.Contains(tp.GetEffectiveName()))
+            .DistinctBy(tp => tp.GetEffectiveName())
+            .ToImmutableArray();
+
+        if (matchedParameters.Length == 0)
+            return List<TypeParameterConstraintClauseSyntax>();
+
+        return List(Helpers.TypeParameterConstraintBuilder.Create(matchedParameters));
     }
 
     // ── Modifier list ─────────────────────────────────────────────────────────

@@ -4,6 +4,8 @@ using Converj.Generator.Extensions;
 using Converj.Generator.Models.Parameters;
 using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Converj.Generator.Models.Steps;
 
@@ -134,24 +136,58 @@ internal class AccumulatorFluentStep(INamedTypeSymbol rootType) : IFluentStep
 
     /// <summary>
     /// Returns the fully-qualified identifier display string for use in generated code.
-    /// Accumulator steps have no generic type parameters, so this is simply
-    /// <c>global::{Namespace}.{Name}</c>.
+    /// Includes a type argument list derived from forwarded / threaded parameters when the
+    /// target type is generic (e.g., <c>global::Ns.Accumulator_1__Root&lt;TEngine&gt;</c>), so the
+    /// accumulator struct name stays in scope for consumers that reference <c>TEngine</c> in fields,
+    /// <c>Add</c>-method return types, and the terminal return type.
     /// </summary>
     public string IdentifierDisplayString()
     {
-        var globalPrefix = Namespace.IsGlobalNamespace
-            ? "global::"
-            : $"global::{Namespace.ToDisplayString()}.";
-        return $"{globalPrefix}{Name}";
+        var typeArguments = GetDistinctEffectiveTypeArguments();
+        return BuildGlobalIdentifier(typeArguments, arg => IdentifierName(arg.GetEffectiveName()));
     }
 
     /// <summary>
     /// Returns the fully-qualified identifier display string with generic type argument mappings applied.
-    /// Accumulator steps carry no generic parameters of their own, so the map is unused and the
-    /// result is identical to <see cref="IdentifierDisplayString()"/>.
+    /// The map supplies concrete type substitutions (e.g., closed-generic call sites), while
+    /// unmapped open parameters fall back to their effective name.
     /// </summary>
-    public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap) =>
-        IdentifierDisplayString();
+    public string IdentifierDisplayString(IDictionary<FluentType, ITypeSymbol> genericTypeArgumentMap)
+    {
+        var distinctGenericParameters = this.GetGenericTypeArguments(genericTypeArgumentMap)
+            .ToArray();
+
+        return BuildGlobalIdentifier(
+            distinctGenericParameters,
+            arg => ParseTypeName(arg.ToGlobalDisplayString()));
+    }
+
+    /// <summary>
+    /// Returns the distinct effective type arguments derived from <see cref="GenericTargetParameters"/>,
+    /// used when building identifiers and declaration headers for this step.
+    /// </summary>
+    internal ITypeParameterSymbol[] GetDistinctEffectiveTypeArguments() =>
+        GenericTargetParameters
+            .SelectMany(t => t.Type.GetGenericTypeArguments())
+            .DistinctBy(symbol => symbol.GetEffectiveName())
+            .ToArray();
+
+    private string BuildGlobalIdentifier<T>(
+        T[] typeArguments,
+        Func<T, TypeSyntax> argumentSelector)
+    {
+        var globalPrefix = Namespace.IsGlobalNamespace
+            ? "global::"
+            : $"global::{Namespace.ToDisplayString()}.";
+
+        return typeArguments.Length > 0
+            ? $"{globalPrefix}{GenericName(Identifier(Name))
+                .WithTypeArgumentList(
+                    TypeArgumentList(SeparatedList(
+                        typeArguments.Select(argumentSelector))))
+                .NormalizeWhitespace()}"
+            : $"{globalPrefix}{Name}";
+    }
 
     // ── Debugging ────────────────────────────────────────────────────────────
 
