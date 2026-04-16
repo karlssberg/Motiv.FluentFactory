@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 23-01-PLAN.md
-last_updated: "2026-04-16T00:08:59.201Z"
-last_activity: "2026-04-14 — Plan 22-04 complete: FluentModelBuilder pipeline wiring + 13 source-gen tests; 440 tests passing; fixed ResolveTargetTypeReturn infinite loop"
+stopped_at: Completed 23-02-PLAN.md
+last_updated: "2026-04-16T00:50:00.000Z"
+last_activity: "2026-04-16 — Plan 23-02 complete: AccumulatorBulkMethod + WithXs emission + COMP-01/02/03; 456 tests passing"
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 14
-  completed_plans: 10
-  percent: 44
+  completed_plans: 11
+  percent: 50
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 
 ## Current Position
 
-Phase: 22 of 24 (Core Code Generation — In Progress)
-Plan: 4 of 5 complete in current phase
+Phase: 23 of 24 (Composability — In Progress)
+Plan: 2 of 5 complete in current phase
 Status: In progress
-Last activity: 2026-04-14 — Plan 22-04 complete: FluentModelBuilder pipeline wiring + 13 source-gen tests; 440 tests passing; fixed ResolveTargetTypeReturn infinite loop
+Last activity: 2026-04-16 — Plan 23-02 complete: AccumulatorBulkMethod + WithXs emission + COMP-01/02/03; 456 tests passing
 
-Progress: [████░░░░░░] 44% (v2.2 milestone — 1/4 phases complete, 4/5 plans in phase 22)
+Progress: [█████░░░░░] 50% (v2.2 milestone — 2/4 phases complete, 2/5 plans in phase 23)
 
 ## Accumulated Context
 
@@ -64,6 +64,10 @@ Progress: [████░░░░░░] 44% (v2.2 milestone — 1/4 phases co
 - [Phase 22-core-code-generation Plan 04]: global using System.Linq injected into test compilation — resolves ImmutableArray<T>.ToArray() via LINQ extension in netstandard2.0 reference assembly context
 - [Phase 23-composability]: Model D free-composition adopted: COMP-03 changed from mutual exclusion to free composition — both AddX and WithXs emit on same AccumulatorFluentStep and freely interleave
 - [Phase 23-composability]: Phase 23 stub pattern established: same as Phase 22 — VerifyCS alias, single internal Placeholder [Fact], omit FluentDiagnostics using until real diagnostic tests added
+- [Phase 23-composability Plan 02]: ISelfReturningAccumulatorMethod marker generalizes traversal exclusion — all AccumulatorMethod/AccumulatorBulkMethod excluded via marker; 3 sites updated
+- [Phase 23-composability Plan 02]: Bulk transition chaining pattern: WithXs on regular step/root emits new AccumulatorStep(forwarded...).WithXs(items) — avoids calling private copy constructor from external scope
+- [Phase 23-composability Plan 02]: [MultipleFluentMethods] on collection params not supported yet — deferred to Plan 23-04; collection params excluded from trie pre-empts any FluentMethodBuilder skip
+- [Phase 23-composability Plan 02]: COMP-03 runtime round-trip deferred to manual verification — compile-time test confirms generated code is valid; ImmutableArray<T> struct semantics preserve branch independence
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T00:08:59.199Z
-Stopped at: Completed 23-01-PLAN.md
+Last session: 2026-04-16T00:50:00.000Z
+Stopped at: Completed 23-02-PLAN.md
 Resume file: None
