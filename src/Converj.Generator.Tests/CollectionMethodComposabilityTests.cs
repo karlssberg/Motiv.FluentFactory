@@ -12,9 +12,9 @@ public class CollectionMethodComposabilityTests
 {
     /// <summary>
     /// COMP-01: [FluentCollectionMethod] and [FluentMethod("WithTags")] on the same parameter
-    /// is accepted without diagnostics. The preceding regular step (from a non-collection parameter)
-    /// exposes WithTags(IEnumerable&lt;string&gt;) as a bulk entry into the accumulator step.
-    /// The root exposes WithName(string) entry and the step exposes both BuildTarget() and WithTags(IEnumerable&lt;string&gt;).
+    /// is accepted without diagnostics. With hoist, the intermediate Step_0 + BuildTarget()/WithTags
+    /// transition is elided — Builder.WithName returns the accumulator step directly, which exposes
+    /// both AddTag(string) and WithTags(IEnumerable&lt;string&gt;) composably.
     /// </summary>
     [Fact]
     internal async Task COMP_01_both_attributes_accepted_on_same_parameter()
@@ -45,67 +45,39 @@ public class CollectionMethodComposabilityTests
                     ///     <seealso cref="Test.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Builder WithName(in string name)
+                    public static global::Test.Accumulator_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Builder(name);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Target"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Builder
-                {
-                    private readonly string _name__parameter;
-                    internal Step_0__Test_Builder(in string name)
-                    {
-                        this._name__parameter = name;
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder BuildTarget()
-                    {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter);
-                    }
-
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder WithTags(global::System.Collections.Generic.IEnumerable<string> items)
-                    {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter).WithTags(items);
+                        return new global::Test.Accumulator_0__Test_Builder(name);
                     }
                 }
 
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Accumulator_1__Test_Builder
+                public readonly struct Accumulator_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly global::System.Collections.Immutable.ImmutableArray<string> _tags__parameter;
-                    public Accumulator_1__Test_Builder(in string name)
+                    public Accumulator_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._tags__parameter = global::System.Collections.Immutable.ImmutableArray<string>.Empty;
                     }
 
-                    private Accumulator_1__Test_Builder(in string name, in global::System.Collections.Immutable.ImmutableArray<string> tags)
+                    private Accumulator_0__Test_Builder(in string name, in global::System.Collections.Immutable.ImmutableArray<string> tags)
                     {
                         this._name__parameter = name;
                         this._tags__parameter = tags;
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder AddTag(in string item)
+                    public global::Test.Accumulator_0__Test_Builder AddTag(in string item)
                     {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter, this._tags__parameter.Add(item));
+                        return new global::Test.Accumulator_0__Test_Builder(this._name__parameter, this._tags__parameter.Add(item));
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder WithTags(global::System.Collections.Generic.IEnumerable<string> items)
+                    public global::Test.Accumulator_0__Test_Builder WithTags(global::System.Collections.Generic.IEnumerable<string> items)
                     {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter, this._tags__parameter.AddRange(items));
+                        return new global::Test.Accumulator_0__Test_Builder(this._name__parameter, this._tags__parameter.AddRange(items));
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]

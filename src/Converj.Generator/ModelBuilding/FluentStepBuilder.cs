@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using Converj.Generator.Diagnostics;
 using Converj.Generator.Extensions;
 using Converj.Generator.Models.Methods;
+using Converj.Generator.Models.Steps;
 using Converj.Generator.TargetAnalysis;
 using Microsoft.CodeAnalysis;
 
@@ -56,6 +57,20 @@ internal class FluentStepBuilder(
                                 node.EndValues.Any(v => v.OptionalParameters.Length > 0);
         if (fluentMethods.Length == 0 && !(useExistingTypeAsStep && hasOptionalParams))
             return null;
+
+        // Hoist: if the yielded methods include AccumulatorMethod(s) whose Return is an
+        // AccumulatorFluentStep, the accumulator step IS this node's step — skip RegularFluentStep
+        // creation. The AccumulatorFluentStep was pre-built in BuildAccumulatorTransitions with
+        // its ValueStorage / ForwardedTargetParameters / CandidateTargets already set.
+        var hoistedAccumulator = fluentMethods
+            .OfType<AccumulatorMethod>()
+            .Select(m => m.Return as AccumulatorFluentStep)
+            .FirstOrDefault(s => s is not null);
+        if (hoistedAccumulator is not null)
+        {
+            hoistedAccumulator.FluentMethods = new List<IFluentMethod>(fluentMethods);
+            return hoistedAccumulator;
+        }
 
         var step = CreateStep(valueStorages);
         ReportUnresolvableStorage(step, valueStorages);

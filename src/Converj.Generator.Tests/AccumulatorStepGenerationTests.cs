@@ -1037,11 +1037,10 @@ public class AccumulatorStepGenerationTests
     // ── Optional: mixed regular + collection parameters ───────────────────────
 
     /// <summary>
-    /// A constructor with one regular parameter plus one collection parameter produces:
-    ///   - A Step_0__ struct with a WithName method and a BuildTarget() transition method
-    ///   - An Accumulator_1__ struct with AddItem + CreateTarget() terminal
-    ///   - No terminal method on Step_0__ (RESEARCH.md Open Question 3 — terminal on accumulator only)
-    /// Verifies the AccumulatorTransitionMethod architecture end-to-end.
+    /// A constructor with one regular parameter plus one collection parameter produces a single
+    /// hoisted <c>Accumulator_0__</c> struct that the root's <c>WithName</c> returns directly.
+    /// No intermediate <c>Step_0__</c> + <c>BuildTarget()</c> transition is emitted — the
+    /// accumulator step absorbs the scalar field.
     /// </summary>
     [Fact]
     internal async Task Collection_plus_regular_parameter()
@@ -1070,55 +1069,33 @@ public class AccumulatorStepGenerationTests
                     ///     <seealso cref="Test.Target"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Builder WithName(in string name)
+                    public static global::Test.Accumulator_0__Test_Builder WithName(in string name)
                     {
-                        return new global::Test.Step_0__Test_Builder(name);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Target"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Builder
-                {
-                    private readonly string _name__parameter;
-                    internal Step_0__Test_Builder(in string name)
-                    {
-                        this._name__parameter = name;
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Target"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder BuildTarget()
-                    {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter);
+                        return new global::Test.Accumulator_0__Test_Builder(name);
                     }
                 }
 
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Accumulator_1__Test_Builder
+                public readonly struct Accumulator_0__Test_Builder
                 {
                     private readonly string _name__parameter;
                     private readonly global::System.Collections.Immutable.ImmutableArray<string> _items__parameter;
-                    public Accumulator_1__Test_Builder(in string name)
+                    public Accumulator_0__Test_Builder(in string name)
                     {
                         this._name__parameter = name;
                         this._items__parameter = global::System.Collections.Immutable.ImmutableArray<string>.Empty;
                     }
 
-                    private Accumulator_1__Test_Builder(in string name, in global::System.Collections.Immutable.ImmutableArray<string> items)
+                    private Accumulator_0__Test_Builder(in string name, in global::System.Collections.Immutable.ImmutableArray<string> items)
                     {
                         this._name__parameter = name;
                         this._items__parameter = items;
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder AddItem(in string item)
+                    public global::Test.Accumulator_0__Test_Builder AddItem(in string item)
                     {
-                        return new global::Test.Accumulator_1__Test_Builder(this._name__parameter, this._items__parameter.Add(item));
+                        return new global::Test.Accumulator_0__Test_Builder(this._name__parameter, this._items__parameter.Add(item));
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
@@ -1184,57 +1161,35 @@ public class AccumulatorStepGenerationTests
                     ///     <seealso cref="Test.Train{TEngine}"/>
                     /// </summary>
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public static global::Test.Step_0__Test_Builder<TEngine> WithEngine<TEngine>(in TEngine engine)
+                    public static global::Test.Accumulator_0__Test_Builder<TEngine> WithEngine<TEngine>(in TEngine engine)
                         where TEngine : global::Test.IEngine
                     {
-                        return new global::Test.Step_0__Test_Builder<TEngine>(engine);
-                    }
-                }
-
-                /// <summary>
-                ///     <seealso cref="Test.Train{TEngine}"/>
-                /// </summary>
-                [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Step_0__Test_Builder<TEngine> where TEngine : global::Test.IEngine
-                {
-                    private readonly TEngine _engine__parameter;
-                    internal Step_0__Test_Builder(in TEngine engine)
-                    {
-                        this._engine__parameter = engine;
-                    }
-
-                    /// <summary>
-                    ///     <seealso cref="Test.Train{TEngine}"/>
-                    /// </summary>
-                    [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder<TEngine> BuildTrain()
-                    {
-                        return new global::Test.Accumulator_1__Test_Builder<TEngine>(this._engine__parameter);
+                        return new global::Test.Accumulator_0__Test_Builder<TEngine>(engine);
                     }
                 }
 
                 [global::System.CodeDom.Compiler.GeneratedCode("Converj", "$$VERSION$$")]
-                public readonly struct Accumulator_1__Test_Builder<TEngine>
+                public readonly struct Accumulator_0__Test_Builder<TEngine>
                     where TEngine : global::Test.IEngine
                 {
                     private readonly TEngine _engine__parameter;
                     private readonly global::System.Collections.Immutable.ImmutableArray<global::Test.Wheel> _wheels__parameter;
-                    public Accumulator_1__Test_Builder(in TEngine engine)
+                    public Accumulator_0__Test_Builder(in TEngine engine)
                     {
                         this._engine__parameter = engine;
                         this._wheels__parameter = global::System.Collections.Immutable.ImmutableArray<global::Test.Wheel>.Empty;
                     }
 
-                    private Accumulator_1__Test_Builder(in TEngine engine, in global::System.Collections.Immutable.ImmutableArray<global::Test.Wheel> wheels)
+                    private Accumulator_0__Test_Builder(in TEngine engine, in global::System.Collections.Immutable.ImmutableArray<global::Test.Wheel> wheels)
                     {
                         this._engine__parameter = engine;
                         this._wheels__parameter = wheels;
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-                    public global::Test.Accumulator_1__Test_Builder<TEngine> AddWheel(in global::Test.Wheel item)
+                    public global::Test.Accumulator_0__Test_Builder<TEngine> AddWheel(in global::Test.Wheel item)
                     {
-                        return new global::Test.Accumulator_1__Test_Builder<TEngine>(this._engine__parameter, this._wheels__parameter.Add(item));
+                        return new global::Test.Accumulator_0__Test_Builder<TEngine>(this._engine__parameter, this._wheels__parameter.Add(item));
                     }
 
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]

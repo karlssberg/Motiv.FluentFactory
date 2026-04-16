@@ -10,6 +10,11 @@ internal partial class Vehicles
         Vehicle
             .WithCar(new Car<ICarEngine>(new CarEngine(), 5))
             .DispatchVehicle();
+
+        Train<TrainEngine> train = Vehicle
+            .WithTrainEngine(new TrainEngine())
+            .AddWheel(new Wheel())
+            .CreateVehicles_Train();
     }
     
     [FluentRoot]
@@ -19,6 +24,7 @@ internal partial class Vehicles
     internal class CarEngine : ICarEngine;
     internal interface ITrainEngine;
     internal class TrainEngine : ITrainEngine;
+    internal record Wheel;
 
     [FluentTarget<Vehicle>(TerminalMethod = TerminalMethod.None)]
     internal partial record Car<[As("TEngine")]TCarEngine>(
@@ -28,7 +34,8 @@ internal partial class Vehicles
 
     [FluentTarget<Vehicle>]
     internal partial record Train<TEngine>(
-        [FluentMethod("WithTrainEngine")] TEngine Engine)
+        [FluentMethod("WithTrainEngine")] TEngine Engine,
+        [FluentCollectionMethod] IEnumerable<Wheel> Wheels)
         where TEngine : ITrainEngine;
     
     [FluentTarget<Vehicle>]

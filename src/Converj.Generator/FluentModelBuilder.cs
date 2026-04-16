@@ -466,6 +466,22 @@ internal class FluentModelBuilder(Compilation compilation)
 
         accumulatorStep.FluentMethods = [..addMethods, ..bulkMethods, terminal];
 
+        // Hoist condition: when the preceding step would only host the transition (single
+        // collection-bearing end-value, no children, no optional params), skip the intermediate
+        // Step_N struct entirely and yield accumulator methods directly. The parent step's
+        // navigation method (With{LastScalar}) will return the accumulator step directly.
+        var shouldHoist = node.Key.Length > 0
+            && node.EndValues.Count == 1
+            && node.Children.Count == 0
+            && value.OptionalParameters.Length == 0;
+
+        if (shouldHoist)
+        {
+            foreach (var method in accumulatorStep.FluentMethods)
+                yield return method;
+            yield break;
+        }
+
         // The transition method replaces the terminal on the last regular step.
         // It is parameterless and returns the accumulator step.
         // Apply the same DynamicSuffix / FixedName logic as terminal methods to avoid name
@@ -474,7 +490,7 @@ internal class FluentModelBuilder(Compilation compilation)
             ? "Build"
             : $"Build{value.Method.ContainingType.ToCreateMethodSuffix()}";
 
-        // Yield the parameterless transition (Phase 22 BACK-01 preserved).
+        // Yield the parameterless transition.
         yield return new AccumulatorTransitionMethod(
             name: transitionName,
             returnStep: accumulatorStep,

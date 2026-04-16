@@ -21,10 +21,10 @@ namespace Converj.Example
             ///     <seealso cref="Converj.Example.Vehicles.Train{TEngine}"/>
             /// </summary>
             [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-            public static global::Converj.Example.Step_1__Converj_Example_Vehicles_Vehicle<TEngine> WithTrainEngine<TEngine>(in TEngine engine)
+            public static global::Converj.Example.Accumulator_1__Converj_Example_Vehicles_Vehicle<TEngine> WithTrainEngine<TEngine>(in TEngine engine)
                 where TEngine : global::Converj.Example.Vehicles.ITrainEngine
             {
-                return new global::Converj.Example.Step_1__Converj_Example_Vehicles_Vehicle<TEngine>(engine);
+                return new global::Converj.Example.Accumulator_1__Converj_Example_Vehicles_Vehicle<TEngine>(engine);
             }
 
             /// <summary>
@@ -80,27 +80,34 @@ namespace Converj.Example
         }
     }
 
-    /// <summary>
-    ///     <seealso cref="Converj.Example.Vehicles.Train{TEngine}"/>
-    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Converj", "2.0.0.0")]
-    internal readonly struct Step_1__Converj_Example_Vehicles_Vehicle<TEngine> where TEngine : global::Converj.Example.Vehicles.ITrainEngine
+    internal readonly struct Accumulator_1__Converj_Example_Vehicles_Vehicle<TEngine>
+        where TEngine : global::Converj.Example.Vehicles.ITrainEngine
     {
         private readonly TEngine _engine__parameter;
-        internal Step_1__Converj_Example_Vehicles_Vehicle(in TEngine engine)
+        private readonly global::System.Collections.Immutable.ImmutableArray<global::Converj.Example.Vehicles.Wheel> _wheels__parameter;
+        internal Accumulator_1__Converj_Example_Vehicles_Vehicle(in TEngine engine)
         {
             this._engine__parameter = engine;
+            this._wheels__parameter = global::System.Collections.Immutable.ImmutableArray<global::Converj.Example.Vehicles.Wheel>.Empty;
         }
 
-        /// <summary>
-        /// Creates a new instance using constructor Converj.Example.Vehicles.Train&lt;TEngine&gt;.Train(TEngine Engine).
-        ///
-        ///     <seealso cref="Converj.Example.Vehicles.Train{TEngine}"/>
-        /// </summary>
+        private Accumulator_1__Converj_Example_Vehicles_Vehicle(in TEngine engine, in global::System.Collections.Immutable.ImmutableArray<global::Converj.Example.Vehicles.Wheel> wheels)
+        {
+            this._engine__parameter = engine;
+            this._wheels__parameter = wheels;
+        }
+
+        [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        public global::Converj.Example.Accumulator_1__Converj_Example_Vehicles_Vehicle<TEngine> AddWheel(in global::Converj.Example.Vehicles.Wheel item)
+        {
+            return new global::Converj.Example.Accumulator_1__Converj_Example_Vehicles_Vehicle<TEngine>(this._engine__parameter, this._wheels__parameter.Add(item));
+        }
+
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public global::Converj.Example.Vehicles.Train<TEngine> CreateVehicles_Train()
         {
-            return new global::Converj.Example.Vehicles.Train<TEngine>(this._engine__parameter);
+            return new global::Converj.Example.Vehicles.Train<TEngine>(this._engine__parameter, this._wheels__parameter);
         }
     }
 
