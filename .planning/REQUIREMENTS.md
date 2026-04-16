@@ -32,9 +32,9 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Composability
 
-- [ ] **COMP-01**: `[FluentCollectionMethod]` can be applied alongside `[FluentMethod]` on the same parameter
-- [ ] **COMP-02**: When both attributes are present, both an accumulator method (singularized, from `[FluentCollectionMethod]`) and a bulk-set method (plural, from `[FluentMethod]`) are generated
-- [ ] **COMP-03**: When both `[FluentCollectionMethod]` and `[FluentMethod]` are present on the same parameter or property, both the accumulator method (`AddX`) and the bulk method (`WithXs`) are emitted on the same `AccumulatorFluentStep` and freely compose — either may be called zero-or-more times in any order, each appending incrementally to the shared backing `ImmutableArray<T>` (GEN-03 independence preserved by struct value semantics)
+- [x] **COMP-01**: `[FluentCollectionMethod]` can be applied alongside `[FluentMethod]` on the same parameter
+- [x] **COMP-02**: When both attributes are present, both an accumulator method (singularized, from `[FluentCollectionMethod]`) and a bulk-set method (plural, from `[FluentMethod]`) are generated
+- [x] **COMP-03**: When both `[FluentCollectionMethod]` and `[FluentMethod]` are present on the same parameter or property, both the accumulator method (`AddX`) and the bulk method (`WithXs`) are emitted on the same `AccumulatorFluentStep` and freely compose — either may be called zero-or-more times in any order, each appending incrementally to the shared backing `ImmutableArray<T>` (GEN-03 independence preserved by struct value semantics)
 
 ### MinItems Enforcement
 
@@ -95,9 +95,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GEN-04 | Phase 22 | Complete |
 | GEN-05 | Phase 22 | Complete |
 | GEN-06 | Phase 22 | Complete |
-| COMP-01 | Phase 23 | Pending |
-| COMP-02 | Phase 23 | Pending |
-| COMP-03 | Phase 23 | Pending |
+| COMP-01 | Phase 23 | Complete |
+| COMP-02 | Phase 23 | Complete |
+| COMP-03 | Phase 23 | Complete |
 | MIN-01 | Phase 24 | Pending |
 | MIN-02 | Phase 24 | Pending |
 | MIN-03 | Phase 24 | Pending |

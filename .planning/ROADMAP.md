@@ -122,7 +122,7 @@ Plans:
   3. `[FluentCollectionMethod]` applied to a property produces the same accumulator-step shape as on a parameter, with terminal-time property assignment via object initializer
   4. Record primary-constructor positional collection properties carrying `[FluentCollectionMethod]` emit CVJG0053 and are skipped rather than generating contradictory code
   5. Two generated fluent methods with the same name but signature-distinct parameter lists emit as C# overloads; CVJG0052 fires only when name AND parameter-type sequence both collide
-**Plans:** 5 plans
+**Plans:** 1/5 plans executed
 Plans:
 - [ ] 23-01-PLAN.md — Wave 0: ROADMAP/REQUIREMENTS amendments + five xUnit test stubs
 - [ ] 23-02-PLAN.md — Core composability: AccumulatorBulkMethod + AccumulatorBulkTransitionMethod + ISelfReturningAccumulatorMethod marker + emission + pipeline wiring (COMP-01/02/03)
@@ -164,5 +164,5 @@ Plans:
 | 20. Documentation Cleanup & Final Verification | v2.1 | 2/2 | Complete | 2026-04-12 |
 | 21. Foundation | v2.2 | Complete    | 2026-04-14 | 2026-04-14 |
 | 22. Core Code Generation | v2.2 | Complete    | 2026-04-14 | - |
-| 23. Composability | v2.2 | 0/5 | Planned | - |
+| 23. Composability | 1/5 | In Progress|  | - |
 | 24. MinItems Enforcement | v2.2 | 0/TBD | Not started | - |
