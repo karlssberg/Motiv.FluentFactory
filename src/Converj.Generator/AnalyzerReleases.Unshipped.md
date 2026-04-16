@@ -55,5 +55,5 @@ CVJG0048 | Converj | Info | [This] is redundant on extension method parameter
 CVJG0049 | Converj | Error | FluentRoot must be static for extension method targets
 CVJG0050 | Converj | Error | FluentCollectionMethod on non-collection parameter
 CVJG0051 | Converj | Error | Cannot derive accumulator method name
-CVJG0052 | Converj | Error | Accumulator method name collision
+CVJG0052 | Converj | Error | Accumulator method name and signature collision (Phase 23 Plan 04: narrowed from name-only to name+signature; signature-distinct same-name methods now emit as C# overloads)
 CVJG0053 | Converj | Error | [FluentCollectionMethod] applied to a property with an unsupported accessor shape (e.g., record primary-constructor positional property)

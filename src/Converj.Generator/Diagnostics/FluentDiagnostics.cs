@@ -608,15 +608,18 @@ public static class FluentDiagnostics
         isEnabledByDefault: true);
 
     /// <summary>
-    /// Diagnostic when two or more parameters on the same target produce the same accumulator method
-    /// name after singularization (NAME-04). Emitted by the Phase 21 collision filter (Plan 05).
+    /// Diagnostic when two or more parameters on the same target produce accumulator methods with
+    /// both the same name AND the same parameter-type signature (NAME-04). Parameters that produce
+    /// the same name but signature-distinct element types are permitted as C# overloads — only
+    /// identical-name-AND-identical-signature pairs trigger this diagnostic. Emitted by the
+    /// Phase 21 collision filter (Plan 05), narrowed in Phase 23 (Plan 04).
     /// Resolution: disambiguate via <c>[FluentCollectionMethod("AlternateName")]</c>.
     /// </summary>
     public static readonly DiagnosticDescriptor AccumulatorMethodNameCollision = new(
         id: "CVJG0052",
-        title: "Accumulator method name collision",
+        title: "FluentCollectionMethod accumulator method has a name and signature collision within the same target",
         messageFormat:
-        "Parameters '{0}' and '{1}' on '{2}' both produce accumulator method '{3}'. Disambiguate via [FluentCollectionMethod(\"AlternateName\")].",
+        "Parameters '{0}' and '{1}' on '{2}' produce accumulator methods with identical name AND parameter signature '{3}'. Disambiguate via [FluentCollectionMethod(\"AlternateName\")].",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);

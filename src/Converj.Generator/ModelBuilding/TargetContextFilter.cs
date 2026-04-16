@@ -140,7 +140,9 @@ internal static class TargetContextFilter
     }
 
     /// <summary>
-    /// Finds the first pair of collection parameters whose derived accumulator method names collide.
+    /// Finds the first pair of collection parameters whose derived accumulator method name AND
+    /// element-type signature collide. Two parameters with the same derived name but different
+    /// element types are signature-distinct and are permitted to coexist as C# overloads.
     /// Returns null when no collision exists.
     /// </summary>
     private static (CollectionParameterInfo First, CollectionParameterInfo Second)? FindCollision(
@@ -149,9 +151,24 @@ internal static class TargetContextFilter
         if (parameters.Length < 2) return null;
         for (var i = 0; i < parameters.Length; i++)
         for (var j = i + 1; j < parameters.Length; j++)
-            if (string.Equals(parameters[i].MethodName, parameters[j].MethodName, StringComparison.Ordinal))
+            if (HaveIdenticalAccumulatorSignature(parameters[i], parameters[j]))
                 return (parameters[i], parameters[j]);
         return null;
+    }
+
+    /// <summary>
+    /// Returns true when two collection parameters would produce accumulator methods with
+    /// both the same derived name AND the same element-type parameter signature.
+    /// Signature-distinct methods (same name, different element types) are not collisions.
+    /// </summary>
+    private static bool HaveIdenticalAccumulatorSignature(
+        CollectionParameterInfo first,
+        CollectionParameterInfo second)
+    {
+        if (!string.Equals(first.MethodName, second.MethodName, StringComparison.Ordinal))
+            return false;
+
+        return SymbolEqualityComparer.Default.Equals(first.ElementType, second.ElementType);
     }
 
     /// <summary>
