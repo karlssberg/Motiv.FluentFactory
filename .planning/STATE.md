@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 23-02-PLAN.md
-last_updated: "2026-04-16T00:50:00.000Z"
-last_activity: "2026-04-16 — Plan 23-02 complete: AccumulatorBulkMethod + WithXs emission + COMP-01/02/03; 456 tests passing"
+stopped_at: Completed 23-03-PLAN.md
+last_updated: "2026-04-16T00:53:49Z"
+last_activity: "2026-04-16 — Plan 23-03 complete: [FluentCollectionMethod] property parity, CollectionPropertyInfo, CVJG0053; 462 tests passing"
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 14
-  completed_plans: 11
-  percent: 50
+  completed_plans: 12
+  percent: 57
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 ## Current Position
 
 Phase: 23 of 24 (Composability — In Progress)
-Plan: 2 of 5 complete in current phase
+Plan: 3 of 5 complete in current phase
 Status: In progress
-Last activity: 2026-04-16 — Plan 23-02 complete: AccumulatorBulkMethod + WithXs emission + COMP-01/02/03; 456 tests passing
+Last activity: 2026-04-16 — Plan 23-03 complete: [FluentCollectionMethod] property parity, CollectionPropertyInfo, CVJG0053; 462 tests passing
 
-Progress: [█████░░░░░] 50% (v2.2 milestone — 2/4 phases complete, 2/5 plans in phase 23)
+Progress: [██████░░░░] 57% (v2.2 milestone — 2/4 phases complete, 3/5 plans in phase 23)
 
 ## Accumulated Context
 
@@ -68,6 +68,10 @@ Progress: [█████░░░░░] 50% (v2.2 milestone — 2/4 phases co
 - [Phase 23-composability Plan 02]: Bulk transition chaining pattern: WithXs on regular step/root emits new AccumulatorStep(forwarded...).WithXs(items) — avoids calling private copy constructor from external scope
 - [Phase 23-composability Plan 02]: [MultipleFluentMethods] on collection params not supported yet — deferred to Plan 23-04; collection params excluded from trie pre-empts any FluentMethodBuilder skip
 - [Phase 23-composability Plan 02]: COMP-03 runtime round-trip deferred to manual verification — compile-time test confirms generated code is valid; ImmutableArray<T> struct semantics preserve branch independence
+- [Phase 23-composability Plan 03]: Architecture B-lite (parallel CollectionProperties on step) chosen over shared ICollectionAccumulatorTarget interface — zero regression risk on parameter path
+- [Phase 23-composability Plan 03]: Property field naming _camelCase__property distinguishes from _camelCase__parameter — prevents field name collision when both appear on same step
+- [Phase 23-composability Plan 03]: CVJG0053 triggering set — (1) record primary-ctor positional property, (2) property with no set/init accessor; private-set properties not rejected
+- [Phase 23-composability Plan 03]: [FluentMethod] bulk/WithXs on property-backed accumulators deferred to Plan 23-04 — HasFluentMethodAttribute only checks CollectionParameterInfo path
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T00:50:00.000Z
-Stopped at: Completed 23-02-PLAN.md
+Last session: 2026-04-16T00:53:49Z
+Stopped at: Completed 23-03-PLAN.md
 Resume file: None
