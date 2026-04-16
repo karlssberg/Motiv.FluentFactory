@@ -11,7 +11,7 @@ namespace Converj.Generator.Models.Methods;
 /// element to one of the step's collection fields and returns the same accumulator step (GEN-01 self-return).
 /// The method parameter type is the collection's element type — NOT the collection type itself (GEN-05).
 /// </summary>
-internal class AccumulatorMethod : IFluentMethod
+internal class AccumulatorMethod : IFluentMethod, ISelfReturningAccumulatorMethod
 {
     /// <summary>
     /// Initialises a new <see cref="AccumulatorMethod"/>.
