@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Fluent Collection Accumulation
 status: executing
-stopped_at: Completed 23-03-PLAN.md
-last_updated: "2026-04-16T00:53:49Z"
-last_activity: "2026-04-16 — Plan 23-03 complete: [FluentCollectionMethod] property parity, CollectionPropertyInfo, CVJG0053; 462 tests passing"
+stopped_at: Completed 23-04-PLAN.md
+last_updated: "2026-04-16T01:09:47.729Z"
+last_activity: "2026-04-16 — Plan 23-04 complete: CVJG0052 narrowed to name+signature collision, broad overload rule operational, retrofit audit; 467 tests passing"
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 14
-  completed_plans: 12
+  completed_plans: 13
   percent: 57
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-14)
 ## Current Position
 
 Phase: 23 of 24 (Composability — In Progress)
-Plan: 3 of 5 complete in current phase
+Plan: 4 of 5 complete in current phase
 Status: In progress
-Last activity: 2026-04-16 — Plan 23-03 complete: [FluentCollectionMethod] property parity, CollectionPropertyInfo, CVJG0053; 462 tests passing
+Last activity: 2026-04-16 — Plan 23-04 complete: CVJG0052 narrowed to name+signature, broad overload rule, retrofit audit; 467 tests passing
 
-Progress: [██████░░░░] 57% (v2.2 milestone — 2/4 phases complete, 3/5 plans in phase 23)
+Progress: [██████████] 96% (v2.2 milestone — 2/4 phases complete, 4/5 plans in phase 23)
 
 ## Accumulated Context
 
@@ -72,6 +72,9 @@ Progress: [██████░░░░] 57% (v2.2 milestone — 2/4 phases co
 - [Phase 23-composability Plan 03]: Property field naming _camelCase__property distinguishes from _camelCase__parameter — prevents field name collision when both appear on same step
 - [Phase 23-composability Plan 03]: CVJG0053 triggering set — (1) record primary-ctor positional property, (2) property with no set/init accessor; private-set properties not rejected
 - [Phase 23-composability Plan 03]: [FluentMethod] bulk/WithXs on property-backed accumulators deferred to Plan 23-04 — HasFluentMethodAttribute only checks CollectionParameterInfo path
+- [Phase 23-composability]: FindCollision extended with HaveIdenticalAccumulatorSignature: compares MethodName AND ElementType via SymbolEqualityComparer.Default
+- [Phase 23-composability]: CVJG0052 narrowed Plan 04: fires only on name+signature (ElementType) collision; title and message updated; signature-distinct same-name accumulator methods now emit as C# overloads
+- [Phase 23-composability]: RefKind not tracked in FluentMethodSignatureEqualityComparer: ref/out filtered upstream; 'in' produces identical generated signatures; full RefKind propagation deferred post-v2.2
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T00:53:49Z
-Stopped at: Completed 23-03-PLAN.md
+Last session: 2026-04-16T01:09:47.727Z
+Stopped at: Completed 23-04-PLAN.md
 Resume file: None
