@@ -2,6 +2,7 @@
 
 **Defined:** 2026-04-14
 **Core Value:** Developers write constructor parameters once and get a complete, type-safe fluent builder API generated automatically
+**Amendment (2026-04-16, Phase 23):** COMP-03 changed from mutual exclusion to free composition. See `.planning/phases/23-composability/23-CONTEXT.md` for rationale.
 
 ## v2.2 Requirements
 
@@ -33,7 +34,7 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 - [ ] **COMP-01**: `[FluentCollectionMethod]` can be applied alongside `[FluentMethod]` on the same parameter
 - [ ] **COMP-02**: When both attributes are present, both an accumulator method (singularized, from `[FluentCollectionMethod]`) and a bulk-set method (plural, from `[FluentMethod]`) are generated
-- [ ] **COMP-03**: In a chain, accumulator and bulk-set methods are mutually exclusive per parameter — choosing one path excludes the other
+- [ ] **COMP-03**: When both `[FluentCollectionMethod]` and `[FluentMethod]` are present on the same parameter or property, both the accumulator method (`AddX`) and the bulk method (`WithXs`) are emitted on the same `AccumulatorFluentStep` and freely compose — either may be called zero-or-more times in any order, each appending incrementally to the shared backing `ImmutableArray<T>` (GEN-03 independence preserved by struct value semantics)
 
 ### MinItems Enforcement
 

@@ -113,13 +113,15 @@ Plans:
 - [ ] 22-05-PLAN.md — (TBD)
 
 ### Phase 23: Composability
-**Goal**: A developer can apply both `[FluentCollectionMethod]` and `[FluentMethod]` to the same parameter and receive two distinct fluent paths — an item-by-item accumulator path and a bulk-set path — where choosing one path in a chain makes the other unavailable for that parameter.
+**Goal**: A developer can apply both `[FluentCollectionMethod]` and `[FluentMethod]` (or `[MultipleFluentMethods]`) to the same parameter or property and receive a single `AccumulatorFluentStep` exposing both an item-by-item accumulator method (`AddX(T item)`) and a bulk-append method (`WithXs(IEnumerable<T> items)`). The two methods freely compose — interleaving `AddX` and `WithXs` calls each appends incrementally to the shared `ImmutableArray<T>` backing field. `[FluentCollectionMethod]` also widens to properties with full parity (same step shape, terminal-time assignment via object initializer for required/init-only properties). A new diagnostic CVJG0053 rejects property accessor shapes (e.g., record primary-constructor positional properties) where terminal-time assignment is impossible. Generator-wide collision detection is narrowed so that signature-distinct methods emit as C# overloads rather than triggering collision diagnostics.
 **Depends on**: Phase 22
 **Requirements**: COMP-01, COMP-02, COMP-03
 **Success Criteria** (what must be TRUE):
-  1. Developer can use `.AddTag("x").AddTag("y").Create()` (accumulator path) and `.WithTags(allTags).Create()` (bulk-set path) on the same root type, with both producing correct output
-  2. After calling an accumulator method on a parameter, the bulk-set method for that parameter is not available in the chain (compile-time, no method present on the returned step type)
-  3. After calling the bulk-set method on a parameter, the accumulator method for that parameter is not available in the chain (compile-time, no method present on the returned step type)
+  1. Developer can call `.AddTag("x").WithTags(bulk).AddTag("y").Create()` on the same root type; the constructed object receives `["x", ...bulk, "y"]` in the declared collection type
+  2. Both `AddX` and `WithXs` methods are emitted on the single accumulator step, each self-returning, each marked `[MethodImpl(AggressiveInlining)]`, each operating on the same `ImmutableArray<T>` backing field
+  3. `[FluentCollectionMethod]` applied to a property produces the same accumulator-step shape as on a parameter, with terminal-time property assignment via object initializer
+  4. Record primary-constructor positional collection properties carrying `[FluentCollectionMethod]` emit CVJG0053 and are skipped rather than generating contradictory code
+  5. Two generated fluent methods with the same name but signature-distinct parameter lists emit as C# overloads; CVJG0052 fires only when name AND parameter-type sequence both collide
 **Plans:** 5 plans
 Plans:
 - [ ] 23-01-PLAN.md — Wave 0: ROADMAP/REQUIREMENTS amendments + five xUnit test stubs
