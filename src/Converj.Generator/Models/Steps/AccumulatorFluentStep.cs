@@ -86,6 +86,14 @@ internal class AccumulatorFluentStep(INamedTypeSymbol rootType) : IFluentStep
     /// </summary>
     public ImmutableArray<CollectionParameterInfo> CollectionParameters { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets the property-backed collection accumulators from the target type.
+    /// Parallel to <see cref="CollectionParameters"/> for properties annotated with
+    /// <c>[FluentCollectionMethod]</c>. Terminal emission routes these through object initializer
+    /// syntax rather than constructor arguments.
+    /// </summary>
+    public ImmutableArray<CollectionPropertyInfo> CollectionProperties { get; set; } = [];
+
     // ── IFluentReturn requirements ────────────────────────────────────────────
 
     /// <summary>Gets the containing namespace of this step (derived from the root type).</summary>

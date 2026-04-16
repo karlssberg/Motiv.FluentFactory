@@ -161,6 +161,17 @@ internal static class StringExtensions
     }
 
     /// <summary>
+    /// Converts a property name to its accumulator backing-field name for property-backed collection fields.
+    /// For example, "Tags" becomes "_tags__property".
+    /// </summary>
+    /// <param name="name">The property name to convert.</param>
+    /// <returns>A property field name in the format _camelCaseName__property.</returns>
+    public static string ToPropertyFieldName(this string name)
+    {
+        return $"_{name.ToCamelCase()}__property";
+    }
+
+    /// <summary>
     /// Reverses <see cref="ToParameterFieldName"/> to recover the original camelCase parameter name.
     /// For example, "_wheels__parameter" becomes "wheels".
     /// </summary>

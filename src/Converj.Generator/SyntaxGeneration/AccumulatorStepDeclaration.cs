@@ -26,6 +26,9 @@ internal static class AccumulatorStepDeclaration
     /// <summary>
     /// Creates the <see cref="StructDeclarationSyntax"/> for the given accumulator step.
     /// The emitted struct is unconditionally <c>readonly</c> (GEN-06 / RESEARCH.md Pitfall 5).
+    /// Handles both parameter-backed and property-backed collection accumulators.
+    /// Property-backed accumulators use <c>__property</c> field naming and emit object-initializer
+    /// assignment in the terminal method.
     /// </summary>
     /// <param name="step">The accumulator step model to emit.</param>
     /// <returns>A <see cref="StructDeclarationSyntax"/> representing the complete accumulator step struct.</returns>
@@ -33,9 +36,11 @@ internal static class AccumulatorStepDeclaration
     {
         var forwardedFields = CreateForwardedFieldDeclarations(step);
         var accumulatorFields = CreateAccumulatorFieldDeclarations(step);
+        var propertyAccumulatorFields = CreatePropertyAccumulatorFieldDeclarations(step);
         var entryCtor = CreateEntryConstructor(step);
         var copyCtor = CreateCopyConstructor(step);
         var addMethods = CreateAddMethods(step);
+        var addPropertyMethods = CreatePropertyAddMethods(step);
         var terminalMethod = CreateTerminalMethod(step);
 
         var modifiers = GetAccessibilityTokens(step.Accessibility);
@@ -46,9 +51,11 @@ internal static class AccumulatorStepDeclaration
             .WithMembers(List<MemberDeclarationSyntax>([
                 ..forwardedFields,
                 ..accumulatorFields,
+                ..propertyAccumulatorFields,
                 entryCtor,
                 copyCtor,
                 ..addMethods,
+                ..addPropertyMethods,
                 terminalMethod
             ]));
     }
@@ -107,6 +114,24 @@ internal static class AccumulatorStepDeclaration
                     Token(SyntaxKind.ReadOnlyKeyword))))
             .ToImmutableArray();
 
+    /// <summary>
+    /// Emits one <c>private readonly global::System.Collections.Immutable.ImmutableArray&lt;ElementType&gt;
+    /// _{propertyName}__property</c> field per property-backed collection accumulator.
+    /// Uses the <c>__property</c> suffix to distinguish from parameter-backed fields.
+    /// </summary>
+    private static ImmutableArray<FieldDeclarationSyntax> CreatePropertyAccumulatorFieldDeclarations(
+        AccumulatorFluentStep step) =>
+        step.CollectionProperties
+            .Select(cp => FieldDeclaration(
+                    VariableDeclaration(
+                        ParseTypeName($"{ImmutableArrayGlobal}<{cp.ElementType.ToGlobalDisplayString()}>"))
+                        .AddVariables(VariableDeclarator(
+                            Identifier(cp.Property.Name.ToPropertyFieldName()))))
+                .WithModifiers(TokenList(
+                    Token(SyntaxKind.PrivateKeyword),
+                    Token(SyntaxKind.ReadOnlyKeyword))))
+            .ToImmutableArray();
+
     // ── Constructors ──────────────────────────────────────────────────────────
 
     /// <summary>
@@ -118,9 +143,11 @@ internal static class AccumulatorStepDeclaration
         var forwardedParams = BuildForwardedConstructorParameters(step);
         var forwardedAssignments = BuildForwardedFieldAssignments(step);
         var emptyInitializations = BuildEmptyInitializations(step);
+        var propertyEmptyInitializations = BuildPropertyEmptyInitializations(step);
 
         var allStatements = forwardedAssignments
             .Concat(emptyInitializations)
+            .Concat(propertyEmptyInitializations)
             .ToArray();
 
         var accessModifier = forwardedParams.Any()
@@ -142,15 +169,20 @@ internal static class AccumulatorStepDeclaration
     {
         var forwardedParams = BuildForwardedConstructorParameters(step);
         var accumulatorParams = BuildAccumulatorConstructorParameters(step);
+        var propertyAccumulatorParams = BuildPropertyAccumulatorConstructorParameters(step);
 
-        var allParams = forwardedParams.Concat(accumulatorParams)
+        var allParams = forwardedParams
+            .Concat(accumulatorParams)
+            .Concat(propertyAccumulatorParams)
             .InterleaveWith(Token(SyntaxKind.CommaToken));
 
         var forwardedAssignments = BuildForwardedFieldAssignments(step);
         var accumulatorAssignments = BuildAccumulatorFieldAssignments(step);
+        var propertyAccumulatorAssignments = BuildPropertyAccumulatorFieldAssignments(step);
 
         var allStatements = forwardedAssignments
             .Concat(accumulatorAssignments)
+            .Concat(propertyAccumulatorAssignments)
             .ToArray();
 
         return ConstructorDeclaration(Identifier(step.Name))
@@ -285,6 +317,66 @@ internal static class AccumulatorStepDeclaration
                 SingletonSeparatedList(Argument(IdentifierName("items")))));
     }
 
+    // ── Property-backed AddX methods ─────────────────────────────────────────
+
+    /// <summary>
+    /// Emits one <c>AddX(in ElementType item)</c> method per property-backed collection accumulator.
+    /// Parallel to <see cref="CreateAddMethods"/> but drives field names from
+    /// <see cref="AccumulatorFluentStep.CollectionProperties"/> using <c>__property</c> suffix.
+    /// </summary>
+    private static ImmutableArray<MethodDeclarationSyntax> CreatePropertyAddMethods(AccumulatorFluentStep step)
+    {
+        var stepGlobalName = step.IdentifierDisplayString();
+        return step.CollectionProperties
+            .Select(cp => CreatePropertyAddMethod(step, cp, stepGlobalName))
+            .ToImmutableArray();
+    }
+
+    private static MethodDeclarationSyntax CreatePropertyAddMethod(
+        AccumulatorFluentStep step,
+        CollectionPropertyInfo cp,
+        string stepGlobalName)
+    {
+        var elementTypeName = cp.ElementType.ToGlobalDisplayString();
+        var fieldName = cp.Property.Name.ToPropertyFieldName();
+
+        var targetFieldExpression = BuildAddExpressionForField(fieldName);
+        var ctorArgs = BuildCopyConstructorArgumentsWithProperties(step, targetParamFieldName: null, targetPropertyFieldName: fieldName, targetFieldExpression);
+
+        return MethodDeclaration(ParseTypeName(stepGlobalName), Identifier(cp.MethodName))
+            .WithAttributeLists(SingletonList(
+                AttributeList(SingletonSeparatedList(AggressiveInliningAttributeSyntax.Create()))))
+            .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+            .WithParameterList(ParameterList(SingletonSeparatedList(
+                Parameter(Identifier("item"))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                    .WithType(ParseTypeName(elementTypeName)))))
+            .WithBody(Block(
+                ReturnStatement(
+                    ObjectCreationExpression(ParseTypeName(stepGlobalName))
+                        .WithArgumentList(ArgumentList(SeparatedList<ArgumentSyntax>(
+                            ctorArgs.InterleaveWith(Token(SyntaxKind.CommaToken))))))));
+    }
+
+    /// <summary>
+    /// Builds <c>this._{fieldName}.Add(item)</c> for use in a copy-constructor argument.
+    /// </summary>
+    private static ExpressionSyntax BuildAddExpressionForField(string fieldName)
+    {
+        var thisField = MemberAccessExpression(
+            SyntaxKind.SimpleMemberAccessExpression,
+            ThisExpression(),
+            IdentifierName(fieldName));
+
+        return InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                thisField,
+                IdentifierName("Add")))
+            .WithArgumentList(ArgumentList(
+                SingletonSeparatedList(Argument(IdentifierName("item")))));
+    }
+
     // ── Terminal method ───────────────────────────────────────────────────────
 
     /// <summary>
@@ -341,14 +433,69 @@ internal static class AccumulatorStepDeclaration
 
         ExpressionSyntax returnExpression = terminal.IsStaticMethodTarget
             ? BuildStaticMethodInvocation(terminal, argList)
-            : ObjectCreationExpression(ParseTypeName(returnTypeName))
-                .WithArgumentList(argList);
+            : EmitTerminalForParameterBackedAccumulator(step, returnTypeName, argList);
 
         return MethodDeclaration(ParseTypeName(returnTypeName), Identifier(terminal.Name))
             .WithAttributeLists(SingletonList(
                 AttributeList(SingletonSeparatedList(AggressiveInliningAttributeSyntax.Create()))))
             .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
             .WithBody(Block(ReturnStatement(returnExpression)));
+    }
+
+    /// <summary>
+    /// Emits the terminal object creation for parameter-backed (constructor-arg) accumulation,
+    /// optionally followed by a property object-initializer block for property-backed accumulators.
+    /// When no property-backed accumulators exist, emits plain <c>new Target(...)</c>.
+    /// When property-backed accumulators exist, emits <c>new Target(...) { Prop = fieldExpr, ... }</c>.
+    /// </summary>
+    private static ExpressionSyntax EmitTerminalForParameterBackedAccumulator(
+        AccumulatorFluentStep step,
+        string returnTypeName,
+        ArgumentListSyntax argList)
+    {
+        var objectCreation = ObjectCreationExpression(ParseTypeName(returnTypeName))
+            .WithArgumentList(argList);
+
+        if (step.CollectionProperties.IsEmpty)
+            return objectCreation;
+
+        return EmitTerminalWithPropertyInitializers(objectCreation, step);
+    }
+
+    /// <summary>
+    /// Adds object-initializer assignments for property-backed collection fields to the given
+    /// object creation expression. Each initializer converts the <c>ImmutableArray&lt;T&gt;</c>
+    /// backing field to the property's declared collection type.
+    /// </summary>
+    private static ObjectCreationExpressionSyntax EmitTerminalWithPropertyInitializers(
+        ObjectCreationExpressionSyntax objectCreation,
+        AccumulatorFluentStep step)
+    {
+        var initializerExpressions = step.CollectionProperties
+            .Select(cp =>
+            {
+                var fieldName = cp.Property.Name.ToPropertyFieldName();
+                var fieldAccess = MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(fieldName));
+
+                var converted = AccumulatorCollectionConversionExpression.ConvertToDeclaredType(
+                    fieldAccess,
+                    cp.DeclaredCollectionType,
+                    cp.ElementType);
+
+                return (ExpressionSyntax)AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
+                    IdentifierName(cp.Property.Name),
+                    converted);
+            })
+            .ToArray();
+
+        return objectCreation.WithInitializer(
+            InitializerExpression(
+                SyntaxKind.ObjectInitializerExpression,
+                SeparatedList(initializerExpressions)));
     }
 
     private static ArgumentSyntax BuildTerminalArgument(
@@ -390,6 +537,14 @@ internal static class AccumulatorStepDeclaration
                     .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
                     .WithType(ParseTypeName($"{ImmutableArrayGlobal}<{cp.ElementType.ToGlobalDisplayString()}>")));
 
+    private static IEnumerable<ParameterSyntax> BuildPropertyAccumulatorConstructorParameters(
+        AccumulatorFluentStep step) =>
+        step.CollectionProperties
+            .Select(cp =>
+                Parameter(Identifier(cp.Property.Name.ToCamelCase()))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                    .WithType(ParseTypeName($"{ImmutableArrayGlobal}<{cp.ElementType.ToGlobalDisplayString()}>")));
+
     private static IEnumerable<StatementSyntax> BuildForwardedFieldAssignments(
         AccumulatorFluentStep step) =>
         step.ForwardedTargetParameters
@@ -423,6 +578,26 @@ internal static class AccumulatorStepDeclaration
                         emptyExpr));
             });
 
+    private static IEnumerable<StatementSyntax> BuildPropertyEmptyInitializations(
+        AccumulatorFluentStep step) =>
+        step.CollectionProperties
+            .Select(cp =>
+            {
+                var emptyExpr = MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ParseExpression($"{ImmutableArrayGlobal}<{cp.ElementType.ToGlobalDisplayString()}>"),
+                    IdentifierName("Empty"));
+
+                return ExpressionStatement(
+                    AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(cp.Property.Name.ToPropertyFieldName())),
+                        emptyExpr));
+            });
+
     private static IEnumerable<StatementSyntax> BuildAccumulatorFieldAssignments(
         AccumulatorFluentStep step) =>
         step.CollectionParameters
@@ -436,18 +611,28 @@ internal static class AccumulatorStepDeclaration
                             IdentifierName(cp.Parameter.Name.ToParameterFieldName())),
                         IdentifierName(cp.Parameter.Name.ToCamelCase()))));
 
+    private static IEnumerable<StatementSyntax> BuildPropertyAccumulatorFieldAssignments(
+        AccumulatorFluentStep step) =>
+        step.CollectionProperties
+            .Select(cp =>
+                ExpressionStatement(
+                    AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            ThisExpression(),
+                            IdentifierName(cp.Property.Name.ToPropertyFieldName())),
+                        IdentifierName(cp.Property.Name.ToCamelCase()))));
+
     /// <summary>
-    /// Builds the argument list for the private copy constructor call inside an <c>AddX</c> or
-    /// <c>WithXs</c> method.
-    /// All forwarded fields are passed as <c>this._field</c>; the target accumulator field is
-    /// passed as the caller-supplied <paramref name="targetFieldExpression"/>
-    /// (either <c>this._field.Add(item)</c> or <c>this._field.AddRange(items)</c>);
-    /// all other accumulator fields pass-through unchanged.
+    /// Builds the argument list for the private copy constructor call inside a parameter-backed
+    /// <c>AddX</c> or <c>WithXs</c> method. Passes all forwarded fields, all parameter accumulator
+    /// fields (updating the target), and all property accumulator fields unchanged.
     /// </summary>
     /// <param name="step">The accumulator step whose fields drive the argument order.</param>
     /// <param name="targetFieldName">The field name of the collection being mutated.</param>
     /// <param name="targetFieldExpression">
-    /// The expression to substitute for the target field (e.g., <c>Add(item)</c> or <c>AddRange(items)</c> invocation).
+    /// The expression to substitute for the target field (e.g., <c>Add(item)</c> invocation).
     /// </param>
     private static IEnumerable<ArgumentSyntax> BuildCopyConstructorArguments(
         AccumulatorFluentStep step,
@@ -464,7 +649,7 @@ internal static class AccumulatorStepDeclaration
                     IdentifierName(p.Name.ToParameterFieldName())));
         }
 
-        // Accumulator fields — update target via caller-provided expression, pass others through
+        // Parameter accumulator fields — update target via caller-provided expression, pass others through
         foreach (var cp in step.CollectionParameters)
         {
             var fieldName = cp.Parameter.Name.ToParameterFieldName();
@@ -473,14 +658,65 @@ internal static class AccumulatorStepDeclaration
                 ThisExpression(),
                 IdentifierName(fieldName));
 
-            if (fieldName == targetFieldName)
-            {
-                yield return Argument(targetFieldExpression);
-            }
-            else
-            {
-                yield return Argument(thisField);
-            }
+            yield return Argument(fieldName == targetFieldName ? targetFieldExpression : thisField);
+        }
+
+        // Property accumulator fields — always pass through unchanged in parameter-backed AddX
+        foreach (var cp in step.CollectionProperties)
+        {
+            yield return Argument(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(cp.Property.Name.ToPropertyFieldName())));
+        }
+    }
+
+    /// <summary>
+    /// Builds the argument list for the private copy constructor call inside a property-backed
+    /// <c>AddX</c> method. Passes all forwarded fields, all parameter accumulator fields unchanged,
+    /// and all property accumulator fields (updating the target).
+    /// </summary>
+    /// <param name="step">The accumulator step whose fields drive the argument order.</param>
+    /// <param name="targetParamFieldName">Must be <see langword="null"/> — no parameter field is being mutated.</param>
+    /// <param name="targetPropertyFieldName">The property field name being mutated.</param>
+    /// <param name="targetFieldExpression">The expression to substitute for the target property field.</param>
+    private static IEnumerable<ArgumentSyntax> BuildCopyConstructorArgumentsWithProperties(
+        AccumulatorFluentStep step,
+        string? targetParamFieldName,
+        string targetPropertyFieldName,
+        ExpressionSyntax targetFieldExpression)
+    {
+        // Forwarded non-collection fields — pass through unchanged
+        foreach (var p in step.ForwardedTargetParameters)
+        {
+            yield return Argument(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(p.Name.ToParameterFieldName())));
+        }
+
+        // Parameter accumulator fields — pass through unchanged in property-backed AddX
+        foreach (var cp in step.CollectionParameters)
+        {
+            yield return Argument(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    ThisExpression(),
+                    IdentifierName(cp.Parameter.Name.ToParameterFieldName())));
+        }
+
+        // Property accumulator fields — update target, pass others through
+        foreach (var cp in step.CollectionProperties)
+        {
+            var fieldName = cp.Property.Name.ToPropertyFieldName();
+            var thisField = MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                ThisExpression(),
+                IdentifierName(fieldName));
+
+            yield return Argument(fieldName == targetPropertyFieldName ? targetFieldExpression : thisField);
         }
     }
 }

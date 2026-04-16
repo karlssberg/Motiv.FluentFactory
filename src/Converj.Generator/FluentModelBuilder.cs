@@ -322,11 +322,10 @@ internal class FluentModelBuilder(Compilation compilation)
             if (node.Key.Length > value.Method.Parameters.Length - preSatisfiedNames.Count - receiverCount - collectionParamCount) continue;
             if (value.TerminalMethod == TerminalMethodKind.None) continue;
 
-            // Branch: if the target has collection parameters, produce an AccumulatorTransitionMethod
-            // (parameterless) plus optional AccumulatorBulkTransitionMethod(s) (parameterised, one per
-            // collection param that carries [FluentMethod]) instead of a direct TerminalMethod.
-            // The terminal lives on the AccumulatorFluentStep.
-            if (value.CollectionParameters.Length > 0)
+            // Branch: if the target has collection parameters or collection properties, produce an
+            // AccumulatorTransitionMethod (parameterless) plus optional AccumulatorBulkTransitionMethod(s)
+            // instead of a direct TerminalMethod. The terminal lives on the AccumulatorFluentStep.
+            if (value.CollectionParameters.Length > 0 || value.Context.CollectionProperties.Length > 0)
             {
                 foreach (var transitionMethod in BuildAccumulatorTransitions(rootType, node, value, valueSources, methodPrefix))
                     yield return transitionMethod;
@@ -407,6 +406,7 @@ internal class FluentModelBuilder(Compilation compilation)
             ForwardedTargetParameters = new ParameterSequence(node.Key),
             ValueStorage = accumulatorValueStorage,
             CollectionParameters = value.CollectionParameters,
+            CollectionProperties = value.Context.CollectionProperties,
             CandidateTargets = [value.Method],
         };
 
