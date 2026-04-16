@@ -88,7 +88,7 @@ public class FluentCollectionMethodAttributeTests
                 ExpectedDiagnostics =
                 {
                     DiagnosticResult.CompilerError("CS0592").WithSpan("/0/Test1.cs", 1, 2, 1, 24)
-                        .WithArguments("FluentCollectionMethod", "parameter")
+                        .WithArguments("FluentCollectionMethod", "property, indexer, parameter")
                 }
             }
         };

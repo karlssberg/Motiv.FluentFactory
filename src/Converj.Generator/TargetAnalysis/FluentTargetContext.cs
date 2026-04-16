@@ -51,6 +51,18 @@ internal class FluentTargetContext
         CollectionParameters = FluentCollectionMethodAnalyzer.Analyze(method, collectionDiagnostics);
         CollectionDiagnostics = collectionDiagnostics;
 
+        // Property-backed collection analysis is only meaningful for constructor targets
+        // (static/instance method targets don't have a target type with settable properties).
+        if (!IsStaticMethodTarget && !IsInstanceMethodTarget)
+        {
+            CollectionProperties = FluentCollectionMethodAnalyzer.AnalyzeProperties(
+                method.ContainingType, collectionDiagnostics);
+        }
+        else
+        {
+            CollectionProperties = [];
+        }
+
         if (IsStaticMethodTarget || IsInstanceMethodTarget)
         {
             // Method targets don't have value storage or property analysis
@@ -157,6 +169,14 @@ internal class FluentTargetContext
     /// Diagnostics from <c>[FluentCollectionMethod]</c> parameter analysis (CVJG0050, CVJG0051).
     /// </summary>
     public DiagnosticList CollectionDiagnostics { get; }
+
+    /// <summary>
+    /// Properties on the target type annotated with <c>[FluentCollectionMethod]</c>, including
+    /// derived or explicit accumulator method names.
+    /// Empty for static/instance method targets (which have no settable target-type properties).
+    /// Parallel to <see cref="CollectionParameters"/> — separate collection per plan architecture.
+    /// </summary>
+    public ImmutableArray<CollectionPropertyInfo> CollectionProperties { get; }
 
     /// <summary>
     /// The first parameter designated as the extension receiver, either via

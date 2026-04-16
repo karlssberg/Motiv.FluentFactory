@@ -10,12 +10,13 @@ namespace Converj.Attributes;
 /// <c>IReadOnlyCollection&lt;T&gt;</c>, or <c>IReadOnlyList&lt;T&gt;</c>.
 /// </summary>
 /// <remarks>
-/// Only valid on constructor parameters (see <see cref="AttributeTargets.Parameter"/>).
+/// Valid on constructor/method parameters AND on properties of the target type
+/// (see <see cref="AttributeTargets.Parameter"/> | <see cref="AttributeTargets.Property"/>).
 /// The <see cref="MinItems"/> property is parsed and retained for future enforcement in Phase 24;
 /// it is not enforced by the Phase 21 generator.
 /// </remarks>
 [ExcludeFromCodeCoverage]
-[AttributeUsage(AttributeTargets.Parameter)]
+[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property)]
 public class FluentCollectionMethodAttribute : Attribute
 {
     /// <summary>

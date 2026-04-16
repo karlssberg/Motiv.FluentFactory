@@ -56,3 +56,4 @@ CVJG0049 | Converj | Error | FluentRoot must be static for extension method targ
 CVJG0050 | Converj | Error | FluentCollectionMethod on non-collection parameter
 CVJG0051 | Converj | Error | Cannot derive accumulator method name
 CVJG0052 | Converj | Error | Accumulator method name collision
+CVJG0053 | Converj | Error | [FluentCollectionMethod] applied to a property with an unsupported accessor shape (e.g., record primary-constructor positional property)

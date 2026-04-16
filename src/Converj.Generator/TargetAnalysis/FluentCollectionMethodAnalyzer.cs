@@ -7,9 +7,9 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace Converj.Generator.TargetAnalysis;
 
 /// <summary>
-/// Per-parameter analyzer that detects <c>[FluentCollectionMethod]</c> usage,
-/// validates that the parameter type is a supported collection type, and derives
-/// (or validates) the accumulator method name.
+/// Analyzer that detects <c>[FluentCollectionMethod]</c> usage on constructor/method parameters
+/// and on target-type properties. Validates that the type is a supported collection type and
+/// derives or validates the accumulator method name.
 /// </summary>
 /// <remarks>
 /// Supported collection types: <c>T[]</c>, <c>IEnumerable&lt;T&gt;</c>,
@@ -17,7 +17,7 @@ namespace Converj.Generator.TargetAnalysis;
 /// <c>IReadOnlyCollection&lt;T&gt;</c>, <c>IReadOnlyList&lt;T&gt;</c>.
 ///
 /// Name derivation: explicit <c>[FluentCollectionMethod("Name")]</c> wins. Otherwise the
-/// parameter name is singularized and capitalized to produce <c>Add{Singular}</c>.
+/// parameter/property name is singularized and capitalized to produce <c>Add{Singular}</c>.
 /// If no rule fires (or the result is a C# keyword), <c>CVJG0051</c> is emitted.
 /// </remarks>
 internal static class FluentCollectionMethodAnalyzer
@@ -85,6 +85,129 @@ internal static class FluentCollectionMethodAnalyzer
         }
 
         return builder.ToImmutable();
+    }
+
+    /// <summary>
+    /// Analyses every property of <paramref name="targetType"/> that carries a
+    /// <c>[FluentCollectionMethod]</c> attribute.  Valid properties produce a
+    /// <see cref="CollectionPropertyInfo"/> entry; invalid or unsupported ones contribute a
+    /// diagnostic to <paramref name="diagnostics"/>.
+    /// </summary>
+    /// <param name="targetType">The target type whose properties to analyse.</param>
+    /// <param name="diagnostics">Collector for any diagnostics produced during analysis.</param>
+    /// <returns>
+    /// An <see cref="ImmutableArray{T}"/> of <see cref="CollectionPropertyInfo"/> for each
+    /// valid collection property.  Empty when no properties carry the attribute.
+    /// </returns>
+    public static ImmutableArray<CollectionPropertyInfo> AnalyzeProperties(
+        INamedTypeSymbol targetType,
+        DiagnosticList diagnostics)
+    {
+        var builder = ImmutableArray.CreateBuilder<CollectionPropertyInfo>();
+
+        foreach (var property in targetType.GetMembers().OfType<IPropertySymbol>())
+        {
+            if (property.IsStatic || property.IsIndexer) continue;
+
+            var attr = property.GetAttributes(TypeName.FluentCollectionMethodAttribute).FirstOrDefault();
+            if (attr is null)
+                continue;
+
+            var location = GetPropertyAttributeLocation(attr, property);
+
+            // CVJG0053: record primary-constructor positional properties cannot be re-assigned
+            if (IsRecordPrimaryConstructorPositionalProperty(targetType, property))
+            {
+                diagnostics.Add(Diagnostic.Create(
+                    FluentDiagnostics.UnsupportedCollectionPropertyAccessor,
+                    location,
+                    property.Name,
+                    targetType.Name,
+                    "record primary-constructor positional properties cannot be re-assigned via object initializer"));
+                continue;
+            }
+
+            // CVJG0053: property without a set or init accessor cannot be assigned at terminal time
+            if (property.SetMethod is null)
+            {
+                diagnostics.Add(Diagnostic.Create(
+                    FluentDiagnostics.UnsupportedCollectionPropertyAccessor,
+                    location,
+                    property.Name,
+                    targetType.Name,
+                    "property has no set or init accessor and cannot be assigned"));
+                continue;
+            }
+
+            var (isCollection, elementType) = DetectCollection(property.Type);
+            if (!isCollection)
+            {
+                // Reuse CVJG0050 (same descriptor as non-collection parameter misuse, per plan spec)
+                diagnostics.Add(Diagnostic.Create(
+                    FluentDiagnostics.NonCollectionFluentCollectionMethod,
+                    location,
+                    property.Name,
+                    property.Type.ToDisplayString()));
+                continue;
+            }
+
+            var explicitName = attr.GetFirstStringArgument();
+            var minItems = ReadMinItemsNamedArg(attr);
+
+            string? methodName;
+            if (explicitName is not null)
+            {
+                methodName = explicitName;
+            }
+            else
+            {
+                methodName = TryDeriveAccumulatorName(property.Name);
+                if (methodName is null)
+                {
+                    diagnostics.Add(Diagnostic.Create(
+                        FluentDiagnostics.UnsingularizableParameterName,
+                        location,
+                        property.Name));
+                    continue;
+                }
+            }
+
+            builder.Add(new CollectionPropertyInfo(property, elementType!, property.Type, methodName, minItems));
+        }
+
+        return builder.ToImmutable();
+    }
+
+    /// <summary>
+    /// Determines whether <paramref name="property"/> is a record primary-constructor positional
+    /// property — i.e., it was auto-generated from a primary constructor parameter on a record type.
+    /// Such properties cannot be re-assigned via an object initializer.
+    /// </summary>
+    private static bool IsRecordPrimaryConstructorPositionalProperty(
+        INamedTypeSymbol containingType,
+        IPropertySymbol property)
+    {
+        if (!containingType.IsRecord) return false;
+
+        // A record primary-ctor positional property has the same name (case-insensitive) as a
+        // primary constructor parameter. Use FindPrimaryConstructor + parameter name comparison.
+        var primaryCtor = containingType.FindPrimaryConstructor();
+        if (primaryCtor is null) return false;
+
+        return primaryCtor.Parameters.Any(p =>
+            p.Name.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// Returns the location of the <c>[FluentCollectionMethod]</c> attribute application on a property,
+    /// falling back to the property's own location, then <see cref="Location.None"/>.
+    /// </summary>
+    private static Location GetPropertyAttributeLocation(AttributeData attr, IPropertySymbol property)
+    {
+        if (attr.ApplicationSyntaxReference?.GetSyntax() is { } attrSyntax)
+            return attrSyntax.GetLocation();
+
+        return property.Locations.FirstOrDefault() ?? Location.None;
     }
 
     /// <summary>

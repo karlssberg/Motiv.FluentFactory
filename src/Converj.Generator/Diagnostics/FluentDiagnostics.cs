@@ -620,4 +620,20 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic for <c>[FluentCollectionMethod]</c> applied to a property with an unsupported
+    /// accessor shape. Primary case: record primary-constructor positional properties cannot be
+    /// re-assigned via an object initializer. Secondary case: property with no set or init accessor.
+    /// Resolution: remove <c>[FluentCollectionMethod]</c> or restructure the type.
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnsupportedCollectionPropertyAccessor = new(
+        id: "CVJG0053",
+        title: "FluentCollectionMethod on property with unsupported accessor shape",
+        messageFormat:
+            "Property '{0}' on type '{1}' cannot be used as a [FluentCollectionMethod] target: "
+            + "{2}. Remove [FluentCollectionMethod] or restructure the type.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }
