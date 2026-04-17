@@ -84,7 +84,90 @@ internal static class FluentCollectionMethodAnalyzer
             builder.Add(new CollectionParameterInfo(parameter, elementType!, parameter.Type, methodName, minItems));
         }
 
-        return builder.ToImmutable();
+        var result = builder.ToImmutable();
+        DetectDisjointUnresolvedGenerics(method, result, diagnostics);
+        return result;
+    }
+
+    /// <summary>
+    /// Emits <see cref="FluentDiagnostics.DisjointUnresolvedCollectionGenerics"/> when the target has
+    /// two or more collection parameters whose element types carry disjoint type parameters that are
+    /// not resolved by the non-collection parameters of the target.
+    /// </summary>
+    /// <remarks>
+    /// The split-accumulator design resolves a single unresolved element-type parameter via generic
+    /// inference on the first <c>AddX</c> call. Supporting multiple disjoint unresolved parameters
+    /// would require a combinatorial lattice of intermediate struct shapes; out of scope.
+    /// </remarks>
+    private static void DetectDisjointUnresolvedGenerics(
+        IMethodSymbol method,
+        ImmutableArray<CollectionParameterInfo> collectionParameters,
+        DiagnosticList diagnostics)
+    {
+        if (collectionParameters.Length < 2)
+            return;
+
+        var collectionParamSymbols = collectionParameters
+            .Select(cp => cp.Parameter)
+            .ToImmutableHashSet<IParameterSymbol>(SymbolEqualityComparer.Default);
+
+        var resolvedNames = method.Parameters
+            .Where(p => !collectionParamSymbols.Contains(p))
+            .SelectMany(p => CollectTypeParameterNames(p.Type))
+            .ToImmutableHashSet(StringComparer.Ordinal);
+
+        var unresolvedPerCollection = collectionParameters
+            .Select(cp => CollectTypeParameterNames(cp.ElementType)
+                .Where(n => !resolvedNames.Contains(n))
+                .Distinct(StringComparer.Ordinal)
+                .ToImmutableArray())
+            .ToImmutableArray();
+
+        var collectionsWithUnresolved = unresolvedPerCollection
+            .Where(set => !set.IsEmpty)
+            .ToImmutableArray();
+
+        if (collectionsWithUnresolved.Length < 2)
+            return;
+
+        var unionSize = collectionsWithUnresolved
+            .SelectMany(set => set)
+            .Distinct(StringComparer.Ordinal)
+            .Count();
+
+        if (unionSize <= 1)
+            return;
+
+        var location = method.Locations.FirstOrDefault() ?? Location.None;
+        var allUnresolved = string.Join(", ", collectionsWithUnresolved
+            .SelectMany(set => set)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(n => n, StringComparer.Ordinal));
+
+        diagnostics.Add(Diagnostic.Create(
+            FluentDiagnostics.DisjointUnresolvedCollectionGenerics,
+            location,
+            method.ContainingType.ToDisplayString(),
+            allUnresolved));
+    }
+
+    private static IEnumerable<string> CollectTypeParameterNames(ITypeSymbol type)
+    {
+        switch (type)
+        {
+            case ITypeParameterSymbol tp:
+                yield return tp.Name;
+                yield break;
+            case INamedTypeSymbol named:
+                foreach (var arg in named.TypeArguments)
+                foreach (var name in CollectTypeParameterNames(arg))
+                    yield return name;
+                yield break;
+            case IArrayTypeSymbol array:
+                foreach (var name in CollectTypeParameterNames(array.ElementType))
+                    yield return name;
+                yield break;
+        }
     }
 
     /// <summary>

@@ -639,4 +639,27 @@ public static class FluentDiagnostics
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    /// <summary>
+    /// Diagnostic when a target has two or more collection parameters whose element types carry
+    /// disjoint type parameters that are not resolved by the forwarded / threaded parameters leading
+    /// into the accumulator. Example: a target with
+    /// <c>IEnumerable&lt;Wheel&lt;T&gt;&gt;</c> and <c>IEnumerable&lt;Brake&lt;U&gt;&gt;</c> where
+    /// neither <c>T</c> nor <c>U</c> appears elsewhere in the chain. The accumulator split design
+    /// resolves a single unresolved parameter via generic inference on the first <c>AddX</c> call;
+    /// supporting multiple disjoint unresolved parameters would require a combinatorial lattice of
+    /// intermediate struct shapes. Targets in this configuration are skipped.
+    /// Resolution: ensure all collection-element type parameters are covered by a shared generic
+    /// (e.g., collapse to a single <c>T</c>), or constrain them via forwarded parameters.
+    /// </summary>
+    public static readonly DiagnosticDescriptor DisjointUnresolvedCollectionGenerics = new(
+        id: "CVJG0054",
+        title: "Accumulator cannot resolve disjoint collection-element generics",
+        messageFormat:
+            "Target '{0}' has multiple collection parameters whose element types carry disjoint "
+            + "unresolved type parameters ({1}). Only one unresolved collection-element generic is "
+            + "supported per target. Collapse to a shared type parameter or constrain via forwarded parameters.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }
