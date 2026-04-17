@@ -172,6 +172,47 @@ internal class AccumulatorFluentStep(INamedTypeSymbol rootType) : IFluentStep
             .DistinctBy(symbol => symbol.GetEffectiveName())
             .ToArray();
 
+    /// <summary>
+    /// Returns the distinct type parameters carried by collection element types that are not already
+    /// resolved by <see cref="GenericTargetParameters"/>. These parameters enter the chain only when
+    /// the first <c>AddX</c> supplies an argument, so they must appear as method-level generics on
+    /// the pre-resolution accumulator struct and as struct-level generics on the post-resolution one.
+    /// </summary>
+    internal ITypeParameterSymbol[] GetUnresolvedElementTypeParameters()
+    {
+        var resolved = new HashSet<string>(
+            GetDistinctEffectiveTypeArguments().Select(tp => tp.GetEffectiveName()),
+            StringComparer.Ordinal);
+
+        return CollectionParameters
+            .SelectMany(cp => cp.ElementType.GetGenericTypeArguments())
+            .Where(tp => !resolved.Contains(tp.GetEffectiveName()))
+            .DistinctBy(tp => tp.GetEffectiveName())
+            .ToArray();
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether this accumulator step must be emitted as a split pre/post pair
+    /// because at least one collection element type carries a type parameter not resolved by the
+    /// forwarded / threaded parameters leading into the step.
+    /// </summary>
+    internal bool IsSplit => GetUnresolvedElementTypeParameters().Length > 0;
+
+    /// <summary>
+    /// Returns the fully qualified identifier of the post-resolution struct, i.e., the identifier
+    /// carrying both resolved and unresolved type parameters. For non-split accumulators this matches
+    /// <see cref="IdentifierDisplayString()"/>.
+    /// </summary>
+    public string FullIdentifierDisplayString()
+    {
+        ITypeParameterSymbol[] typeArguments =
+        [
+            ..GetDistinctEffectiveTypeArguments(),
+            ..GetUnresolvedElementTypeParameters()
+        ];
+        return BuildGlobalIdentifier(typeArguments, arg => IdentifierName(arg.GetEffectiveName()));
+    }
+
     private string BuildGlobalIdentifier<T>(
         T[] typeArguments,
         Func<T, TypeSyntax> argumentSelector)

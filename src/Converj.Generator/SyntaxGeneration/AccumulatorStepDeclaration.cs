@@ -24,15 +24,168 @@ internal static class AccumulatorStepDeclaration
         "global::System.Collections.Immutable.ImmutableArray";
 
     /// <summary>
-    /// Creates the <see cref="StructDeclarationSyntax"/> for the given accumulator step.
-    /// The emitted struct is unconditionally <c>readonly</c> (GEN-06 / RESEARCH.md Pitfall 5).
-    /// Handles both parameter-backed and property-backed collection accumulators.
-    /// Property-backed accumulators use <c>__property</c> field naming and emit object-initializer
-    /// assignment in the terminal method.
+    /// Emits the full sequence of struct declarations required for <paramref name="step"/>.
+    /// For non-split accumulators returns a single <see cref="StructDeclarationSyntax"/> carrying
+    /// the forwarded + resolved generic parameters. For split accumulators (<see
+    /// cref="AccumulatorFluentStep.IsSplit"/>) emits a pair: the post-resolution struct (which
+    /// carries both resolved and unresolved generics in its type-parameter list) and the
+    /// pre-resolution struct (forwarded-only, method-level generic <c>AddX&lt;T&gt;</c> /
+    /// <c>CreateX&lt;T&gt;</c> that delegate to the post struct).
     /// </summary>
-    /// <param name="step">The accumulator step model to emit.</param>
-    /// <returns>A <see cref="StructDeclarationSyntax"/> representing the complete accumulator step struct.</returns>
-    public static StructDeclarationSyntax Create(AccumulatorFluentStep step)
+    public static IEnumerable<StructDeclarationSyntax> CreateAll(AccumulatorFluentStep step)
+    {
+        yield return CreatePostStruct(step);
+
+        if (step.IsSplit)
+            yield return CreatePreStruct(step);
+    }
+
+    /// <summary>
+    /// Emits the pre-resolution struct: forwarded-only fields, one method-level-generic <c>AddX&lt;T&gt;</c>
+    /// per collection parameter that delegates to the post struct, and a method-level-generic terminal
+    /// that supports the empty-chain case where no <c>AddX</c> is ever called.
+    /// </summary>
+    private static StructDeclarationSyntax CreatePreStruct(AccumulatorFluentStep step)
+    {
+        var forwardedFields = CreateForwardedFieldDeclarations(step);
+        var entryCtor = CreatePreEntryConstructor(step);
+        var addMethods = CreatePreAddMethods(step);
+        var terminalMethod = CreatePreTerminalMethod(step);
+
+        var modifiers = GetAccessibilityTokens(step.Accessibility);
+
+        var typeParameterList = CreateTypeParameterListResolved(step);
+        var constraintClauses = CreateConstraintClausesResolved(step);
+
+        return StructDeclaration(step.Name)
+            .WithModifiers(modifiers)
+            .WithTypeParameterList(typeParameterList)
+            .WithConstraintClauses(constraintClauses)
+            .WithAttributeLists(SingletonList(Helpers.GeneratedCodeAttributeSyntax.Create()))
+            .WithMembers(List<MemberDeclarationSyntax>([
+                ..forwardedFields,
+                entryCtor,
+                ..addMethods,
+                terminalMethod
+            ]));
+    }
+
+    private static ConstructorDeclarationSyntax CreatePreEntryConstructor(AccumulatorFluentStep step)
+    {
+        var forwardedParams = BuildForwardedConstructorParameters(step).ToArray();
+        var forwardedAssignments = BuildForwardedFieldAssignments(step).ToArray();
+
+        var accessModifier = forwardedParams.Length > 0
+            ? step.Accessibility.AccessibilityToSyntaxKind().Select(Token)
+            : [Token(SyntaxKind.PublicKeyword)];
+
+        return ConstructorDeclaration(Identifier(step.Name))
+            .WithModifiers(TokenList(accessModifier))
+            .WithParameterList(ParameterList(SeparatedList<ParameterSyntax>(
+                forwardedParams.InterleaveWith(Token(SyntaxKind.CommaToken)))))
+            .WithBody(Block(forwardedAssignments));
+    }
+
+    private static ImmutableArray<MethodDeclarationSyntax> CreatePreAddMethods(AccumulatorFluentStep step)
+    {
+        var postGlobalName = step.FullIdentifierDisplayString();
+        var unresolvedGenerics = step.GetUnresolvedElementTypeParameters();
+
+        return
+        [
+            ..step.FluentMethods
+                .OfType<AccumulatorMethod>()
+                .Select(method => CreatePreAddMethod(step, method, postGlobalName, unresolvedGenerics))
+        ];
+    }
+
+    private static MethodDeclarationSyntax CreatePreAddMethod(
+        AccumulatorFluentStep step,
+        AccumulatorMethod method,
+        string postGlobalName,
+        ITypeParameterSymbol[] unresolvedGenerics)
+    {
+        var elementTypeName = method.CollectionParameter.ElementType.ToGlobalDisplayString();
+
+        var body = BuildPreDelegationBody(
+            step,
+            postGlobalName,
+            innerCallName: method.Name,
+            argumentExpressions: [IdentifierName("item")]);
+
+        return MethodDeclaration(ParseTypeName(postGlobalName), Identifier(method.Name))
+            .WithAttributeLists(SingletonList(
+                AttributeList(SingletonSeparatedList(AggressiveInliningAttributeSyntax.Create()))))
+            .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+            .WithTypeParameterList(BuildMethodTypeParameterList(unresolvedGenerics))
+            .WithParameterList(ParameterList(SingletonSeparatedList(
+                Parameter(Identifier("item"))
+                    .WithModifiers(TokenList(Token(SyntaxKind.InKeyword)))
+                    .WithType(ParseTypeName(elementTypeName)))))
+            .WithBody(body);
+    }
+
+    private static MethodDeclarationSyntax CreatePreTerminalMethod(AccumulatorFluentStep step)
+    {
+        var terminal = step.FluentMethods.OfType<TerminalMethod>().Single();
+        var targetTypeReturn = (TargetTypeReturn)terminal.Return;
+        var returnTypeName = targetTypeReturn.ReturnTypeDisplayString();
+
+        var postGlobalName = step.FullIdentifierDisplayString();
+        var unresolvedGenerics = step.GetUnresolvedElementTypeParameters();
+
+        var body = BuildPreDelegationBody(
+            step,
+            postGlobalName,
+            innerCallName: terminal.Name,
+            argumentExpressions: []);
+
+        return MethodDeclaration(ParseTypeName(returnTypeName), Identifier(terminal.Name))
+            .WithAttributeLists(SingletonList(
+                AttributeList(SingletonSeparatedList(AggressiveInliningAttributeSyntax.Create()))))
+            .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+            .WithTypeParameterList(BuildMethodTypeParameterList(unresolvedGenerics))
+            .WithBody(body);
+    }
+
+    private static TypeParameterListSyntax? BuildMethodTypeParameterList(ITypeParameterSymbol[] typeParameters)
+    {
+        if (typeParameters.Length == 0)
+            return null;
+
+        return TypeParameterList(SeparatedList(
+            typeParameters.Select(tp => TypeParameter(tp.GetEffectiveName()))));
+    }
+
+    private static BlockSyntax BuildPreDelegationBody(
+        AccumulatorFluentStep step,
+        string postGlobalName,
+        string innerCallName,
+        IReadOnlyList<ExpressionSyntax> argumentExpressions)
+    {
+        var forwardedArgs = step.ForwardedTargetParameters
+            .Select(p => Argument(MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                ThisExpression(),
+                IdentifierName(p.Name.ToParameterFieldName()))))
+            .ToArray();
+
+        var postCtor = ObjectCreationExpression(ParseTypeName(postGlobalName))
+            .WithArgumentList(ArgumentList(SeparatedList<ArgumentSyntax>(
+                forwardedArgs.InterleaveWith(Token(SyntaxKind.CommaToken)))));
+
+        var invocation = InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                postCtor,
+                IdentifierName(innerCallName)))
+            .WithArgumentList(ArgumentList(SeparatedList(
+                argumentExpressions.Select(Argument))));
+
+        return Block(ReturnStatement(invocation));
+    }
+
+    private static StructDeclarationSyntax CreatePostStruct(AccumulatorFluentStep step)
     {
         var forwardedFields = CreateForwardedFieldDeclarations(step);
         var accumulatorFields = CreateAccumulatorFieldDeclarations(step);
@@ -45,8 +198,8 @@ internal static class AccumulatorStepDeclaration
 
         var modifiers = GetAccessibilityTokens(step.Accessibility);
 
-        var typeParameterList = CreateTypeParameterList(step);
-        var constraintClauses = CreateConstraintClauses(step);
+        var typeParameterList = CreateTypeParameterListFull(step);
+        var constraintClauses = CreateConstraintClausesFull(step);
 
         return StructDeclaration(step.Name)
             .WithModifiers(modifiers)
@@ -66,13 +219,27 @@ internal static class AccumulatorStepDeclaration
     }
 
     /// <summary>
-    /// Builds the type parameter list for the accumulator struct from the effective generic
-    /// parameters carried by forwarded / threaded parameters (e.g., <c>&lt;TEngine&gt;</c>).
+    /// Builds the type parameter list for the pre-resolution accumulator struct from the effective
+    /// generic parameters carried by forwarded / threaded parameters (e.g., <c>&lt;TEngine&gt;</c>).
     /// Returns <see langword="null"/> when no generic parameters are present.
     /// </summary>
-    private static TypeParameterListSyntax? CreateTypeParameterList(AccumulatorFluentStep step)
+    private static TypeParameterListSyntax? CreateTypeParameterListResolved(AccumulatorFluentStep step) =>
+        BuildTypeParameterList(step.GetDistinctEffectiveTypeArguments());
+
+    /// <summary>
+    /// Builds the type parameter list for the post-resolution accumulator struct, combining forwarded
+    /// generics with the type parameters introduced by collection element types (e.g., the <c>T</c>
+    /// in <c>IEnumerable&lt;Wheel&lt;T&gt;&gt;</c>). Non-split accumulators yield the same result as
+    /// <see cref="CreateTypeParameterListResolved"/>.
+    /// </summary>
+    private static TypeParameterListSyntax? CreateTypeParameterListFull(AccumulatorFluentStep step) =>
+        BuildTypeParameterList([
+            ..step.GetDistinctEffectiveTypeArguments(),
+            ..step.GetUnresolvedElementTypeParameters()
+        ]);
+
+    private static TypeParameterListSyntax? BuildTypeParameterList(ITypeParameterSymbol[] typeArguments)
     {
-        var typeArguments = step.GetDistinctEffectiveTypeArguments();
         if (typeArguments.Length == 0)
             return null;
 
@@ -81,14 +248,25 @@ internal static class AccumulatorStepDeclaration
     }
 
     /// <summary>
-    /// Builds the constraint clauses for the accumulator struct type parameters.
-    /// Collects type parameters from the candidate target containing type (and receiver when present),
-    /// matches them to the accumulator's effective type arguments by name, and emits the constraints
-    /// (e.g., <c>where TEngine : global::Ns.IEngine</c>).
+    /// Builds constraint clauses for the pre-resolution struct type parameters (forwarded generics only).
     /// </summary>
-    private static SyntaxList<TypeParameterConstraintClauseSyntax> CreateConstraintClauses(AccumulatorFluentStep step)
+    private static SyntaxList<TypeParameterConstraintClauseSyntax> CreateConstraintClausesResolved(AccumulatorFluentStep step) =>
+        BuildConstraintClauses(step, step.GetDistinctEffectiveTypeArguments());
+
+    /// <summary>
+    /// Builds constraint clauses covering the full type-parameter list of the post-resolution struct,
+    /// including any constraints attached to unresolved collection-element type parameters.
+    /// </summary>
+    private static SyntaxList<TypeParameterConstraintClauseSyntax> CreateConstraintClausesFull(AccumulatorFluentStep step) =>
+        BuildConstraintClauses(step, [
+            ..step.GetDistinctEffectiveTypeArguments(),
+            ..step.GetUnresolvedElementTypeParameters()
+        ]);
+
+    private static SyntaxList<TypeParameterConstraintClauseSyntax> BuildConstraintClauses(
+        AccumulatorFluentStep step,
+        ITypeParameterSymbol[] typeArguments)
     {
-        var typeArguments = step.GetDistinctEffectiveTypeArguments();
         if (typeArguments.Length == 0)
             return List<TypeParameterConstraintClauseSyntax>();
 
@@ -102,6 +280,10 @@ internal static class AccumulatorStepDeclaration
 
         if (step.ReceiverParameter?.Type is INamedTypeSymbol { IsGenericType: true } receiverType)
             candidateTypeParameters.AddRange(receiverType.OriginalDefinition.TypeParameters);
+
+        // Unresolved element-type parameters are referenced by name via the typeArguments themselves;
+        // include them as candidates so their constraints (e.g., `where T : struct`) are emitted.
+        candidateTypeParameters.AddRange(typeArguments);
 
         var effectiveNames = new HashSet<string>(typeArguments.Select(tp => tp.GetEffectiveName()));
         var matchedParameters = candidateTypeParameters
@@ -262,7 +444,7 @@ internal static class AccumulatorStepDeclaration
     /// </summary>
     private static ImmutableArray<MethodDeclarationSyntax> CreateAddMethods(AccumulatorFluentStep step)
     {
-        var stepGlobalName = step.IdentifierDisplayString();
+        var stepGlobalName = step.FullIdentifierDisplayString();
 
         var singleAdds = step.FluentMethods
             .OfType<AccumulatorMethod>()
@@ -381,7 +563,7 @@ internal static class AccumulatorStepDeclaration
     /// </summary>
     private static ImmutableArray<MethodDeclarationSyntax> CreatePropertyAddMethods(AccumulatorFluentStep step)
     {
-        var stepGlobalName = step.IdentifierDisplayString();
+        var stepGlobalName = step.FullIdentifierDisplayString();
         return step.CollectionProperties
             .Select(cp => CreatePropertyAddMethod(step, cp, stepGlobalName))
             .ToImmutableArray();

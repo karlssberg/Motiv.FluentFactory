@@ -83,13 +83,21 @@ internal static class CompilationUnit
 
         foreach (var entry in outputOrder)
         {
-            yield return entry switch
+            switch (entry)
             {
-                INamedTypeSymbol typeKey => ExistingPartialTypeStepDeclaration.CreateMerged(existingTypeGroups[typeKey]),
-                RegularFluentStep regularStep => FluentStepDeclaration.Create(regularStep),
-                AccumulatorFluentStep accumulatorStep => AccumulatorStepDeclaration.Create(accumulatorStep),
-                _ => throw new NotSupportedException()
-            };
+                case INamedTypeSymbol typeKey:
+                    yield return ExistingPartialTypeStepDeclaration.CreateMerged(existingTypeGroups[typeKey]);
+                    break;
+                case RegularFluentStep regularStep:
+                    yield return FluentStepDeclaration.Create(regularStep);
+                    break;
+                case AccumulatorFluentStep accumulatorStep:
+                    foreach (var declaration in AccumulatorStepDeclaration.CreateAll(accumulatorStep))
+                        yield return declaration;
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 
