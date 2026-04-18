@@ -25,7 +25,7 @@ namespace Converj.Example
         public static global::Converj.Example.Circle<T> ConvertToCircle<T>(this global::Converj.Example.ShapeExtensionMethods.ColoredDiamond<T> coloredDiamond)
             where T : global::System.Numerics.INumber<T>
         {
-            return global::Converj.Example.ShapeExtensionMethods.ConvertToCircle(coloredDiamond);
+            return global::Converj.Example.ShapeExtensionMethods.ConvertToCircle<T>(coloredDiamond);
         }
     }
 

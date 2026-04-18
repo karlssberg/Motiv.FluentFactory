@@ -19,4 +19,7 @@
       <ProjectReference Include="..\Converj.Attributes\Converj.Attributes.csproj" />
       <ProjectReference Include="..\Converj.Generator\Converj.Generator.csproj" OutputItemType="Analyzer" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Generated\Converj.Generator\" />
+    </ItemGroup>
 </Project>

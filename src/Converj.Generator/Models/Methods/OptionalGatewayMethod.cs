@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Converj.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 
 namespace Converj.Generator.Models.Methods;
@@ -23,6 +24,13 @@ internal class OptionalGatewayMethod : IFluentMethod
         ValueSources = valueStorages;
         AvailableParameterFields = [];
         Return = fluentReturn;
+        TypeParameters =
+        [
+            ..fluentReturn.GenericTargetParameters
+                .SelectMany(p => p.Type.GetGenericTypeParameters())
+                .Select(tp => new FluentTypeParameter(tp))
+                .Distinct()
+        ];
     }
 
     public string Name { get; }
@@ -33,7 +41,7 @@ internal class OptionalGatewayMethod : IFluentMethod
 
     public IFluentReturn Return { get; }
 
-    public ImmutableArray<FluentTypeParameter> TypeParameters { get; } = [];
+    public ImmutableArray<FluentTypeParameter> TypeParameters { get; }
 
     public INamespaceSymbol RootNamespace { get; }
 

@@ -54,13 +54,21 @@ internal static class TargetTypeObjectCreationExpression
         IEnumerable<ArgumentSyntax> fieldArguments,
         IEnumerable<ArgumentSyntax> methodArguments)
     {
-        var containingType = method.Return.CandidateTargets[0].ContainingType.ToGlobalDisplayString();
-        var methodName = method.Return.CandidateTargets[0].Name;
+        var targetMethod = method.Return.CandidateTargets[0];
+        var containingType = targetMethod.ContainingType.ToGlobalDisplayString();
+        var methodName = targetMethod.Name;
+
+        SimpleNameSyntax methodNameSyntax = targetMethod.TypeParameters.Length > 0
+            ? GenericName(methodName)
+                .WithTypeArgumentList(
+                    TypeArgumentList(SeparatedList<TypeSyntax>(
+                        targetMethod.TypeParameters.Select(tp => IdentifierName(tp.GetEffectiveName())))))
+            : IdentifierName(methodName);
 
         var memberAccess = MemberAccessExpression(
             SyntaxKind.SimpleMemberAccessExpression,
             ParseExpression(containingType),
-            IdentifierName(methodName));
+            methodNameSyntax);
 
         return InvocationExpression(memberAccess)
             .WithArgumentList(ArgumentList(SeparatedList([..fieldArguments, ..methodArguments])));

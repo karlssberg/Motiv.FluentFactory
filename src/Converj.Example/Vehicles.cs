@@ -8,12 +8,16 @@ internal partial class Vehicles
     {
         Car<CarEngine> car = Vehicle.WithCarEngine(new CarEngine()).WithAge(5);
         Vehicle
-            .WithCar(new Car<ICarEngine>(new CarEngine(), 5))
+            .WithCar<int>(new Car<ICarEngine>(new CarEngine(), 5))
+            .DispatchVehicle();
+        Vehicle
+            .WithTrain(new Train<ITrainEngine, int>(new TrainEngine(), []))
             .DispatchVehicle();
 
-        Train<TrainEngine> train = Vehicle
+        Train<TrainEngine, int> train = Vehicle
             .WithTrainEngine(new TrainEngine())
-            .AddWheel(new Wheel())
+            .AddWheel(new Wheel<int>())
+            .AddWheel(new Wheel<int>())
             .CreateVehicles_Train();
     }
     
@@ -24,7 +28,7 @@ internal partial class Vehicles
     internal class CarEngine : ICarEngine;
     internal interface ITrainEngine;
     internal class TrainEngine : ITrainEngine;
-    internal record Wheel;
+    internal record Wheel<T>;
 
     [FluentTarget<Vehicle>(TerminalMethod = TerminalMethod.None)]
     internal partial record Car<[As("TEngine")]TCarEngine>(
@@ -33,15 +37,15 @@ internal partial class Vehicles
         where TCarEngine : ICarEngine;
 
     [FluentTarget<Vehicle>]
-    internal partial record Train<TEngine>(
+    internal partial record Train<TEngine, T>(
         [FluentMethod("WithTrainEngine")] TEngine Engine,
-        [FluentCollectionMethod] IEnumerable<Wheel> Wheels)
+        [FluentCollectionMethod] IEnumerable<Wheel<T>> Wheels)
         where TEngine : ITrainEngine;
     
     [FluentTarget<Vehicle>]
-    public static string DispatchVehicle(
+    public static string DispatchVehicle<T>(
         [FluentMethod("WithCar")]Car<ICarEngine>? car = null,
-        [FluentMethod("WithTrain")]Train<ITrainEngine>? train = null)
+        [FluentMethod("WithTrain")]Train<ITrainEngine, T>? train = null)
     {
         return (car, train) switch
         {

@@ -141,7 +141,7 @@ internal static class RootTypeDeclaration
                 RootTerminalMethodDeclaration.Create(method, file.RootType),
 
             OptionalGatewayMethod gateway =>
-                OptionalGatewayMethodDeclaration.Create(gateway),
+                OptionalGatewayMethodDeclaration.Create(gateway, file.RootType),
 
             MultiMethod multiMethod =>
                 FluentStepMethodDeclaration.Create(multiMethod, [], file.RootType.TypeParameters),

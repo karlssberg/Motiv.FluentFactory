@@ -106,12 +106,15 @@ internal class TerminalMethod : IFluentMethod
 
     private ImmutableArray<FluentTypeParameter> GetFluentTypeParameter()
     {
-        return
-        [
-            ..SourceParameter?.Type
-                  .GetGenericTypeParameters()
-                  .Select(genericTypeParameter => new FluentTypeParameter(genericTypeParameter))
-              ?? []
-        ];
+        var sourceParameterTypeParameters = SourceParameter?.Type
+                                                .GetGenericTypeParameters()
+                                                .Select(tp => new FluentTypeParameter(tp))
+                                            ?? [];
+
+        var staticMethodTypeParameters = IsStaticMethodTarget && Return is TargetTypeReturn target
+            ? target.Method.TypeParameters.Select(tp => new FluentTypeParameter(tp))
+            : [];
+
+        return [..sourceParameterTypeParameters.Concat(staticMethodTypeParameters).Distinct()];
     }
 }

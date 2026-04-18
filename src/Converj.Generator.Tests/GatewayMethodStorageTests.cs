@@ -139,4 +139,41 @@ public class GatewayMethodStorageTests
             }
         }.RunAsync();
     }
+
+    /// <summary>
+    /// Gateway methods for an all-optional static method target whose optional parameters
+    /// reference the method's own generic type parameters must declare those type parameters
+    /// on the gateway method signature, because the return step is generic.
+    /// </summary>
+    [Fact]
+    internal async Task Should_thread_static_method_generic_onto_gateway_methods()
+    {
+        const string code =
+            """
+            #nullable enable
+            using System.Collections.Generic;
+            using Converj.Generator;
+
+            namespace Test;
+
+            [FluentRoot]
+            public static partial class Builder;
+
+            public static class Dispatcher
+            {
+                [FluentTarget(typeof(Builder))]
+                public static string Dispatch<T>(
+                    [FluentMethod("WithItems")] System.Collections.Generic.IReadOnlyList<T>? items = null,
+                    [FluentMethod("WithName")] string? name = null) => "";
+            }
+            """;
+
+        var test = new VerifyCS.Test
+        {
+            TestState = { Sources = { code } },
+            TestBehaviors = Microsoft.CodeAnalysis.Testing.TestBehaviors.SkipGeneratedSourcesCheck
+        };
+
+        await test.RunAsync();
+    }
 }

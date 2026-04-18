@@ -387,7 +387,7 @@ public class ExtensionMethodTests
                     public static string Unwrap<T>(this global::Test.Wrapper<T> wrapper)
                         where T : global::System.IComparable<T>
                     {
-                        return global::Test.Helpers.Unwrap(wrapper);
+                        return global::Test.Helpers.Unwrap<T>(wrapper);
                     }
                 }
             }
@@ -616,7 +616,7 @@ public class ExtensionMethodTests
                     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
                     public string ConvertToCircle()
                     {
-                        return global::Test.ShapeHelpers.ConvertToCircle(this._diamond__parameter, this._precision__parameter);
+                        return global::Test.ShapeHelpers.ConvertToCircle<T>(this._diamond__parameter, this._precision__parameter);
                     }
                 }
             }

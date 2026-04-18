@@ -17,7 +17,7 @@ internal static class OptionalGatewayMethodDeclaration
     /// Creates a method declaration that constructs an all-optional step using a named argument
     /// for the specified parameter, relying on default values for the remaining parameters.
     /// </summary>
-    public static MethodDeclarationSyntax Create(OptionalGatewayMethod method)
+    public static MethodDeclarationSyntax Create(OptionalGatewayMethod method, INamedTypeSymbol rootType)
     {
         var parameterName = method.SourceParameter.Name.ToCamelCase();
         var returnTypeName = ParseTypeName(method.Return.IdentifierDisplayString());
@@ -34,7 +34,7 @@ internal static class OptionalGatewayMethodDeclaration
         var xmlDocTrivia = FluentMethodSummaryDocXml.Create(
             [..FluentMethodSummaryDocXml.GenerateCandidateTargetTypeSeeAlsoLinks(method.Return.GetAvailableTargets())]);
 
-        return MethodDeclaration(returnTypeName, Identifier(method.Name))
+        var methodDeclaration = MethodDeclaration(returnTypeName, Identifier(method.Name))
             .WithAttributeLists(
                 SingletonList(
                     AttributeList(
@@ -47,5 +47,7 @@ internal static class OptionalGatewayMethodDeclaration
                         .WithType(ParseTypeName(method.SourceParameter.Type.ToGlobalDisplayString())))))
             .WithBody(body)
             .WithLeadingTrivia(xmlDocTrivia);
+
+        return RootMethodTypeParameterResolver.AttachTypeParametersAndConstraints(methodDeclaration, method, rootType);
     }
 }
